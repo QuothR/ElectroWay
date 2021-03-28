@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40.96" height="35.116" viewBox="0 0 40.96 35.116">
+  <g id="History" transform="translate(338.296 -595.144)">
+    <path id="Circle" d="M-335.365,611.331c.547-6.213,3.084-15.61,17.764-15.686a18.583,18.583,0,0,1,11.127,3.16c4.822,2.908,6.928,10.491,6.966,14.748.237,4-1.329,7.943-5.073,11.405-3.243,3-8.8,4.758-13.02,4.8-8.567.085-13.4-3.251-14.753-5.992" transform="translate(1.647)" fill="none" stroke="#707070" stroke-width="1"/>
+    <g id="Arrow" transform="matrix(-1, 0.017, -0.017, -1, -329.14, 619.323)" fill="none">
+      <path d="M4.5,0,9,9H0Z" stroke="none"/>
+      <path d="M 4.5 2.236070156097412 L 1.618034839630127 8 L 7.381965160369873 8 L 4.5 2.236070156097412 M 4.5 0 L 9 9 L 0 9 L 4.5 0 Z" stroke="none" fill="#707070"/>
+    </g>
+    <line id="Line_1" data-name="Line 1" y2="7" transform="translate(-315.875 606.962)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="1"/>
+    <line id="Line_2" data-name="Line 2" x1="5" y2="3.343" transform="translate(-320.768 613.293)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="1"/>
+  </g>
+</svg>

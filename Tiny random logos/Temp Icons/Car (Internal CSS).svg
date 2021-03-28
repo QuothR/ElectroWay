@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="44.883" height="27.143" viewBox="0 0 44.883 27.143">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #707070;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="Car" transform="translate(165.521 -649.857)">
+    <path id="Car_Base" data-name="Car Base" class="cls-1" d="M-162.885,673.045c-2.939-1.816-3.056-9.1,1.029-10.541s3.953-.334,6.51-1.983,2.8-2.572,5-6.178c1-1.68,2.377-3.986,5.231-3.986,6.747,0,9.316.334,11.623,1.44s4.349,4.362,5.114,7.806,6.906.355,7.024,2.9.5,2.922,0,6.366c-.1.665-.023,3.554-2.939,4.174C-129.03,674.506-160.96,675.4-162.885,673.045Z" transform="translate(0 0)"/>
+    <g id="Wheel_2" data-name="Wheel 2" class="cls-2" transform="translate(-156 668)">
+      <circle class="cls-3" cx="4.5" cy="4.5" r="4.5"/>
+      <circle class="cls-4" cx="4.5" cy="4.5" r="4"/>
+    </g>
+    <g id="Wheel_1" data-name="Wheel 1" class="cls-2" transform="translate(-139 668)">
+      <circle class="cls-3" cx="4.5" cy="4.5" r="4.5"/>
+      <circle class="cls-4" cx="4.5" cy="4.5" r="4"/>
+    </g>
+  </g>
+</svg>
