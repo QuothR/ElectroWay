@@ -1,1 +1,1 @@
-Mini logo-urile finale sun in folderul better icons (sunt toate in acelasi png)
+Mini logo-urile finale sunt in folderul better icons
