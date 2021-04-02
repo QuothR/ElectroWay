@@ -1,0 +1,256 @@
+*{
+    margin: 0;
+    padding:0;
+}
+html,body{
+    height: 100%;
+    background-color: #503B88;
+    }
+ .page{
+    display: flex;
+    align-items: stretch;
+        height: 100%;
+    }
+aside{
+    position: relative;
+    margin:0;
+    background: linear-gradient(to right, #3f3446, #525289, #726c91);
+     display: flex;
+     flex-direction: column;
+     width: 15%;
+     height: 100%;
+     justify-content: start;
+} 
+button{
+ background: linear-gradient(to right, #8585ac , #c6bfd2) !important;;
+    position: absolute;
+    width: 70%;
+    top: 37%;
+    left: 12%;
+    border-radius: 11px;
+    height: 33px;
+}   
+.main{
+      flex:1;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      background-color: aliceblue;
+      height: 100%;
+}
+#image{
+    opacity: 0.6;
+    width: 100%;
+    height:100%;
+}
+
+.actions {
+    width: 100%;
+    height: 30%;
+    background-color: beige;
+    display: flex;
+    flex-direction: column;
+  }
+.intro{
+display: flex;
+flex-direction: row;
+position: relative;
+height: 100%;
+width: 100%;
+}
+#text-over-picture{
+position: absolute;
+top:16%;
+left:26%;
+color:#8a8383;
+font-stretch: expanded;
+font-size: 53px;
+}
+.main_section{
+   /* height: 64%;*/
+    width: 100%;
+
+   }
+ .login_section{
+    
+    background-color: #372658;
+    flex-shrink: 2;
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    width: 30%;
+
+}
+.pinned-no-pt{
+    padding-top: 0
+    !important;
+}
+.pinned-no-pb{
+    padding-bottom: 30 px!important;
+}
+.bg-purple{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: linear-gradient(to right, #3f3446, #525289, #726c91);
+
+   height: 70%;
+}
+.container{
+    margin-right: auto;
+    margin-left: auto;
+}
+/*.items-pinned{
+        padding: 7em 0;
+        position: relative;
+        width: 100%;
+    
+}*/
+.service-wrap{
+margin-top: -34px !important;
+}
+
+.pinned{
+    width: 100%;
+    background:#888499;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 9px 12px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 46%);
+    height: 14em;
+}
+.icon span {
+    font-size: 60px;
+    line-height: 1.5;
+  }
+
+.text{
+   text-size-adjust: 2em;
+}    
+.footer-class{
+   
+    background: linear-gradient(to right, #8585ac , #c6bfd2) !important;
+    width: 100%;
+    height: auto;
+    
+}
+.g-3, .gx-3 {
+    --bs-gutter-x: 1rem;
+}
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-right: calc(var(--bs-gutter-x)/ -2);
+    margin-left: calc(var(--bs-gutter-x)/ -2);
+}
+.col-lg-2 {
+    flex: 0 0 auto;
+    width: 18.666667%;
+}
+.icon-img{
+    margin-left:7%;
+    width: 40px;
+    height: 40px;
+}
+.footer-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: fit-content;
+    height: fit-content;
+    padding: 30px;
+    margin-left: 2ch;
+}
+.storys{
+    position: static;
+    background: linear-gradient(to right, #3f3446, #525289, #726c91);
+    flex-wrap: wrap;
+    height: fit-content;
+    display: flex;
+}    
+.combine{
+    position: relative;
+    top: 20%;
+    height: 20%;
+    width: 100%;
+}
+.combine-p{
+    color: lightpink;
+    text-align: justify;
+    font-size: 24px;
+    float: left;
+    left: 10%;
+    width: 57%;
+    position: relative;
+}
+.combine-image{
+    height: 7cm;
+    float: right;
+    top: -61%;
+    position: relative;
+    right: 120px;
+}
+.combine-p-right{
+    color: lightpink;
+    text-align: justify;
+    font-size: 24px;
+    float: right;
+    width: 57%;
+    position: relative;
+    left: -145px;
+}
+.combine-image-left{
+    height: 7cm;
+    float: left;
+    top: -75%;
+    position: relative;
+    margin-left: 121px;
+}
+.combine-list{
+    top: 21% !important;
+}
+
+.combine-p-third{
+    color: lightpink;
+    text-align: justify;
+    font-size: 24px;
+    float: left;
+    left: 12%;
+    width: 57%;
+    position: relative;
+}
+.combine-image-right-third {
+    height: 7cm;
+    float: left;
+    float: right;
+    top: -54%;
+    position: relative;
+    margin-right: 125px;
+}
+.map-section{
+  
+    background: linear-gradient(to right, #3f3446, #525289, #726c91);
+    height: 22cm;
+    position: relative;
+}
+#map-container{
+    height: 69%;
+    top: 13%;
+    margin-left: 5cm;
+    margin-right: 5cm;
+    border-style: solid;
+    border-color: lightpink;
+    border-width: 4px;
+    border-radius: 50px;
+}
+.combine-final{
+    position: relative;
+    top: 25%;
+    height: 30%;
+    width: 100%;
+}

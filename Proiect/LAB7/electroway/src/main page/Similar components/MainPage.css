@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.MainPage {
+    font-family: 'Poppins', sans-serif !important;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to right, #3f3446, #525289, #726c91);
+}
+
+.MainPage .ContentMainPage{
+    height: 89%;
+    display: flex;
+}
+
+
+.ContentMainPage .content-dreapta {
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+}
+
+
+.ContentMainPage .img {
+    width: 125px;
+    height: 125px;
+    border-radius: 62.5px;
+    box-shadow: 0px 0px 20px 0px #000;
+    transition: 0.70s;
+}
+
+/* Footer */
+.MainPage footer {
+    height: 11%;
+    background: linear-gradient(to right, #8585ac , #c6bfd2) !important;
+    box-shadow: 0px 0px 15px 0px #000;
+    z-index: 1;
+    position:relative;
+}
+.MainPage .foot{
+    height: 78px;
+    display: flex;
+    align-items: center;
+
+}
+
+.ContentMainPage .sidebar {
+    height: 100% ;
+    width: 300px;
+    justify-content: center;
+}
+
+.ContentMainPage .btn-class{
+    background: linear-gradient(to right, #8585ac , #c6bfd2) !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: bold;
+    width: 200px;
+    border-radius: 40px;
+    box-shadow: 2px 2px 10px 0px #000;
+    font: bold !important;
+    transition: 0.70s;
+}
+.ContentMainPage .sign-out-btn {
+    width: 100px !important;
+}
+
+.ContentMainPage .content {
+    width: 100%;
+    height: 100%;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    margin: 0% !important;
+    background: linear-gradient(to right, #3f3446, #525289, #726c91) !important;
+    justify-content: center;
+    align-items: center;
+    /* border-bottom-right-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+    */
+
+    box-shadow: 0px 10px 15px 0px #000;
+}
+
+.ContentMainPage .btn-class:hover{
+    box-shadow: 0px 0px 5px 5px #FFFF;
+    
+}
+.ContentMainPage .img:hover{
+    box-shadow: 0px 0px 15px 0px #FFFF;
+    
+}
+
+#active .btn-class{
+    box-shadow: 0px 0px 5px 5px #FFFF;
+
+}
+
+.Icon{
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    transition: 1s;
+}
+
+.Icon:hover{
+    transform: translateY(-20%);
+}
+

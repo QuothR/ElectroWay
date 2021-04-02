@@ -1,0 +1,41 @@
+@font-face {
+    font-family: "flaticon";
+    src: url("./flaticon.ttf?252ea76e3c8f4f25e5ddcd80240d9a8a") format("truetype"),
+url("./flaticon.woff?252ea76e3c8f4f25e5ddcd80240d9a8a") format("woff"),
+url("./flaticon.woff2?252ea76e3c8f4f25e5ddcd80240d9a8a") format("woff2"),
+url("./flaticon.eot?252ea76e3c8f4f25e5ddcd80240d9a8a#iefix") format("embedded-opentype"),
+url("./flaticon.svg?252ea76e3c8f4f25e5ddcd80240d9a8a#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-charging:before {
+    content: "\f101";
+}
+.flaticon-compass:before {
+    content: "\f102";
+}
+.flaticon-credit-card:before {
+    content: "\f103";
+}
+.flaticon-facebook:before {
+    content: "\f104";
+}
+.flaticon-history:before {
+    content: "\f105";
+}
+.flaticon-instagram:before {
+    content: "\f106";
+}
+.flaticon-twitter:before {
+    content: "\f107";
+}
