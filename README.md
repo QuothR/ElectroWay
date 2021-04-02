@@ -1,7 +1,7 @@
 
 # Uber For Electric Cars Api Route Data
 
-This is the documentation for Uber For Electric Cars Api Route Data.
+This is the documentation for ElectroWay, Uber For Electric Cars Api Route Data.
 
 # Route Module
 
@@ -79,8 +79,39 @@ This is the documentation for Uber For Electric Cars Api Route Data.
 ### Example Request Body:
 ```
 {
-  "limit": 5,
-  "query": "lidl Dorohoi"
+    "locationsCoords" :
+    [
+        {
+            "lat" : 47.15751,
+            "lon" : 27.58978
+        },
+        {
+            "lat" : 47.174,
+            "lon" : 27.575
+        }
+    ],
+    "computeBestOrder" : true,
+    "routeType" : "shortest",
+    "avoid" : "unpavedRoads",
+    "travelMode" : "car",
+    "car" :
+    {
+        "vehicleMaxSpeed" : 160,
+        "constantSpeedConsumptionInkWhPerHundredkm" :
+        [
+            {
+                "speed" : 50,
+                "consumptionRate" : 8.2
+            },
+            {
+                "speed" : 130,
+                "consumptionRate" : 12.6
+            }
+        ],
+        "currentChargeInkWh" : 40,
+        "maxChargeInkWh" : 90,
+        "auxiliaryInkW" : 5
+    }
 }
 ```
 
@@ -99,21 +130,48 @@ This is the documentation for Uber For Electric Cars Api Route Data.
 ### Example Response Body:
 ```
 {
-"results": [
-{
-  "Name": "Lidl",
-  "Adress": "Strada Constantin Dobrogeanu Gherea 25, Dorohoi, 715200",
-  "Country": "Romania",
-  "Municipality": "Dorohoi",
-  "Latitude": 47.95512,
-  "Longitude": 26.39868
- },
- {
-  "Name": "Parcare Lidl",
-  "Adress": "Strada Constantin Dobrogeanu Gherea 25, Dorohoi, 715200",
-  "Country": "Romania",
-  "Municipality": "Dorohoi"
- }
- ]
-}`
+    "routes": [
+        {
+            "summary": {
+                "lengthInMeters": 3216,
+                "travelTimeInSeconds": 581,
+                "trafficDelayInSeconds": 0,
+                "departureTime": "2021-04-02T08:15:36+03:00",
+                "arrivalTime": "2021-04-02T08:25:16+03:00",
+                "batteryConsumptionInkWh": 0.959574
+            },
+            "legs": [
+                {
+                    "summary": {
+                        "lengthInMeters": 3216,
+                        "travelTimeInSeconds": 581,
+                        "trafficDelayInSeconds": 0,
+                        "departureTime": "2021-04-02T08:15:36+03:00",
+                        "arrivalTime": "2021-04-02T08:25:16+03:00",
+                        "batteryConsumptionInkWh": 0.959574
+                    },
+                    "points": [
+                        {
+                            "latitude": 47.15727,
+                            "longitude": 27.59052
+                        },
+                        {
+                            "latitude": 47.15715,
+                            "longitude": 27.59044
+                        },
+                        ..........
+                        ],
+            "sections": [
+                {
+                    "startPointIndex": 0,
+                    "endPointIndex": 94,
+                    "sectionType": "TRAVEL_MODE",
+                    "travelMode": "car"
+                }
+            ]
+        }
+    ],
+    "formatVersion": "0.0.12"
+}
+```
 
