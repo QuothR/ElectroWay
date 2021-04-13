@@ -21,6 +21,8 @@ public class VerificationTokenService {
 
     @Transactional
     public VerificationToken findByToken(String token){
+        int a=0;
+        System.out.println(a);
         return verificationTokenRepository.findByToken(token);
     }
 

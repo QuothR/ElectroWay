@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .container{
+            padding: 20px;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+    <div class="container">
+        <h3 th:text="${title}">TITLE</h3>
+        <p>Please click on the link to verify your email address.</p>
+        <a th:href="${link}" th:text="${link}">LINK</a>
+    </div>
+</body>
+</html>

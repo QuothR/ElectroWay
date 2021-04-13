@@ -3,7 +3,6 @@ package com.example.electrowayfinal.service;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.user.MyUserDetails;
 import com.example.electrowayfinal.user.User;
-import com.example.electrowayfinal.validation.ValidPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;

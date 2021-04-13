@@ -8,6 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -16,36 +18,34 @@ import javax.mail.internet.MimeMessage;
 public class EmailService{
     private final VerificationTokenService verificationTokenService;
     private final JavaMailSender javaMailSender;
+    private final TemplateEngine templateEngine;
 
     @Autowired
-    public EmailService(VerificationTokenService verificationTokenService, JavaMailSender javaMailSender) {
+    public EmailService(VerificationTokenService verificationTokenService,TemplateEngine templateEngine, JavaMailSender javaMailSender) {
         this.verificationTokenService = verificationTokenService;
         this.javaMailSender = javaMailSender;
+        this.templateEngine = templateEngine;
     }
 
     public void sendHtmlMail(User user) throws MessagingException {
         VerificationToken verificationToken = verificationTokenService.findByUser(user);
 
-        String token = verificationToken.getToken();
-        String body = "http://localhost:8090/activation?token=" + token;
 
         if (verificationToken != null) {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(user.getEmailAddress());
-            mailMessage.setFrom("stufftesting469@gmail.com");
-            mailMessage.setSubject("Test Spring Email");
-            mailMessage.setText(body);
-            javaMailSender.send(mailMessage);
+            String token = verificationToken.getToken();
+            Context context = new Context();
+            context.setVariable("title","Verify your email adress");
+            context.setVariable("link","http://localhost:8090/activation?token="+token);
+
+            String body = templateEngine.process("verification",context);
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message,true);
+            helper.setTo(user.getEmailAddress());
+            helper.setSubject("email adress verification");
+            helper.setText(body,true);
+            javaMailSender.send(message);
         }
 
-
-
-//            MimeMessage message = javaMailSender.createMimeMessage();
-//
-//            MimeMessageHelper helper = new MimeMessageHelper(message,true);
-//            helper.setTo(user.getEmailAddress());
-//            helper.setSubject("email adress verification");
-//            helper.setText(body);
-//            javaMailSender.send(message)
     }
 }

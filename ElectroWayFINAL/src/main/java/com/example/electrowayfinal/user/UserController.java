@@ -3,7 +3,6 @@ package com.example.electrowayfinal.user;
 import com.example.electrowayfinal.emailVerification.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
 import com.example.electrowayfinal.service.VerificationTokenService;
-import com.example.electrowayfinal.validation.ValidPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +30,9 @@ public class UserController {
     }
 
     @Autowired //dependency injection, userService is automatically instantiated
-    public UserController(UserService userService) {
+    public UserController(UserService userService, VerificationTokenService verificationTokenService) {
         this.userService = userService;
+        this.verificationTokenService = verificationTokenService;
     }
 
     @GetMapping
