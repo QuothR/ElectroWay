@@ -3,6 +3,7 @@ package com.example.electrowayfinal.user;
 import com.example.electrowayfinal.emailVerification.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
 import com.example.electrowayfinal.service.VerificationTokenService;
+import com.example.electrowayfinal.validation.ValidPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
