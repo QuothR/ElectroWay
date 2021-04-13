@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>TomTom Mapping Example</title>
+  <link rel='stylesheet' type='text/css'
+        href='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.53.0/maps/maps.css'>
+  <style>
+    #map {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.53.0/maps/maps-web.min.js"></script>
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.53.0/services/services-web.min.js"></script>
+</head>
+<body>
+<input type="text" id="query" value="">
+<button onclick="search()">cauta locatie</button>
+<button onclick="clearMarkers()">sterge markers</button>
+<button onclick="createRoute()">create route</button>
+<div id='map' class='map'></div>
+<script th:inline="javascript">
+  let map = tt.map({
+    key: "WJ8s7PREG7SxRMtQTZaS6c0kyLjO5lfa", // key will be filled in by Thymeleaf
+    container: 'map',
+    style: 'tomtom://vector/1/basic-main',
+    center: [25.0094303, 45.9442858],
+    zoom: 7
+  });
+  map.addControl(new tt.FullscreenControl());
+  map.addControl(new tt.NavigationControl());
+
+  const popupOffsets = {
+    top: [0, 0],
+    bottom: [0, -50],
+    'bottom-right': [0, -70],
+    'bottom-left': [0, -70],
+    left: [25, -35],
+    right: [-25, -35]
+  }
+
+  // placeholder for data that will be filled in by Thymeleaf
+  const coolLocations = [[${coolLocations}]];
+  var moveMap = function(lnglat){
+    map.flyTo({
+      center: lnglat,
+      zoom:12
+    })
+  }
+  var markers=[]
+  map.on('click',function(event){
+    console.log(event)
+    var marker=new tt.Marker().setLngLat(event.lngLat).addTo(map)
+    markers.push(marker)
+  })
+  var clearMarkers=function(){
+    for(marker of markers){
+      marker.remove();
+    }
+    markers=[];
+  }
+  var handleResults=function(result){
+    console.log("result");
+    if(result.results){
+      moveMap(result.results[0].position)
+    }
+  }
+  var search=function(){
+    tt.services.fuzzySearch({
+      key: "WJ8s7PREG7SxRMtQTZaS6c0kyLjO5lfa",
+      query: document.getElementById("query").value
+    }).go().then(handleResults)
+  }
+  coolLocations.forEach(location => {
+    const marker = new tt.Marker().setLngLat(location.lnglat).addTo(map);
+    const popup = new tt.Popup({offset: popupOffsets}).setHTML(location.description);
+    marker.setPopup(popup).togglePopup();
+    markers.push(marker);
+    console.log(marker);
+  });
+
+  var displayRoute = function(geoJson){
+    routeLayer=map.addLayer({
+      'id' : 'route',
+      'type' : 'line',
+      'source' :{
+        'type' : 'geojson',
+        'data' : geoJson
+      },
+      'paint' :{
+        'line-color' : 'red',
+        'line-width' : 5
+      }
+    })
+  }
+  var routes = []
+  var createRoute =function(){
+    var routeOptions={
+      key: "WJ8s7PREG7SxRMtQTZaS6c0kyLjO5lfa",
+      locations: []
+    }
+    for(marker of markers){
+      routeOptions.locations.push(marker.getLngLat())
+    }
+    tt.services.calculateRoute(routeOptions).go().then(
+            function(routeData){
+              console.log(routeData)
+              var geo=routeData.toGeoJson();
+              displayRoute(geo)
+              routes.push(routeData);
+            }
+    )
+  }
+
+</script>
+</body>
+</html>
