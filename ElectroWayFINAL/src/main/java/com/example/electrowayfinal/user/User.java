@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.user;
 
+import com.example.electrowayfinal.Validation.ValidPassword;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,6 +23,7 @@ public class User implements UserDetails {
     //TODO Change camelCase to python_format
     private Long id;
     private String userName;
+    @ValidPassword
     private String passwordHash;
     private String firstName;
     private String lastName;
