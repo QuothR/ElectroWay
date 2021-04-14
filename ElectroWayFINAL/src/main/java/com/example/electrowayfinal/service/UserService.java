@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.Validation.ValidPassword;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.user.MyUserDetails;
 import com.example.electrowayfinal.user.User;
@@ -20,7 +21,8 @@ import java.util.*;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final VerificationTokenService verificationTokenService;
-
+    @ValidPassword
+    private String parola;
 
     private final EmailService emailService;
 
@@ -46,6 +48,8 @@ public class UserService implements UserDetailsService {
         if(userOptional.isPresent()){
             throw new IllegalStateException("email taken!");
         }
+        parola=user.getPasswordHash();
+        user.setPasswordHash(parola);
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
 
         user.setEnabled(false);

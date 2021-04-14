@@ -1,10 +1,12 @@
 package com.example.electrowayfinal.user;
 
 import com.example.electrowayfinal.Validation.ValidPassword;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 
 @Entity
@@ -23,8 +25,12 @@ public class User implements UserDetails {
     //TODO Change camelCase to python_format
     private Long id;
     private String userName;
+
+    @NonNull
+    @NotBlank(message = "New password is mandatory")
     @ValidPassword
     private String passwordHash;
+
     private String firstName;
     private String lastName;
     private String phoneNumber;
