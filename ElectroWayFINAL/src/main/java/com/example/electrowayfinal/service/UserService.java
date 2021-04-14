@@ -21,8 +21,6 @@ import java.util.*;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final VerificationTokenService verificationTokenService;
-    @ValidPassword
-    private String parola;
 
     private final EmailService emailService;
 
@@ -48,9 +46,10 @@ public class UserService implements UserDetailsService {
         if(userOptional.isPresent()){
             throw new IllegalStateException("email taken!");
         }
-        parola=user.getPasswordHash();
-        user.setPasswordHash(parola);
-        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+
+        // Se comenteaza pentru ca: Validarea parolei se face pe hashPassword
+        //Dupa rezolvarea problemei, se decomenteaza
+        //user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
 
         user.setEnabled(false);
 

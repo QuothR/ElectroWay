@@ -6,11 +6,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
 @Table
+@ValidPassword
 public class User implements UserDetails {
     @Id
     @SequenceGenerator( //se auto-incrementeaza pkul ?
@@ -28,7 +31,7 @@ public class User implements UserDetails {
 
     @NonNull
     @NotBlank(message = "New password is mandatory")
-    @ValidPassword
+
     private String passwordHash;
 
     private String firstName;

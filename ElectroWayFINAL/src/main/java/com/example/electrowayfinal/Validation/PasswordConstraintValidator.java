@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.Validation;
 
+import com.example.electrowayfinal.user.User;
 import lombok.SneakyThrows;
 import org.passay.*;
 import org.passay.dictionary.WordListDictionary;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
+public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, User> {
 
 
     @Override
@@ -26,12 +27,11 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 
     }
 
-
     @SneakyThrows
 
     @Override
 
-    public boolean isValid(String password, ConstraintValidatorContext context) {
+    public boolean isValid(User user, ConstraintValidatorContext context) {
 
 
         //customizing validation messages
@@ -86,8 +86,8 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new IllegalSequenceRule(EnglishSequenceData.Numerical, 5, false)
 
         ));
-
-        RuleResult result = validator.validate(new PasswordData(password));
+        System.out.println("COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOCKASDASDASDAS");
+        RuleResult result = validator.validate(new PasswordData(user.getPasswordHash()));
 
 
         if (result.isValid()) {
