@@ -5,16 +5,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+
 public class MyUserDetails implements UserDetails {
 
     private String emailAddress;
     private String userName;
     private String password;
+    private boolean enabled = false;
 
     public MyUserDetails(User user) {
         this.emailAddress = user.getEmailAddress();
         this.userName=user.getUserName();
         this.password=user.getPasswordHash();
+        this.enabled = user.getEnabled();
     }
 
     @Override
@@ -50,6 +53,6 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

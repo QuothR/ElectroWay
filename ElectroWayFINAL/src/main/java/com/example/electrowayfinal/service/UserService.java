@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User registerNewUserAccount(User user){
+    public void registerNewUserAccount(User user){
         Optional<User> userOptional= userRepository.findUserByEmailAddress(user.getEmailAddress());
         if(userOptional.isPresent()){
             throw new IllegalStateException("email taken!");
@@ -68,7 +68,7 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
         System.out.println(user);
-        return saved.get();
+        saved.get();
     }
 
 

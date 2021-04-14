@@ -48,7 +48,9 @@ public class User implements UserDetails {
         this.emailAddress = emailAddress;
     }
 
-
+    public boolean getEnabled(){
+        return enabled;
+    }
 
     public Long getId() {
         return id;
@@ -176,7 +178,22 @@ public class User implements UserDetails {
         this.zipcode = zipcode;
     }
 
-/*public User(String email, String first_name, String last_name, String password) {
+    public User(Long id, String userName, String passwordHash, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String address2, String city, String country, String zipcode, boolean enabled) {
+        this.id = id;
+        this.userName = userName;
+        this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.country = country;
+        this.zipcode = zipcode;
+        this.enabled = enabled;
+    }
+    /*public User(String email, String first_name, String last_name, String password) {
         this.email = email;
         this.first_name = first_name;
         this.last_name = last_name;
