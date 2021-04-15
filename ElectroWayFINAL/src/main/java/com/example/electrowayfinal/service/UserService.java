@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registerNewUserAccount(@Valid User user){
+    public void registerNewUserAccount(User user){
         Optional<User> userOptional= userRepository.findUserByEmailAddress(user.getEmailAddress());
         if(userOptional.isPresent()){
             throw new IllegalStateException("email taken!");
@@ -50,10 +50,10 @@ public class UserService implements UserDetailsService {
 
         // Se comenteaza pentru ca: Validarea parolei se face pe hashPassword
         //Dupa rezolvarea problemei, se decomenteaza
-        //user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+
 
         user.setEnabled(false);
-
+        //user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         Optional<User> saved = Optional.of(user);
         saved.ifPresent(u -> {
             try {
@@ -70,9 +70,12 @@ public class UserService implements UserDetailsService {
             }
         });
 
+
         userRepository.save(user);
         System.out.println(user);
+
         saved.get();
+
     }
 
 

@@ -4,6 +4,7 @@ import com.example.electrowayfinal.Validation.ValidPassword;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -85,6 +86,7 @@ public class User implements UserDetails {
     public String getPasswordHash() {
         return passwordHash;
     }
+
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;

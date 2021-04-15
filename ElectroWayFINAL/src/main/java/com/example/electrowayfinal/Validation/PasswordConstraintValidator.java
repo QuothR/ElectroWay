@@ -3,19 +3,12 @@ package com.example.electrowayfinal.Validation;
 import com.example.electrowayfinal.user.User;
 import lombok.SneakyThrows;
 import org.passay.*;
-import org.passay.dictionary.WordListDictionary;
-import org.passay.dictionary.WordLists;
-import org.passay.dictionary.sort.ArraysSort;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, User>{
 
@@ -41,21 +34,15 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new WhitespaceRule(),
                 new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 5, false),
                 new IllegalSequenceRule(EnglishSequenceData.Numerical, 5, false)
-
         ));
 
         RuleResult result = validator.validate(new PasswordData(user.getPasswordHash()));
         if (result.isValid()) {
-
             return true;
-
         }
 
         List<String> messages  = validator.getMessages(result);
-
         String messageTemplate = String.join(",", messages);
-
-
 
         context.buildConstraintViolationWithTemplate(messageTemplate)
                 .addConstraintViolation()
@@ -64,6 +51,5 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
         return false;
 
     }
-
 
 }
