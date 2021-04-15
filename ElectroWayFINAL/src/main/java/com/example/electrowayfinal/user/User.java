@@ -1,6 +1,8 @@
 package com.example.electrowayfinal.user;
 
 import com.example.electrowayfinal.Validation.ValidPassword;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,6 +46,7 @@ public class User implements UserDetails {
     private String country;
     private String zipcode;
     private boolean enabled;
+
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
@@ -235,7 +238,10 @@ public class User implements UserDetails {
                 ", zipcode='" + zipcode + '\'' +
                 '}';
     }
-
+//
+//    public void encryptPassword(User user,PasswordEncoder passwordEncoder){
+//        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+//    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

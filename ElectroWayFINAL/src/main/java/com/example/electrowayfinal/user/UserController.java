@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.user;
 
+import com.example.electrowayfinal.Validation.ValidPassword;
 import com.example.electrowayfinal.emailVerification.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
 import com.example.electrowayfinal.service.VerificationTokenService;

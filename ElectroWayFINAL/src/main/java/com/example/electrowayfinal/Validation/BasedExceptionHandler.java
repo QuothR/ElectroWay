@@ -22,7 +22,7 @@ public class BasedExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
 
         List<String> details = new ArrayList<>();
-        ErrorResponse error  = new ErrorResponse("Invalid Password", details);
+        ErrorResponse error  = new ErrorResponse("Invalid Data", details);
         details.add(ex.getLocalizedMessage());
 
         return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,7 +46,7 @@ public class BasedExceptionHandler extends ResponseEntityExceptionHandler {
             details.add(error.getDefaultMessage());
         }
 
-        ErrorResponse error  = new ErrorResponse("Invalid Password", details);
+        ErrorResponse error  = new ErrorResponse("Invalid Data", details);
         return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 

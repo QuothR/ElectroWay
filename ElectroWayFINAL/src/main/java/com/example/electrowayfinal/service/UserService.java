@@ -50,10 +50,9 @@ public class UserService implements UserDetailsService {
 
         // Se comenteaza pentru ca: Validarea parolei se face pe hashPassword
         //Dupa rezolvarea problemei, se decomenteaza
-
-
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         user.setEnabled(false);
-        //user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+
         Optional<User> saved = Optional.of(user);
         saved.ifPresent(u -> {
             try {
