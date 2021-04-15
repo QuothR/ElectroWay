@@ -149,6 +149,5 @@
     <orderEntry type="library" name="Maven: org.assertj:assertj-core:3.18.1" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.18" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.6.2" level="project" />
-    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>
