@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+ElectroWayFINAL/src/main/resources/application.properties
