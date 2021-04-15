@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Optional<com.example.electrowayfinal.user.User> registerNewUser(@RequestBody com.example.electrowayfinal.user.User user){
+    public Optional<com.example.electrowayfinal.user.User> registerNewUser(@Valid @RequestBody com.example.electrowayfinal.user.User user){
         userService.registerNewUserAccount(user);
         return userService.getOptionalUser(user);
     }

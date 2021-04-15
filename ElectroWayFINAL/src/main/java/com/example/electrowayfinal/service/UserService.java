@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.*;
 
 @Service
@@ -41,7 +42,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registerNewUserAccount(User user){
+    public void registerNewUserAccount(@Valid User user){
         Optional<User> userOptional= userRepository.findUserByEmailAddress(user.getEmailAddress());
         if(userOptional.isPresent()){
             throw new IllegalStateException("email taken!");

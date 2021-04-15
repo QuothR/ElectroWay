@@ -28,12 +28,9 @@ public class User implements UserDetails {
     //TODO Change camelCase to python_format
     private Long id;
     private String userName;
-
     @NonNull
     @NotBlank(message = "New password is mandatory")
-
     private String passwordHash;
-
     private String firstName;
     private String lastName;
     private String phoneNumber;
