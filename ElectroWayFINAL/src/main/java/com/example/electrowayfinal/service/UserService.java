@@ -1,22 +1,24 @@
 package com.example.electrowayfinal.service;
 
-import com.example.electrowayfinal.Validation.ValidPassword;
+import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.user.MyUserDetails;
-import com.example.electrowayfinal.user.User;
+import com.example.electrowayfinal.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.*;
+
+import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -37,12 +39,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+
     //TODO ???
     @Qualifier("getPasswordEncoder")
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registerNewUserAccount(User user){
+    public void registerNewUserAccount(User user, String confirmedPassword) throws PasswordsDoNotMatch {
         Optional<User> userOptional= userRepository.findUserByEmailAddress(user.getEmailAddress());
         if(userOptional.isPresent()){
             throw new IllegalStateException("email taken!");
@@ -50,7 +53,23 @@ public class UserService implements UserDetailsService {
 
         // Se comenteaza pentru ca: Validarea parolei se face pe hashPassword
         //Dupa rezolvarea problemei, se decomenteaza
-        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+
+        String encryptedPassword;
+        String encryptedConfirmedPassword = confirmedPassword;
+
+
+        if (!user.getPasswordHash().equals(confirmedPassword))
+            throw new PasswordsDoNotMatch("passwords do not match");
+
+
+
+
+        encryptedPassword = passwordEncoder.encode(user.getPasswordHash());
+
+        if (!encryptedPassword.equals(encryptedConfirmedPassword))
+            throw new PasswordsDoNotMatch("cringe");
+
+        user.setPasswordHash(encryptedPassword);
         user.setEnabled(false);
 
         Optional<User> saved = Optional.of(user);
@@ -141,4 +160,36 @@ public class UserService implements UserDetailsService {
     public Optional<User> getOptionalUser(User user) {
         return userRepository.findUserByEmailAddress(user.getEmailAddress());
     }
+
+    public void updateResetPasswordToken(String token,String email) throws Exception{
+        Optional<User> user = userRepository.findUserByEmailAddress(email);
+
+        if (user.isPresent()){
+            user.get().setPasswordResetToken(token);
+            userRepository.save(user.get());
+        }
+        else{
+            throw new Exception("cringe");
+        }
+    }
+
+    public User get(String passwordResetToken){
+        return userRepository.findUserByPasswordResetToken(passwordResetToken).isPresent()
+                ? userRepository.findUserByPasswordResetToken(passwordResetToken).get()
+                : null;
+
+    }
+
+    public void updatePassword(User user, String newPassword, String passwordResetToken){
+        //TODO :> OwO :^)
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        user.setPasswordHash(encodedPassword);
+        user.setPasswordResetToken(passwordResetToken);
+
+        userRepository.save(user);
+    }
+
+
 }

@@ -1,10 +1,8 @@
 package com.example.electrowayfinal.service;
 
-import com.example.electrowayfinal.emailVerification.VerificationToken;
-import com.example.electrowayfinal.user.User;
+import com.example.electrowayfinal.models.VerificationToken;
+import com.example.electrowayfinal.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;

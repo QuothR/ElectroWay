@@ -1,4 +1,4 @@
-package com.example.electrowayfinal.Validation;
+package com.example.electrowayfinal.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

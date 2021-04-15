@@ -1,10 +1,13 @@
-package com.example.electrowayfinal.user;
+package com.example.electrowayfinal.controllers;
 
-import com.example.electrowayfinal.Validation.ValidPassword;
-import com.example.electrowayfinal.emailVerification.VerificationToken;
+import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
+import com.example.electrowayfinal.models.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
 import com.example.electrowayfinal.service.VerificationTokenService;
+import com.example.electrowayfinal.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,13 +41,13 @@ public class UserController {
     }
 
     @GetMapping
-    public List<com.example.electrowayfinal.user.User> getUsers(){
+    public List<User> getUsers(){
         return userService.getUsers();
     }
 
     @PostMapping("/register")
-    public Optional<com.example.electrowayfinal.user.User> registerNewUser(@Valid @RequestBody com.example.electrowayfinal.user.User user){
-        userService.registerNewUserAccount(user);
+    public Optional<User> registerNewUser(@Valid @RequestBody User user,@RequestParam("confirmedPassword") String passwordConfirmation) throws DataIntegrityViolationException, PasswordsDoNotMatch {
+        userService.registerNewUserAccount(user ,passwordConfirmation);
         return userService.getOptionalUser(user);
     }
     /*
@@ -100,5 +103,18 @@ public class UserController {
     @GetMapping("/authenticated")
     public String authenticated(){
         return ("<h1>Success!");
+    }
+
+    @GetMapping("/reset_password")
+    public String showResetPasswordForm(@Param(value="token") String token, Model model){
+        User user = userService.get(token);
+        if (user == null){
+            model.addAttribute("title","Reset your password");
+            model.addAttribute("message","Invalid Token");
+            return "message";
+        }
+
+        model.addAttribute("token",token);
+        return ("reset password form");
     }
 }

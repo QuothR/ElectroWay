@@ -1,6 +1,8 @@
 package com.example.electrowayfinal.Validation;
 
+import com.example.electrowayfinal.exceptions.RecordNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,15 @@ public class BasedExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse error  = new ErrorResponse("Record Not Found", details);
         details.add(ex.getLocalizedMessage());
         return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<Object> sqlError(DataIntegrityViolationException ex) {
+        List<String> details = new ArrayList<>();
+        ErrorResponse error  = new ErrorResponse("SQL Error",details);
+        details.add(ex.getRootCause().getMessage());
+
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 
     @Override

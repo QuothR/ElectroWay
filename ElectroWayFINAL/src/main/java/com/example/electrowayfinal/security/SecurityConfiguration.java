@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
 
                 .authorizeRequests()
-                .antMatchers("/","/register","/activation","/login")
+                .antMatchers("/","/register","/activation","/login","/forgot_password","/reset_password")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+//                .loginPage("/login")
                 .defaultSuccessUrl("/authenticated")
                 .permitAll()
                 .and()

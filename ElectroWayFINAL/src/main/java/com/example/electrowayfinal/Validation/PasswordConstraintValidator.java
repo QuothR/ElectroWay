@@ -1,6 +1,6 @@
 package com.example.electrowayfinal.Validation;
 
-import com.example.electrowayfinal.user.User;
+import com.example.electrowayfinal.models.User;
 import lombok.SneakyThrows;
 import org.passay.*;
 import javax.validation.ConstraintValidator;
@@ -35,6 +35,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 5, false),
                 new IllegalSequenceRule(EnglishSequenceData.Numerical, 5, false)
         ));
+        System.out.println("->>>>>>>>>>>>>>>>>>>>>"+user.getPasswordHash());
         RuleResult result = validator.validate(new PasswordData(user.getPasswordHash()));
         if (result.isValid()) {
             return true;

@@ -1,8 +1,8 @@
 package com.example.electrowayfinal.service;
 
-import com.example.electrowayfinal.emailVerification.VerificationToken;
+import com.example.electrowayfinal.models.VerificationToken;
 import com.example.electrowayfinal.repositories.VerificationTokenRepository;
-import com.example.electrowayfinal.user.User;
+import com.example.electrowayfinal.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +21,6 @@ public class VerificationTokenService {
 
     @Transactional
     public VerificationToken findByToken(String token){
-        int a=0;
-        System.out.println(a);
         return verificationTokenRepository.findByToken(token);
     }
 

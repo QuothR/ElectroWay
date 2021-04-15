@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.user;
 
+import com.example.electrowayfinal.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

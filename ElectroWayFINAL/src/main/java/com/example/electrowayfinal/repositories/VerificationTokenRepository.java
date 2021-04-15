@@ -1,7 +1,7 @@
 package com.example.electrowayfinal.repositories;
 
-import com.example.electrowayfinal.emailVerification.VerificationToken;
-import com.example.electrowayfinal.user.User;
+import com.example.electrowayfinal.models.VerificationToken;
+import com.example.electrowayfinal.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
