@@ -10,7 +10,7 @@
     tools:ignore="UseCompoundDrawables">
 
   <ImageView
-      android:id="@+id/itemImageView"
+      android:id="@+id/itemTextImage"
       android:layout_width="50dp"
       android:layout_height="50dp"
       tools:src="@tools:sample/avatars"

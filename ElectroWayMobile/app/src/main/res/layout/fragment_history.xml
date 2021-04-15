@@ -7,4 +7,4 @@
     android:nestedScrollingEnabled="true"
     tools:context=".ui.main.CarDetailsFragment"
     tools:itemCount="10"
-    tools:listitem="@layout/recycler_view_item" />
+    tools:listitem="@layout/history_recycler_view_item" />

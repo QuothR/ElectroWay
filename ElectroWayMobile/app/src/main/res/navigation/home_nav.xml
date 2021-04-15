@@ -12,21 +12,18 @@
     <fragment
         android:id="@+id/navigation_history"
         android:name="com.github.electroway.ui.main.HistoryFragment"
-        android:label="@string/title_history"
-        tools:layout="@layout/fragment_history" />
+        android:label="@string/title_history" />
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.github.electroway.ui.main.HistoryFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_history" />
+        android:name="com.github.electroway.ui.main.NotificationsFragment"
+        android:label="@string/title_notifications" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.github.electroway.ui.main.ProfileFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:label="@string/title_profile" />
     <fragment
         android:id="@+id/navigation_stations"
-        android:name="com.github.electroway.ui.main.HistoryFragment"
+        android:name="com.github.electroway.ui.main.StationsFragment"
         android:label="@string/title_stations"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_stations" />
 </navigation>

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
+    android:id="@+id/notificationsRecyclerView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.NotificationsFragment" />
+    android:layout_height="wrap_content"
+    android:nestedScrollingEnabled="true"
+    tools:context=".ui.main.CarDetailsFragment"
+    tools:itemCount="10"
+    tools:listitem="@layout/notifications_recycler_view_item" />
