@@ -61,13 +61,7 @@ public class UserService implements UserDetailsService {
         if (!user.getPasswordHash().equals(confirmedPassword))
             throw new PasswordsDoNotMatch("passwords do not match");
 
-
-
-
         encryptedPassword = passwordEncoder.encode(user.getPasswordHash());
-
-        if (!encryptedPassword.equals(encryptedConfirmedPassword))
-            throw new PasswordsDoNotMatch("cringe");
 
         user.setPasswordHash(encryptedPassword);
         user.setEnabled(false);
