@@ -1,9 +1,9 @@
-package com.example.electrowayfinal.controllers;
+package com.example.electrowayfinal.user;
 
+import com.example.electrowayfinal.Validation.ValidPassword;
 import com.example.electrowayfinal.emailVerification.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
 import com.example.electrowayfinal.service.VerificationTokenService;
-import com.example.electrowayfinal.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class UserController {
     //TODO Automated testing
 
     private final UserService userService;
-    private final VerificationTokenService verificationTokenService;
+    private VerificationTokenService verificationTokenService;
 
     @GetMapping("/")
     public String home(){
@@ -47,7 +47,6 @@ public class UserController {
         userService.registerNewUserAccount(user);
         return userService.getOptionalUser(user);
     }
-
     /*
         @RequestMapping("login")
         @PutMapping()
