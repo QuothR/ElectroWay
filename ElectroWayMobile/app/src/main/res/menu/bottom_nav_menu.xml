@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_car_details"
+        android:icon="@drawable/car_details"
+        android:title="@string/title_car_details" />
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/history"
+        android:title="@string/title_history" />
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/notifications"
+        android:title="@string/title_notifications" />
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile"
+        android:title="@string/title_profile" />
+    <item
+        android:id="@+id/navigation_stations"
+        android:icon="@drawable/station"
+        android:title="@string/title_stations" />
+
+</menu>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10sp"
+    android:divider="?android:attr/listDivider"
+    android:gravity="center_vertical"
+    android:showDividers="middle"
+    tools:context=".ui.main.CarDetailsFragment">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerPadding="10sp"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/model"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/modelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:inputType="textPersonName|text"
+            android:textColor="@color/purple_dark"
+            android:autofillHints=""
+            tools:ignore="LabelFor" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/year"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/yearText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:inputType="number"
+            android:textColor="@color/purple_dark"
+            android:autofillHints=""
+            tools:ignore="LabelFor" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/autonomy"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/autonomyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:inputType="number"
+            android:textColor="@color/purple_dark"
+            android:autofillHints=""
+            tools:ignore="LabelFor" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/average_consumption"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/averageConsumptionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:inputType="number"
+            android:textColor="@color/purple_dark"
+            android:autofillHints=""
+            tools:ignore="LabelFor" />
+
+    </TableRow>
+</TableLayout>

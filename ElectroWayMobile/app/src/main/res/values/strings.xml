@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">ElectroWay</string>
+    <string name="title_car_details">Car Details</string>
+    <string name="title_history">History</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_stations">Stations</string>
+    <string name="title_map">Map</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="cancel">Cancel</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email_address">Email Address</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="sign_in">Sign in</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="create_account">Create Account</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm">Confirm</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="model">Model</string>
+    <string name="year">Year</string>
+    <string name="autonomy">Autonomy</string>
+    <string name="average_consumption">Average Consumption</string>
+    <string name="e_mail">E-mail</string>
+    <string name="person_example_com">person@example.com</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
 </resources>

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Test" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ElectroWay" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_dark</item>
         <item name="colorPrimaryVariant">@color/purple</item>
@@ -8,18 +8,26 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/purple_dark</item>
         <item name="colorSecondaryVariant">@color/pink</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:textColorSecondary">@color/purple_light</item>
+        <item name="android:textColorPrimary">@color/purple_light</item>
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Test.NoActionBar">
+    <style name="Theme.ElectroWay.NoActionBar" parent="Theme.ElectroWay">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Test.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.ElectroWay.NoActionBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="Theme.Test.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.ElectroWay.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ElectroWay.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

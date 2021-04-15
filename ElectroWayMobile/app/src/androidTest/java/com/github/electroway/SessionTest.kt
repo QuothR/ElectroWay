@@ -27,6 +27,6 @@ class SessionTest {
 
     @Test
     fun authenticate() {
-        val session = Session("a", "b", server.url("/").toString(), client)
+        val session = Session(server.url("/").toString(), client)
     }
 }
