@@ -18,7 +18,7 @@ class HistoryFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_history, container, false)
         val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerView)
         var items = List<Pair<String, Int>>(20, { i ->
-            Pair("statie" + i, R.drawable.profile)
+            Pair("Station $i", R.drawable.avatar_13)
         })
         val adapter = HistoryAdapter(items)
         val layoutManager = LinearLayoutManager(requireActivity().applicationContext)

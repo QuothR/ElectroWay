@@ -12,9 +12,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.electroway.R
+import kotlin.random.Random
 
 class SignInFragment : Fragment() {
-    private val fail = false;
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +35,7 @@ class SignInFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.sign_in_button).setOnClickListener {
-            if (fail) {
+            if (Random.Default.nextInt(3) != 0) {
                 val toast =
                     Toast.makeText(requireContext(), "Connection failed", Toast.LENGTH_SHORT)
                 toast.show()
