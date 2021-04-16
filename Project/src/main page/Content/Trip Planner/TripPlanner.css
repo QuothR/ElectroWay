@@ -1,0 +1,91 @@
+
+.TripPlanner{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center !important;
+    font-weight: 600;
+    font-size: 17px !important;
+    z-index: 0;
+   
+     
+}
+.TripPlanner .TripBox {
+    width: 100%;
+    height: 100%;
+}
+
+.TripPlanner .TripContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.TripPlanner .leaflet-container{
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    
+  }
+
+  
+.TripPlanner .TripForm{
+
+    z-index: 1;
+    position: absolute;
+    background: linear-gradient(to right, #646482, #a6a2ac) !important;
+    border-radius: 0px 10px 10px 10px;
+    display: flex;
+    align-items: flex-start;
+    padding: 30px;
+    width: 225px;
+    height: 250px;
+    
+
+  }
+
+.TripPlanner .Scris_X{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: last baseline;
+    color: black;
+ }
+
+.TripPlanner .Scris_Y{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: last baseline;
+    color: black;
+ }
+
+
+
+
+ .TripPlanner input {
+    width: 10rem;
+    height: 2rem;
+    padding: .6em;
+    border: 0.8px solid;
+    border-radius: 33px;
+    
+}
+
+
+.TripPlanner .ButonG{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.TripPlanner .ButonGenereaza {
+    
+    background: #66628f;
+    border-radius: 30px;
+   
+}
+  
+
