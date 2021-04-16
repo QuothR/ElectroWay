@@ -55,7 +55,6 @@ public class UserService implements UserDetailsService {
         //Dupa rezolvarea problemei, se decomenteaza
 
         String encryptedPassword;
-        String encryptedConfirmedPassword = confirmedPassword;
 
 
         if (!user.getPasswordHash().equals(confirmedPassword))

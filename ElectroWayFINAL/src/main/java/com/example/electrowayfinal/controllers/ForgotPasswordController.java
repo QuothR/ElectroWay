@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.controllers;
 
 
+import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.service.UserService;
 import net.bytebuddy.utility.RandomString;
@@ -51,13 +52,13 @@ public class ForgotPasswordController {
     }
 
     @PostMapping("/reset_password")
-    public String resetPassword(HttpServletRequest request){
+    public String resetPassword(HttpServletRequest request) throws PasswordsDoNotMatch {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
         String passwordConfirmPassword = request.getParameter("passwordConfirmed");
 
         if(!password.equals(passwordConfirmPassword)){
-            return "wrong";
+            throw new PasswordsDoNotMatch("passwords do not match");
         }
 
         User user = userService.get(token);
