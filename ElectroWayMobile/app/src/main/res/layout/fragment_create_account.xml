@@ -8,12 +8,13 @@
     tools:context=".ui.start.CreateAccountFragment">
 
     <ImageView
-        android:layout_width="228dp"
-        android:layout_height="283dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/create_account_email_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_transparent"
+        app:srcCompat="@drawable/start"
         tools:ignore="ContentDescription" />
 
     <EditText
