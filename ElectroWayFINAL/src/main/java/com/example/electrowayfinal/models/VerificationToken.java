@@ -1,8 +1,6 @@
 package com.example.electrowayfinal.models;
 
 
-import com.example.electrowayfinal.models.User;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 

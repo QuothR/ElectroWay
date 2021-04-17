@@ -9,9 +9,9 @@ import java.util.Collection;
 
 public class MyUserDetails implements UserDetails {
 
-    private String emailAddress;
-    private String userName;
-    private String password;
+    private final String emailAddress;
+    private final String userName;
+    private final String password;
     private boolean enabled = false;
 
     public MyUserDetails(User user) {

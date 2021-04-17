@@ -22,7 +22,7 @@ public class UserController {
     //TODO Automated testing
 
     private final UserService userService;
-    private VerificationTokenService verificationTokenService;
+    private final VerificationTokenService verificationTokenService;
 
     @GetMapping("/")
     public String home(){

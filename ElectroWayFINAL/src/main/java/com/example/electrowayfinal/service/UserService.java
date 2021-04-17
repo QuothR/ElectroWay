@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.*;
 
-import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -52,7 +51,7 @@ public class UserService implements UserDetailsService {
         }
 
         // Se comenteaza pentru ca: Validarea parolei se face pe hashPassword
-        //Dupa rezolvarea problemei, se decomenteaza
+        // Dupa rezolvarea problemei, se decomenteaza
 
         String encryptedPassword;
 
@@ -85,7 +84,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         System.out.println(user);
 
-        saved.get();
+        //saved.get();
 
     }
 
@@ -134,11 +133,6 @@ public class UserService implements UserDetailsService {
             response.addCookie(cookie);
         }
     */
-    public boolean loggedIn( HttpServletRequest request, String name){
-        if (request.getCookies() == null)
-            return false;
-        return Arrays.stream(request.getCookies()).anyMatch(cookie -> name.equals(cookie.getName()));
-    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
