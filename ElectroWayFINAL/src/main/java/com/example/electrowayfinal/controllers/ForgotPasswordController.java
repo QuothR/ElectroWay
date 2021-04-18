@@ -79,8 +79,6 @@ public class ForgotPasswordController {
         String body = "<p>Hello, you've requested a password reset, please click the link below to change your password</p>" + resetPasswordLink;
         helper.setText(body,true);
         javaMailSender.send(message);
-
-
     }
 }
 
