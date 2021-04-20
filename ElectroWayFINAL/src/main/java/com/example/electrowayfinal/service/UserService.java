@@ -56,10 +56,10 @@ public class UserService implements UserDetailsService {
         String encryptedPassword;
 
 
-        if (!user.getPasswordHash().equals(confirmedPassword))
+        if (!user.getPassword().equals(confirmedPassword))
             throw new PasswordsDoNotMatch("passwords do not match");
 
-        encryptedPassword = passwordEncoder.encode(user.getPasswordHash());
+        encryptedPassword = passwordEncoder.encode(user.getPassword());
 
         user.setPasswordHash(encryptedPassword);
         user.setEnabled(false);
