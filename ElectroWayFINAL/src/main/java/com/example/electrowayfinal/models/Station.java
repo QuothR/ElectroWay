@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity(name = "station")
 @Table(name = "station", schema = "electroway", uniqueConstraints = {
