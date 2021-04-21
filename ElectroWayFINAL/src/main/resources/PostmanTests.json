@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userName\": \"cxdsasasffdsvddsc\",\r\n    \"passwordHash\": \"ds5safdsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4333\",\r\n    \"emailAddress\": \"mihnea.ochesanu@gmail.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\"\r\n}",
+					"raw": "{\r\n    \"username\": \"cxdsasasffdsvddsd\",\r\n    \"password\": \"ds5safdsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,7 +20,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8090/register?confirmedPassword=ds5safdsas!Aa1",
+					"raw": "http://localhost:8090/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -28,12 +28,6 @@
 					"port": "8090",
 					"path": [
 						"register"
-					],
-					"query": [
-						{
-							"key": "confirmedPassword",
-							"value": "ds5safdsas!Aa1"
-						}
 					]
 				}
 			},
@@ -45,7 +39,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8090/forgot_password?email=mihnea.ochesanu@gmail.com",
+					"raw": "http://localhost:8090/forgot_password?email=electroway@mailinator.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -57,7 +51,7 @@
 					"query": [
 						{
 							"key": "email",
-							"value": "mihnea.ochesanu@gmail.com"
+							"value": "electroway@mailinator.com"
 						}
 					]
 				}
@@ -70,7 +64,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8090/reset_password?token=tewyYBqddTdCSil2MhzT21kcBrSO2dwAx91fOCa43gac8&password=Afjkahs!23fsa&passwordConfirmed=Afjkahs!23fsa",
+					"raw": "http://localhost:8090/reset_password?token=Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt&password=Afjkahs!23fsa",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -82,14 +76,10 @@
 					"query": [
 						{
 							"key": "token",
-							"value": "tewyYBqddTdCSil2MhzT21kcBrSO2dwAx91fOCa43gac8"
+							"value": "Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt"
 						},
 						{
 							"key": "password",
-							"value": "Afjkahs!23fsa"
-						},
-						{
-							"key": "passwordConfirmed",
 							"value": "Afjkahs!23fsa"
 						}
 					]
@@ -103,7 +93,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8090/login?username=mihnea.ochesanu@gmail.com&password=Afjkahs!23fsa",
+					"raw": "http://localhost:8090/login?username=electroway@mailinator.com&password=Afjkahs!23fsa",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -115,7 +105,7 @@
 					"query": [
 						{
 							"key": "username",
-							"value": "mihnea.ochesanu@gmail.com"
+							"value": "electroway@mailinator.com"
 						},
 						{
 							"key": "password",
