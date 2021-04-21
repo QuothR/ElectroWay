@@ -35,8 +35,8 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 5, false),
                 new IllegalSequenceRule(EnglishSequenceData.Numerical, 5, false)
         ));
-        System.out.println("->>>>>>>>>>>>>>>>>>>>>"+user.getPasswordHash());
-        RuleResult result = validator.validate(new PasswordData(user.getPasswordHash()));
+        System.out.println("->>>>>>>>>>>>>>>>>>>>>"+user.getPassword());
+        RuleResult result = validator.validate(new PasswordData(user.getPassword()));
         if (result.isValid()) {
             return true;
         }

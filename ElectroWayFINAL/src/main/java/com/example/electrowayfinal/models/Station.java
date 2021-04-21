@@ -28,11 +28,11 @@ public class Station implements Serializable {
     private long id;
     @Column(name = "address", nullable = false, columnDefinition = "varchar(64)")
     private String address;
-    @Column(name = "mapLatitudeLocation", nullable = false, columnDefinition = "double")
+    @Column(name = "map_latitude_location", nullable = false, columnDefinition = "double")
     private double latitude;
-    @Column(name = "mapLongitudeLocation", nullable = false, columnDefinition = "double")
+    @Column(name = "map_longitude_location", nullable = false, columnDefinition = "double")
     private double longitude;
     @ManyToOne
-    @JoinColumn(name = "ownerID", referencedColumnName = "id")
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User user;
 }

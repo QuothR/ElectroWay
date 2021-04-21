@@ -6,11 +6,11 @@ import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.service.UserService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -29,7 +29,7 @@ public class ForgotPasswordController {
     }
 
     @GetMapping("/forgot_password")
-    public String showForgotPasswordForm(){
+    public String showForgotPasswordForm() {
         return "<h1>Forgot password form</h1>";
     }
 
@@ -40,24 +40,19 @@ public class ForgotPasswordController {
 
         System.out.println("token: " + token);
 
-        userService.updateResetPasswordToken(token,email);
+        userService.updateResetPasswordToken(token, email);
 
         String resetPasswordLink = "http://localhost:8090/reset_password?token=" + token;
 
-        sendEmail(email,resetPasswordLink);
+        sendEmail(email, resetPasswordLink);
 
         return "<h1>Forgot password form</h1>";
     }
 
     @PostMapping("/reset_password")
-    public String resetPassword(HttpServletRequest request) throws PasswordsDoNotMatch {
+    public String resetPassword(HttpServletRequest request) {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
-        String passwordConfirmPassword = request.getParameter("passwordConfirmed");
-
-        if(!password.equals(passwordConfirmPassword)){
-            throw new PasswordsDoNotMatch("passwords do not match");
-        }
 
         User user = userService.get(token);
 
@@ -65,7 +60,7 @@ public class ForgotPasswordController {
             return "Invalid token";
 
 
-        userService.updatePassword(user,password,token);
+        userService.updatePassword(user, password, token);
 
         return "password succesfully reset";
     }
@@ -77,7 +72,7 @@ public class ForgotPasswordController {
         helper.setTo(email);
         helper.setSubject("ElectroWay Password Reset");
         String body = "<p>Hello, you've requested a password reset, please click the link below to change your password</p>" + resetPasswordLink;
-        helper.setText(body,true);
+        helper.setText(body, true);
         javaMailSender.send(message);
     }
 }

@@ -1,7 +1,10 @@
 package com.example.electrowayfinal.models;
 
 import com.example.electrowayfinal.Validation.ValidPassword;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -40,7 +43,7 @@ public class User implements UserDetails {
     private String username;
     @NotBlank(message = "New password is mandatory")
     @Column(name = "password_hash", nullable = false, columnDefinition = "varchar(64)")
-    private String passwordHash;
+    private String password;
     @Column(name = "first_name", nullable = false, columnDefinition = "varchar(64)")
     private String firstName;
     @Column(name = "last_name", nullable = false, columnDefinition = "varchar(64)")
@@ -62,20 +65,20 @@ public class User implements UserDetails {
     private String country;
     @Column(name = "zipcode", nullable = false, columnDefinition = "varchar(64)")
     private String zipcode;
-    @Column(name = "enabled", nullable = false, columnDefinition = "boolean default false")
-    private boolean enabled;
+    @Column(name = "is_enabled", nullable = false, columnDefinition = "boolean default false")
+    private boolean isEnabled;
     @Column(name = "password_reset_token", columnDefinition = "varchar(64)")
     private String passwordResetToken;
 
     public User(String username, String password, String emailAddress) {
         this.username = username;
-        this.passwordHash = password;
+        this.password = password;
         this.emailAddress = emailAddress;
     }
 
-    public User(String username, String passwordHash, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String city, String country, String zipcode) {
+    public User(String username, String password, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String city, String country, String zipcode) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -87,9 +90,9 @@ public class User implements UserDetails {
         this.address2 = "";
     }
 
-    public User(String username, String passwordHash, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String address2, String city, String country, String zipcode) {
+    public User(String username, String password, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String address2, String city, String country, String zipcode) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -101,10 +104,10 @@ public class User implements UserDetails {
         this.zipcode = zipcode;
     }
 
-    public User(Long id, String username, String passwordHash, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String address2, String city, String country, String zipcode, boolean enabled) {
+    public User(Long id, String username, String password, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String address2, String city, String country, String zipcode, boolean isEnabled) {
         this.id = id;
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -114,17 +117,12 @@ public class User implements UserDetails {
         this.city = city;
         this.country = country;
         this.zipcode = zipcode;
-        this.enabled = enabled;
+        this.isEnabled = isEnabled;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return passwordHash;
     }
 
     @Override
