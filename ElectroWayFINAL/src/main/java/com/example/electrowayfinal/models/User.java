@@ -76,6 +76,11 @@ public class User implements UserDetails {
         this.emailAddress = emailAddress;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User(String username, String password, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String city, String country, String zipcode) {
         this.username = username;
         this.password = password;
