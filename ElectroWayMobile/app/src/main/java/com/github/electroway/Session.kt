@@ -10,7 +10,7 @@ import java.lang.Exception
 class Session() {
     private val json = "application/json; charset=utf-8".toMediaType()
     private var token: String? = null
-    private var url = "https://test.com"
+    private var url = "http://localhost:8090"
     private var client = OkHttpClient()
 
     internal constructor(
