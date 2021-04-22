@@ -4,6 +4,7 @@ import "./AdmStContent.css";
 import Statie from "./Images/statie.svg"
 import Edit from "./Images/edit.svg"
 import * as ReactBootStrap from "react-bootstrap";
+import {Link} from "react-router-dom"
 
 function AdmStContent() {
   const stations = [
@@ -47,7 +48,7 @@ function AdmStContent() {
             {" "}
             <img className="S-C-Img" src={Statie} alt="StatieImg" />{" "}
           </div>
-          <button className="btn-class">Adaugare statie</button>
+          <Link to="/home/Adm-station/Add"><button className="btn-class">Adaugare statie</button></Link>
         </div>
       </div>
     </div>

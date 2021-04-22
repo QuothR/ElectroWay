@@ -1,14 +1,14 @@
 import React from 'react'
 import Tabel from './Tabel'
-import stanga from './stanga.png'
-import dreapta from './dreapta.png'
 import DateTabel from './DateTabelPrimite.json'
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 function ElementeJosDrp() {
     return (
         <div className="ElementeJos">
             <div className="Stanga">
-                <img src={stanga} className="ArrowButton" alt="" />
+                <IoIosArrowBack className="ArrowButton" />
             </div>
 
             {DateTabel.map((val, key) => {
@@ -21,7 +21,7 @@ function ElementeJosDrp() {
             )}
 
             <div className="Dreapta">
-                <img src={dreapta} className="ArrowButton" alt="" />
+                <IoIosArrowForward className="ArrowButton" />
             </div>
 
         </div>

@@ -1,14 +1,14 @@
 import React from 'react'
 import Tabel from './Tabel'
-import stanga from './stanga.png'
-import dreapta from './dreapta.png'
 import DateTabel from './DateTabelLasate.json'
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 function ElementeJosStg() {
     return (
         <div className="ElementeJos">
             <div className="Stanga">
-                <img src={stanga} className="ArrowButton" alt="" />
+                <IoIosArrowBack className="ArrowButton" />
             </div>
 
             <div className="Mijloc">
@@ -23,7 +23,7 @@ function ElementeJosStg() {
             </div>
 
             <div className="Dreapta">
-                <img src={dreapta} className="ArrowButton" alt="" />
+                <IoIosArrowForward className="ArrowButton" />
             </div>
           
         </div>
