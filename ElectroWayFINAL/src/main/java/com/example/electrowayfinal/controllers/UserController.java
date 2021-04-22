@@ -28,7 +28,7 @@ public class UserController {
         return ("<h1>Welcome");
     }
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public String user() {
         return this.userService.getUsers().toString();
     }
