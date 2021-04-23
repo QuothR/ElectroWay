@@ -37,12 +37,13 @@ Pentru instalare recharts:
 Pentru o parte din icons(download):
 - npm install react-icons
 
-Pt cod icon: 
-- https://react-icons.github.io/react-icons/icons?name=io
-- https://www.npmjs.com/package/react-icons
-
 Pentru comunicarea cu backend:
 - npm install axios
 
 Pentru gestionarea variabilelor globale (JWT Token ...):
 - npm install redux react-redux
+Pt cod icon: 
+- https://react-icons.github.io/react-icons/icons?name=io
+- https://www.npmjs.com/package/react-icons
+
+
