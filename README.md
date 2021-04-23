@@ -43,8 +43,4 @@ Pentru comunicarea cu backend:
 Pentru gestionarea variabilelor globale (JWT Token ...):
 - npm install redux react-redux
 
-Pt cod icon: 
-- https://react-icons.github.io/react-icons/icons?name=io
-- https://www.npmjs.com/package/react-icons
-
 
