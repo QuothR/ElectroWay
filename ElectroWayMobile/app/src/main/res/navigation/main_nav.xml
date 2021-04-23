@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mapFragment">
+    app:startDestination="@id/startupFragment">
     <fragment
         android:id="@+id/startupFragment"
         android:name="com.github.electroway.ui.start.StartupFragment"
@@ -81,8 +81,5 @@
         <action
             android:id="@+id/action_createAccountNextFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_createAccountNextFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

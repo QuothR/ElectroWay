@@ -84,7 +84,7 @@ class CreateAccountNextFragment : Fragment() {
                                     "Check your Email",
                                     Toast.LENGTH_SHORT
                                 )
-                                findNavController().navigate(R.id.action_createAccountNextFragment_to_mapFragment)
+                                findNavController().navigate(R.id.action_createAccountNextFragment_to_signInFragment)
                             } else {
                                 Toast.makeText(
                                     requireContext(),

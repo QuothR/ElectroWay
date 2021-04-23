@@ -99,7 +99,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         query.let {
                             addresses = geocoder.getFromLocationName(query, 50)
                             addresses.forEachIndexed { index, address ->
-                                Log.w("a", address.featureName.toString())
                                 cursor.addRow(arrayOf(index, address.featureName.toString()))
                             }
                         }
@@ -122,7 +121,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         LatLng(
                             address.latitude,
                             address.longitude
-                        ), 10.0f
+                        ), 20.0f
                     )
                 )
                 return true

@@ -26,6 +26,10 @@ class Session() {
         sendRequest(info.getJson(), "register", callback)
     }
 
+    fun login(info: LoginInfo, callback: Callback) {
+        sendRequest(info.getJson(), "login", callback)
+    }
+
     private fun sendRequest(body: JSONObject, subpath: String, callback: Callback) {
         val request = Request.Builder()
             .url(url + subpath)
