@@ -3,6 +3,9 @@
 2021
 Proiect realizat de grupa A4, anul 2
 
+Pentru a folosi frontend ul nostru urmati pasii de mai jos iar dupa ce i-ati terminat, faceti download la folderul electroway si inlocuiti folderele public si src,
+din proiectul vostru cu folderele src si public din folderul descarcat electroway
+
 Tutorial instalare React:
 https://nodejs.org/en/ v 14.16.0
 1) intalati oriunde
