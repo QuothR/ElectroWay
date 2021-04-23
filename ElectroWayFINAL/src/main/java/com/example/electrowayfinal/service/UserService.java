@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 
+@Qualifier("userService")
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
