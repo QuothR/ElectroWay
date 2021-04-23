@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1437515c-43b8-4b1e-9c70-d50c16b0d94c",
+		"_postman_id": "8aa51ed5-fa31-4193-9458-3799f621c695",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -88,12 +88,31 @@
 			"response": []
 		},
 		{
-			"name": "Login",
+			"name": "JWT Login Test",
 			"request": {
-				"method": "GET",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2hubnkiLCJleHAiOjE2MTkxMjk4NDIsImlhdCI6MTYxOTEyOTgxMn0.ckslFALFLkfwKrBaqajcid32KrqXIrfkx5VS7TtZAAaXbbaXOtd4wM6BWSvAxpfedWYiW0B0njsKyw-TEsXP9g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sheeshy@mailinator.com\",\r\n    \"password\": \"A!jkashgf12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8090/login?username=electroway@mailinator.com&password=Afjkahs!23fsa",
+					"raw": "http://localhost:8090/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -101,18 +120,124 @@
 					"port": "8090",
 					"path": [
 						"login"
-					],
-					"query": [
-						{
-							"key": "username",
-							"value": "electroway@mailinator.com"
-						},
-						{
-							"key": "password",
-							"value": "Afjkahs!23fsa"
-						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Station",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2hubnlmcyIsImV4cCI6MTYxOTEzNzc5MSwiaWF0IjoxNjE5MTM3NDkxfQ.R5igFg897v4PmsA-8Fq7yJLvOfIARnXcYavGURd4cFRecjzSUY3zD5Xs3WoChTCDfNRejuG5SYLrksBAOEIiLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"address\": \"fsdf\",\r\n    \"latitude\": 1122312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/station",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"station"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Station",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"ff\",\r\n    \"latitude\": 696.23,\r\n    \"longitude\": 22\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/station/33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"station",
+						"33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/station/33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"station",
+						"33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "See all stations for user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
 			},
 			"response": []
 		}
