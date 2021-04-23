@@ -15,20 +15,25 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class SessionTest {
-    private val clientCertificates = HandshakeCertificates.Builder()
-        .addPlatformTrustedCertificates()
-        .addInsecureHost("http://10.0.2.2:8090")
-        .build()
-    private val client = OkHttpClient.Builder()
-        .sslSocketFactory(clientCertificates.sslSocketFactory(), clientCertificates.trustManager)
-        .build()
+    val session = Session()
 
     @Test
     fun authenticate() {
-        val request = Request.Builder()
-            .url("http://10.0.2.2:8090/")
-            .build()
-        val response = client.newCall(request).execute()
-        Log.w("a", response.body!!.string())
+        val info = RegisterInfo(
+            username = "username",
+            password = "Password1!",
+            firstName = "firstName",
+            lastName = "lastName",
+            phoneNumber = "phoneNumber",
+            emailAddress = "electroway@mailinator.com",
+            address1 = "address1",
+            city = "city",
+            country = "country",
+            zipcode = "zipcode"
+        )
+        val response = session.register(info)
+        Log.w("a", "fdsfsd")
+        Log.w("a", "")
+        Log.w("a", response)
     }
 }

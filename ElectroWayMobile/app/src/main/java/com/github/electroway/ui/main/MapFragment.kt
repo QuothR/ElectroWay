@@ -2,6 +2,8 @@ package com.github.electroway.ui.main
 
 import android.app.SearchManager
 import android.database.MatrixCursor
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.provider.BaseColumns
 import android.util.Log
@@ -10,8 +12,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuItemCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.electroway.R
@@ -21,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.util.concurrent.Executors
 import kotlin.random.Random
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -33,6 +34,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         Pair("Station $i", location)
     }
     private var map: GoogleMap? = null
+    private lateinit var geocoder: Geocoder
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +46,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        geocoder = Geocoder(requireContext())
 
         if (mapFragment == null) {
             mapFragment = SupportMapFragment.newInstance()
@@ -74,6 +78,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
         )
         searchView.suggestionsAdapter = cursorAdapter
+        lateinit var addresses: List<Address>
+        val pool = Executors.newFixedThreadPool(1)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 hideKeyboard()
@@ -81,33 +87,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                val cursor =
-                    MatrixCursor(
-                        arrayOf(
-                            BaseColumns._ID,
-                            SearchManager.SUGGEST_COLUMN_TEXT_1
-                        )
-                    )
-                query!!.let {
-                    stations.forEachIndexed { index, suggestion ->
-                        if (suggestion.first.contains(query, true)) {
-                            cursor.addRow(arrayOf(index, suggestion.first))
+                if (query != null && query.length >= 5) {
+                    pool.submit {
+                        val cursor =
+                            MatrixCursor(
+                                arrayOf(
+                                    BaseColumns._ID,
+                                    SearchManager.SUGGEST_COLUMN_TEXT_1
+                                )
+                            )
+                        query.let {
+                            addresses = geocoder.getFromLocationName(query, 50)
+                            addresses.forEachIndexed { index, address ->
+                                Log.w("a", address.featureName.toString())
+                                cursor.addRow(arrayOf(index, address.featureName.toString()))
+                            }
                         }
+                        searchView.suggestionsAdapter.changeCursor(cursor)
                     }
                 }
-                searchView.suggestionsAdapter.changeCursor(cursor)
                 return true
             }
         })
-        searchView.setOnSuggestionListener(object: SearchView.OnSuggestionListener {
+        searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
             override fun onSuggestionSelect(position: Int): Boolean {
                 return false
             }
 
             override fun onSuggestionClick(position: Int): Boolean {
                 hideKeyboard()
-                val location = stations.get(position).second
-                map?.moveCamera(CameraUpdateFactory.newLatLng(location))
+                val address = addresses.get(position)
+                map?.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            address.latitude,
+                            address.longitude
+                        ), 10.0f
+                    )
+                )
                 return true
             }
         })

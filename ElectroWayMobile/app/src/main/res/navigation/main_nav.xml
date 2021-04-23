@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startupFragment">
+    app:startDestination="@id/mapFragment">
     <fragment
         android:id="@+id/startupFragment"
         android:name="com.github.electroway.ui.start.StartupFragment"
@@ -41,6 +41,9 @@
             android:id="@+id/action_createAccountFragment_to_signInFragment"
             app:destination="@id/signInFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_createAccountFragment_to_createAccountNextFragment"
+            app:destination="@id/createAccountNextFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -70,5 +73,16 @@
             android:id="@+id/action_homeFragment_to_mapFragment"
             app:destination="@id/mapFragment"
             app:enterAnim="@android:anim/fade_in" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountNextFragment"
+        android:name="com.github.electroway.ui.start.CreateAccountNextFragment"
+        android:label="CreateAccountNextFragment" >
+        <action
+            android:id="@+id/action_createAccountNextFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_createAccountNextFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>
