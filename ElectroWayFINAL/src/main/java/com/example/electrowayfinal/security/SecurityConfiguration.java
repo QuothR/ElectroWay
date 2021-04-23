@@ -68,25 +68,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//
-//                .authorizeRequests()
-//                .antMatchers("/","/register","/activation","/login","/forgot_password","/reset_password").permitAll().anyRequest().authenticated()
-//                .and()
-//                .csrf()
-//                .disable()
-//                .httpBasic()
-//                .and()
-//                .formLogin()
-////                .loginPage("/login")
-//                .defaultSuccessUrl("/authenticated").permitAll()
-//                .and()
-//                .logout().permitAll();
 
         http.csrf().disable()
 //                .antMatchers("/helloadmin").hasRole("ADMIN")
 //                .antMatchers("/hellouser").hasAnyRole("USER","ADMIN")
-                .authorizeRequests().antMatchers("/login", "/", "/activation", "/forgot_password", "/reset_password").permitAll().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/register","/login", "/", "/activation", "/forgot_password", "/reset_password","/station/**").permitAll().anyRequest().authenticated()
                 .and().logout().permitAll()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler).and().

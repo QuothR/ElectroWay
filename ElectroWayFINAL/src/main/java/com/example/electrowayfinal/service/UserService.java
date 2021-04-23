@@ -141,8 +141,8 @@ public class UserService implements UserDetailsService {
         return user.map(MyUserDetails::new).get();
     }
 
-    public Optional<User> getOptionalUser(User user) {
-        return userRepository.findUserByEmailAddress(user.getEmailAddress());
+    public Optional<User> getOptionalUser(String email) {
+        return userRepository.findUserByEmailAddress(email);
     }
 
     public void updateResetPasswordToken(String token, String email) throws Exception {

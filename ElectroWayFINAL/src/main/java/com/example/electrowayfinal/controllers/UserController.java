@@ -47,7 +47,7 @@ public class UserController {
     @PostMapping("/register")
     public Optional<User> registerNewUser(@Valid @RequestBody User user) throws DataIntegrityViolationException {
         userService.registerNewUserAccount(user);
-        return userService.getOptionalUser(user);
+        return userService.getOptionalUser(user.getEmailAddress());
     }
 
     /*
