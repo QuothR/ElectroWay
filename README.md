@@ -13,7 +13,7 @@ https://nodejs.org/en/ v 14.16.0
 3) Din VS deschideti un terminal new si rulati: 
 npx create-react-app “nume proiect (avand doar litere mici)” 
 4) Pentru a rula proiectul, din terminal rulati comanda : npm start
-5) Instalarea dependentelor necesare pentru a putea rula aplicatia finala
+5) Instalati, din terminal, dependentele de mai jos necesare pentru a putea rula aplicatia finala (!important: trebuie sa va aflati in terminal, in directorul cu numele pus de voi la pasul 3):
 
 
 Instalare Router pentru management ul paginilor:      
