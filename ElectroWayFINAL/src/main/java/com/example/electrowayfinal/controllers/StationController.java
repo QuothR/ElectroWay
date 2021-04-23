@@ -26,12 +26,13 @@ public class StationController {
     }
 
     @GetMapping()
-    public List<Station> station(){
-        return stationService.getStations();
+    public List<Station> station(HttpServletRequest httpServletRequest){
+        return stationService.getStations(httpServletRequest);
     }
 
     @PostMapping()
     public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws Exception{
+        int a = 3;
         stationService.createStation(station,httpServletRequest);
         return stationService.getStation(station.getId());
     }
@@ -40,7 +41,7 @@ public class StationController {
     @ResponseStatus(HttpStatus.OK)
     public Station updateStation(@RequestBody Station newStation,@PathVariable Long id,HttpServletRequest httpServletRequest) throws Exception{
         System.out.println("in put mapping\n");
-        stationService.createStation(stationService.updateStation(newStation,id),httpServletRequest);
+        stationService.createStation(stationService.updateStation(newStation,id,httpServletRequest),httpServletRequest);
         return newStation;
     }
 

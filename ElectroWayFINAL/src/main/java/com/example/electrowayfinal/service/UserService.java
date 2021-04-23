@@ -145,6 +145,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByEmailAddress(email);
     }
 
+    public Optional<User> getOptionalUserByUsername(String username){
+        return userRepository.findUserByUsername(username);
+    }
+
     public void updateResetPasswordToken(String token, String email) throws Exception {
         Optional<User> user = userRepository.findUserByEmailAddress(email);
 

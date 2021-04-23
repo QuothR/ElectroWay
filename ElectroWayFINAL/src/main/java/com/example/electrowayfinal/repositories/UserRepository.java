@@ -12,4 +12,5 @@ public interface UserRepository
 
     Optional<User> findUserByEmailAddress(String emailAddress);
     Optional<User> findUserByPasswordResetToken(String passwordResetToken);
+    Optional<User> findUserByUsername(String username);
 }
