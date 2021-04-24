@@ -1,6 +1,5 @@
-package com.example.electrowayfinal.Validation;
+package com.example.electrowayfinal.exceptions;
 
-import com.example.electrowayfinal.exceptions.RecordNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +20,7 @@ import java.util.List;
 public class BasedExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+    public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
 
         List<String> details = new ArrayList<>();
         ErrorResponse error  = new ErrorResponse("Invalid Data", details);
@@ -32,7 +31,7 @@ public class BasedExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(RecordNotFoundException.class)
-    public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
+    public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex) {
 
         List<String> details = new ArrayList<>();
         ErrorResponse error  = new ErrorResponse("Record Not Found", details);

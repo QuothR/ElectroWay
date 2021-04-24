@@ -1,4 +1,4 @@
-package com.example.electrowayfinal.Validation;
+package com.example.electrowayfinal.exceptions;
 
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
