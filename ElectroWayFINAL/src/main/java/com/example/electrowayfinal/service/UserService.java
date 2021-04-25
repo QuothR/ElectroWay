@@ -1,12 +1,13 @@
 package com.example.electrowayfinal.service;
 
-import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.user.MyUserDetails;
 import com.example.electrowayfinal.models.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -24,8 +26,12 @@ import java.util.*;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final VerificationTokenService verificationTokenService;
-
     private final EmailService emailService;
+    private String secret;
+    @Value("electroway")
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
     @Autowired
     public UserService(UserRepository userRepository, VerificationTokenService verificationTokenService, EmailService emailService) {
@@ -84,7 +90,17 @@ public class UserService implements UserDetailsService {
         //saved.get();
 
     }
+    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest){
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        bearerToken = bearerToken.substring(6);
 
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
+        String username = claims.getSubject();
+
+        Optional<User> optionalUser = getOptionalUserByUsername(username);
+        return optionalUser;
+
+    }
 
     public void deleteUser(Long id) {
         boolean exists = userRepository.existsById(id);
@@ -93,6 +109,20 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
+    public void updateUser(User modifiedUser,HttpServletRequest httpServletRequest) throws Exception {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        bearerToken = bearerToken.substring(6);
+
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
+        String username = claims.getSubject();
+
+        Optional<User> optionalUser = getOptionalUserByUsername(username);
+        if (optionalUser.isEmpty())
+            throw new Exception("wrong user???!!!??");
+        userRepository.save(modifiedUser);
+    }
+
+    //TO DELETE???
     @Transactional
     public void updateUser(Long userId, String firstName, String lastName, String emailAddress) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + "does not exist"));
@@ -132,7 +162,7 @@ public class UserService implements UserDetailsService {
     */
 
 
-    // :))))) Aici face load user by email address
+    // :))))) Aici face load user by email address -> Cringe
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findUserByEmailAddress(username);

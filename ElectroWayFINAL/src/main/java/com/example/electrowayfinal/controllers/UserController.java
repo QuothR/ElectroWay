@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
+import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.models.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.List;
@@ -19,13 +21,17 @@ import java.util.Optional;
 @RestController
 public class UserController {
     //TODO Automated testing
-
     private final UserService userService;
     private final VerificationTokenService verificationTokenService;
 
     @GetMapping("/")
     public String home() {
         return ("<h1>Welcome");
+    }
+
+    @GetMapping("/user")
+    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest){
+        return userService.getCurrentUser(httpServletRequest);
     }
 
     @GetMapping("/users")
@@ -67,6 +73,7 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    //TO DELETE????
     @PutMapping("{userId}")
     public void updateStudent(
             @PathVariable("userId") Long id,
@@ -75,7 +82,10 @@ public class UserController {
             @RequestParam(required = false) String emailAddress) {
         userService.updateUser(id, firstName, lastName, emailAddress);
     }
-
+    @PutMapping("/user")
+    public void updateUser(@RequestBody User modifiedUser, HttpServletRequest httpServletRequest) throws Exception {
+        userService.updateUser(modifiedUser,httpServletRequest);
+    }
     @GetMapping("/activation")
     public String activation(@RequestParam("token") String token, Model model) {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
