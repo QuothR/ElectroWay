@@ -24,6 +24,12 @@ public class UserController {
     private final UserService userService;
     private final VerificationTokenService verificationTokenService;
 
+    @Autowired //dependency injection, userService is automatically instantiated
+    public UserController(UserService userService, VerificationTokenService verificationTokenService) {
+        this.userService = userService;
+        this.verificationTokenService = verificationTokenService;
+    }
+
     @GetMapping("/")
     public String home() {
         return ("<h1>Welcome");
@@ -35,14 +41,8 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String user() {
-        return this.userService.getUsers().toString();
-    }
-
-    @Autowired //dependency injection, userService is automatically instantiated
-    public UserController(UserService userService, VerificationTokenService verificationTokenService) {
-        this.userService = userService;
-        this.verificationTokenService = verificationTokenService;
+    public List<User> users() {
+        return this.userService.getUsers();
     }
 
     @GetMapping

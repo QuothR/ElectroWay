@@ -11,10 +11,12 @@ import java.util.Optional;
 @Repository
 public interface StationRepository
         extends JpaRepository<Station,Long> {
+
     Optional<Station> findStationById(Long id);
     void deleteById(Long id);
     List<Station> findAll();
     Station getOne(Long aLong);
     void delete(Station entity);
     <S extends Station> S save(S entity);
+
 }

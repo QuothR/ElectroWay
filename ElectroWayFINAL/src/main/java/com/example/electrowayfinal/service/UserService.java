@@ -41,7 +41,6 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getUsers() {
-        System.out.println("logUser");
         return userRepository.findAll();
     }
 

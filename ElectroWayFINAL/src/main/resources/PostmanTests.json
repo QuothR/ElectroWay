@@ -1,245 +1,435 @@
 {
 	"info": {
-		"_postman_id": "8aa51ed5-fa31-4193-9458-3799f621c695",
+		"_postman_id": "710f9f8a-4042-4977-893d-42bc36a760eb",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Register",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"cxdsasasffdsvddsd\",\r\n    \"password\": \"ds5safdsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8090/register",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Forgot password",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8090/forgot_password?email=electroway@mailinator.com",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"forgot_password"
-					],
-					"query": [
-						{
-							"key": "email",
-							"value": "electroway@mailinator.com"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Reset password",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8090/reset_password?token=Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt&password=Afjkahs!23fsa",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"reset_password"
-					],
-					"query": [
-						{
-							"key": "token",
-							"value": "Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt"
+			"name": "Login/Register",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"cxdsasasffdsvddsd\",\r\n    \"password\": \"ds5safdsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "password",
-							"value": "Afjkahs!23fsa"
+						"url": {
+							"raw": "http://localhost:8090/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"register"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/forgot_password?email=electroway@mailinator.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"forgot_password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "electroway@mailinator.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/reset_password?token=Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt&password=Afjkahs!23fsa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"reset_password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt"
+								},
+								{
+									"key": "password",
+									"value": "Afjkahs!23fsa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JWT Login Test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"electroway@mailinator.com\",\r\n    \"password\": \"ds5safdsas!Aa1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "JWT Login Test",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2hubnkiLCJleHAiOjE2MTkxMjk4NDIsImlhdCI6MTYxOTEyOTgxMn0.ckslFALFLkfwKrBaqajcid32KrqXIrfkx5VS7TtZAAaXbbaXOtd4wM6BWSvAxpfedWYiW0B0njsKyw-TEsXP9g",
-							"type": "string"
+			"name": "Stations",
+			"item": [
+				{
+					"name": "Add Station",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTI1OTcyNiwiaWF0IjoxNjE5MjU5NDI2fQ.TY04bJnsHY1-wKOXKFbywwTr3olCddP2CzmiJMcUaHH1_MO_htxRmPoAiP9EOYPocWYAvNW5vJZSu8OF9oIHaA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"fsdf\",\r\n    \"latitude\": 1122312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/station",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"sheeshy@mailinator.com\",\r\n    \"password\": \"A!jkashgf12\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Modify Station",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"ff\",\r\n    \"latitude\": 696.23,\r\n    \"longitude\": 22\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/station/33",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"33"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8090/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"login"
-					]
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/33",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See all stations for user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgxNTg0LCJpYXQiOjE2MTkzODEyODR9.F0yKH3X9eBiaanh7DzKRP4Fe11zUfgs-Zowfnwq66qXIcS4Ep7zwhrbUgsI56TGJbxDEZBIlcF-0aO10e5W6IQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8090/station",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Add Station",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2hubnlmcyIsImV4cCI6MTYxOTEzNzc5MSwiaWF0IjoxNjE5MTM3NDkxfQ.R5igFg897v4PmsA-8Fq7yJLvOfIARnXcYavGURd4cFRecjzSUY3zD5Xs3WoChTCDfNRejuG5SYLrksBAOEIiLQ",
-							"type": "string"
+			"name": "User",
+			"item": [
+				{
+					"name": "Welcome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								""
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \r\n    \"address\": \"fsdf\",\r\n    \"latitude\": 1122312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+				{
+					"name": "CurrentLoggedUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgxODAxLCJpYXQiOjE2MTkzODE1MDF9.z4gmzhTAbkKaP3Qai-Nruj1cKTGRlV20mhzAiGF4UYsTDzwj4L4_22qO4h26L89tjpPczChAn18hzpMcz1M9iQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"user"
+							]
+						},
+						"description": "-- Need to be logged in using JWT Login Test bearer token"
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8090/station",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"station"
-					]
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgxODAxLCJpYXQiOjE2MTkzODE1MDF9.z4gmzhTAbkKaP3Qai-Nruj1cKTGRlV20mhzAiGF4UYsTDzwj4L4_22qO4h26L89tjpPczChAn18hzpMcz1M9iQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"users"
+							]
+						},
+						"description": "--Returns all users as a json list"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user (not done)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgyMDczLCJpYXQiOjE2MTkzODE3NzN9.65tiHsjDzUo_c_BvnLzxXBNx7OMdO50ODgB0c0EyA3I1UexmqC9_AwDZ-2n9uJpLI-UbiR7-bCt8_MVPutmQDA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"5"
+							]
+						},
+						"description": "Should delete user (admin only)\r\n\r\nNot ready yet"
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Current User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgyMjU0LCJpYXQiOjE2MTkzODE5NTR9.buA6IsnDVWoeCdvD-lpSw7Q1O8AgdMOGwsn6VWQ4-LeXHUVon0zIX5e8RQDMobm7_db7D9J-v22jTGRRdls8hQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 9,\r\n    \"username\": \"USERNAMESdsCHIMBAT\",\r\n    \"password\": \"$2a$10$ontVS4H7lAtw5ZlelsiIse5Lx2uHfDWc5JsK5pybRuF9.1ZUsCj.a\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"address2\": null,\r\n    \"city\": \"cxzsafcx\",\r\n    \"region\": null,\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"passwordResetToken\": null,\r\n    \"enabled\": true,\r\n    \"authorities\": null,\r\n    \"accountNonExpired\": true,\r\n    \"credentialsNonExpired\": true,\r\n    \"accountNonLocked\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"user"
+							]
+						},
+						"description": "--Takes a json user and modifies the current user\r\n\r\n--Should not be able to modify name and id??\r\n\r\n--Need to get login token if you modify the username"
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Modify Station",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"address\": \"ff\",\r\n    \"latitude\": 696.23,\r\n    \"longitude\": 22\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8090/station/33",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"station",
-						"33"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "New Request",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8090/station/33",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"station",
-						"33"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "See all stations for user",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": null
-			},
-			"response": []
+			]
 		}
 	]
 }
