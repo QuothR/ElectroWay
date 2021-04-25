@@ -5,11 +5,11 @@
 -- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0 */;
+/*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
 
 
 -- Dumping database structure for electroway
@@ -21,11 +21,11 @@ USE `electroway`;
 DROP TABLE IF EXISTS `car`;
 CREATE TABLE IF NOT EXISTS `car`
 (
-    `id`                    bigint(20)  NOT NULL,
-    `model`                 varchar(64) NOT NULL,
-    `year`                  bigint(20) DEFAULT NULL,
-    `autonomy`              bigint(20)  NOT NULL,
-    `medium_consumption_kw` bigint(20)  NOT NULL,
+    `id`                    bigint(20)   NOT NULL,
+    `model`                 varchar(255) NOT NULL,
+    `year`                  bigint(20)   NOT NULL,
+    `autonomy`              bigint(20)   NOT NULL,
+    `medium_consumption_kw` bigint(20)   NOT NULL,
     `owner_id`              bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `owner_id` (`owner_id`),
@@ -39,12 +39,12 @@ CREATE TABLE IF NOT EXISTS `car`
 DROP TABLE IF EXISTS `charging_plug`;
 CREATE TABLE IF NOT EXISTS `charging_plug`
 (
-    `id`                bigint(20)  NOT NULL,
-    `status`            tinyint(1)  NOT NULL,
-    `level`             bigint(20)  NOT NULL,
-    `connector_type`    varchar(64) NOT NULL,
-    `price_kw`          double      NOT NULL,
-    `charging_speed_kw` double      NOT NULL,
+    `id`                bigint(20)   NOT NULL,
+    `status`            tinyint(4)   NOT NULL,
+    `level`             bigint(20)   NOT NULL,
+    `connector_type`    varchar(255) NOT NULL,
+    `price_kw`          double       NOT NULL,
+    `charging_speed_kw` double       NOT NULL,
     `charging_point_id` bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `charging_point_id` (`charging_point_id`),
@@ -72,11 +72,29 @@ CREATE TABLE IF NOT EXISTS `charging_point`
 DROP TABLE IF EXISTS `password_reset_token`;
 CREATE TABLE IF NOT EXISTS `password_reset_token`
 (
-    `id`      int(11) NOT NULL AUTO_INCREMENT,
+    `id`      bigint(11) NOT NULL AUTO_INCREMENT,
     `user_id` bigint(20)   DEFAULT NULL,
     `token`   varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table electroway.report
+DROP TABLE IF EXISTS `report`;
+CREATE TABLE IF NOT EXISTS `report`
+(
+    `id`          bigint(20)   NOT NULL,
+    `text_report` varchar(255) NOT NULL,
+    `user_id`     bigint(20) DEFAULT NULL,
+    `station_id`  bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`),
+    KEY `station_id` (`station_id`),
+    CONSTRAINT `report_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+    CONSTRAINT `report_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `station` (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
 
@@ -87,7 +105,8 @@ DROP TABLE IF EXISTS `review`;
 CREATE TABLE IF NOT EXISTS `review`
 (
     `id`          bigint(20)   NOT NULL,
-    `text_review` varchar(200) NOT NULL,
+    `text_review` varchar(255) NOT NULL,
+    `rating`      tinyint(4)   NOT NULL,
     `user_id`     bigint(20) DEFAULT NULL,
     `station_id`  bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
@@ -120,26 +139,27 @@ CREATE TABLE IF NOT EXISTS `station`
 
 -- Dumping structure for table electroway.user
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-                                      `id` bigint(20) NOT NULL,
-                                      `user_name` varchar(64) NOT NULL,
-                                      `password_hash` varchar(64) NOT NULL,
-                                      `first_name` varchar(64) NOT NULL,
-                                      `last_name` varchar(64) NOT NULL,
-                                      `phone_number` varchar(64) NOT NULL,
-                                      `email_address` varchar(64) NOT NULL,
-                                      `address1` varchar(64) NOT NULL,
-                                      `address2` varchar(64) DEFAULT NULL,
-                                      `city` varchar(64) NOT NULL,
-                                      `region` varchar(64) DEFAULT NULL,
-                                      `country` varchar(64) NOT NULL,
-                                      `zipcode` varchar(64) NOT NULL,
-                                      `is_enabled` tinyint(1) NOT NULL,
-                                      `password_reset_token` varchar(64) DEFAULT NULL,
-                                      PRIMARY KEY (`id`),
-                                      UNIQUE KEY `user_name` (`user_name`),
-                                      UNIQUE KEY `email_address` (`email_address`),
-                                      UNIQUE KEY `phone_number` (`phone_number`)
+CREATE TABLE IF NOT EXISTS `user`
+(
+    `id`                   bigint(20)   NOT NULL,
+    `user_name`            varchar(255) NOT NULL,
+    `password_hash`        varchar(255) NOT NULL,
+    `first_name`           varchar(255) DEFAULT NULL,
+    `last_name`            varchar(255) DEFAULT NULL,
+    `phone_number`         varchar(255) DEFAULT NULL,
+    `email_address`        varchar(255) NOT NULL,
+    `address1`             varchar(255) DEFAULT NULL,
+    `address2`             varchar(255) DEFAULT NULL,
+    `city`                 varchar(255) DEFAULT NULL,
+    `region`               varchar(255) DEFAULT NULL,
+    `country`              varchar(255) DEFAULT NULL,
+    `zipcode`              varchar(255) DEFAULT NULL,
+    `is_enabled`           tinyint(1)   NOT NULL,
+    `password_reset_token` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_name` (`user_name`),
+    UNIQUE KEY `email_address` (`email_address`),
+    UNIQUE KEY `phone_number` (`phone_number`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
 
@@ -165,19 +185,19 @@ CREATE TABLE IF NOT EXISTS `user_sequence`
 DROP TABLE IF EXISTS `verification_token`;
 CREATE TABLE IF NOT EXISTS `verification_token`
 (
-    `id`          int(11)   NOT NULL AUTO_INCREMENT,
-    `user_id`     bigint(20)         DEFAULT NULL,
-    `token`       varchar(255)       DEFAULT NULL,
-    `expiry_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `user_id`     bigint(20)          DEFAULT NULL,
+    `token`       varchar(255)        DEFAULT NULL,
+    `expiry_date` timestamp  NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`),
     CONSTRAINT `verification_token_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 33
+  AUTO_INCREMENT = 31
   DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET SQL_MODE = IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS = IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
