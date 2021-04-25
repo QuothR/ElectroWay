@@ -1,10 +1,7 @@
 package com.example.electrowayfinal.models;
 
 import com.example.electrowayfinal.Validation.ValidPassword;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,7 +16,8 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @ToString
-@Entity(name = "user")
+@EqualsAndHashCode
+@Entity(name = "User")
 @Table(name = "user", schema = "electroway", uniqueConstraints = {
         @UniqueConstraint(name = "user_id_unique", columnNames = "id"),
         @UniqueConstraint(name = "user_user_name_unique", columnNames = "user_name"),
@@ -39,35 +37,49 @@ public class User implements UserDetails {
     )
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigint")
     private long id;
-    @Column(name = "user_name", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "user_name", nullable = false, columnDefinition = "varchar(255)")
     private String username;
+
     @NotBlank(message = "New password is mandatory")
-    @Column(name = "password_hash", nullable = false, columnDefinition = "varchar(64)")
+    @Column(name = "password_hash", nullable = false, columnDefinition = "varchar(255)")
     private String password;
-    @Column(name = "first_name", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "first_name", columnDefinition = "varchar(255)")
     private String firstName;
-    @Column(name = "last_name", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "last_name", columnDefinition = "varchar(255)")
     private String lastName;
-    @Column(name = "phone_number", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "phone_number", columnDefinition = "varchar(255)")
     private String phoneNumber;
+
     @Email
-    @Column(name = "email_address", nullable = false, columnDefinition = "varchar(64)")
+    @Column(name = "email_address", nullable = false, columnDefinition = "varchar(255)")
     private String emailAddress;
-    @Column(name = "address1", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "address1", columnDefinition = "varchar(255)")
     private String address1;
-    @Column(name = "address2", columnDefinition = "varchar(64)")
+
+    @Column(name = "address2", columnDefinition = "varchar(255)")
     private String address2;
-    @Column(name = "city", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "city", columnDefinition = "varchar(255)")
     private String city;
-    @Column(name = "region", columnDefinition = "varchar(64)")
+
+    @Column(name = "region", columnDefinition = "varchar(255)")
     private String region;
-    @Column(name = "country", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "country", columnDefinition = "varchar(255)")
     private String country;
-    @Column(name = "zipcode", nullable = false, columnDefinition = "varchar(64)")
+
+    @Column(name = "zipcode", columnDefinition = "varchar(255)")
     private String zipcode;
+
     @Column(name = "is_enabled", nullable = false, columnDefinition = "boolean default false")
     private boolean isEnabled;
-    @Column(name = "password_reset_token", columnDefinition = "varchar(64)")
+
+    @Column(name = "password_reset_token", columnDefinition = "varchar(255)")
     private String passwordResetToken;
 
     public User(String username, String password, String emailAddress) {

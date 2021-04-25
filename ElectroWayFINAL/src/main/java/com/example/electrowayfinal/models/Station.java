@@ -7,11 +7,13 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @ToString
-@Entity(name = "station")
+@EqualsAndHashCode
+@Entity(name = "Station")
 @Table(name = "station", schema = "electroway", uniqueConstraints = {
-        @UniqueConstraint(name = "user_id_unique", columnNames = "id")
+        @UniqueConstraint(name = "station_id_unique", columnNames = "id"),
+        @UniqueConstraint(name = "station_owner_location_unique", columnNames = {"map_latitude_location", "map_longitude_location", "owner_id"})
 })
 public class Station implements Serializable {
     @Id
@@ -26,14 +28,20 @@ public class Station implements Serializable {
 //    )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
-    @Column(name = "address", nullable = false, columnDefinition = "varchar(64)")
+
+    @Basic
+    @Column(name = "address", nullable = false, columnDefinition = "varchar(255)")
     private String address;
+
+    @Basic
     @Column(name = "map_latitude_location", nullable = false, columnDefinition = "double")
     private double latitude;
+
     @Column(name = "map_longitude_location", nullable = false, columnDefinition = "double")
     private double longitude;
+
     @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", columnDefinition = "bigint")
     private User user;
 }
 
