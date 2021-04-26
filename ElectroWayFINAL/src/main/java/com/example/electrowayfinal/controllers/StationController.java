@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/station")
@@ -20,23 +21,23 @@ public class StationController {
     @Autowired
     public StationController(StationService stationService) {
 
-       this.stationService = stationService;
+        this.stationService = stationService;
     }
 
     @GetMapping()
-    public List<Station> getUserStations(HttpServletRequest httpServletRequest){
+    public List<Station> getUserStations(HttpServletRequest httpServletRequest) {
         return stationService.getStations(httpServletRequest);
     }
 
     @PostMapping()
-    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws Exception{
-        stationService.createStation(station,httpServletRequest);
+    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws Exception {
+        stationService.createStation(station, httpServletRequest);
         return stationService.getStation(station.getId());
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public Station updateStation(@RequestBody Station newStation,@PathVariable Long id,HttpServletRequest httpServletRequest) throws Exception{
+    public Station updateStation(@RequestBody Station newStation, @PathVariable Long id, HttpServletRequest httpServletRequest) throws Exception {
         return stationService.updateStation(newStation, id, httpServletRequest);
     }
 
@@ -44,6 +45,12 @@ public class StationController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
         stationService.deleteStation(id);
+    }
+
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<Station> getStation(@PathVariable("id") Long id) {
+        return stationService.getCurrentStation(id);
     }
 
 }

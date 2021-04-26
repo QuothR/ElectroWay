@@ -58,6 +58,10 @@ public class StationService {
         return stationRepository.getOne(id);
     }
 
+    public Optional<Station> getCurrentStation(Long id) {
+        return stationRepository.findStationById(id);
+    }
+
     public List<Station> getStations(HttpServletRequest httpServletRequest) {
 
         String bearToken = httpServletRequest.getHeader("Authorization");

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "710f9f8a-4042-4977-893d-42bc36a760eb",
+		"_postman_id": "d924b9d5-866f-4367-b2d8-728ebea6aaa4",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -241,7 +241,7 @@
 					"response": []
 				},
 				{
-					"name": "See all stations for user",
+					"name": "Get all stations for user",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -426,6 +426,71 @@
 							]
 						},
 						"description": "--Takes a json user and modifies the current user\r\n\r\n--Should not be able to modify name and id??\r\n\r\n--Need to get login token if you modify the username"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Add review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text_review\": \"prea blana statia\",\r\n    \"rating\": \"10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/station/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all reviews for station",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTQ1NTQ4OSwiaWF0IjoxNjE5NDU1MTg5fQ.3TR9HHXg2xZlaR4yI18xYxymlMl9FRdTGM5GuUziycBu15myrvdBjQV8_o-uVtZuZAWbdjtR9BgajDJcDe5bkQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/2/reviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"2",
+								"reviews"
+							]
+						}
 					},
 					"response": []
 				}

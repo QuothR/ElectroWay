@@ -16,6 +16,14 @@ import javax.persistence.*;
 public class Review {
 
     @Id
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
 
