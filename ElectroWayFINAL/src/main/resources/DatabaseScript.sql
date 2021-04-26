@@ -13,7 +13,7 @@
 
 
 -- Dumping database structure for electroway
-
+CREATE DATABASE IF NOT EXISTS `electroway` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `electroway`;
 
 -- Dumping structure for table electroway.car
@@ -81,6 +81,18 @@ CREATE TABLE IF NOT EXISTS `password_reset_token`
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table electroway.privilege
+DROP TABLE IF EXISTS `privilege`;
+CREATE TABLE IF NOT EXISTS `privilege`
+(
+    `id`   bigint(20)   NOT NULL,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table electroway.report
 DROP TABLE IF EXISTS `report`;
 CREATE TABLE IF NOT EXISTS `report`
@@ -118,14 +130,43 @@ CREATE TABLE IF NOT EXISTS `review`
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table electroway.role
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE IF NOT EXISTS `role`
+(
+    `id`   bigint(20)   NOT NULL,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table electroway.role_privilege
+DROP TABLE IF EXISTS `role_privilege`;
+CREATE TABLE IF NOT EXISTS `role_privilege`
+(
+    `id`           bigint(20) NOT NULL,
+    `role_id`      bigint(20) DEFAULT NULL,
+    `privilege_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `role_id` (`role_id`),
+    KEY `privilege_id` (`privilege_id`),
+    CONSTRAINT `role_privilege_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+    CONSTRAINT `role_privilege_ibfk_2` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table electroway.station
 DROP TABLE IF EXISTS `station`;
 CREATE TABLE IF NOT EXISTS `station`
 (
-    `id`                     bigint(20)  NOT NULL AUTO_INCREMENT,
-    `address`                varchar(64) NOT NULL,
-    `map_latitude_location`  double      NOT NULL,
-    `map_longitude_location` double      NOT NULL,
+    `id`                     bigint(20)   NOT NULL,
+    `address`                varchar(255) NOT NULL,
+    `map_latitude_location`  double       NOT NULL,
+    `map_longitude_location` double       NOT NULL,
     `owner_id`               bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `map_latitude_location` (`map_latitude_location`, `map_longitude_location`, `owner_id`),
@@ -164,6 +205,23 @@ CREATE TABLE IF NOT EXISTS `user`
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table electroway.user_role
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE IF NOT EXISTS `user_role`
+(
+    `id`      bigint(20) NOT NULL,
+    `user_id` bigint(20) DEFAULT NULL,
+    `role_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`),
+    KEY `role_id` (`role_id`),
+    CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+    CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table electroway.user_sequence
 DROP TABLE IF EXISTS `user_sequence`;
 CREATE TABLE IF NOT EXISTS `user_sequence`
@@ -192,11 +250,11 @@ CREATE TABLE IF NOT EXISTS `verification_token`
     KEY `user_id` (`user_id`),
     CONSTRAINT `verification_token_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 31
+  AUTO_INCREMENT = 32
   DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
 /*!40101 SET SQL_MODE = IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS = IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
