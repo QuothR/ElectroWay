@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d924b9d5-866f-4367-b2d8-728ebea6aaa4",
+		"_postman_id": "b7d4fb09-cccc-468b-a985-717f8af13649",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -141,7 +141,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTI1OTcyNiwiaWF0IjoxNjE5MjU5NDI2fQ.TY04bJnsHY1-wKOXKFbywwTr3olCddP2CzmiJMcUaHH1_MO_htxRmPoAiP9EOYPocWYAvNW5vJZSu8OF9oIHaA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTUzNjczNywiaWF0IjoxNjE5NTM2NDM3fQ.dbHND4c0hH1Dmb7XKMlFAzQzlByOMomOmSrWQ1WQB9hia6gymvTBfDTryEkKoVaFazOxklZ6DM7ZpKXRPtkMoA",
 									"type": "string"
 								}
 							]
@@ -150,7 +150,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"address\": \"fsdf\",\r\n    \"latitude\": 1122312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
+							"raw": "{\r\n    \"address\": \"sss\",\r\n    \"latitude\": 11222312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -211,7 +211,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Station",
 					"request": {
 						"auth": {
 							"type": "bearer",
