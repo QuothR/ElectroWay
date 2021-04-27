@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `role_privilege`
 DROP TABLE IF EXISTS `station`;
 CREATE TABLE IF NOT EXISTS `station`
 (
-    `id`                     bigint(20)   NOT NULL,
+    `id`                     bigint(20)   NOT NULL AUTO_INCREMENT,
     `address`                varchar(255) NOT NULL,
     `map_latitude_location`  double       NOT NULL,
     `map_longitude_location` double       NOT NULL,
