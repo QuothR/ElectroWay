@@ -59,7 +59,8 @@
         android:id="@+id/mapFragment"
         android:name="com.github.electroway.ui.main.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" >
+        tools:layout="@layout/fragment_map"
+        app:startDestination="@id/action_mapFragment_to_homeFragment">
         <action
             android:id="@+id/action_mapFragment_to_homeFragment"
             app:destination="@id/homeFragment"

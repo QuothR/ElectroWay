@@ -5,8 +5,6 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.io.IOException
-import java.lang.Exception
 
 class Session() {
     private val json = "application/json; charset=utf-8".toMediaType()
@@ -30,12 +28,30 @@ class Session() {
         sendRequest(info.getJson(), "login", callback)
     }
 
+    fun userInfo(callback: Callback) {
+        sendAuthRequest("user", callback)
+    }
+
     private fun sendRequest(body: JSONObject, subpath: String, callback: Callback) {
         val request = Request.Builder()
             .url(url + subpath)
-            .post(body.toString().toRequestBody("application/json; charset=utf-8".toMediaType()))
+            .post(body.toString().toRequestBody(json))
             .build()
         val call = client.newCall(request)
         call.enqueue(callback)
+    }
+
+    private fun sendAuthRequest(subpath: String, callback: Callback) {
+        val request = Request.Builder()
+            .url(url + subpath)
+            .header("Authorization", "Bearer " + token!!)
+            .get()
+            .build()
+        val call = client.newCall(request)
+        call.enqueue(callback)
+    }
+
+    fun changeToken(body: String) {
+        token = JSONObject(body).getString("token")
     }
 }

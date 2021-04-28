@@ -3,7 +3,6 @@ package com.github.electroway.ui.start
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.github.electroway.Application
 import com.github.electroway.R
 import com.github.electroway.RegisterInfo
-import com.github.electroway.Session
 import com.github.electroway.ui.main.ProfileFragment
 import okhttp3.Call
 import okhttp3.Callback
@@ -54,7 +53,7 @@ class CreateAccountNextFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.create_account_next_sign_up_button).setOnClickListener {
-            val session = Session()
+            val session = (requireActivity().application as Application).session
             val info = RegisterInfo(
                 username = CreateAccountFragment.username.toString(),
                 password = CreateAccountFragment.password.toString(),
@@ -67,7 +66,6 @@ class CreateAccountNextFragment : Fragment() {
                 country = country.toString(),
                 zipcode = zipcode.toString()
             )
-            ProfileFragment.info = info
             session.register(
                 info,
                 object : Callback {

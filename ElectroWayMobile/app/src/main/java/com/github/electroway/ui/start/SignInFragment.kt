@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.github.electroway.Application
 import com.github.electroway.LoginInfo
 import com.github.electroway.R
 import com.github.electroway.Session
@@ -43,7 +44,7 @@ class SignInFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.sign_in_button).setOnClickListener {
-            val session = Session()
+            val session = (requireActivity().application as Application).session
             val info = LoginInfo(
                 email = email.toString(),
                 password = password.toString()
@@ -54,9 +55,11 @@ class SignInFragment : Fragment() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
+                    val body = response.body!!.string()
                     val handler = Handler(requireContext().mainLooper)
                     handler.post {
                         if (response.isSuccessful) {
+                            session.changeToken(body)
                             findNavController().navigate(R.id.action_signInFragment_to_mapFragment)
                         } else {
                             Toast.makeText(requireContext(), "Login failed", Toast.LENGTH_SHORT)

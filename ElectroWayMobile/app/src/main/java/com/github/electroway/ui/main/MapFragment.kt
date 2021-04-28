@@ -1,27 +1,32 @@
 package com.github.electroway.ui.main
 
 import android.app.SearchManager
+import android.content.pm.PackageManager
 import android.database.MatrixCursor
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.provider.BaseColumns
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.github.electroway.MainActivity
 import com.github.electroway.R
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.concurrent.Executors
+import java.util.jar.Manifest
 import kotlin.random.Random
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -127,6 +132,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 return true
             }
         })
+//        view.findViewById<FloatingActionButton>(R.id.mapLocationButton).setOnClickListener {
+//            if (ActivityCompat.checkSelfPermission(
+//                    requireContext(),
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//                ) != PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(
+//                    requireContext(),
+//                    Manifest.permission.ACCESS_COARSE_LOCATION
+//                ) != PackageManager.PERMISSION_GRANTED
+//            ) {
+//                requestPermissions(
+//                    arrayOf(
+//                        Manifest.permission.ACCESS_FINE_LOCATION,
+//                        Manifest.permission.ACCESS_COARSE_LOCATION
+//                    )
+//                )
+//                return
+//            }
+//            val location =
+//                (requireActivity() as MainActivity).fusedLocationProviderClient.lastLocation
+//        }
     }
 
     override fun onMapReady(map: GoogleMap?) {
