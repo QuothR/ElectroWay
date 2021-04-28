@@ -27,12 +27,24 @@ public class Car {
     private long year;
 
     @Basic
-    @Column(name = "autonomy", nullable = false, columnDefinition = "bigint")
-    private long autonomy;
+    @Column(name = "battery_capacity", nullable = false, columnDefinition = "bigint")
+    private long batteryCapacity;
 
     @Basic
-    @Column(name = "medium_consumption_kw", nullable = false, columnDefinition = "bigint")
-    private long mediumConsumptionKw;
+    @Column(name = "charging_capacity", nullable = false, columnDefinition = "bigint")
+    private long chargingCapacity;
+
+    @Basic
+    @Column(name = "plug_type", nullable = false, columnDefinition = "varchar(255)")
+    private String plugType;
+
+    @Basic
+    @Column(name = "vehicle_max_speed", nullable = false, columnDefinition = "bigint")
+    private long vehicleMaxSpeed;
+
+    @Basic
+    @Column(name = "auxiliary_kWh", nullable = false, columnDefinition = "bigint")
+    private long auxiliaryKwh;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id", columnDefinition = "bigint")

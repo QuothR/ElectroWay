@@ -17,15 +17,15 @@ import java.io.Serializable;
 })
 public class Station implements Serializable {
     @Id
-//    @SequenceGenerator(
-//            name = "station_generator",
-//            sequenceName = "station_sequence",
-//            allocationSize = 1
-//    )
-//    @GeneratedValue(
-//            strategy = GenerationType.SEQUENCE,
-//            generator = "station_generator"
-//    )
+    @SequenceGenerator(
+            name = "station_sequence",
+            sequenceName = "station_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "station_sequence"
+    )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
 

@@ -14,15 +14,14 @@ import javax.persistence.*;
         @UniqueConstraint(name = "review_id_unique", columnNames = "id")
 })
 public class Review {
-
     @Id
     @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
+            name = "review_sequence",
+            sequenceName = "review_sequence",
             allocationSize = 1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
+            generator = "review_sequence"
     )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
