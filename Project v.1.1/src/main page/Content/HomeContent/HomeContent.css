@@ -1,0 +1,63 @@
+
+.HomeContent{
+    width: 100%;
+    height: 100%;
+    padding: 5% 2% 5% 2%;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 20px !important;
+}
+
+p{
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center;
+}
+
+.HomeContent .CarBlock{
+    height: 450px !important;
+    margin-right: 2% !important;   
+    padding: 15px 30px 15px 30px !important;
+    display: block !important;
+    background: linear-gradient(to left, #66628f , #b9b2c9) !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 0px #000;
+}
+
+.HomeContent .StationBlock {
+    height: 450px !important;
+    margin-left: 2% !important;
+    padding: 20px 30px 20px 30px !important;  
+    display: block !important;
+    background: linear-gradient(to left, #66628f , #b9b2c9) !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 0px #000;
+}
+
+.HomeContent .HomeImg{
+    height: 450px !important;
+    width: 100%;
+    display: block;
+    border-radius: 100px !important;
+    object-fit: cover;
+    box-shadow: 0px 0px 15px 0px #000;
+}
+
+.HomeContent .HomePhoto {
+    margin: 0 !important;
+    padding-bottom: 30px !important;
+    
+}
+.HomeContent .S-C-Img{
+    background: #c6bfd2;
+    border-radius: 100px;
+    box-shadow: 0px 4px 15px 2px #000;
+}
+
+
+
+
+
+
+
