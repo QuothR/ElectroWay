@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b7d4fb09-cccc-468b-a985-717f8af13649",
+		"_postman_id": "117b45f5-7840-4a0a-9f9e-735a3102959d",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -489,6 +489,293 @@
 								"station",
 								"2",
 								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ChargingPoints",
+			"item": [
+				{
+					"name": "Get Current ChargingPoint",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMzE2MCwiaWF0IjoxNjE5NzIyODYwfQ.8BWBEPnNpoVFyEbyvXoPkA-uM1ELNRzEntMexKG1-G1oKfSkcMVjzeYIXFvkISLqkwwQ1wTEyViw7yvyKO8NYQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/3/points/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All ChargingPoints from station",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMjMyNSwiaWF0IjoxNjE5NzIyMDI1fQ.aXXN4ERU_VcLHTz8mTuo3RjC-xCIJSJg36dVrkIANkSjrw8tIL96VSjdK2wjkSwt8VEC9mmomb9Pefeg82bYPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/3/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePoint",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMjA1NiwiaWF0IjoxNjE5NzIxNzU2fQ.QzV8EQ1NSUEIhSC5CAL5LaSAzuHsQ39GWfzAdGKWPLIeMu4x2r6A3_cLbxQDuQQQE-_7nMMbZKKCnsvAy7elNA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/station/3/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete ChargingPoint",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMjMyNSwiaWF0IjoxNjE5NzIyMDI1fQ.aXXN4ERU_VcLHTz8mTuo3RjC-xCIJSJg36dVrkIANkSjrw8tIL96VSjdK2wjkSwt8VEC9mmomb9Pefeg82bYPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/3/points/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ChargingPlugs",
+			"item": [
+				{
+					"name": "Add Charging Plug",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjE2OCwiaWF0IjoxNjE5NzI1ODY4fQ.PZFGGEFSuEKDiiHrjfzorKmHax1YfLnSQY2TkncMZz-lY8fxEVP3-zlzbAHNdU9Ie8xNM4_9FGSPeoHJxaQpOg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"status\":11,\r\n    \"level\":1,\r\n    \"connectorType\":\"xd\",\r\n    \"priceKw\":12.2,\r\n    \"chargingSpeedKw\":12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/station/3/points/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all plugs from charging point",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjE2OCwiaWF0IjoxNjE5NzI1ODY4fQ.PZFGGEFSuEKDiiHrjfzorKmHax1YfLnSQY2TkncMZz-lY8fxEVP3-zlzbAHNdU9Ie8xNM4_9FGSPeoHJxaQpOg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/3/points/2/plugs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points",
+								"2",
+								"plugs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current plug",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjQ3NCwiaWF0IjoxNjE5NzI2MTc0fQ.nsFKpB472NaJcge0E0ymJn3UIUW5PFaAnTyogcMbBR7PEG5Qz7E7i22oyyELdCbfCSS0wWftlqS0QE19lPZDtw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/3/points/2/plugs/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points",
+								"2",
+								"plugs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Plug",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjQ3NCwiaWF0IjoxNjE5NzI2MTc0fQ.nsFKpB472NaJcge0E0ymJn3UIUW5PFaAnTyogcMbBR7PEG5Qz7E7i22oyyELdCbfCSS0wWftlqS0QE19lPZDtw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/station/3/points/2/plugs/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"station",
+								"3",
+								"points",
+								"2",
+								"plugs",
+								"1"
 							]
 						}
 					},
