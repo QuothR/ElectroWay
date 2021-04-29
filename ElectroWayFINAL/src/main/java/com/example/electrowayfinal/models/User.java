@@ -1,7 +1,10 @@
 package com.example.electrowayfinal.models;
 
 import com.example.electrowayfinal.Validation.ValidPassword;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,13 +12,15 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 
 
 @ValidPassword
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Entity(name = "User")
 @Table(name = "user", schema = "electroway", uniqueConstraints = {
@@ -25,6 +30,7 @@ import java.util.Collection;
         @UniqueConstraint(name = "user_email_address_unique", columnNames = "email_address"),
 })
 public class User implements UserDetails {
+
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -35,6 +41,8 @@ public class User implements UserDetails {
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
+
+
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigint")
     private long id;
 
@@ -82,15 +90,28 @@ public class User implements UserDetails {
     @Column(name = "password_reset_token", columnDefinition = "varchar(255)")
     private String passwordResetToken;
 
-    public User(String username, String password, String emailAddress) {
+    @JsonCreator
+    public User(
+            @JsonProperty("username") String username,
+            @JsonProperty("password") String password,
+            @JsonProperty("firstName") String firstName,
+            @JsonProperty("lastName") String lastName,
+            @JsonProperty("phoneNumber") String phoneNumber,
+            @JsonProperty("emailAddress") String emailAddress,
+            @JsonProperty("address1") String address1,
+            @JsonProperty("city") String city,
+            @JsonProperty("country") String country,
+            @JsonProperty("zipcode") String zipcode,
+            @JsonProperty("roles") List<String> roles){
         this.username = username;
         this.password = password;
+        this.firstName = firstName;
+        this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+        this.address1 = address1;
+        this.city = city;
+        this.country = country;
+        this.zipcode = zipcode;
     }
 
     public User(String username, String password, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String city, String country, String zipcode) {
@@ -121,8 +142,8 @@ public class User implements UserDetails {
         this.zipcode = zipcode;
     }
 
-    public User(Long id, String username, String password, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String address2, String city, String country, String zipcode, boolean isEnabled) {
-        this.id = id;
+
+    public User(String username, String password, String firstName, String lastName, String phoneNumber, String emailAddress, String address1, String city, String region, String country, String zipcode, List<String> roles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -130,11 +151,34 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.address1 = address1;
-        this.address2 = address2;
         this.city = city;
+        this.region = region;
         this.country = country;
         this.zipcode = zipcode;
-        this.isEnabled = isEnabled;
+        //TODO  :)))))
+        for (String role : roles) {
+            Role role2 = new Role(role);
+            this.roles.add(role2);
+        }
+        System.out.println("CONSTRUCTOR");
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(String username, String password, String emailAddress) {
+        this.username = username;
+        this.password = password;
+        this.emailAddress = emailAddress;
+    }
+
+    public User(String username, String password, String phoneNumber, String emailAddress) {
+        this.username = username;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
     }
 
     @Override
@@ -155,5 +199,35 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", city='" + city + '\'' +
+                ", region='" + region + '\'' +
+                ", country='" + country + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", isEnabled=" + isEnabled +
+                ", passwordResetToken='" + passwordResetToken + '\'' +
+                '}';
     }
 }

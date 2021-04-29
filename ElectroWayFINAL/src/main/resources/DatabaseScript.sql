@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `password_reset_token`
 DROP TABLE IF EXISTS `privilege`;
 CREATE TABLE IF NOT EXISTS `privilege`
 (
-    `id`   bigint(20)   NOT NULL,
+    `id`   bigint(20)   NOT NULL auto_increment,
     `name` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `review`
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role`
 (
-    `id`   bigint(20)   NOT NULL,
+    `id`   bigint(20)   NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `role`
 DROP TABLE IF EXISTS `role_privilege`;
 CREATE TABLE IF NOT EXISTS `role_privilege`
 (
-    `id`           bigint(20) NOT NULL,
+    `id`           bigint(20) NOT NULL AUTO_INCREMENT,
     `role_id`      bigint(20) DEFAULT NULL,
     `privilege_id` bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `user`
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE IF NOT EXISTS `user_role`
 (
-    `id`      bigint(20) NOT NULL,
+    `id`      bigint(20) NOT NULL AUTO_INCREMENT,
     `user_id` bigint(20) DEFAULT NULL,
     `role_id` bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),

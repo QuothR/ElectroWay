@@ -26,6 +26,7 @@ public class Station implements Serializable {
             strategy = GenerationType.SEQUENCE,
             generator = "station_sequence"
     )
+
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
 

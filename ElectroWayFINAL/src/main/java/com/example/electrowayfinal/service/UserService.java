@@ -1,5 +1,9 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.dtos.UserDto;
+import com.example.electrowayfinal.models.Privilege;
+import com.example.electrowayfinal.models.Role;
+import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.user.MyUserDetails;
 import com.example.electrowayfinal.models.User;
@@ -8,6 +12,8 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,25 +25,29 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Qualifier("userService")
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final VerificationTokenService verificationTokenService;
     private final EmailService emailService;
     private String secret;
+
     @Value("electroway")
     public void setSecret(String secret) {
         this.secret = secret;
     }
 
     @Autowired
-    public UserService(UserRepository userRepository, VerificationTokenService verificationTokenService, EmailService emailService) {
+    public UserService(UserRepository userRepository, VerificationTokenService verificationTokenService, EmailService emailService,RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.verificationTokenService = verificationTokenService;
         this.emailService = emailService;
+        this.roleRepository = roleRepository;
     }
 
     public List<User> getUsers() {
@@ -45,13 +55,15 @@ public class UserService implements UserDetailsService {
     }
 
 
+
     //TODO ???
     @Qualifier("getPasswordEncoder")
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registerNewUserAccount(User user) {
-        Optional<User> userOptional = userRepository.findUserByEmailAddress(user.getEmailAddress());
+    public void registerNewUserAccount(UserDto userDto) {
+        Optional<User> userOptional = userRepository.findUserByEmailAddress(userDto.getEmailAddress());
+
         if (userOptional.isPresent()) {
             throw new IllegalStateException("email taken!");
         }
@@ -59,14 +71,49 @@ public class UserService implements UserDetailsService {
         // Se comenteaza pentru ca: Validarea parolei se face pe hashPassword
         // Dupa rezolvarea problemei, se decomenteaza
 
-        String encryptedPassword;
+        User user = new User();
 
-        encryptedPassword = passwordEncoder.encode(user.getPassword());
+        String encryptedPassword;
+        encryptedPassword = passwordEncoder.encode(userDto.getPassword());
 
         user.setPassword(encryptedPassword);
         user.setEnabled(false);
 
+        user.setUsername(userDto.getUsername());
+        user.setFirstName(userDto.getFirstName());
+        //user.setLastName(userDto.getLastName());
+        user.setAddress1(userDto.getAddress1());
+        //user.setAddress2(userDto.getAddress2());
+        user.setCity(userDto.getCity());
+        user.setEmailAddress(userDto.getEmailAddress());
+        user.setCountry(userDto.getCountry());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        //user.setRegion(userDto.getRegion());
+        user.setZipcode(userDto.getZipcode());
+
         Optional<User> saved = Optional.of(user);
+
+        List<Role> roles = new LinkedList<>();
+
+        for (String role : userDto.getRoles()){
+            if ( roleRepository.findByName(role).isPresent())
+                roles.add(roleRepository.findByName(role).get());
+            else
+                System.out.println("Tried to add inexistent role " + role + '\n');
+        }
+
+        user.setRoles(roles);
+
+//        assert roleRepository.findByName("ROLE_DRIVER") != null;
+
+//        Collection<Role> roless = Collections.singletonList(roleRepository.findByName("ROLE_DRIVER").isPresent() ?
+//                                                            roleRepository.findByName("ROLE_DRIVER").get() :
+//                                                                new Role("retardat"));
+//
+//        if (!user.getUsername().equals("root")) {
+//            user.setRoles(roless);
+//        }
+
         saved.ifPresent(u -> {
             try {
                 String token = UUID.randomUUID().toString();
@@ -89,16 +136,25 @@ public class UserService implements UserDetailsService {
         //saved.get();
 
     }
-    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest){
+
+    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest) {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
 
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
         String username = claims.getSubject();
 
-        Optional<User> optionalUser = getOptionalUserByUsername(username);
-        return optionalUser;
+        return getOptionalUserByUsername(username);
 
+    }
+    public Optional<UserDto> getOptionalUserDto(String email){
+        Optional<User> user = userRepository.findUserByEmailAddress(email);
+        if (user.isEmpty())
+            return Optional.empty();
+
+        return Optional.of(new UserDto(user.get().getUsername(), user.get().getPassword(), user.get().getFirstName(), user.get().getLastName(),
+                user.get().getPhoneNumber(), user.get().getEmailAddress(), user.get().getAddress1(), user.get().getCity(),
+                user.get().getCountry(), user.get().getZipcode(), user.get().getRoles().stream().map(Role::getName).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     public void deleteUser(Long id) {
@@ -108,7 +164,7 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public void updateUser(User modifiedUser,HttpServletRequest httpServletRequest) throws Exception {
+    public void updateUser(User modifiedUser, HttpServletRequest httpServletRequest) throws Exception {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
 
@@ -143,23 +199,6 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + "does not exist"));
         user.setEnabled(true);
     }
-    /*
-        public void login(HttpServletRequest request, HttpServletResponse response, String email, String password){
-            Optional<User> userOptional = userRepository.findUserByEmail(email);
-            if(userOptional.isEmpty())
-                throw new IllegalStateException("The email " + email + " does not appear in the database");
-            if (!password.equals(userOptional.get().getPassword()))
-                throw new IllegalStateException("The password  is invalid");
-            if (loggedIn(request,"logged-in"))
-                throw new IllegalStateException("the user " + email +" is already logged in");
-
-            Cookie cookie = new Cookie("logged-in",email);
-            cookie.setMaxAge(7 * 24 * 60 * 60);
-            cookie.setPath("/users/login");
-            response.addCookie(cookie);
-        }
-    */
-
 
     // :))))) Aici face load user by email address -> Cringe
     @Override
@@ -175,7 +214,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByEmailAddress(email);
     }
 
-    public Optional<User> getOptionalUserByUsername(String username){
+    public Optional<User> getOptionalUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
     }
 
@@ -208,5 +247,30 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    private Collection<? extends GrantedAuthority> getAuthorities(
+            Collection<Role> roles) {
 
+        return getGrantedAuthorities(getPrivileges(roles));
+    }
+
+    private List<String> getPrivileges(Collection<Role> roles) {
+
+        List<String> privileges = new ArrayList<>();
+        List<Privilege> collection = new ArrayList<>();
+        for (Role role : roles) {
+            collection.addAll(role.getPrivileges());
+        }
+        for (Privilege item : collection) {
+            privileges.add(item.getName());
+        }
+        return privileges;
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String privilege : privileges) {
+            authorities.add(new SimpleGrantedAuthority(privilege));
+        }
+        return authorities;
+    }
 }

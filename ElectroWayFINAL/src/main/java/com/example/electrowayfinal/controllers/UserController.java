@@ -1,6 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
-import com.example.electrowayfinal.models.Station;
+import com.example.electrowayfinal.dtos.UserDto;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.models.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
@@ -51,9 +51,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Optional<User> registerNewUser(@Valid @RequestBody User user) throws DataIntegrityViolationException {
-        userService.registerNewUserAccount(user);
-        return userService.getOptionalUser(user.getEmailAddress());
+    public Optional<UserDto> registerNewUser(@Valid @RequestBody UserDto userDto) throws DataIntegrityViolationException {
+
+        userService.registerNewUserAccount(userDto);
+        return userService.getOptionalUserDto(userDto.getEmailAddress());
     }
 
     /*
@@ -73,15 +74,6 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    //TO DELETE????
-    @PutMapping("{userId}")
-    public void updateStudent(
-            @PathVariable("userId") Long id,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String emailAddress) {
-        userService.updateUser(id, firstName, lastName, emailAddress);
-    }
     @PutMapping("/user")
     public void updateUser(@RequestBody User modifiedUser, HttpServletRequest httpServletRequest) throws Exception {
         userService.updateUser(modifiedUser,httpServletRequest);
