@@ -40,4 +40,8 @@ class HomeFragment : Fragment() {
             true
         }
     }
+
+    fun navigateToSignIn() {
+        findNavController().navigate(R.id.action_homeFragment_to_signInFragment)
+    }
 }

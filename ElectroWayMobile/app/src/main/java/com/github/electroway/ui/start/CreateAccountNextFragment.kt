@@ -66,34 +66,22 @@ class CreateAccountNextFragment : Fragment() {
                 country = country.toString(),
                 zipcode = zipcode.toString()
             )
-            session.register(
-                info,
-                object : Callback {
-                    override fun onFailure(call: Call, e: IOException) {
-                        e.printStackTrace()
-                    }
-
-                    override fun onResponse(call: Call, response: Response) {
-                        val handler = Handler(requireContext().mainLooper)
-                        handler.post {
-                            if (response.isSuccessful) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Check your Email",
-                                    Toast.LENGTH_SHORT
-                                )
-                                findNavController().navigate(R.id.action_createAccountNextFragment_to_signInFragment)
-                            } else {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Request unsuccessful",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    }
+            session.register(info) { success ->
+                if (success) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Check your Email",
+                        Toast.LENGTH_SHORT
+                    )
+                    findNavController().navigate(R.id.action_createAccountNextFragment_to_signInFragment)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Request unsuccessful",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            )
+            }
         }
     }
 }

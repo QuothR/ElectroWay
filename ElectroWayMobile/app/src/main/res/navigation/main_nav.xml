@@ -74,6 +74,9 @@
             android:id="@+id/action_homeFragment_to_mapFragment"
             app:destination="@id/mapFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_homeFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountNextFragment"

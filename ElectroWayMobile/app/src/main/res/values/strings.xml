@@ -37,4 +37,5 @@
     <string name="zip_code">Zip code</string>
     <string name="phone_number">Phone number</string>
     <string name="location">Location</string>
+    <string name="sign_out">Sign out</string>
 </resources>

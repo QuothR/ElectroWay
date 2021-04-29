@@ -4,231 +4,245 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:divider="?android:attr/listDivider"
-        android:gravity="center_vertical"
-        android:nestedScrollingEnabled="false"
-        android:showDividers="middle"
-        tools:context=".ui.main.CarDetailsFragment">
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="10sp"
+        android:orientation="vertical">
 
-        <TableRow
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
+            android:layout_height="wrap_content"
+            android:divider="?android:attr/listDivider"
+            android:gravity="center_vertical"
+            android:nestedScrollingEnabled="false"
+            android:showDividers="middle"
+            tools:context=".ui.main.CarDetailsFragment">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/firstNameText"
-                android:text="@string/first_name"
-                android:textSize="18sp" />
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
 
-            <EditText
-                android:id="@+id/firstNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="textPersonName|text"
-                android:textColor="@color/purple_dark" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/firstNameText"
+                    android:text="@string/first_name"
+                    android:textSize="18sp" />
 
-        </TableRow>
+                <EditText
+                    android:id="@+id/firstNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="textPersonName|text"
+                    android:textColor="@color/purple_dark" />
 
-        <TableRow
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/lastNameText"
+                    android:text="@string/last_name"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/lastNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="textPersonName|text"
+                    android:textColor="@color/purple_dark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/emailText"
+                    android:text="@string/e_mail"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/emailText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/purple_dark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/phoneNumberText"
+                    android:text="@string/phone_number"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/phoneNumberText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:textColor="@color/purple_dark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/addressText"
+                    android:text="@string/address"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/addressText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/purple_dark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/cityText"
+                    android:text="@string/city"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/cityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="text"
+                    android:textColor="@color/purple_dark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/countryText"
+                    android:text="@string/country"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/countryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="text"
+                    android:textColor="@color/purple_dark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerPadding="10sp"
+                android:minHeight="50sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:labelFor="@id/zipcodeText"
+                    android:text="@string/zip_code"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/zipcodeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="text"
+                    android:textColor="@color/purple_dark" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/signOutButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/lastNameText"
-                android:text="@string/last_name"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/lastNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="textPersonName|text"
-                android:textColor="@color/purple_dark" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/emailText"
-                android:text="@string/e_mail"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/emailText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/purple_dark" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/phoneNumberText"
-                android:text="@string/phone_number"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/phoneNumberText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="phone"
-                android:textColor="@color/purple_dark" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/addressText"
-                android:text="@string/address"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/addressText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="textPostalAddress"
-                android:textColor="@color/purple_dark" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/cityText"
-                android:text="@string/city"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/cityText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="text"
-                android:textColor="@color/purple_dark" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/countryText"
-                android:text="@string/country"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/countryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="text"
-                android:textColor="@color/purple_dark" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerPadding="10sp"
-            android:minHeight="50sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:labelFor="@id/zipcodeText"
-                android:text="@string/zip_code"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/zipcodeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="text"
-                android:textColor="@color/purple_dark" />
-
-        </TableRow>
-
-    </TableLayout>
+    </LinearLayout>
 </ScrollView>
