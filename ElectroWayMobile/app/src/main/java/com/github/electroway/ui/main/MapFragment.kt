@@ -1,17 +1,17 @@
 package com.github.electroway.ui.main
 
 import android.Manifest
+import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.MatrixCursor
 import android.location.Address
 import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
 import android.provider.BaseColumns
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -20,18 +20,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.github.electroway.MainActivity
 import com.github.electroway.R
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.concurrent.Executors
 import kotlin.random.Random
@@ -47,6 +47,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
     private var map: GoogleMap? = null
     private lateinit var geocoder: Geocoder
+    private val AUTOCOMPLETE_REQUEST_CODE = 1
+    private val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,78 +69,34 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         parentFragmentManager.beginTransaction().replace(R.id.map, mapFragment!!).commit()
         mapFragment!!.getMapAsync(this)
 
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+            .build(requireContext())
+
         view.findViewById<Toolbar>(R.id.toolbar).setOnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.home_button -> {
                     findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
                     true
                 }
+                R.id.app_bar_search -> {
+                    startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+                }
             }
             true
         }
-        val searchView =
-            view.findViewById<Toolbar>(R.id.toolbar).menu.findItem(R.id.app_bar_search).actionView as SearchView
-        searchView.queryHint = R.string.search.toString()
-        val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
-        val to = IntArray(1) { android.R.id.text1 }
-        val cursorAdapter = SimpleCursorAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            null,
-            from,
-            to,
-            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
-        )
-        searchView.suggestionsAdapter = cursorAdapter
-        lateinit var addresses: List<Address>
-        val pool = Executors.newFixedThreadPool(1)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                hideKeyboard()
-                return false
-            }
 
-            override fun onQueryTextChange(query: String?): Boolean {
-                if (query != null && query.length >= 5) {
-                    pool.submit {
-                        val cursor =
-                            MatrixCursor(
-                                arrayOf(
-                                    BaseColumns._ID,
-                                    SearchManager.SUGGEST_COLUMN_TEXT_1
-                                )
-                            )
-                        query.let {
-                            addresses = geocoder.getFromLocationName(query, 50)
-                            addresses.forEachIndexed { index, address ->
-                                cursor.addRow(arrayOf(index, address.featureName.toString()))
-                            }
-                        }
-                        searchView.suggestionsAdapter.changeCursor(cursor)
-                    }
-                }
-                return true
-            }
-        })
-        searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
-            override fun onSuggestionSelect(position: Int): Boolean {
-                return false
-            }
+        if (!Places.isInitialized()) {
+            val context = requireContext()
+            context.packageManager.getApplicationInfo(
+                context.packageName,
+                PackageManager.GET_META_DATA
+            ).apply {
 
-            override fun onSuggestionClick(position: Int): Boolean {
-                hideKeyboard()
-                val address = addresses.get(position)
-                map?.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        LatLng(
-                            address.latitude,
-                            address.longitude
-                        ), 20.0f
-                    )
-                )
-                return true
+                val key = metaData.getString("com.google.android.geo.API_KEY")!!
+                Places.initialize(requireActivity().applicationContext, key)
             }
-        })
+        }
+
         view.findViewById<FloatingActionButton>(R.id.mapLocationButton).setOnClickListener {
             if (ActivityCompat.checkSelfPermission(
                     requireContext(),
@@ -184,16 +142,25 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 20.0f))
+                    }
+                }
+            }
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun onMapReady(map: GoogleMap?) {
         this.map = map
         stations.forEach { station ->
             map!!.addMarker(MarkerOptions().position(station.second).title(station.first))
         }
-    }
-
-    private fun hideKeyboard() {
-        val inputMethodManager =
-            requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 }
