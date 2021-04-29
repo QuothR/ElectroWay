@@ -1,0 +1,93 @@
+[
+    {
+        "id": 2215,
+        "name": "Statie Autobuz",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.16950582334348,
+            "longitude": 27.59901572274817
+        }
+    },
+    {
+        "id": 2216,
+        "name": "EVConnect Statie de incarcare",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.156060957329636,
+            "longitude": 27.604964107236132
+        }
+    },
+    {
+        "id": 2217,
+        "name": "Statie Incarcare Electrica Pentru Masini",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.152425497255955,
+            "longitude": 27.602709621218228
+        } 
+    },
+    {
+        "id": 2218,
+        "name": "EVConnect Statie de incarcare",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.156352380491704,
+            "longitude": 27.58697460290722
+        } 
+    },
+    {
+        "id": 2219,
+        "name": "Alimentare masini electrice",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.16204570930384,
+            "longitude": 27.57701377501523
+        } 
+    },
+    {
+        "id": 2220,
+        "name": "Caby UAIC",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.17637452882848,
+            "longitude": 27.571601436239835
+        } 
+    },
+    {
+        "id": 2221,
+        "name": "EVconnect - ETECNIC Charging Station",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.17793777222658,
+            "longitude": 27.52133816466764
+        } 
+    },
+    {
+        "id": 2222,
+        "name": "Statie Incarcare Electrica Pentru Masini",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.17516215664494,
+            "longitude": 27.523074666582485
+        } 
+    },
+    {
+        "id": 2223,
+        "name": "Statie incarcare electrica BMW",
+        "status": "OPEN",
+        
+        "gps": {
+            "latitude": 47.17695940506633,
+            "longitude": 27.495303748599873
+        } 
+    }
+
+]
