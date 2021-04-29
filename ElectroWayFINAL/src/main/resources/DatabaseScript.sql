@@ -16,7 +16,41 @@
 CREATE DATABASE IF NOT EXISTS `electroway` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `electroway`;
 
+
 -- Dumping structure for table electroway.car
+
+DROP TABLE IF EXISTS `car`;
+CREATE TABLE IF NOT EXISTS `car` (
+                                     `id` bigint(20) NOT NULL,
+                                     `model` varchar(255) NOT NULL,
+                                     `year` bigint(20) NOT NULL,
+                                     `battery_capacity` bigint(20) NOT NULL,
+                                     `charging_capacity` bigint(20) NOT NULL,
+                                     `plug_type` varchar(255) NOT NULL,
+                                     `vehicle_max_speed` bigint(20) NOT NULL,
+                                     `auxiliary_kWh` bigint(20) NOT NULL,
+                                     `owner_id` bigint(20) DEFAULT NULL,
+                                     PRIMARY KEY (`id`),
+                                     KEY `owner_id` (`owner_id`),
+                                     CONSTRAINT `car_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping structure for table electroway.consumption
+DROP TABLE IF EXISTS `consumption`;
+CREATE TABLE IF NOT EXISTS `consumption` (
+                                             `id` bigint(20) NOT NULL,
+                                             `speed` bigint(20) NOT NULL,
+                                             `consumption_kWh` bigint(20) NOT NULL,
+                                             `car_id` bigint(20) DEFAULT NULL,
+                                             PRIMARY KEY (`id`),
+                                             KEY `car_id` (`car_id`),
+                                             CONSTRAINT `consumption_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+
+/*
 DROP TABLE IF EXISTS `car`;
 CREATE TABLE IF NOT EXISTS `car`
 (
@@ -31,8 +65,7 @@ CREATE TABLE IF NOT EXISTS `car`
     CONSTRAINT `car_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
-
--- Data exporting was unselected.
+*/
 
 -- Dumping structure for table electroway.charging_plug
 DROP TABLE IF EXISTS `charging_plug`;
@@ -163,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `role_privilege`
 DROP TABLE IF EXISTS `station`;
 CREATE TABLE IF NOT EXISTS `station`
 (
-    `id`                     bigint(20)   NOT NULL AUTO_INCREMENT,
+    `id`                     bigint(20)   NOT NULL,
     `address`                varchar(255) NOT NULL,
     `map_latitude_location`  double       NOT NULL,
     `map_longitude_location` double       NOT NULL,
@@ -225,6 +258,38 @@ CREATE TABLE IF NOT EXISTS `user_role`
 -- Dumping structure for table electroway.user_sequence
 DROP TABLE IF EXISTS `user_sequence`;
 CREATE TABLE IF NOT EXISTS `user_sequence`
+(
+    `next_not_cached_value` bigint(21)          NOT NULL,
+    `minimum_value`         bigint(21)          NOT NULL,
+    `maximum_value`         bigint(21)          NOT NULL,
+    `start_value`           bigint(21)          NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
+    `increment`             bigint(21)          NOT NULL COMMENT 'increment value',
+    `cache_size`            bigint(21) unsigned NOT NULL,
+    `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
+    `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
+) ENGINE = InnoDB SEQUENCE=1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table electroway.station_sequence
+DROP TABLE IF EXISTS `station_sequence`;
+CREATE TABLE IF NOT EXISTS `station_sequence`
+(
+    `next_not_cached_value` bigint(21)          NOT NULL,
+    `minimum_value`         bigint(21)          NOT NULL,
+    `maximum_value`         bigint(21)          NOT NULL,
+    `start_value`           bigint(21)          NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
+    `increment`             bigint(21)          NOT NULL COMMENT 'increment value',
+    `cache_size`            bigint(21) unsigned NOT NULL,
+    `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
+    `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
+) ENGINE = InnoDB SEQUENCE=1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table electroway.review_sequence
+DROP TABLE IF EXISTS `review_sequence`;
+CREATE TABLE IF NOT EXISTS `review_sequence`
 (
     `next_not_cached_value` bigint(21)          NOT NULL,
     `minimum_value`         bigint(21)          NOT NULL,
