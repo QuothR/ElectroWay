@@ -38,7 +38,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (alreadySetup)
             return;
-
+        printLogo();
         Privilege driverPrivilege = createPrivilegeIfNotFound("DRIVER_PRIVILEGE");
         Privilege ownerPrivilege = createPrivilegeIfNotFound("OWNER_PRIVILEGE");
         Privilege adminPrivilege = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
@@ -85,5 +85,21 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             roleRepository.save(role);
         }
         return role;
+    }
+
+    private void printLogo(){
+        System.out.println(" ______     __         ______     ______     ______   ______     ______     __     __     ______     __  __    \n" +
+                "/\\  ___\\   /\\ \\       /\\  ___\\   /\\  ___\\   /\\__  _\\ /\\  == \\   /\\  __ \\   /\\ \\  _ \\ \\   /\\  __ \\   /\\ \\_\\ \\   \n" +
+                "\\ \\  __\\   \\ \\ \\____  \\ \\  __\\   \\ \\ \\____  \\/_/\\ \\/ \\ \\  __<   \\ \\ \\/\\ \\  \\ \\ \\/ \".\\ \\  \\ \\  __ \\  \\ \\____ \\  \n" +
+                " \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\    \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\__/\".~\\_\\  \\ \\_\\ \\_\\  \\/\\_____\\ \n" +
+                "  \\/_____/   \\/_____/   \\/_____/   \\/_____/     \\/_/   \\/_/ /_/   \\/_____/   \\/_/   \\/_/   \\/_/\\/_/   \\/_____/ \n" +
+                "                                                                                                               ");
+        //https://patorjk.com/software/taag/#p=display&v=0&f=Small&t=v%200.1%20 'small slant'
+        System.out.println("         ___   ___  \n" +
+                " _  __  / _ \\ <  /  \n" +
+                "| |/ / / // / / /   \n" +
+                "|___/  \\___(_)_/    \n" +
+                "                    ");
+        System.out.println();
     }
 }
