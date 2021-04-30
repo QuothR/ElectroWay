@@ -44,14 +44,14 @@ public class StationController {
     //TODO This can deletes stations one does not own!
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id) {
-        stationService.deleteStation(id);
+    public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
+        stationService.deleteStation(id,httpServletRequest);
     }
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Station> getStation(@PathVariable("id") Long id) {
-        return stationService.getCurrentStation(id);
+    public Optional<Station> getStation(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
+        return stationService.getCurrentStation(id,httpServletRequest);
     }
 
 }

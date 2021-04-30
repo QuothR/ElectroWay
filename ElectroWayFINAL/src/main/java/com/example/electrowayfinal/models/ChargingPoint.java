@@ -15,6 +15,7 @@ import javax.persistence.*;
 })
 public class ChargingPoint {
     @Id
+
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
 
