@@ -56,7 +56,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createRoleIfNotFound("ROLE_OWNER", ownerPrivileges);
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
-        UserDto adminUser = new UserDto("root", "root", "0750855596", "electroway@mailinator.com");
+        UserDto adminUser = new UserDto("root", "root", "0750855596", "radu.harabagiu@gmail.com");
 
         if (userRepository.findUserByUsername("root").isEmpty())
             userService.registerNewUserAccount(adminUser);

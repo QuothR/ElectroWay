@@ -30,9 +30,9 @@ public class StationController {
     }
 
     @PostMapping()
-    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws Exception {
+    public String createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws Exception {
         stationService.createStation(station, httpServletRequest);
-        return stationService.getStation(station.getId());
+        return stationService.getStation(station.getId()).toString();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
@@ -41,6 +41,7 @@ public class StationController {
         return stationService.updateStation(newStation, id, httpServletRequest);
     }
 
+    //TODO This can deletes stations one does not own!
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {

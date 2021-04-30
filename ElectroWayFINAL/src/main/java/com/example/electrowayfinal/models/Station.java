@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Entity(name = "Station")
 @Table(name = "station", schema = "electroway", uniqueConstraints = {
@@ -44,5 +43,16 @@ public class Station implements Serializable {
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id", columnDefinition = "bigint")
     private User user;
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", user=" + user.getUsername() +
+                '}';
+    }
 }
 
