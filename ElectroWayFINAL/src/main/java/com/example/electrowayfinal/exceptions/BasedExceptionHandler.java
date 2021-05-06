@@ -23,10 +23,10 @@ public class BasedExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
 
         List<String> details = new ArrayList<>();
-        ErrorResponse error  = new ErrorResponse("Invalid Data", details);
+        ErrorResponse error = new ErrorResponse("Invalid Data", details);
         details.add(ex.getLocalizedMessage());
 
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
@@ -34,30 +34,30 @@ public class BasedExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex) {
 
         List<String> details = new ArrayList<>();
-        ErrorResponse error  = new ErrorResponse("Record Not Found", details);
+        ErrorResponse error = new ErrorResponse("Record Not Found", details);
         details.add(ex.getLocalizedMessage());
-        return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({DataIntegrityViolationException.class})
     public ResponseEntity<Object> sqlError(DataIntegrityViolationException ex) {
         List<String> details = new ArrayList<>();
-        ErrorResponse error  = new ErrorResponse("SQL Error",details);
+        ErrorResponse error = new ErrorResponse("SQL Error", details);
         details.add(ex.getRootCause().getMessage());
 
-        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         List<String> details = new ArrayList<>();
-        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
+        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());
         }
 
-        ErrorResponse error  = new ErrorResponse("Invalid Data", details);
-        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        ErrorResponse error = new ErrorResponse("Invalid Data", details);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 }

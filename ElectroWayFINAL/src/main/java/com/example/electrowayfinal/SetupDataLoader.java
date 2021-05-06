@@ -3,7 +3,6 @@ package com.example.electrowayfinal;
 import com.example.electrowayfinal.dtos.UserDto;
 import com.example.electrowayfinal.models.Privilege;
 import com.example.electrowayfinal.models.Role;
-import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.PrivilegeRepository;
 import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.UserRepository;
@@ -14,7 +13,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -87,7 +88,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         return role;
     }
 
-    private void printLogo(){
+    private void printLogo() {
         System.out.println(" ______     __         ______     ______     ______   ______     ______     __     __     ______     __  __    \n" +
                 "/\\  ___\\   /\\ \\       /\\  ___\\   /\\  ___\\   /\\__  _\\ /\\  == \\   /\\  __ \\   /\\ \\  _ \\ \\   /\\  __ \\   /\\ \\_\\ \\   \n" +
                 "\\ \\  __\\   \\ \\ \\____  \\ \\  __\\   \\ \\ \\____  \\/_/\\ \\/ \\ \\  __<   \\ \\ \\/\\ \\  \\ \\ \\/ \".\\ \\  \\ \\  __ \\  \\ \\____ \\  \n" +

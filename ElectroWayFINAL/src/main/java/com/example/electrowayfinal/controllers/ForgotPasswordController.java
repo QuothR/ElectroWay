@@ -1,7 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
 
-import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.service.UserService;
 import net.bytebuddy.utility.RandomString;
@@ -58,7 +57,6 @@ public class ForgotPasswordController {
 
         if (user == null)
             return "Invalid token";
-
 
         userService.updatePassword(user, password, token);
 

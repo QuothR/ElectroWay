@@ -16,8 +16,8 @@ public class MyUserDetails implements UserDetails {
 
     public MyUserDetails(User user) {
         this.emailAddress = user.getEmailAddress();
-        this.username =user.getUsername();
-        this.password=user.getPassword();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
         this.enabled = user.isEnabled();
     }
 

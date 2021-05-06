@@ -33,7 +33,7 @@ public class UserDto {
             @JsonProperty("city") String city,
             @JsonProperty("country") String country,
             @JsonProperty("zipcode") String zipcode,
-            @JsonProperty("roles") List<String> roles){
+            @JsonProperty("roles") List<String> roles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;

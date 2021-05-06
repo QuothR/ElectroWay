@@ -45,13 +45,13 @@ public class StationController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
-        stationService.deleteStation(id,httpServletRequest);
+        stationService.deleteStation(id, httpServletRequest);
     }
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Station> getStation(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
-        return stationService.getCurrentStation(id,httpServletRequest);
+        return stationService.getCurrentStation(id, httpServletRequest);
     }
 
 }

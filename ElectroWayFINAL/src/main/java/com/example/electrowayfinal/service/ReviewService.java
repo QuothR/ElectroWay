@@ -46,7 +46,7 @@ public class ReviewService {
 
         review.setUser(optionalUser.get());
 
-        Optional<Station> optionalStation = stationService.getCurrentStation(stationId,httpServletRequest);
+        Optional<Station> optionalStation = stationService.getCurrentStation(stationId, httpServletRequest);
         if (optionalStation.isEmpty())
             throw new Exception("wrong station in review service");
 

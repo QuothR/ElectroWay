@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest){
+    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest) {
         return userService.getCurrentUser(httpServletRequest);
     }
 
@@ -76,8 +76,9 @@ public class UserController {
 
     @PutMapping("/user")
     public void updateUser(@RequestBody User modifiedUser, HttpServletRequest httpServletRequest) throws Exception {
-        userService.updateUser(modifiedUser,httpServletRequest);
+        userService.updateUser(modifiedUser, httpServletRequest);
     }
+
     @GetMapping("/activation")
     public String activation(@RequestParam("token") String token, Model model) {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);

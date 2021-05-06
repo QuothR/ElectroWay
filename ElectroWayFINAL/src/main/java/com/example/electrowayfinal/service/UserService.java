@@ -3,10 +3,10 @@ package com.example.electrowayfinal.service;
 import com.example.electrowayfinal.dtos.UserDto;
 import com.example.electrowayfinal.models.Privilege;
 import com.example.electrowayfinal.models.Role;
+import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.user.MyUserDetails;
-import com.example.electrowayfinal.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Autowired
-    public UserService(UserRepository userRepository, VerificationTokenService verificationTokenService, EmailService emailService,RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, VerificationTokenService verificationTokenService, EmailService emailService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.verificationTokenService = verificationTokenService;
         this.emailService = emailService;
@@ -53,7 +53,6 @@ public class UserService implements UserDetailsService {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
-
 
 
     //TODO ???
@@ -95,8 +94,8 @@ public class UserService implements UserDetailsService {
 
         List<Role> roles = new LinkedList<>();
 
-        for (String role : userDto.getRoles()){
-            if ( roleRepository.findByName(role).isPresent())
+        for (String role : userDto.getRoles()) {
+            if (roleRepository.findByName(role).isPresent())
                 roles.add(roleRepository.findByName(role).get());
             else
                 System.out.println("Tried to add inexistent role " + role + '\n');
@@ -147,7 +146,8 @@ public class UserService implements UserDetailsService {
         return getOptionalUserByUsername(username);
 
     }
-    public Optional<UserDto> getOptionalUserDto(String email){
+
+    public Optional<UserDto> getOptionalUserDto(String email) {
         Optional<User> user = userRepository.findUserByEmailAddress(email);
         if (user.isEmpty())
             return Optional.empty();

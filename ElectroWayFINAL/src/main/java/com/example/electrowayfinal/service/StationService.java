@@ -50,9 +50,9 @@ public class StationService {
 
     }
 
-    public void deleteStation(Long id,HttpServletRequest httpServletRequest) throws Exception {
-        Optional<Station> station = getCurrentStation(id,httpServletRequest);
-        if(station.isEmpty())
+    public void deleteStation(Long id, HttpServletRequest httpServletRequest) throws Exception {
+        Optional<Station> station = getCurrentStation(id, httpServletRequest);
+        if (station.isEmpty())
             throw new Exception("Nu poti sterge o statie care nu exista");
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -61,10 +61,10 @@ public class StationService {
         String username = claims.getSubject();
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-        if(optionalUser.isEmpty())
+        if (optionalUser.isEmpty())
             throw new Exception("Cumva acest user nu exista???? Dar nu stiu cum ajugi aici");
 
-        if(station.get().getUser()!=optionalUser.get())
+        if (station.get().getUser() != optionalUser.get())
             throw new Exception("Se pare ca nu detii acest station, prin urmare nu poti sterge");
         stationRepository.deleteById(id);
     }
@@ -73,9 +73,9 @@ public class StationService {
         return stationRepository.getOne(id);
     }
 
-    public Optional<Station> getCurrentStation(Long id,HttpServletRequest httpServletRequest) throws Exception {
+    public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest) throws Exception {
         Optional<Station> station = stationRepository.findStationById(id);
-        if(station.isEmpty())
+        if (station.isEmpty())
             throw new Exception("De ce incerci sa intri pe un station inexistent???");
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
@@ -85,10 +85,10 @@ public class StationService {
         String username = claims.getSubject();
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-        if(optionalUser.isEmpty())
+        if (optionalUser.isEmpty())
             throw new Exception("Cumva acest user nu exista???? Dar nu stiu cum ajugi aici");
 
-        if(station.get().getUser()!=optionalUser.get())
+        if (station.get().getUser() != optionalUser.get())
             throw new Exception("Ai incercat sa intri pe un station care nu iti apartine, raule");
         return station;
     }
@@ -107,7 +107,7 @@ public class StationService {
     public Station updateStation(Station station, Long id, HttpServletRequest httpServletRequest) throws Exception {
         Optional<Station> stationToUpdate = stationRepository.findStationById(id);
 
-        if(stationToUpdate.isEmpty())
+        if (stationToUpdate.isEmpty())
             throw new Exception("How does one update a non-existing station???");
 
         stationToUpdate.get().setLongitude(station.getLongitude());
@@ -124,7 +124,7 @@ public class StationService {
 
         if (optionalUser.isEmpty())
             throw new Exception("wrong user in station service");
-        if(stationToUpdate.get().getUser()!= optionalUser.get())
+        if (stationToUpdate.get().getUser() != optionalUser.get())
             throw new Exception("Cam ciudat ca vrei sa faci update unui station strain, sigur este o greseala :)");
         station.setUser(optionalUser.get());
         stationRepository.save(stationToUpdate.get());

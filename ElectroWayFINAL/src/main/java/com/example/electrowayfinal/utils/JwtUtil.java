@@ -6,7 +6,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import io.jsonwebtoken.JwsHeader;
+
 import java.util.*;
 
 @Service
@@ -55,7 +55,7 @@ public class JwtUtil {
     }
 
     public String getUsernameFromToken(String token) {
-        int a=2;
+        int a = 2;
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 
         return claims.getSubject();
