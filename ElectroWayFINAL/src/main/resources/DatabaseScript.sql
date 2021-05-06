@@ -16,56 +16,56 @@
 CREATE DATABASE IF NOT EXISTS `electroway` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `electroway`;
 
+-- Dumping database structure for electroway.template_car
+
+DROP TABLE IF EXISTS `template_car`;
+CREATE TABLE IF NOT EXISTS `template_car`
+(
+    `id`                bigint(20)   NOT NULL,
+    `model`             varchar(255) NOT NULL,
+    `year`              bigint(20)   NOT NULL,
+    `battery_capacity`  bigint(20)   NOT NULL,
+    `charging_capacity` double       NOT NULL,
+    `plug_type`         varchar(255) NOT NULL,
+    `vehicle_max_speed` bigint(20)   NOT NULL,
+    `auxiliary_kwh`     bigint(20)   NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- Dumping structure for table electroway.car
 
 DROP TABLE IF EXISTS `car`;
-CREATE TABLE IF NOT EXISTS `car` (
-                                     `id` bigint(20) NOT NULL,
-                                     `model` varchar(255) NOT NULL,
-                                     `year` bigint(20) NOT NULL,
-                                     `battery_capacity` bigint(20) NOT NULL,
-                                     `charging_capacity` bigint(20) NOT NULL,
-                                     `plug_type` varchar(255) NOT NULL,
-                                     `vehicle_max_speed` bigint(20) NOT NULL,
-                                     `auxiliary_kWh` bigint(20) NOT NULL,
-                                     `owner_id` bigint(20) DEFAULT NULL,
-                                     PRIMARY KEY (`id`),
-                                     KEY `owner_id` (`owner_id`),
-                                     CONSTRAINT `car_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `car`
+(
+    `id`                bigint(20)   NOT NULL,
+    `model`             varchar(255) NOT NULL,
+    `year`              bigint(20)   NOT NULL,
+    `battery_capacity`  bigint(20)   NOT NULL,
+    `charging_capacity` double       NOT NULL,
+    `plug_type`         varchar(255) NOT NULL,
+    `vehicle_max_speed` bigint(20)   NOT NULL,
+    `auxiliary_kwh`     bigint(20)   NOT NULL,
+    `owner_id`          bigint references user (id),
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- Dumping structure for table electroway.consumption
 DROP TABLE IF EXISTS `consumption`;
-CREATE TABLE IF NOT EXISTS `consumption` (
-                                             `id` bigint(20) NOT NULL,
-                                             `speed` bigint(20) NOT NULL,
-                                             `consumption_kWh` bigint(20) NOT NULL,
-                                             `car_id` bigint(20) DEFAULT NULL,
-                                             PRIMARY KEY (`id`),
-                                             KEY `car_id` (`car_id`),
-                                             CONSTRAINT `consumption_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Data exporting was unselected.
-
-
-/*
-DROP TABLE IF EXISTS `car`;
-CREATE TABLE IF NOT EXISTS `car`
+CREATE TABLE IF NOT EXISTS `consumption`
 (
-    `id`                    bigint(20)   NOT NULL,
-    `model`                 varchar(255) NOT NULL,
-    `year`                  bigint(20)   NOT NULL,
-    `autonomy`              bigint(20)   NOT NULL,
-    `medium_consumption_kw` bigint(20)   NOT NULL,
-    `owner_id`              bigint(20) DEFAULT NULL,
+    `id`              bigint(20) NOT NULL,
+    `speed`           bigint(20) NOT NULL,
+    `consumption_kwh` double     NOT NULL,
+    `car_id`          bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
-    KEY `owner_id` (`owner_id`),
-    CONSTRAINT `car_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
+    KEY `car_id` (`car_id`),
+    CONSTRAINT `consumption_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
-*/
+
+-- Data exporting was unselected.
 
 -- Dumping structure for table electroway.charging_plug
 DROP TABLE IF EXISTS `charging_plug`;

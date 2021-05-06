@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "30b22145-f83d-4236-b141-05c95b81218a",
+		"_postman_id": "cc519866-b8c4-4e48-b743-f852ea6423b8",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -776,6 +776,81 @@
 								"2",
 								"plugs",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Car",
+			"item": [
+				{
+					"name": "Add car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDMyNTk0MywiaWF0IjoxNjIwMzI1NjQzfQ.21oSRQpbuULYfSgSIe7d4ZGkTYTOXAJFuiO_Dgf6HWLoKMXLCj7Q4ptCwA5oZzsgQuVCdhix3_7K8536ofWS3w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"model\": \"Tesla Model 3 Standard Range\",\r\n    \"year\": 2019,\r\n    \"batteryCapacity\": 54,\r\n    \"chargingCapacity\": 7,\r\n    \"plugType\": \"Type 2\",\r\n    \"vehicleMaxSpeed\": 209,\r\n    \"auxiliaryKwh\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/user/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cars for user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDMyNjU3MCwiaWF0IjoxNjIwMzI2MjcwfQ.c8gMpYTSJI5nxozLVSNWntMjYsLPU_n0fqAwJAttBUobARqAEGJF0o4idBQPZSanoLk-SQBJm0YDd9b4zGr6jg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/user/2/cars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"user",
+								"2",
+								"cars"
 							]
 						}
 					},

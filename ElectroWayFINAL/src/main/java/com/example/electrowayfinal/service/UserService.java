@@ -247,6 +247,10 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public Optional<User> getUserById(long user_id) {
+        return userRepository.findUserById(user_id);
+    }
+
     private Collection<? extends GrantedAuthority> getAuthorities(
             Collection<Role> roles) {
 

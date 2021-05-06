@@ -31,8 +31,8 @@ public class Car {
     private long batteryCapacity;
 
     @Basic
-    @Column(name = "charging_capacity", nullable = false, columnDefinition = "bigint")
-    private long chargingCapacity;
+    @Column(name = "charging_capacity", nullable = false, columnDefinition = "double")
+    private double chargingCapacity;
 
     @Basic
     @Column(name = "plug_type", nullable = false, columnDefinition = "varchar(255)")
@@ -43,7 +43,7 @@ public class Car {
     private long vehicleMaxSpeed;
 
     @Basic
-    @Column(name = "auxiliary_kWh", nullable = false, columnDefinition = "bigint")
+    @Column(name = "auxiliary_kwh", nullable = false, columnDefinition = "bigint")
     private long auxiliaryKwh;
 
     @ManyToOne

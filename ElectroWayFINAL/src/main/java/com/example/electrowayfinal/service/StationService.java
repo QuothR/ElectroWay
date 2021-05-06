@@ -5,6 +5,7 @@ import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.StationRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class StationService {
     private final StationRepository stationRepository;
@@ -41,8 +43,9 @@ public class StationService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (optionalUser.isEmpty())
+        if (optionalUser.isEmpty()) {
             throw new Exception("wrong user in station service");
+        }
 
         station.setUser(optionalUser.get());
 

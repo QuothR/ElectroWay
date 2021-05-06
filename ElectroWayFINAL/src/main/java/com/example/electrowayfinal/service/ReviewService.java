@@ -6,6 +6,7 @@ import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.ReviewRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class ReviewService {
         this.secret = secret;
     }
 
+    @Autowired
     public ReviewService(ReviewRepository reviewRepository, UserService userService, StationService stationService) {
         this.reviewRepository = reviewRepository;
         this.userService = userService;
