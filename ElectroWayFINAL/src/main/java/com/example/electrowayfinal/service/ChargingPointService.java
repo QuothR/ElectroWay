@@ -1,5 +1,7 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.WrongAccessException;
+import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
 import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
@@ -7,14 +9,17 @@ import com.example.electrowayfinal.repositories.ChargingPlugRepository;
 import com.example.electrowayfinal.repositories.ChargingPointRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ChargingPointService {
     private final ChargingPointRepository chargingPointRepository;
@@ -36,7 +41,7 @@ public class ChargingPointService {
         this.userService = userService;
     }
 
-    public void createChargingPoint(ChargingPoint chargingPoint, Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public void createChargingPoint(ChargingPoint chargingPoint, Long id, HttpServletRequest httpServletRequest) {
         Station station = stationService.getStation(id);
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -46,10 +51,16 @@ public class ChargingPointService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (optionalUser.isEmpty())
-            throw new Exception("wrong user in station service");
-        if (!station.getUser().equals(optionalUser.get()))
-            throw new Exception("NU DETII ACEST STATION DOMNULE/DOAMNO/ ->");
+        if (optionalUser.isEmpty()) {
+            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
+        if (!station.getUser().equals(optionalUser.get())) {
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
 
         chargingPoint.setStation(station);
         chargingPointRepository.save(chargingPoint);
@@ -59,24 +70,34 @@ public class ChargingPointService {
         chargingPointRepository.delete(chargingPoint);
     }
 
-    public void deleteChargingPointById(Long cId, Long id) throws Exception {
+    public void deleteChargingPointById(Long cId, Long id) {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
 
-        if (chargingPoint.isEmpty())
-            throw new Exception("There is no such chargingPoint bruh");
+        if (chargingPoint.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("No charging point found!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
         if (chargingPoint.get().getStation().getId() != id) {
-            throw new Exception("hopa, nu detii aceasta statie, cf?");
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
         }
         chargingPointRepository.deleteById(cId);
     }
 
-    public Optional<ChargingPoint> findChargingPointById(Long id, Long cId, HttpServletRequest httpServletRequest) throws Exception {
+    public Optional<ChargingPoint> findChargingPointById(Long id, Long cId, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(id);
 
-        if (chargingPoint.isEmpty())
-            throw new Exception("There is no such chargingPoint bruh");
+        if (chargingPoint.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("No charging point found!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
         if (chargingPoint.get().getStation().getId() != cId) {
-            throw new Exception("hopa, nu detii aceasta statie, cf?");
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
         }
         Station station = stationService.getStation(chargingPoint.get().getStation().getId());
         String bearerToken = httpServletRequest.getHeader("Authorization");
@@ -87,15 +108,21 @@ public class ChargingPointService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (optionalUser.isEmpty())
-            throw new Exception("wrong user in station service");
-        if (!station.getUser().equals(optionalUser.get()))
-            throw new Exception("NU DETII ACEST STATION DOMNULE/DOAMNO/ ->");
+        if (optionalUser.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("Empty user in charging point search!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
+        if (!station.getUser().equals(optionalUser.get())) {
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
 
         return chargingPoint;
     }
 
-    public List<ChargingPoint> getAllChargingPointsByStationId(Long stationId, HttpServletRequest httpServletRequest) throws Exception {
+    public List<ChargingPoint> getAllChargingPointsByStationId(Long stationId, HttpServletRequest httpServletRequest) {
 
         Station station = stationService.getStation(stationId);
         String bearerToken = httpServletRequest.getHeader("Authorization");
@@ -106,10 +133,16 @@ public class ChargingPointService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (optionalUser.isEmpty())
-            throw new Exception("wrong user in station service");
-        if (!station.getUser().equals(optionalUser.get()))
-            throw new Exception("NU DETII ACEST STATION DOMNULE/DOAMNO/ ->");
+        if (optionalUser.isEmpty()) {
+            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
+        if (!station.getUser().equals(optionalUser.get())) {
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
 
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);
     }

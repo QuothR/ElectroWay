@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.utils;
 
 import com.example.electrowayfinal.models.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -40,7 +42,7 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
             // Spring Security Configurations successfully.
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         } else {
-            System.out.println("Cannot set the Security Context");
+            log.error("Cannot set the Security Context");
         }
         chain.doFilter(request, response);
     }

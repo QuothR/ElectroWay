@@ -9,6 +9,7 @@ import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.user.MyUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+@Slf4j
 @Qualifier("userService")
 @Service
 public class UserService implements UserDetailsService {
@@ -164,7 +166,7 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public void updateUser(User modifiedUser, HttpServletRequest httpServletRequest) throws Exception {
+    public void updateUser(User modifiedUser, HttpServletRequest httpServletRequest) {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
 
@@ -172,8 +174,11 @@ public class UserService implements UserDetailsService {
         String username = claims.getSubject();
 
         Optional<User> optionalUser = getOptionalUserByUsername(username);
-        if (optionalUser.isEmpty())
-            throw new Exception("wrong user???!!!??");
+        if (optionalUser.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
         userRepository.save(modifiedUser);
     }
 
@@ -218,14 +223,16 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByUsername(username);
     }
 
-    public void updateResetPasswordToken(String token, String email) throws Exception {
+    public void updateResetPasswordToken(String token, String email) {
         Optional<User> user = userRepository.findUserByEmailAddress(email);
 
         if (user.isPresent()) {
             user.get().setPasswordResetToken(token);
             userRepository.save(user.get());
         } else {
-            throw new Exception("cringe");
+            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
+            log.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -251,9 +258,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserById(user_id);
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(
-            Collection<Role> roles) {
-
+    private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
         return getGrantedAuthorities(getPrivileges(roles));
     }
 

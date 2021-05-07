@@ -1,5 +1,7 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.WrongAccessException;
+import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.StationRepository;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,7 +36,7 @@ public class StationService {
         this.userService = userService;
     }
 
-    public void createStation(Station station, HttpServletRequest httpServletRequest) throws Exception {
+    public void createStation(Station station, HttpServletRequest httpServletRequest) {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -44,7 +47,9 @@ public class StationService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            throw new Exception("wrong user in station service");
+            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
+            log.error(exception.getMessage());
+            throw exception;
         }
 
         station.setUser(optionalUser.get());
@@ -55,8 +60,11 @@ public class StationService {
 
     public void deleteStation(Long id, HttpServletRequest httpServletRequest) throws Exception {
         Optional<Station> station = getCurrentStation(id, httpServletRequest);
-        if (station.isEmpty())
-            throw new Exception("Nu poti sterge o statie care nu exista");
+        if (station.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("Station does not exist!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
 
@@ -64,11 +72,17 @@ public class StationService {
         String username = claims.getSubject();
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-        if (optionalUser.isEmpty())
-            throw new Exception("Cumva acest user nu exista???? Dar nu stiu cum ajugi aici");
+        if (optionalUser.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
 
-        if (station.get().getUser() != optionalUser.get())
-            throw new Exception("Se pare ca nu detii acest station, prin urmare nu poti sterge");
+        if (station.get().getUser() != optionalUser.get()) {
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
         stationRepository.deleteById(id);
     }
 
@@ -76,10 +90,13 @@ public class StationService {
         return stationRepository.getOne(id);
     }
 
-    public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest) {
         Optional<Station> station = stationRepository.findStationById(id);
-        if (station.isEmpty())
-            throw new Exception("De ce incerci sa intri pe un station inexistent???");
+        if (station.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("Station does not exist!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -88,11 +105,17 @@ public class StationService {
         String username = claims.getSubject();
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-        if (optionalUser.isEmpty())
-            throw new Exception("Cumva acest user nu exista???? Dar nu stiu cum ajugi aici");
+        if (optionalUser.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
 
-        if (station.get().getUser() != optionalUser.get())
-            throw new Exception("Ai incercat sa intri pe un station care nu iti apartine, raule");
+        if (station.get().getUser() != optionalUser.get()) {
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
         return station;
     }
 
@@ -107,11 +130,14 @@ public class StationService {
         return stationRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
     }
 
-    public Station updateStation(Station station, Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public Station updateStation(Station station, Long id, HttpServletRequest httpServletRequest) {
         Optional<Station> stationToUpdate = stationRepository.findStationById(id);
 
-        if (stationToUpdate.isEmpty())
-            throw new Exception("How does one update a non-existing station???");
+        if (stationToUpdate.isEmpty()) {
+            NoSuchElementException exception = new NoSuchElementException("Station does not exist!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
 
         stationToUpdate.get().setLongitude(station.getLongitude());
         stationToUpdate.get().setAddress(station.getAddress());
@@ -125,10 +151,16 @@ public class StationService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (optionalUser.isEmpty())
-            throw new Exception("wrong user in station service");
-        if (stationToUpdate.get().getUser() != optionalUser.get())
-            throw new Exception("Cam ciudat ca vrei sa faci update unui station strain, sigur este o greseala :)");
+        if (optionalUser.isEmpty()) {
+            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
+        if (stationToUpdate.get().getUser() != optionalUser.get()) {
+            WrongAccessException exception = new WrongAccessException("You don't own this station!");
+            log.error(exception.getMessage());
+            throw exception;
+        }
         station.setUser(optionalUser.get());
         stationRepository.save(stationToUpdate.get());
         return stationToUpdate.get();

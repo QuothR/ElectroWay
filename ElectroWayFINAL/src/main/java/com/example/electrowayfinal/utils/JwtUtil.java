@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.utils;
 
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Slf4j
 @Service
 public class JwtUtil {
     private String secret;
@@ -50,6 +52,7 @@ public class JwtUtil {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
+            log.error(ex.getMessage());
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
         }
     }
@@ -69,7 +72,7 @@ public class JwtUtil {
         /*if (isAdmin != null && isAdmin == true) {
             roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }*/
-        if (isUser != null && isUser == true) {
+        if (isUser != null && isUser) {
             roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
         }
         return roles;
