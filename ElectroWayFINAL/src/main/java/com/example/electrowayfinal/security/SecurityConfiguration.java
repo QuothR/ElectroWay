@@ -21,10 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    /*@Qualifier("userService")
-    @Autowired
-    UserDetailsService UserService;*/
-
     @Qualifier("userService")
     @Autowired
     private UserDetailsService userDetailsService;
@@ -47,12 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
     }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth)  {
-//        //     auth.userDetailsService(UserService);
-//        auth.authenticationProvider(authProvider());
-//    }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

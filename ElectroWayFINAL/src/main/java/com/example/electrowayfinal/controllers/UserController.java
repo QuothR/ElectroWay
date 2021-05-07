@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Timestamp;
@@ -51,31 +52,18 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Optional<UserDto> registerNewUser(@Valid @RequestBody UserDto userDto) throws DataIntegrityViolationException {
-
+    public Optional<UserDto> registerNewUser(@Valid @RequestBody UserDto userDto) throws DataIntegrityViolationException, MessagingException {
         userService.registerNewUserAccount(userDto);
         return userService.getOptionalUserDto(userDto.getEmailAddress());
     }
 
-    /*
-        @RequestMapping("login")
-        @PutMapping()
-        public void login(
-                HttpServletRequest request,
-                HttpServletResponse response,
-                @RequestParam(required = true) String email,
-                @RequestParam(required = true) String password
-        ){
-            userService.login(request,response,email,password);
-        }
-    */
     @DeleteMapping(path = "{userId}")
     public void deleteUser(@PathVariable("userId") Long id) {
         userService.deleteUser(id);
     }
 
     @PutMapping("/user")
-    public void updateUser(@RequestBody User modifiedUser, HttpServletRequest httpServletRequest) throws Exception {
+    public void updateUser(@RequestBody User modifiedUser, HttpServletRequest httpServletRequest) {
         userService.updateUser(modifiedUser, httpServletRequest);
     }
 

@@ -47,18 +47,12 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String authToken) {
-        try {
-            // Jwt token has not been tampered with
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
-            return true;
-        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
-            log.error(ex.getMessage());
-            throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
-        }
+        // Jwt token has not been tampered with
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+        return true;
     }
 
     public String getUsernameFromToken(String token) {
-        int a = 2;
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 
         return claims.getSubject();

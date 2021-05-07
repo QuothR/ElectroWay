@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@Slf4j
 @Service
 public class ChargingPointService {
     private final ChargingPointRepository chargingPointRepository;
@@ -52,14 +51,10 @@ public class ChargingPointService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongUserInServiceException("Wrong user in station service!");
         }
         if (!station.getUser().equals(optionalUser.get())) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
 
         chargingPoint.setStation(station);
@@ -74,14 +69,10 @@ public class ChargingPointService {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
 
         if (chargingPoint.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("No charging point found!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("No charging point found!");
         }
         if (chargingPoint.get().getStation().getId() != id) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         chargingPointRepository.deleteById(cId);
     }
@@ -90,14 +81,10 @@ public class ChargingPointService {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(id);
 
         if (chargingPoint.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("No charging point found!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("No charging point found!");
         }
         if (chargingPoint.get().getStation().getId() != cId) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         Station station = stationService.getStation(chargingPoint.get().getStation().getId());
         String bearerToken = httpServletRequest.getHeader("Authorization");
@@ -109,14 +96,10 @@ public class ChargingPointService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("Empty user in charging point search!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("Empty user in charging point search!");
         }
         if (!station.getUser().equals(optionalUser.get())) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
 
         return chargingPoint;
@@ -134,14 +117,10 @@ public class ChargingPointService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongUserInServiceException("Wrong user in station service!");
         }
         if (!station.getUser().equals(optionalUser.get())) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
 
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);

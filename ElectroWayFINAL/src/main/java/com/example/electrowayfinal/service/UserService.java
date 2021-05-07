@@ -100,39 +100,23 @@ public class UserService implements UserDetailsService {
             if (roleRepository.findByName(role).isPresent())
                 roles.add(roleRepository.findByName(role).get());
             else
-                System.out.println("Tried to add inexistent role " + role + '\n');
+                log.info("Tried to add inexistent role " + role + '\n');
         }
 
         user.setRoles(roles);
-
-//        assert roleRepository.findByName("ROLE_DRIVER") != null;
-
-//        Collection<Role> roless = Collections.singletonList(roleRepository.findByName("ROLE_DRIVER").isPresent() ?
-//                                                            roleRepository.findByName("ROLE_DRIVER").get() :
-//                                                                new Role("retardat"));
-//
-//        if (!user.getUsername().equals("root")) {
-//            user.setRoles(roless);
-//        }
-
         saved.ifPresent(u -> {
+            String token = UUID.randomUUID().toString();
+            verificationTokenService.save(user, token);
             try {
-                String token = UUID.randomUUID().toString();
-                verificationTokenService.save(user, token);
-
-                try {
-                    emailService.sendHtmlMail(u);
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                emailService.sendHtmlMail(u);
+            } catch (MessagingException e) {
+                log.error(e.getMessage());
             }
         });
 
 
         userRepository.save(user);
-        System.out.println(user);
+        log.info(user.toString());
 
         //saved.get();
 
@@ -175,9 +159,7 @@ public class UserService implements UserDetailsService {
 
         Optional<User> optionalUser = getOptionalUserByUsername(username);
         if (optionalUser.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("User does not exist!");
         }
         userRepository.save(modifiedUser);
     }
@@ -205,7 +187,7 @@ public class UserService implements UserDetailsService {
         user.setEnabled(true);
     }
 
-    // :))))) Aici face load user by email address -> Cringe
+    // :))))) Aici face load user by email address
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findUserByEmailAddress(username);
@@ -230,9 +212,7 @@ public class UserService implements UserDetailsService {
             user.get().setPasswordResetToken(token);
             userRepository.save(user.get());
         } else {
-            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("User does not exist!");
         }
     }
 
@@ -244,7 +224,6 @@ public class UserService implements UserDetailsService {
     }
 
     public void updatePassword(User user, String newPassword, String passwordResetToken) {
-        //TODO :> OwO :^)
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(newPassword);
 

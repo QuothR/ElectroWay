@@ -2,6 +2,7 @@ package com.example.electrowayfinal.Validation;
 
 import com.example.electrowayfinal.models.User;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.passay.*;
 
 import javax.validation.ConstraintValidator;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+@Slf4j
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, User> {
 
     @Override
@@ -37,7 +39,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 5, false),
                 new IllegalSequenceRule(EnglishSequenceData.Numerical, 5, false)
         ));
-        System.out.println("->>>>>>>>>>>>>>>>>>>>>" + user.getPassword());
+        log.info("->>>>>>>>>>>>>>>>>>>>>" + user.getPassword());
         RuleResult result = validator.validate(new PasswordData(user.getPassword()));
         if (result.isValid()) {
             return true;

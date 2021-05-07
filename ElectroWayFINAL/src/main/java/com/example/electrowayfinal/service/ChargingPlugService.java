@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@Slf4j
 @Service
 public class ChargingPlugService {
     private final ChargingPlugRepository chargingPlugRepository;
@@ -36,12 +35,13 @@ public class ChargingPlugService {
         this.userService = userService;
     }
 
-    public void createChargingPlug(ChargingPlug chargingPlug, Long cId, Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public void createChargingPlug(ChargingPlug chargingPlug, Long cId, Long id, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
-        if (chargingPoint.isEmpty())
-            throw new Exception("cannot set chargingPoint to chargingPlug bruh");
+        if (chargingPoint.isEmpty()) {
+            throw new NoSuchElementException("Charging point does not exist!");
+        }
         if (chargingPoint.get().getStation().getId() != id) {
-            throw new Exception("Hopa, se pare ca nu detii aceasta statie, ce vrei sa faci????????!");
+            throw new WrongAccessException("You don't own this station!");
         }
         chargingPlug.setChargingPoint(chargingPoint.get());
 
@@ -52,37 +52,27 @@ public class ChargingPlugService {
         chargingPlugRepository.delete(chargingPlug);
     }
 
-    public void deleteChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) throws Exception {
+    public void deleteChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
         if (chargingPoint.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("Charging point in charging plug search is empty!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("Charging point in charging plug search is empty!");
         }
         if (chargingPoint.get().getStation().getId() != id) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         Optional<ChargingPlug> chargingPlug = chargingPlugRepository.findChargingPlugById(pId);
         if (chargingPlug.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("Charging plug does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("Charging plug does not exist!");
         }
         if (chargingPoint.get().getId() != chargingPlug.get().getChargingPoint().getId()) {
-            WrongAccessException exception = new WrongAccessException("You don't own this charging point!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this charging point!");
         }
         chargingPlugRepository.deleteById(pId);
     }
 
     public List<ChargingPlug> getChargingPlugsByChargingPoint(ChargingPoint chargingPoint, Long id) {
         if (chargingPoint.getStation().getId() != id) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         return chargingPlugRepository.findChargingPlugsByChargingPoint(chargingPoint);
     }
@@ -98,25 +88,17 @@ public class ChargingPlugService {
     public Optional<ChargingPlug> getChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
         if (chargingPoint.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("Charging point in charging plug search is empty!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("Charging point in charging plug search is empty!");
         }
         if (chargingPoint.get().getStation().getId() != id) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         Optional<ChargingPlug> chargingPlug = chargingPlugRepository.findChargingPlugById(pId);
         if (chargingPlug.isEmpty()) {
-            WrongAccessException exception = new WrongAccessException("You don't own this charging plug!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this charging plug!");
         }
         if (chargingPoint.get().getId() != chargingPlug.get().getChargingPoint().getId()) {
-            WrongAccessException exception = new WrongAccessException("You don't own this charging point!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this charging point!");
         }
         return chargingPlug;
     }
@@ -124,9 +106,7 @@ public class ChargingPlugService {
     public ChargingPlug updateChargingPlug(ChargingPlug chargingPlug, Long id, HttpServletRequest httpServletRequest) {
         Optional<ChargingPlug> chargingPlugToUpdate = chargingPlugRepository.findChargingPlugById(id);
         if (chargingPlugToUpdate.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("No charging plug to update!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("No charging plug to update!");
         }
         chargingPlugToUpdate.get().setChargingSpeedKw(chargingPlug.getChargingSpeedKw());
         chargingPlugToUpdate.get().setConnectorType(chargingPlug.getConnectorType());

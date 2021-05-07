@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -26,28 +27,29 @@ public class ChargingPlugController {
 
     @PostMapping(value = "{id}/points/{cId}")
     @ResponseStatus(HttpStatus.OK)
-    public ChargingPlug createChargingPlug(@RequestBody ChargingPlug chargingPlug, @PathVariable("cId") Long cId, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public ChargingPlug createChargingPlug(@RequestBody ChargingPlug chargingPlug, @PathVariable("cId") Long cId, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         chargingPlugService.createChargingPlug(chargingPlug, cId, id, httpServletRequest);
         return chargingPlug;
     }
 
     @GetMapping(value = "{id}/points/{cId}/plugs")
-    public List<ChargingPlug> getAllPlugsFromStation(@PathVariable("cId") Long cId, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public List<ChargingPlug> getAllPlugsFromStation(@PathVariable("cId") Long cId, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
-        if (chargingPoint.isEmpty())
-            throw new Exception("There is no such chargingPlug bruh");
+        if (chargingPoint.isEmpty()) {
+            throw new NoSuchElementException("Charging plug does not exist!");
+        }
         return chargingPlugService.getChargingPlugsByChargingPoint(chargingPoint.get(), id);
     }
 
     @GetMapping(path = "/{id}/points/{cId}/plugs/{pId}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<ChargingPlug> getChargingPlug(@PathVariable("pId") Long pId, @PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) throws Exception {
+    public Optional<ChargingPlug> getChargingPlug(@PathVariable("pId") Long pId, @PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) {
         return chargingPlugService.getChargingPlugById(pId, id, cId, httpServletRequest);
     }
 
     @DeleteMapping(path = "/{id}/points/{cId}/plugs/{pId}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("pId") Long pId, @PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) throws Exception {
+    public void delete(@PathVariable("pId") Long pId, @PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) {
         chargingPlugService.deleteChargingPlugById(pId, id, cId, httpServletRequest);
     }
 

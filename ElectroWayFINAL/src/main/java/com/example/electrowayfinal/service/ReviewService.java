@@ -7,7 +7,6 @@ import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.ReviewRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
 public class ReviewService {
     private final ReviewRepository reviewRepository;
@@ -47,18 +45,14 @@ public class ReviewService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in review service!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongUserInServiceException("Wrong user in review service!");
         }
 
         review.setUser(optionalUser.get());
 
         Optional<Station> optionalStation = stationService.getCurrentStation(stationId, httpServletRequest);
         if (optionalStation.isEmpty()) {
-            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong station in review service!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongUserInServiceException("Wrong station in review service!");
         }
 
         review.setStation(optionalStation.get());

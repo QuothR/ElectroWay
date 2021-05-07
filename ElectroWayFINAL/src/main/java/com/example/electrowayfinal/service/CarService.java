@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
 public class CarService {
     private final CarRepository carRepository;
@@ -46,15 +45,11 @@ public class CarService {
         Optional<User> optionalUser1 = userService.getUserById(userId);
 
         if (optionalUser.isEmpty() || optionalUser1.isEmpty()) {
-            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in car service!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongUserInServiceException("Wrong user in car service!");
         }
 
         if (!optionalUser.get().equals(optionalUser1.get())) {
-            WrongAccessException exception = new WrongAccessException("You don't own this car!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this car!");
         }
 
         car.setUser(optionalUser.get());

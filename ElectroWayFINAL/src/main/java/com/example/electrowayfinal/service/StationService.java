@@ -7,7 +7,6 @@ import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.StationRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 public class StationService {
     private final StationRepository stationRepository;
@@ -47,9 +45,7 @@ public class StationService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongUserInServiceException("Wrong user in station service!");
         }
 
         station.setUser(optionalUser.get());
@@ -58,12 +54,10 @@ public class StationService {
 
     }
 
-    public void deleteStation(Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public void deleteStation(Long id, HttpServletRequest httpServletRequest) {
         Optional<Station> station = getCurrentStation(id, httpServletRequest);
         if (station.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("Station does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("Station does not exist!");
         }
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -73,15 +67,11 @@ public class StationService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
         if (optionalUser.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("User does not exist!");
         }
 
         if (station.get().getUser() != optionalUser.get()) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         stationRepository.deleteById(id);
     }
@@ -93,9 +83,7 @@ public class StationService {
     public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest) {
         Optional<Station> station = stationRepository.findStationById(id);
         if (station.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("Station does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("Station does not exist!");
         }
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
@@ -106,15 +94,11 @@ public class StationService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
         if (optionalUser.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("User does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("User does not exist!");
         }
 
         if (station.get().getUser() != optionalUser.get()) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         return station;
     }
@@ -134,9 +118,7 @@ public class StationService {
         Optional<Station> stationToUpdate = stationRepository.findStationById(id);
 
         if (stationToUpdate.isEmpty()) {
-            NoSuchElementException exception = new NoSuchElementException("Station does not exist!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NoSuchElementException("Station does not exist!");
         }
 
         stationToUpdate.get().setLongitude(station.getLongitude());
@@ -152,14 +134,10 @@ public class StationService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            WrongUserInServiceException exception = new WrongUserInServiceException("Wrong user in station service!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongUserInServiceException("Wrong user in station service!");
         }
         if (stationToUpdate.get().getUser() != optionalUser.get()) {
-            WrongAccessException exception = new WrongAccessException("You don't own this station!");
-            log.error(exception.getMessage());
-            throw exception;
+            throw new WrongAccessException("You don't own this station!");
         }
         station.setUser(optionalUser.get());
         stationRepository.save(stationToUpdate.get());

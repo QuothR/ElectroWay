@@ -20,7 +20,7 @@ public class CarController {
     }
 
     @PostMapping(path = "user/{id}")
-    public Car createCar(@RequestBody Car car, @PathVariable("id") Long userId,  HttpServletRequest httpServletRequest) throws Exception {
+    public Car createCar(@RequestBody Car car, @PathVariable("id") Long userId,  HttpServletRequest httpServletRequest) {
         carService.createCar(car, userId, httpServletRequest);
         return carService.getCar(car.getId());
     }
@@ -29,6 +29,4 @@ public class CarController {
     public List<Car> getUserCars(@PathVariable("id") Long userId) {
         return carService.getCars(userId);
     }
-
-
 }

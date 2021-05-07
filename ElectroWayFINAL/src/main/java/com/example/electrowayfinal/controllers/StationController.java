@@ -30,27 +30,27 @@ public class StationController {
     }
 
     @PostMapping()
-    public String createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws Exception {
+    public String createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) {
         stationService.createStation(station, httpServletRequest);
         return stationService.getStation(station.getId()).toString();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public Station updateStation(@RequestBody Station newStation, @PathVariable Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public Station updateStation(@RequestBody Station newStation, @PathVariable Long id, HttpServletRequest httpServletRequest) {
         return stationService.updateStation(newStation, id, httpServletRequest);
     }
 
     //TODO This can deletes stations one does not own!
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         stationService.deleteStation(id, httpServletRequest);
     }
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Station> getStation(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
+    public Optional<Station> getStation(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         return stationService.getCurrentStation(id, httpServletRequest);
     }
 

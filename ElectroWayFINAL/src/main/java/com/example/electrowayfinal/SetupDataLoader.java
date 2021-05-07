@@ -7,6 +7,7 @@ import com.example.electrowayfinal.repositories.PrivilegeRepository;
 import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.service.UserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -34,6 +35,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         this.userRepository = userRepository;
     }
 
+    @SneakyThrows
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -56,7 +58,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createRoleIfNotFound("ROLE_DRIVER", driverPrivileges);
         createRoleIfNotFound("ROLE_OWNER", ownerPrivileges);
 
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
+        // Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
         UserDto adminUser = new UserDto("root", "root", "0750855596", "radu.harabagiu@gmail.com");
 
         if (userRepository.findUserByUsername("root").isEmpty())
@@ -74,6 +76,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         return privilege;
     }
 
+    // TODO this should be void
     @Transactional
     Role createRoleIfNotFound(
             String name, Collection<Privilege> privileges) {
