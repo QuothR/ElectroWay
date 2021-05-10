@@ -20,7 +20,7 @@ public class ReviewController {
     }
 
     @PostMapping(path = "station/{id}")
-    public Review createReview(@RequestBody Review review, @PathVariable("id") Long stationId, HttpServletRequest httpServletRequest) throws Exception {
+    public Review createReview(@RequestBody Review review, @PathVariable("id") Long stationId, HttpServletRequest httpServletRequest) {
         reviewService.createReview(review, stationId, httpServletRequest);
         return reviewService.getReview(review.getId());
     }

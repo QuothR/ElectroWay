@@ -1,11 +1,13 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
 import com.example.electrowayfinal.models.Review;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.ReviewRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +27,14 @@ public class ReviewService {
         this.secret = secret;
     }
 
+    @Autowired
     public ReviewService(ReviewRepository reviewRepository, UserService userService, StationService stationService) {
         this.reviewRepository = reviewRepository;
         this.userService = userService;
         this.stationService = stationService;
     }
 
-    public void createReview(Review review, Long stationId, HttpServletRequest httpServletRequest) throws Exception {
+    public void createReview(Review review, Long stationId, HttpServletRequest httpServletRequest) {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -41,14 +44,16 @@ public class ReviewService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (optionalUser.isEmpty())
-            throw new Exception("wrong user in review service");
+        if (optionalUser.isEmpty()) {
+            throw new WrongUserInServiceException("Wrong user in review service!");
+        }
 
         review.setUser(optionalUser.get());
 
-        Optional<Station> optionalStation = stationService.getCurrentStation(stationId,httpServletRequest);
-        if (optionalStation.isEmpty())
-            throw new Exception("wrong station in review service");
+        Optional<Station> optionalStation = stationService.getCurrentStation(stationId, httpServletRequest);
+        if (optionalStation.isEmpty()) {
+            throw new WrongUserInServiceException("Wrong station in review service!");
+        }
 
         review.setStation(optionalStation.get());
 

@@ -1,12 +1,13 @@
 package com.example.electrowayfinal.user;
 
 import com.example.electrowayfinal.models.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-
+@Getter
 public class MyUserDetails implements UserDetails {
 
     private final String emailAddress;
@@ -16,25 +17,14 @@ public class MyUserDetails implements UserDetails {
 
     public MyUserDetails(User user) {
         this.emailAddress = user.getEmailAddress();
-        this.username =user.getUsername();
-        this.password=user.getPassword();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
         this.enabled = user.isEnabled();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override
@@ -50,10 +40,5 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
     }
 }

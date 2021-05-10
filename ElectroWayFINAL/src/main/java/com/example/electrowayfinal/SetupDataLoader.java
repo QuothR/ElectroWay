@@ -3,18 +3,20 @@ package com.example.electrowayfinal;
 import com.example.electrowayfinal.dtos.UserDto;
 import com.example.electrowayfinal.models.Privilege;
 import com.example.electrowayfinal.models.Role;
-import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.PrivilegeRepository;
 import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.UserRepository;
 import com.example.electrowayfinal.service.UserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -33,6 +35,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         this.userRepository = userRepository;
     }
 
+    @SneakyThrows
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -55,7 +58,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createRoleIfNotFound("ROLE_DRIVER", driverPrivileges);
         createRoleIfNotFound("ROLE_OWNER", ownerPrivileges);
 
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
+        // Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
         UserDto adminUser = new UserDto("root", "root", "0750855596", "radu.harabagiu@gmail.com");
 
         if (userRepository.findUserByUsername("root").isEmpty())
@@ -73,6 +76,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         return privilege;
     }
 
+    // TODO this should be void
     @Transactional
     Role createRoleIfNotFound(
             String name, Collection<Privilege> privileges) {
@@ -87,7 +91,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         return role;
     }
 
-    private void printLogo(){
+    private void printLogo() {
         System.out.println(" ______     __         ______     ______     ______   ______     ______     __     __     ______     __  __    \n" +
                 "/\\  ___\\   /\\ \\       /\\  ___\\   /\\  ___\\   /\\__  _\\ /\\  == \\   /\\  __ \\   /\\ \\  _ \\ \\   /\\  __ \\   /\\ \\_\\ \\   \n" +
                 "\\ \\  __\\   \\ \\ \\____  \\ \\  __\\   \\ \\ \\____  \\/_/\\ \\/ \\ \\  __<   \\ \\ \\/\\ \\  \\ \\ \\/ \".\\ \\  \\ \\  __ \\  \\ \\____ \\  \n" +

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "30b22145-f83d-4236-b141-05c95b81218a",
+		"_postman_id": "cc519866-b8c4-4e48-b743-f852ea6423b8",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"cxdsasasffdsvddsd\",\r\n    \"password\": \"ds5safdsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\"\r\n}",
+							"raw": "{\r\n    \"username\": \"cxdsasasffdsvddsd\",\r\n    \"password\": \"ds5safdsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": [\"ROLE_DRIVER\",\"ROLE_OWNER\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -437,11 +437,21 @@
 				{
 					"name": "Add review",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDY0ODAzNCwiaWF0IjoxNjIwNjQ3NzM0fQ.HAz2A0vb1kT75yA9WbKwAtXYY3O4sTxojfXlkwDv7k1jSBPFY9bfsJ_Kl25Vr9momXadKQfveXlRMOH4W5ehgw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"text_review\": \"prea blana statia\",\r\n    \"rating\": \"10\"\r\n}",
+							"raw": "{\r\n    \"textReview\": \"prea blana statia\",\r\n    \"rating\": \"10\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -449,7 +459,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/station/2",
+							"raw": "http://localhost:8090/station/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -457,7 +467,7 @@
 							"port": "8090",
 							"path": [
 								"station",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -776,6 +786,81 @@
 								"2",
 								"plugs",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Car",
+			"item": [
+				{
+					"name": "Add car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDM5NDk3NiwiaWF0IjoxNjIwMzk0Njc2fQ.KgJGbfzsfznCo0Y2sWRm1w8b2lV-TfNbblOwTKrFg6j9kewidSK5Ay5NVb13z82850y4JyDxGXk6sneeWtGAHg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"model\": \"Tesla Model 3 Standard Range\",\r\n    \"year\": 2019,\r\n    \"batteryCapacity\": 54,\r\n    \"chargingCapacity\": 7,\r\n    \"plugType\": \"Type 2\",\r\n    \"vehicleMaxSpeed\": 209,\r\n    \"auxiliaryKwh\": 1.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/user/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cars for user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDMyNjU3MCwiaWF0IjoxNjIwMzI2MjcwfQ.c8gMpYTSJI5nxozLVSNWntMjYsLPU_n0fqAwJAttBUobARqAEGJF0o4idBQPZSanoLk-SQBJm0YDd9b4zGr6jg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/user/2/cars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"user",
+								"2",
+								"cars"
 							]
 						}
 					},

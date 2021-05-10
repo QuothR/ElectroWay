@@ -1,13 +1,14 @@
 package com.example.electrowayfinal.controllers;
 
 
-import com.example.electrowayfinal.exceptions.PasswordsDoNotMatch;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @RestController
 public class ForgotPasswordController {
 
@@ -34,11 +36,11 @@ public class ForgotPasswordController {
     }
 
     @PostMapping("/forgot_password")
-    public String processForgotPasswordForm(HttpServletRequest request) throws Exception /* :) */ {
+    public String processForgotPasswordForm(HttpServletRequest request) throws MessagingException {
         String email = request.getParameter("email");
         String token = RandomString.make(45);
 
-        System.out.println("token: " + token);
+        log.info("token: " + token);
 
         userService.updateResetPasswordToken(token, email);
 
@@ -59,7 +61,6 @@ public class ForgotPasswordController {
         if (user == null)
             return "Invalid token";
 
-
         userService.updatePassword(user, password, token);
 
         return "password succesfully reset";
@@ -76,20 +77,3 @@ public class ForgotPasswordController {
         javaMailSender.send(message);
     }
 }
-
-//    String body = templateEngine.process("verification",context);
-//
-//    MimeMessage message = javaMailSender.createMimeMessage();
-//    MimeMessageHelper helper = new MimeMessageHelper(message,true);
-//            helper.setTo(user.getEmailAddress());
-//                    helper.setSubject("email adress verification");
-//                    helper.setText(body,true);
-//                    javaMailSender.send(message);
-
-
-//    MimeMessage message = javaMailSender.createMimeMessage();
-//    MimeMessageHelper helper = new MimeMessageHelper(message,true);
-//            helper.setTo(user.getEmailAddress());
-//                    helper.setSubject("email adress verification");
-//                    helper.setText(body,true);
-//                    javaMailSender.send(message);

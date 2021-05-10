@@ -4,6 +4,7 @@ import com.example.electrowayfinal.Validation.ValidPassword;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-
+@Slf4j
 @ValidPassword
 @Getter
 @Setter
@@ -160,7 +161,7 @@ public class User implements UserDetails {
             Role role2 = new Role(role);
             this.roles.add(role2);
         }
-        System.out.println("CONSTRUCTOR");
+        log.info("CONSTRUCTOR");
     }
 
     public User(String username, String password) {
