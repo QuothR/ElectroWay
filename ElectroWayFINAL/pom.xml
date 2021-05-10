@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-security</artifactId>f
         </dependency>
         <dependency>
             <groupId>com.mageddo.lombok</groupId>
