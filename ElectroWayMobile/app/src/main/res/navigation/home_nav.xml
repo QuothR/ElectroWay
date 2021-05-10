@@ -8,7 +8,11 @@
         android:id="@+id/navigation_car_details"
         android:name="com.github.electroway.ui.main.CarDetailsFragment"
         android:label="@string/title_car_details"
-        tools:layout="@layout/fragment_car_details" />
+        tools:layout="@layout/fragment_car_details" >
+        <action
+            android:id="@+id/action_navigation_car_details_to_navigation_stations"
+            app:destination="@id/navigation_stations" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_history"
         android:name="com.github.electroway.ui.main.HistoryFragment"

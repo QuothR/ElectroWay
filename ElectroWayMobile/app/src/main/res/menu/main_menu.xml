@@ -5,6 +5,7 @@
     <item
         android:id="@+id/map_button"
         android:icon="@android:drawable/ic_menu_mapmode"
+        android:menuCategory="alternative"
         android:title="@string/title_map"
         app:showAsAction="always" />
 </menu>

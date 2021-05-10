@@ -24,5 +24,9 @@ class ForgotPasswordFragment : Fragment() {
         view.findViewById<Button>(R.id.forgot_password_cancel_button).setOnClickListener {
             findNavController().navigate(R.id.action_forgotPasswordFragment_to_signInFragment)
         }
+
+        view.findViewById<Button>(R.id.forgot_password_confirm_button).setOnClickListener {
+            findNavController().navigate(R.id.action_forgotPasswordFragment_to_signInFragment)
+        }
     }
 }

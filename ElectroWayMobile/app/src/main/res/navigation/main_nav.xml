@@ -8,7 +8,7 @@
         android:id="@+id/startupFragment"
         android:name="com.github.electroway.ui.start.StartupFragment"
         android:label="Startup"
-        tools:layout="@layout/fragment_startup" >
+        tools:layout="@layout/fragment_startup">
         <action
             android:id="@+id/action_startupFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -18,7 +18,7 @@
         android:id="@+id/signInFragment"
         android:name="com.github.electroway.ui.start.SignInFragment"
         android:label="Sign In"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_createAccountFragment"
             app:destination="@id/createAccountFragment"
@@ -36,7 +36,7 @@
         android:id="@+id/createAccountFragment"
         android:name="com.github.electroway.ui.start.CreateAccountFragment"
         android:label="fragment_create_account"
-        tools:layout="@layout/fragment_create_account" >
+        tools:layout="@layout/fragment_create_account">
         <action
             android:id="@+id/action_createAccountFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -49,7 +49,7 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.github.electroway.ui.start.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" >
+        tools:layout="@layout/fragment_forgot_password">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -59,29 +59,39 @@
         android:id="@+id/mapFragment"
         android:name="com.github.electroway.ui.main.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map"
-        app:startDestination="@id/action_mapFragment_to_homeFragment">
+        app:startDestination="@id/action_mapFragment_to_homeFragment"
+        tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_mapFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <argument
+            android:name="addStation"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.github.electroway.ui.main.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_mapFragment"
             app:destination="@id/mapFragment"
-            app:enterAnim="@android:anim/fade_in" />
+            app:enterAnim="@android:anim/fade_in"
+            />
         <action
             android:id="@+id/action_homeFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <argument
+            android:name="stationToAdd"
+            app:argType="com.google.android.gms.maps.model.LatLng"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/createAccountNextFragment"
         android:name="com.github.electroway.ui.start.CreateAccountNextFragment"
-        android:label="CreateAccountNextFragment" >
+        android:label="CreateAccountNextFragment">
         <action
             android:id="@+id/action_createAccountNextFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
