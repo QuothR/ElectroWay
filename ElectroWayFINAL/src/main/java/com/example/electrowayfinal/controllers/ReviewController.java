@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @Qualifier("review")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReviewController {
     private final ReviewService reviewService;
 
