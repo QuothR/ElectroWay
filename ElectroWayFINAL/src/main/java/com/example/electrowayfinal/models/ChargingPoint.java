@@ -1,8 +1,11 @@
 package com.example.electrowayfinal.models;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 
 @Getter
 @Setter

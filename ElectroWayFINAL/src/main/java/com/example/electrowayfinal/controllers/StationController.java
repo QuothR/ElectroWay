@@ -2,6 +2,8 @@ package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.service.StationService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -31,9 +33,10 @@ public class StationController {
     }
 
     @PostMapping()
-    public String createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) {
+    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) {
         stationService.createStation(station, httpServletRequest);
-        return stationService.getStation(station.getId()).toString();
+        return stationService.getStation(station.getId());
+
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)

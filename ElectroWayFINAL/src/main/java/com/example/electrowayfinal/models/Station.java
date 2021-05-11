@@ -1,8 +1,12 @@
 package com.example.electrowayfinal.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 
 @Getter
@@ -51,7 +55,7 @@ public class Station implements Serializable {
                 ", address='" + address + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", user=" + user.getUsername() +
+                ", user=" + user +
                 '}';
     }
 }

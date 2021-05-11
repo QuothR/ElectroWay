@@ -1,8 +1,11 @@
 package com.example.electrowayfinal.models;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Getter
@@ -24,6 +27,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Collection<User> users;
 
     public Role(String name) {
@@ -37,6 +41,7 @@ public class Role {
                     name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "privilege_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Collection<Privilege> privileges;
 
     @Override

@@ -1,8 +1,7 @@
 package com.example.electrowayfinal.models;
 
 import com.example.electrowayfinal.Validation.ValidPassword;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Cascade;
@@ -209,6 +208,7 @@ public class User implements UserDetails {
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Collection<Role> roles;
 
     @Override

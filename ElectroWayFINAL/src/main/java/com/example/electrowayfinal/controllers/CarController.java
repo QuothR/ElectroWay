@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @Qualifier("car")
+
 public class CarController {
     private final CarService carService;
 
