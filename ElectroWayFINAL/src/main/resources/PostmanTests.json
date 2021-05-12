@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cc519866-b8c4-4e48-b743-f852ea6423b8",
+		"_postman_id": "1aa03123-4e4f-4258-87e0-20b2ec255ed2",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -23,12 +23,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/register",
-							"protocol": "http",
+							"raw": "https://localhost:443/register",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"register"
 							]
@@ -42,12 +42,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/forgot_password?email=electroway@mailinator.com",
-							"protocol": "http",
+							"raw": "https://localhost:443/forgot_password?email=electroway@mailinator.com",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"forgot_password"
 							],
@@ -67,12 +67,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/reset_password?token=Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt&password=Afjkahs!23fsa",
-							"protocol": "http",
+							"raw": "https://localhost:443/reset_password?token=Gc7YENlwxqre5kdhxo6DFScdyQO9TPnzO4mlSdFJbBLVt&password=Afjkahs!23fsa",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"reset_password"
 							],
@@ -115,12 +115,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/login",
-							"protocol": "http",
+							"raw": "https://localhost:443/login",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"login"
 							]
@@ -141,7 +141,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTUzNjczNywiaWF0IjoxNjE5NTM2NDM3fQ.dbHND4c0hH1Dmb7XKMlFAzQzlByOMomOmSrWQ1WQB9hia6gymvTBfDTryEkKoVaFazOxklZ6DM7ZpKXRPtkMoA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
 									"type": "string"
 								}
 							]
@@ -158,12 +158,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/station",
-							"protocol": "http",
+							"raw": "https://localhost:443/station",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station"
 							]
@@ -196,12 +196,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/station/33",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/33",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"33"
@@ -226,12 +226,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/33",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/33",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"33"
@@ -251,7 +251,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgxNTg0LCJpYXQiOjE2MTkzODEyODR9.F0yKH3X9eBiaanh7DzKRP4Fe11zUfgs-Zowfnwq66qXIcS4Ep7zwhrbUgsI56TGJbxDEZBIlcF-0aO10e5W6IQ",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
 									"type": "string"
 								}
 							]
@@ -263,12 +263,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8090/station",
-							"protocol": "http",
+							"raw": "https://localhost:443/station",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station"
 							]
@@ -287,12 +287,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/",
-							"protocol": "http",
+							"raw": "https://localhost:443/",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								""
 							]
@@ -308,7 +308,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgxODAxLCJpYXQiOjE2MTkzODE1MDF9.z4gmzhTAbkKaP3Qai-Nruj1cKTGRlV20mhzAiGF4UYsTDzwj4L4_22qO4h26L89tjpPczChAn18hzpMcz1M9iQ",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
 									"type": "string"
 								}
 							]
@@ -316,12 +316,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/user",
-							"protocol": "http",
+							"raw": "https://localhost:443/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"user"
 							]
@@ -346,12 +346,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/users",
-							"protocol": "http",
+							"raw": "https://localhost:443/users",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"users"
 							]
@@ -376,12 +376,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/5",
-							"protocol": "http",
+							"raw": "https://localhost:443/5",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"5"
 							]
@@ -415,12 +415,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/user",
-							"protocol": "http",
+							"raw": "https://localhost:443/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"user"
 							]
@@ -459,12 +459,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/station/1",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/1",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"1"
@@ -481,7 +481,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTQ1NTQ4OSwiaWF0IjoxNjE5NDU1MTg5fQ.3TR9HHXg2xZlaR4yI18xYxymlMl9FRdTGM5GuUziycBu15myrvdBjQV8_o-uVtZuZAWbdjtR9BgajDJcDe5bkQ",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
 									"type": "string"
 								}
 							]
@@ -489,15 +489,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/2/reviews",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/1/reviews",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
-								"2",
+								"1",
 								"reviews"
 							]
 						}
@@ -525,12 +525,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/3/points/2",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points/2",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -557,12 +557,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/3/points",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -597,12 +597,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/station/3/points",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -628,12 +628,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/3/points/2",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points/2",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -674,12 +674,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/station/3/points/2",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points/2",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -706,12 +706,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/3/points/2/plugs",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points/2/plugs",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -739,12 +739,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/3/points/2/plugs/1",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points/2/plugs/1",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -773,12 +773,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/station/3/points/2/plugs/1",
-							"protocol": "http",
+							"raw": "https://localhost:443/station/3/points/2/plugs/1",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"station",
 								"3",
@@ -821,12 +821,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/user/2",
-							"protocol": "http",
+							"raw": "https://localhost:443/user/2",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"user",
 								"2"
@@ -851,12 +851,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/user/2/cars",
-							"protocol": "http",
+							"raw": "https://localhost:443/user/2/cars",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "443",
 							"path": [
 								"user",
 								"2",

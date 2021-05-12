@@ -320,6 +320,23 @@ CREATE TABLE IF NOT EXISTS `verification_token`
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table electroway.review
+DROP TABLE IF EXISTS `favourite`;
+CREATE TABLE IF NOT EXISTS `favourite`
+(
+    `id`         bigint(20) NOT NULL,
+    `user_id`    bigint(20) DEFAULT NULL,
+    `station_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`),
+    KEY `station_id` (`station_id`),
+    CONSTRAINT `favourite_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+    CONSTRAINT `favourite_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `station` (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+-- Data exporting was unselected.
+
 /*!40101 SET SQL_MODE = IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS = IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
