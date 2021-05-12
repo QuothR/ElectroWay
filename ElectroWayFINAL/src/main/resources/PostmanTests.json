@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1aa03123-4e4f-4258-87e0-20b2ec255ed2",
+		"_postman_id": "38fc6e63-03a2-40c1-b392-a79b0bb6be63",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -92,6 +92,18 @@
 				},
 				{
 					"name": "JWT Login Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", res.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -128,49 +140,41 @@
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{jwttoken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.get(\"jwttoken\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
 			"name": "Stations",
 			"item": [
-				{
-					"name": "Add Station",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"address\": \"sss\",\r\n    \"latitude\": 11222312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:443/station",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "443",
-							"path": [
-								"station"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Modify Station",
 					"request": {
@@ -235,6 +239,44 @@
 							"path": [
 								"station",
 								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Station",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"sss\",\r\n    \"latitude\": 11222312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/station",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"station"
 							]
 						}
 					},
@@ -867,6 +909,42 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "2"
 		}
 	]
 }
