@@ -71,7 +71,7 @@
     ]
 }
 ```
-#LOGIN
+# LOGIN
  * E o metoda POST 
  * E folosit pentru autentificare , in urma careia se va obtine un token 
  * URL : http://localhost:443/login
