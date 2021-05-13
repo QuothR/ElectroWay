@@ -73,7 +73,18 @@
 ```
 # LOGIN
  * E o metoda POST 
- * E folosit pentru autentificare , in urma careia se va obtine un token 
+ * E folosit pentru autentificare , in urma careia se va obtine un token . Dupa ce ati inregistrat un cont pe platforma trebuie sa-l activati , activarea se face prin email .
  * URL : http://localhost:443/login
- * 
- * 
+ * MODEL REQUEST 
+ ```json
+{
+  "email" : "dsada@gmail.com"
+  "password":  "dasdasdadsade121"
+}
+  ```
+ * MODEL RESPONSE
+ ```json 
+   {
+      "token" : "12e23efsdfnsdunfsdfssfsdfsdfsdfsd"
+   }
+```
