@@ -79,7 +79,7 @@
  ```json
 {
   "email" : "dsada@gmail.com"
-  "password":  "dasdasdadsade121"
+  "password" :  "dasdasdadsade121"
 }
   ```
  * MODEL RESPONSE
