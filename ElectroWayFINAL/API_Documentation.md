@@ -115,11 +115,11 @@
    * Model response:
    ``` json 
    {
-      "id" : valoare_numerica,
+      "id" : "valoare_numerica",
       "latitude" : "-",
       "longitude" : "-",
       "user" : {
-          "id" : valoare_numerica ,
+          "id" : "valoare_numerica" ,
           "username" : "-",
           "firstname" : "-",
           "lastname" : "-",
@@ -132,11 +132,11 @@
           "country" : "-",
           "zipcode" : "-",
           "passwordResetToken" : "-",
-          "enable": valoare_booleana,
+          "enable": "valoare_booleana",
           "authorities" : "--",
-          "accountNonExpired" : valoare_booleana,
-          "accountNonLocked" : valoare_booleana,
-          "credentialsNonExpired" : valoare_booleana
+          "accountNonExpired" : "valoare_booleana",
+          "accountNonLocked" : "valoare_booleana",
+          "credentialsNonExpired" : "valoare_booleana"
       }
    }
    ```
