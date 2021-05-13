@@ -33,3 +33,20 @@
 
 
 # REGISTER
+   * E o metoda POST . 
+   * E folosit pentru a inregistra utilizatorii .
+   * URL : http://localhost:443/register
+   * MODEL REQUEST : ```json 
+   {
+    "username": "cxdsasasffdsvddsd",
+    "password": "ds5safdsas!Aa1",
+    "firstName": "vcxdsfasafsdsdda23dsdzx",
+    "lastName": "xczdafsasfssdsxc",
+    "phoneNumber": "66dssasaffdsdsff232ddssdsasss4335",
+    "emailAddress": "electroway@mailinator.com",
+    "address1": "xzcdsdsaf324dssxzasdsac",
+    "city": "cxzsafcx",
+    "country": "Rdsafcxzcxz",
+    "zipcode": "73sfad0",
+    "roles": ["ROLE_DRIVER","ROLE_OWNER"]
+}```
