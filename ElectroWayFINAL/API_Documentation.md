@@ -122,6 +122,7 @@
       "user" : {
           "id" : "valoare_numerica" ,
           "username" : "-",
+          "password" : "-",
           "firstname" : "-",
           "lastname" : "-",
           "phoneNumber" : "-",
@@ -133,7 +134,7 @@
           "country" : "-",
           "zipcode" : "-",
           "passwordResetToken" : "-",
-          "enable": "valoare_booleana",
+          "enabled": "valoare_booleana",
           "authorities" : "--",
           "accountNonExpired" : "valoare_booleana",
           "accountNonLocked" : "valoare_booleana",
