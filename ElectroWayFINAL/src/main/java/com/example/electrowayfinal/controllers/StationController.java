@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
+import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.service.StationService;
 import org.json.JSONException;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +35,7 @@ public class StationController {
     }
 
     @PostMapping()
-    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) {
+    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws UserNotFoundException, RoleNotFoundException {
         stationService.createStation(station, httpServletRequest);
         return stationService.getStation(station.getId());
 

@@ -1,9 +1,12 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
+import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
+import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.StationRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class StationService {
     private final StationRepository stationRepository;
+    private final RoleRepository roleRepository;
     private final UserService userService;
     private String secret;
 
@@ -29,12 +34,13 @@ public class StationService {
     }
 
     @Autowired
-    public StationService(StationRepository stationRepository, UserService userService) {
+    public StationService(StationRepository stationRepository, UserService userService, RoleRepository roleRepository) {
         this.stationRepository = stationRepository;
         this.userService = userService;
+        this.roleRepository = roleRepository;
     }
 
-    public void createStation(Station station, HttpServletRequest httpServletRequest) {
+    public void createStation(Station station, HttpServletRequest httpServletRequest) throws UserNotFoundException, RoleNotFoundException {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -48,6 +54,9 @@ public class StationService {
             throw new WrongUserInServiceException("Wrong user in station service!");
         }
 
+        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_DRIVER"))){
+            userService.addRole(optionalUser.get(),"ROLE_DRIVER");
+        }
         station.setUser(optionalUser.get());
 
         stationRepository.save(station);

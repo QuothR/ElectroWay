@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.dtos.UserDto;
+import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Privilege;
 import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.User;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.*;
@@ -61,6 +63,17 @@ public class UserService implements UserDetailsService {
     @Qualifier("getPasswordEncoder")
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public void addRole(User user, String roleName) throws UserNotFoundException, RoleNotFoundException {
+        Optional<Role> role = roleRepository.findByName(roleName);
+        if (role.isEmpty())
+            throw new RoleNotFoundException(roleName);
+
+        Collection<Role> roleList = user.getRoles();
+        roleList.add(role.get());
+
+        user.setRoles(roleList);
+    }
 
     public void registerNewUserAccount(UserDto userDto) {
         Optional<User> userOptional = userRepository.findUserByEmailAddress(userDto.getEmailAddress());
