@@ -36,7 +36,8 @@
    * E o metoda POST . 
    * E folosit pentru a inregistra utilizatorii .
    * URL : http://localhost:443/register
-   * MODEL REQUEST : ```json 
+   * MODEL REQUEST : 
+   ```json 
    {
     "username": "cxdsasasffdsvddsd",
     "password": "ds5safdsas!Aa1",
