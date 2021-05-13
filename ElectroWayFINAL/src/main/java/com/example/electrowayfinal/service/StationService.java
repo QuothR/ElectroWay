@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
@@ -40,7 +41,7 @@ public class StationService {
         this.roleRepository = roleRepository;
     }
 
-    public void createStation(Station station, HttpServletRequest httpServletRequest) throws UserNotFoundException, RoleNotFoundException {
+    public void createStation(Station station, HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -50,17 +51,14 @@ public class StationService {
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (optionalUser.isEmpty()) {
-            throw new WrongUserInServiceException("Wrong user in station service!");
-        }
+        if (optionalUser.isEmpty())
+            throw new UserNotFoundException(username);
 
-        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_OWNER"))){
+        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_OWNER")))
             userService.addRole(optionalUser.get(),"ROLE_OWNER");
-        }
+
         station.setUser(optionalUser.get());
-
         stationRepository.save(station);
-
     }
 
     public void deleteStation(Long id, HttpServletRequest httpServletRequest) {

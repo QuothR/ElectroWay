@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
+import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.service.CarService;
@@ -24,7 +25,7 @@ public class CarController {
     }
 
     @PostMapping(path = "car")
-    public Car createCar(@RequestBody Car car,  HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException {
+    public Car createCar(@RequestBody Car car,  HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
         carService.createCar(car, httpServletRequest);
         return carService.getCar(car.getId());
     }

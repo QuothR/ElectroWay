@@ -1,7 +1,9 @@
 package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.dtos.UserDto;
+import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
+import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.models.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Timestamp;
@@ -56,6 +59,11 @@ public class UserController {
     public Optional<UserDto> registerNewUser(@Valid @RequestBody UserDto userDto) throws DataIntegrityViolationException, MessagingException {
         userService.registerNewUserAccount(userDto);
         return userService.getOptionalUserDto(userDto.getEmailAddress());
+    }
+
+    @PostMapping("/user/addrole")
+    public void addRoleToUser(@RequestParam String roleName, HttpServletRequest httpservletRequest) throws UserNotFoundException, RoleNotFoundException, ForbiddenRoleAssignmentAttemptException {
+        userService.addRole(userService.getCurrentUser(httpservletRequest),roleName);
     }
 
     @DeleteMapping(path = "{userId}")
