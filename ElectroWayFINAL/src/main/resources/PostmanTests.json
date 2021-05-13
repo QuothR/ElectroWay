@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "38fc6e63-03a2-40c1-b392-a79b0bb6be63",
+		"_postman_id": "12592e69-4c86-429d-a128-c28d27da1879",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"cxdsasasffdsvddsd\",\r\n    \"password\": \"ds5safdsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": [\"ROLE_DRIVER\",\"ROLE_OWNER\"]\r\n}",
+							"raw": "{\r\n    \"username\": \"cxdsassasffdsvddsd\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroways@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": [\"ROLE_DRIVER\",\"ROLE_OWNER\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -119,7 +119,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"electroway@mailinator.com\",\r\n    \"password\": \"ds5safdsas!Aa1\"\r\n}",
+							"raw": "{\r\n    \"email\": \"electroways@mailinator.com\",\r\n    \"password\": \"ds5safddsas!Aa1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,7 +173,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -212,7 +212,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTE1NzU2MSwiaWF0IjoxNjE5MTU3MjYxfQ.cIWc-FvXZgpXAl_ebVrWeJQjqroSKkjpZoJ1EjlHqi5knfou2UKDNcPWejjKsDmKVf11KaCZwBwemJZsYwaVQg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -251,7 +251,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"address\": \"sss\",\r\n    \"latitude\": 11222312.23,\r\n    \"longitude\": 11223213.3\r\n    \r\n}",
+							"raw": "{\r\n    \"address\": \"ssss\",\r\n    \"latitude\": 112232312.23,\r\n    \"longitude\": 112223213.3\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -283,7 +283,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -340,7 +340,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -370,7 +370,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgxODAxLCJpYXQiOjE2MTkzODE1MDF9.z4gmzhTAbkKaP3Qai-Nruj1cKTGRlV20mhzAiGF4UYsTDzwj4L4_22qO4h26L89tjpPczChAn18hzpMcz1M9iQ",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -400,7 +400,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgyMDczLCJpYXQiOjE2MTkzODE3NzN9.65tiHsjDzUo_c_BvnLzxXBNx7OMdO50ODgB0c0EyA3I1UexmqC9_AwDZ-2n9uJpLI-UbiR7-bCt8_MVPutmQDA",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -430,7 +430,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJVU0VSTkFNRVNDSElNQkFUIiwiZXhwIjoxNjE5MzgyMjU0LCJpYXQiOjE2MTkzODE5NTR9.buA6IsnDVWoeCdvD-lpSw7Q1O8AgdMOGwsn6VWQ4-LeXHUVon0zIX5e8RQDMobm7_db7D9J-v22jTGRRdls8hQ",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -474,7 +474,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDY0ODAzNCwiaWF0IjoxNjIwNjQ3NzM0fQ.HAz2A0vb1kT75yA9WbKwAtXYY3O4sTxojfXlkwDv7k1jSBPFY9bfsJ_Kl25Vr9momXadKQfveXlRMOH4W5ehgw",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -513,7 +513,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDg0MjY0MiwiaWF0IjoxNjIwODQyMzQyfQ.RCZVoD2Y2nG_0emusuN4XejSBvc80Lgf_BQdzHovnyRCgCNHvdoqFXIJ-Djx6ByegVMVVp4DLFEKRxCC9zGO5w",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -549,7 +549,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMzE2MCwiaWF0IjoxNjE5NzIyODYwfQ.8BWBEPnNpoVFyEbyvXoPkA-uM1ELNRzEntMexKG1-G1oKfSkcMVjzeYIXFvkISLqkwwQ1wTEyViw7yvyKO8NYQ",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -581,7 +581,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMjMyNSwiaWF0IjoxNjE5NzIyMDI1fQ.aXXN4ERU_VcLHTz8mTuo3RjC-xCIJSJg36dVrkIANkSjrw8tIL96VSjdK2wjkSwt8VEC9mmomb9Pefeg82bYPg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -612,24 +612,15 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMjA1NiwiaWF0IjoxNjE5NzIxNzU2fQ.QzV8EQ1NSUEIhSC5CAL5LaSAzuHsQ39GWfzAdGKWPLIeMu4x2r6A3_cLbxQDuQQQE-_7nMMbZKKCnsvAy7elNA",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "https://localhost:443/station/3/points",
+							"raw": "https://localhost:443/station/1/points",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -637,7 +628,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"3",
+								"1",
 								"points"
 							]
 						}
@@ -652,7 +643,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYxOTcyMjMyNSwiaWF0IjoxNjE5NzIyMDI1fQ.aXXN4ERU_VcLHTz8mTuo3RjC-xCIJSJg36dVrkIANkSjrw8tIL96VSjdK2wjkSwt8VEC9mmomb9Pefeg82bYPg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -689,7 +680,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjE2OCwiaWF0IjoxNjE5NzI1ODY4fQ.PZFGGEFSuEKDiiHrjfzorKmHax1YfLnSQY2TkncMZz-lY8fxEVP3-zlzbAHNdU9Ie8xNM4_9FGSPeoHJxaQpOg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -698,7 +689,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":1,\r\n    \"status\":11,\r\n    \"level\":1,\r\n    \"connectorType\":\"xd\",\r\n    \"priceKw\":12.2,\r\n    \"chargingSpeedKw\":12\r\n}",
+							"raw": "{\r\n    \"status\":11,\r\n    \"level\":1,\r\n    \"connectorType\":\"xd\",\r\n    \"priceKw\":12.2,\r\n    \"chargingSpeedKw\":12\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -706,7 +697,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/3/points/2",
+							"raw": "https://localhost:443/station/1/points/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -714,7 +705,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"3",
+								"1",
 								"points",
 								"2"
 							]
@@ -730,7 +721,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjE2OCwiaWF0IjoxNjE5NzI1ODY4fQ.PZFGGEFSuEKDiiHrjfzorKmHax1YfLnSQY2TkncMZz-lY8fxEVP3-zlzbAHNdU9Ie8xNM4_9FGSPeoHJxaQpOg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -763,7 +754,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjQ3NCwiaWF0IjoxNjE5NzI2MTc0fQ.nsFKpB472NaJcge0E0ymJn3UIUW5PFaAnTyogcMbBR7PEG5Qz7E7i22oyyELdCbfCSS0wWftlqS0QE19lPZDtw",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -797,7 +788,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2NrZHN2ZGRzZCIsImV4cCI6MTYxOTcyNjQ3NCwiaWF0IjoxNjE5NzI2MTc0fQ.nsFKpB472NaJcge0E0ymJn3UIUW5PFaAnTyogcMbBR7PEG5Qz7E7i22oyyELdCbfCSS0wWftlqS0QE19lPZDtw",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -836,7 +827,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDM5NDk3NiwiaWF0IjoxNjIwMzk0Njc2fQ.KgJGbfzsfznCo0Y2sWRm1w8b2lV-TfNbblOwTKrFg6j9kewidSK5Ay5NVb13z82850y4JyDxGXk6sneeWtGAHg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -845,7 +836,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 2,\r\n    \"model\": \"Tesla Model 3 Standard Range\",\r\n    \"year\": 2019,\r\n    \"batteryCapacity\": 54,\r\n    \"chargingCapacity\": 7,\r\n    \"plugType\": \"Type 2\",\r\n    \"vehicleMaxSpeed\": 209,\r\n    \"auxiliaryKwh\": 1.0\r\n}",
+							"raw": "{\r\n    \"model\": \"Tesla Model 3 Standard Range\",\r\n    \"year\": 2019,\r\n    \"batteryCapacity\": 54,\r\n    \"chargingCapacity\": 7,\r\n    \"plugType\": \"Type 2\",\r\n    \"vehicleMaxSpeed\": 209,\r\n    \"auxiliaryKwh\": 1.0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -875,7 +866,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNhc2ZmZHN2ZGRzZCIsImV4cCI6MTYyMDMyNjU3MCwiaWF0IjoxNjIwMzI2MjcwfQ.c8gMpYTSJI5nxozLVSNWntMjYsLPU_n0fqAwJAttBUobARqAEGJF0o4idBQPZSanoLk-SQBJm0YDd9b4zGr6jg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
