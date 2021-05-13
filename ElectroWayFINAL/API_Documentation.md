@@ -88,3 +88,8 @@
       "token" : "12e23efsdfnsdunfsdfssfsdfsdfsdfsd"
    }
 ```
+# FORGOT PASSWORD 
+  * E o metoda POST
+  * URL : http://localhost:443/forgot_password?email=email_user
+  * Ca si request o sa avem niste parametrii : email 
+  * Ca si reponse form-ul pentru forgot password 
