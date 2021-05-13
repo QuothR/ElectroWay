@@ -1,11 +1,34 @@
   ## API Electroway Documentation 
   
   
-   Acest API e folosit pentru a comunica cat mai eficient cu baza de date a aplicatiei Electroway , de a extrage informatiile necesare,  de a adauga sau de a realiza un update asupra lor . Toate cererile si raspunsurile catre API-ul Electroway vor fi in format JSON . 
-  Principalele metode, functionalitati sunt : 
+   Acest API e folosit pentru a comunica cat mai eficient cu baza de date a aplicatiei Electroway , de a extrage informatiile necesare,  de a adauga sau de a realiza un update asupra lor . Toate cererile si raspunsurile catre API-ul Electroway vor fi in format JSON .
+  Principalele functionalitati sunt :
+  
+1. **REGISTER**
+2. **LOGIN**
+3. **FORGOT PASSWORD**
+4. **RESET PASSWORD**
+5. **ADD STATION**
+6. **MODIFY STATION**
+7. **VIEW STATION**
+8. **STATIONS **
+9. **DELETE STATIONS**
+10. **GET STATIONS ** 
+11. **GET CURRENT USER ** 
+12. **GET ALL USERS**
+13. **MODIFY USER**
+14. **ADD REVIEW**
+15. **GET REVIEW STATION**
+16. **ADD CAR**
+17. **GET ALL CARS**
+18. **ADD CHARGING PLUG**
+19. **DELETE CHARGIN PLUG**
+20. **GET CURRENT CHARGING PLUG**
+21. **DELETE CHARGING PLUG**
+22. **ADD CHARGING POINT**
+23. **GET CURRENT CHARGING POINT**
+24. **GET ALL CHARGING POINTS**
+25. **GET CURRENT CHARGING POINT** 
+26. **DELETE CHARGING POINT**
 
-1.  **REGISTER**
-2. #LOGIN 
-3. #FORGOT PASSWORD 
-4. #RESET PASSWORD 
-5. #ADD STATION
+
