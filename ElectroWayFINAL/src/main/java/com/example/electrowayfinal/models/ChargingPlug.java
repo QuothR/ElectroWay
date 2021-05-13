@@ -15,6 +15,15 @@ import javax.persistence.*;
 })
 public class ChargingPlug {
     @Id
+    @SequenceGenerator(
+            name = "charging_plug_sequence",
+            sequenceName = "charging_plug_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "charging_plug_sequence"
+    )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
 

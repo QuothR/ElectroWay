@@ -1,11 +1,8 @@
 package com.example.electrowayfinal.models;
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
 
 @Getter
 @Setter
@@ -18,7 +15,15 @@ import java.io.Serializable;
 })
 public class ChargingPoint {
     @Id
-
+    @SequenceGenerator(
+            name = "charging_point_sequence",
+            sequenceName = "charging_point_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "charging_point_sequence"
+    )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
 

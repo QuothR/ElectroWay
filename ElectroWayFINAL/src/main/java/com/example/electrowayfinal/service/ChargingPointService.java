@@ -40,7 +40,7 @@ public class ChargingPointService {
         this.userService = userService;
     }
 
-    public void createChargingPoint(ChargingPoint chargingPoint, Long id, HttpServletRequest httpServletRequest) {
+    public ChargingPoint createChargingPoint(Long id, HttpServletRequest httpServletRequest) {
         Station station = stationService.getStation(id);
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -56,9 +56,10 @@ public class ChargingPointService {
         if (!station.getUser().equals(optionalUser.get())) {
             throw new WrongAccessException("You don't own this station!");
         }
-
+        ChargingPoint chargingPoint = new ChargingPoint();
         chargingPoint.setStation(station);
         chargingPointRepository.save(chargingPoint);
+        return chargingPoint;
     }
 
     public void deleteChargingPoint(ChargingPoint chargingPoint) {

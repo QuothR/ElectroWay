@@ -35,9 +35,8 @@ public class ChargingPointController {
 
     @PostMapping(value = "{id}/points")
     @ResponseStatus(HttpStatus.OK)
-    public ChargingPoint createChargingPoint(@RequestBody ChargingPoint chargingPoint, @PathVariable Long id, HttpServletRequest httpServletRequest) {
-        chargingPointService.createChargingPoint(chargingPoint, id, httpServletRequest);
-        return chargingPoint;
+    public ChargingPoint createChargingPoint(@PathVariable Long id, HttpServletRequest httpServletRequest) {
+        return chargingPointService.createChargingPoint(id, httpServletRequest);
     }
 
 

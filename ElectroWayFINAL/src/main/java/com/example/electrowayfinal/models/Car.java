@@ -15,6 +15,15 @@ import javax.persistence.*;
 })
 public class Car {
     @Id
+    @SequenceGenerator(
+            name = "car_sequence",
+            sequenceName = "car_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "car_sequence"
+    )
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigint")
     private long id;
 

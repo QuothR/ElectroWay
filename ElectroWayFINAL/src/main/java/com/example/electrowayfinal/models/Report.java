@@ -16,6 +16,15 @@ import javax.persistence.*;
 public class Report {
 
     @Id
+    @SequenceGenerator(
+            name = "report_sequence",
+            sequenceName = "report_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "report_sequence"
+    )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "bigint")
     private long id;
 
