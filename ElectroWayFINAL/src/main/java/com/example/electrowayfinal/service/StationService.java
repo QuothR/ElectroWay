@@ -89,6 +89,7 @@ public class StationService {
         return stationRepository.getOne(id);
     }
 
+    //station
     public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest) {
         Optional<Station> station = stationRepository.findStationById(id);
         if (station.isEmpty()) {

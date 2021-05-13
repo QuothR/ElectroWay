@@ -135,6 +135,7 @@ public class UserService implements UserDetailsService {
 
     }
 
+    //user
     public User getCurrentUser(HttpServletRequest httpServletRequest) throws UserNotFoundException{
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -204,6 +205,7 @@ public class UserService implements UserDetailsService {
     }
 
     // :))))) Aici face load user by email address
+    // si face return la UserDetails nu User
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findUserByEmailAddress(username);
@@ -213,7 +215,7 @@ public class UserService implements UserDetailsService {
         return user.map(MyUserDetails::new).get();
     }
 
-    public Optional<User> getOptionalUser(String email) {
+    public Optional<User> findUserByEmailAddress(String email) {
         return userRepository.findUserByEmailAddress(email);
     }
 
