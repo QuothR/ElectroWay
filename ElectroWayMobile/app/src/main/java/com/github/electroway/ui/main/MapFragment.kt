@@ -7,6 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.MatrixCursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
 import android.location.LocationManager
@@ -21,15 +24,19 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.github.electroway.Application
 import com.github.electroway.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
@@ -51,9 +58,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         Pair("Station $i", location)
     }
     private lateinit var googleMap: GoogleMap
+    private lateinit var markerBitmap: BitmapDescriptor
+
     companion object {
         const val AUTOCOMPLETE_REQUEST_CODE = 1
     }
+
     private val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
     private val args: MapFragmentArgs by navArgs()
 
@@ -174,9 +184,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        stations.forEach { station ->
-            googleMap.addMarker(MarkerOptions().position(station.second).title(station.first))
-        }
 
         if (args.addStation) {
             googleMap.setOnMapLongClickListener {
@@ -187,6 +194,37 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 requireView().findViewById<Toolbar>(R.id.toolbar).menu.findItem(R.id.home_button)
             homeItem.isEnabled = false
             homeItem.isVisible = false
+        } else {
+            val session = (requireActivity().application as Application).session
+            session.getStations {
+                if (it != null) {
+                    markerBitmap =
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_baseline_ev_station
+                        )!!.run {
+                            setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+                            val bitmap =
+                                Bitmap.createBitmap(
+                                    intrinsicWidth,
+                                    intrinsicHeight,
+                                    Bitmap.Config.ARGB_8888
+                                )
+                            draw(Canvas(bitmap))
+                            BitmapDescriptorFactory.fromBitmap(bitmap)
+                        }
+                    for (i in 0 until it.length()) {
+                        val obj = it.getJSONObject(i)
+                        val address = obj.getString("address")
+                        val latitude = obj.getDouble("latitude")
+                        val longitude = obj.getDouble("longitude")
+                        googleMap.addMarker(
+                            MarkerOptions().position(LatLng(latitude, longitude)).title(address)
+                                .icon(markerBitmap)
+                        )
+                    }
+                }
+            }
         }
     }
 }
