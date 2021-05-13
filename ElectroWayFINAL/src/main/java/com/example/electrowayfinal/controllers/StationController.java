@@ -47,7 +47,6 @@ public class StationController {
         return stationService.updateStation(newStation, id, httpServletRequest);
     }
 
-    //TODO This can deletes stations one does not own!
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
