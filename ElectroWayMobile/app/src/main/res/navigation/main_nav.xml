@@ -69,6 +69,9 @@
             android:name="addStation"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_mapFragment_to_reviewsFragment"
+            app:destination="@id/reviewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -123,6 +126,31 @@
             android:name="station"
             app:argType="integer" />
         <argument android:name="chargingPoint"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="com.github.electroway.ui.main.ReviewsFragment"
+        android:label="ReviewsFragment" >
+        <argument
+            android:name="station"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_reviewsFragment_to_addReviewFragment"
+            app:destination="@id/addReviewFragment" />
+        <action
+            android:id="@+id/action_reviewsFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addReviewFragment"
+        android:name="com.github.electroway.ui.main.AddReviewFragment"
+        android:label="AddReviewFragment" >
+        <action
+            android:id="@+id/action_addReviewFragment_to_reviewsFragment"
+            app:destination="@id/reviewsFragment" />
+        <argument
+            android:name="station"
             app:argType="integer" />
     </fragment>
 </navigation>

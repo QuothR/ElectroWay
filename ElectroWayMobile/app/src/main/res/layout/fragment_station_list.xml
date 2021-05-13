@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,7 +12,6 @@
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="true"
         tools:context=".ui.main.CarDetailsFragment"
-        tools:itemCount="10"
         tools:listitem="@layout/stations_recycler_view_item" />
 
     <Button

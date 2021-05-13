@@ -45,4 +45,7 @@
     <string name="back">Back</string>
     <string name="add_plug">Add plug</string>
     <string name="remove_plug">Remove plug</string>
+    <string name="add_review">Add review</string>
+    <string name="submit">Submit</string>
+    <string name="review_text">Review text</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.github.electroway.ui.main
 
-import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.Application
@@ -48,32 +47,36 @@ class StationFragment : Fragment() {
             findNavController().navigate(R.id.action_station_fragment_to_homeFragment)
         }
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.chargingPointRecyclerView)
-        val adapter = ChargingPointListAdapter(mutableListOf()) {
-            val action = StationFragmentDirections.actionStationFragmentToChargingPointFragment(args.station, it)
+        val chargingPointRecyclerView =
+            view.findViewById<RecyclerView>(R.id.chargingPointRecyclerView)
+        val chargingPointsAdapter = ChargingPointListAdapter(mutableListOf()) {
+            val action = StationFragmentDirections.actionStationFragmentToChargingPointFragment(
+                args.station,
+                it
+            )
             findNavController().navigate(action)
         }
         val layoutManager = LinearLayoutManager(requireActivity().applicationContext)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
+        chargingPointRecyclerView.layoutManager = layoutManager
+        chargingPointRecyclerView.adapter = chargingPointsAdapter
+        chargingPointsAdapter.notifyDataSetChanged()
 
         session.getChargingPoints(args.station) {
             if (it != null) {
                 for (i in 0 until it.length()) {
                     val obj = it.getJSONObject(i)
                     val id = obj.getInt("id")
-                    adapter.add(id)
+                    chargingPointsAdapter.add(id)
                 }
-                adapter.notifyDataSetChanged()
+                chargingPointsAdapter.notifyDataSetChanged()
             }
         }
 
         view.findViewById<Button>(R.id.addChargingPointButton).setOnClickListener {
             session.addChargingPoint(args.station) {
                 if (it != null) {
-                    adapter.add(it.getInt("id"))
-                    adapter.notifyDataSetChanged()
+                    chargingPointsAdapter.add(it.getInt("id"))
+                    chargingPointsAdapter.notifyDataSetChanged()
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -82,6 +85,30 @@ class StationFragment : Fragment() {
                     )
                         .show()
                 }
+            }
+        }
+
+        val reviewsAdapter = ReviewsAdapter()
+        val reviewsRecyclerView = view.findViewById<RecyclerView>(R.id.ownerReviewsRecyclerView)
+        reviewsRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        reviewsRecyclerView.layoutManager = LinearLayoutManager(requireActivity().applicationContext)
+        reviewsRecyclerView.adapter = reviewsAdapter
+        reviewsAdapter.notifyDataSetChanged()
+
+        session.getReviews(args.station) {
+            if (it != null) {
+                for (i in 0 until it.length()) {
+                    val obj = it.getJSONObject(i)
+                    val text = obj.getString("textReview")
+                    val rating = obj.getInt("rating")
+                    reviewsAdapter.add(rating, text)
+                }
+                reviewsAdapter.notifyDataSetChanged()
             }
         }
     }

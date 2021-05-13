@@ -22,9 +22,11 @@ class Session(val handler: Handler) {
     private val json = "application/json; charset=utf-8".toMediaType()
     private var token: String? = null
     private val client: OkHttpClient
+
     companion object {
         private const val expirationTime = 300_000L
     }
+
     private var tokenRefreshTime = 0L
     private var loginInfo: LoginInfo? = null
 
@@ -49,7 +51,6 @@ class Session(val handler: Handler) {
     }
 
     fun register(info: RegisterInfo, callback: (Boolean) -> Unit) {
-        Log.e("a", info.getJson().toString())
         val request = Request.Builder()
             .url(buildBasePath().addPathSegment("register").build())
             .post(info.getJson().toString().toRequestBody(json))
@@ -405,6 +406,68 @@ class Session(val handler: Handler) {
                 } else {
                     handler.post {
                         callback(false)
+                    }
+                }
+            }
+        })
+    }
+
+    fun addReview(
+        station: Int,
+        addReviewInfo: AddReviewInfo,
+        callback: (Boolean) -> Unit
+    ) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString()).build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .post(addReviewInfo.getJson().toString().toRequestBody(json))
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
+    fun getReviews(station: Int, callback: (JSONArray?) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString())
+                    .addPathSegment("reviews")
+                    .build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .get()
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val json = JSONArray(response.body!!.string())
+                    handler.post {
+                        callback(json)
+                    }
+                } else {
+                    handler.post {
+                        callback(null)
                     }
                 }
             }

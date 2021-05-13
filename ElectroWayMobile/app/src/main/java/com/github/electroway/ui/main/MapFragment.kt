@@ -35,10 +35,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -50,13 +47,6 @@ import kotlin.random.Random
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private var mapFragment: SupportMapFragment? = null
-    private val stations = List(Random.nextInt(1000)) { i ->
-        val location = LatLng(
-            Random.Default.nextDouble(-90.0, 90.0),
-            Random.Default.nextDouble(-180.0, 180.0)
-        )
-        Pair("Station $i", location)
-    }
     private lateinit var googleMap: GoogleMap
     private lateinit var markerBitmap: BitmapDescriptor
 
@@ -213,15 +203,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             draw(Canvas(bitmap))
                             BitmapDescriptorFactory.fromBitmap(bitmap)
                         }
+                    var markersPos = mutableMapOf<Marker, Int>()
                     for (i in 0 until it.length()) {
                         val obj = it.getJSONObject(i)
                         val address = obj.getString("address")
                         val latitude = obj.getDouble("latitude")
                         val longitude = obj.getDouble("longitude")
-                        googleMap.addMarker(
+                        markersPos[googleMap.addMarker(
                             MarkerOptions().position(LatLng(latitude, longitude)).title(address)
                                 .icon(markerBitmap)
-                        )
+                        )] = i
+                    }
+
+                    googleMap.setOnInfoWindowClickListener {
+                        val action =
+                            MapFragmentDirections.actionMapFragmentToReviewsFragment(markersPos[it]!!)
+                        findNavController().navigate(action)
                     }
                 }
             }

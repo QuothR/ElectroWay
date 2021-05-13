@@ -28,30 +28,51 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chargingPointRecyclerView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="true"
-        tools:context=".ui.main.CarDetailsFragment"
-        tools:itemCount="10"
-        tools:listitem="@layout/stations_recycler_view_item">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/addChargingPointButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10sp"
-        android:layout_marginEnd="10sp"
-        android:text="@string/add_charging_point" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chargingPointRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:context=".ui.main.CarDetailsFragment"
+                tools:listitem="@layout/stations_recycler_view_item">
 
-    <Button
-        android:id="@+id/removeStationButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10sp"
-        android:layout_marginEnd="10sp"
-        android:text="@string/remove_station" />
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/addChargingPointButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:text="@string/add_charging_point" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ownerReviewsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:context=".ui.main.CarDetailsFragment"
+                tools:listitem="@layout/reviews_recycler_view_item">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/removeStationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:text="@string/remove_station" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
