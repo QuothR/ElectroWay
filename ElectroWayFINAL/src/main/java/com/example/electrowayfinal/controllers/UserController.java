@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.dtos.UserDto;
+import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.models.VerificationToken;
 import com.example.electrowayfinal.service.UserService;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest) {
+    public User getCurrentUser(HttpServletRequest httpServletRequest) throws UserNotFoundException {
         return userService.getCurrentUser(httpServletRequest);
     }
 

@@ -135,15 +135,18 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public Optional<User> getCurrentUser(HttpServletRequest httpServletRequest) {
+    public User getCurrentUser(HttpServletRequest httpServletRequest) throws UserNotFoundException{
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
 
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
         String username = claims.getSubject();
 
-        return getOptionalUserByUsername(username);
+        Optional<User> user = userRepository.findUserByUsername(username);
+        if (user.isEmpty())
+            throw new UserNotFoundException(username);
 
+        return user.get();
     }
 
     public Optional<UserDto> getOptionalUserDto(String email) {

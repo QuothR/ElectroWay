@@ -33,6 +33,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>2.4.5</version>
         </dependency>
         <dependency>
             <groupId>com.mageddo.lombok</groupId>
