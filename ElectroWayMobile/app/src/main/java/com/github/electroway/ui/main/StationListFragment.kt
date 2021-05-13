@@ -17,13 +17,13 @@ import com.github.electroway.AddStationInfo
 import com.github.electroway.Application
 import com.github.electroway.R
 
-class StationsFragment : Fragment() {
+class StationListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_stations, container, false)
+        return inflater.inflate(R.layout.fragment_station_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +38,10 @@ class StationsFragment : Fragment() {
 
         val session = (requireActivity().application as Application).session
         val recyclerView = view.findViewById<RecyclerView>(R.id.stationsRecyclerView)
-        val adapter = StationsAdapter(mutableListOf())
+        val adapter = StationListAdapter(mutableListOf()) {
+             val action = HomeFragmentDirections.actionHomeFragmentToStationFragment(it)
+             homeFragment.findNavController().navigate(action)
+        }
         val layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
@@ -46,32 +49,36 @@ class StationsFragment : Fragment() {
 
         val geocoder = Geocoder(requireContext())
 
-        val homeArgs: HomeFragmentArgs by homeFragment.navArgs()
-        if (homeArgs.stationToAdd != null) {
-            val latLng = homeArgs.stationToAdd!!
-            val address =
-                geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)[0]
-            val addressLine =
-                if (address != null) address.getAddressLine(0) else "${latLng.latitude}, ${latLng.longitude}"
-            session.addStation(AddStationInfo(addressLine, latLng.latitude, latLng.longitude)) {
-                if (it) {
-                    adapter.add(addressLine)
-                    adapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to add station", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
-
         session.getStations {
             if (it != null) {
                 for (i in 0 until it.length()) {
                     val obj = it.getJSONObject(i)
                     val address = obj.getString("address")
-                    adapter.add(address)
+                    val index = obj.getInt("id")
+                    adapter.add(index, address)
                 }
                 adapter.notifyDataSetChanged()
+            }
+        }
+
+        val homeArgs: HomeFragmentArgs by homeFragment.navArgs()
+        if (homeArgs.stationToAdd != null) {
+            val latLng = homeArgs.stationToAdd!!
+            val addresses =
+                geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+            val addressLine =
+                if (addresses.size > 0 && addresses[0].maxAddressLineIndex != -1)
+                    addresses[0].getAddressLine(0)
+                else
+                    "${latLng.latitude}, ${latLng.longitude}"
+            session.addStation(AddStationInfo(addressLine, latLng.latitude, latLng.longitude)) {
+                if (it != null) {
+                    adapter.add(it.getInt("id"), addressLine)
+                    adapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(requireContext(), "Failed to add station", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }

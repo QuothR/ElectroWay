@@ -39,4 +39,10 @@
     <string name="location">Location</string>
     <string name="sign_out">Sign out</string>
     <string name="add_station">Add station</string>
+    <string name="remove">Remove</string>
+    <string name="add_charging_point">Add charging point</string>
+    <string name="remove_station">Remove station</string>
+    <string name="back">Back</string>
+    <string name="add_plug">Add plug</string>
+    <string name="remove_plug">Remove plug</string>
 </resources>

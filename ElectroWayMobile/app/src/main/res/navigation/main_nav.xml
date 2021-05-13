@@ -87,6 +87,9 @@
             app:argType="com.google.android.gms.maps.model.LatLng"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_homeFragment_to_station_fragment"
+            app:destination="@id/station_fragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountNextFragment"
@@ -95,5 +98,31 @@
         <action
             android:id="@+id/action_createAccountNextFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/station_fragment"
+        android:name="com.github.electroway.ui.main.StationFragment">
+        <argument
+            android:name="station"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_station_fragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_station_fragment_to_chargingPointFragment"
+            app:destination="@id/chargingPointFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chargingPointFragment"
+        android:name="com.github.electroway.ui.main.ChargingPointFragment"
+        android:label="ChargingPointFragment" >
+        <action
+            android:id="@+id/action_chargingPointFragment_to_station_fragment"
+            app:destination="@id/station_fragment" />
+        <argument
+            android:name="station"
+            app:argType="integer" />
+        <argument android:name="chargingPoint"
+            app:argType="integer" />
     </fragment>
 </navigation>

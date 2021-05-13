@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_car_details" >
         <action
             android:id="@+id/action_navigation_car_details_to_navigation_stations"
-            app:destination="@id/navigation_stations" />
+            app:destination="@id/navigation_station_list" />
     </fragment>
     <fragment
         android:id="@+id/navigation_history"
@@ -26,8 +26,8 @@
         android:name="com.github.electroway.ui.main.ProfileFragment"
         android:label="@string/title_profile" />
     <fragment
-        android:id="@+id/navigation_stations"
-        android:name="com.github.electroway.ui.main.StationsFragment"
+        android:id="@+id/navigation_station_list"
+        android:name="com.github.electroway.ui.main.StationListFragment"
         android:label="@string/title_stations"
-        tools:layout="@layout/fragment_stations" />
+        tools:layout="@layout/fragment_station_list" />
 </navigation>

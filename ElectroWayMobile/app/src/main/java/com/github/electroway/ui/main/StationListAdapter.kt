@@ -1,18 +1,26 @@
 package com.github.electroway.ui.main
 
-import android.location.Geocoder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.R
-import com.google.android.gms.maps.model.LatLng
 
-internal class StationsAdapter(private var itemsList: MutableList<String>) :
-    RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
+internal class StationListAdapter(
+    private var itemsList: MutableList<Pair<Int, String>>,
+    private val onClick: (Int) -> Unit
+) :
+    RecyclerView.Adapter<StationListAdapter.ViewHolder>() {
     internal inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val stationText: TextView = view.findViewById(R.id.stationText)
+
+        fun bind(onClick: (Int) -> Unit) {
+            itemView.setOnClickListener {
+                onClick(itemsList[adapterPosition].first)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,14 +30,15 @@ internal class StationsAdapter(private var itemsList: MutableList<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.stationText.text = itemsList[position]
+        holder.stationText.text = itemsList[position].second
+        holder.bind(onClick)
     }
 
     override fun getItemCount(): Int {
         return itemsList.count()
     }
 
-    fun add(address: String) {
-        itemsList.add(address)
+    fun add(index: Int, address: String) {
+        itemsList.add(Pair(index, address))
     }
 }

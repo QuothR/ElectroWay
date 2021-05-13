@@ -1,5 +1,6 @@
 package com.github.electroway
 
+import org.json.JSONArray
 import org.json.JSONObject
 
 class RegisterInfo(
@@ -26,5 +27,6 @@ class RegisterInfo(
             .put("city", city)
             .put("country", country)
             .put("zipcode", zipcode)
+            .put("roles", JSONArray().put("ROLE_DRIVER").put("ROLE_OWNER"))
     }
 }

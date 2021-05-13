@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -34,17 +35,8 @@ class HomeFragment : Fragment() {
         val navView = view.findViewById<BottomNavigationView>(R.id.home_bottom_nav_view)
         navView.setupWithNavController(requireActivity().findNavController(R.id.home_fragment_container_view))
 
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setOnMenuItemClickListener { item: MenuItem ->
-            when (item.itemId) {
-                R.id.map_button -> {
-                    findNavController().navigate(
-                        R.id.action_homeFragment_to_mapFragment,
-                        bundleOf("pickStation" to true)
-                    )
-                }
-            }
-            true
+        view.findViewById<ImageButton>(R.id.homeBackButton).setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_mapFragment)
         }
 
         if (args.stationToAdd != null) {

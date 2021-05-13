@@ -19,7 +19,7 @@
         android:icon="@drawable/profile"
         android:title="@string/title_profile" />
     <item
-        android:id="@+id/navigation_stations"
+        android:id="@+id/navigation_station_list"
         android:icon="@drawable/station"
         android:title="@string/title_stations" />
 
