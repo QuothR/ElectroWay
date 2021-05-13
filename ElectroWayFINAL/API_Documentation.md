@@ -93,3 +93,25 @@
   * URL : http://localhost:443/forgot_password?email=email_user
   * Ca si request o sa avem niste parametrii : email 
   * Ca si reponse form-ul pentru forgot password 
+  
+# RESET PASSWORD 
+   * E o metoda POST
+   * Deobicei parola se reseteaza dupa ce am uitat-o sau pierdut-o , la forgot password user-ul va primi pe email-ul cu care si-a facut contul un email cu un token , acel token va fi folosit la resetarea parolei . 
+   * URL :  http://localhost:443/reset_password?token=token_from_forgot
+   * Parametrii : token-ul de la forgot si noua parola 
+   * Response , deobicei un mesaj cu rezultatul procesului de resetare . 
+
+# ADD STATION 
+   * E o metoda POST 
+   * URL : http://localhost:443/station
+   * Model request : 
+   ```json
+   {
+      "address" : "-",
+      "latitude" : "-",
+      "longitude" : "-"
+   }
+   ```
+   * Model response:
+   ``` json 
+   ```
