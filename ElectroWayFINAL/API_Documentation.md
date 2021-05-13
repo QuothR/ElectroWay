@@ -116,6 +116,7 @@
    ``` json 
    {
       "id" : "valoare_numerica",
+      "address" : "-",
       "latitude" : "-",
       "longitude" : "-",
       "user" : {
