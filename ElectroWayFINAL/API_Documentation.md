@@ -78,7 +78,7 @@
  * MODEL REQUEST 
  ```json
 {
-  "email" : "dsada@gmail.com"
+  "email" : "dsada@gmail.com",
   "password" :  "dasdasdadsade121"
 }
   ```
