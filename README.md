@@ -1,10 +1,9 @@
-# Uber-for-Electric-Car-Charging
---
-2021
-Proiect realizat de grupa A4, anul 2
+# Laborator1IP
 
-Pentru a folosi frontend ul nostru urmati pasii de mai jos iar dupa ce i-ati terminat, faceti download la folderul electroway si inlocuiti folderele public si src
-din proiectul vostru cu folderele public si src din folderul descarcat electroway
+
+Link documentatie:
+https://docs.google.com/document/d/1SVMCBZBSY-kZaLvztw2mwiyWb7dKnzf9moRMKJVa5cE/edit?usp=sharing
+
 
 Tutorial instalare React:
 https://nodejs.org/en/ v 14.16.0
@@ -13,7 +12,6 @@ https://nodejs.org/en/ v 14.16.0
 3) Din VS deschideti un terminal new si rulati: 
 npx create-react-app “nume proiect (avand doar litere mici)” 
 4) Pentru a rula proiectul, din terminal rulati comanda : npm start
-5) Instalati, din terminal, dependentele de mai jos necesare pentru a putea rula aplicatia finala (!important: trebuie sa va aflati in terminal, in directorul cu numele pus de voi la pasul 3):
 
 
 Instalare Router pentru management ul paginilor:      
@@ -24,7 +22,9 @@ Instalare Bootstrap:
 - npm install react-bootstrap bootstrap
 
 Pentru harti:
+- npm install react react-dom leaflet
 - npm install react-leaflet
+- npm install -D @types/leaflet
  
 Pt generare facturi:
 - npm install easyinvoice --save
@@ -37,10 +37,29 @@ Pentru instalare recharts:
 Pentru o parte din icons(download):
 - npm install react-icons
 
+Pt cod icon: 
+- https://react-icons.github.io/react-icons/icons?name=io
+- https://www.npmjs.com/package/react-icons
+
 Pentru comunicarea cu backend:
 - npm install axios
 
 Pentru gestionarea variabilelor globale (JWT Token ...):
 - npm install redux react-redux
 
+Pentru project v.1.1 :
+- npm install jwt-decode
+- npm install react-router
+- npm install redux-thunk
+
+Pentru project v.1.2 :
+- npm install react-svg-star-rating
+- npm install react-animated-slider@^1
+
+Pentru v.1.3 v.1.4 v.1.5 :
+- READ redux -> store.js 
+
+Pentru v.1.6 :
+- am setat la axios ca default host, hostul de la server, de acum pentru orice request axios trebuie sa puneti doar path-ul de dupa host 
+- de ex: axios.post("http://localhost:443/login", data ...) s a transformat in axios.post("/login", data ...) 
 
