@@ -52,3 +52,28 @@
     "roles": ["ROLE_DRIVER","ROLE_OWNER"]
 }
 ```
+* MODEL RESPONSE
+```json
+{
+    "username": "cxdsasasffdsvddsd",
+    "password": "$2a$10$OzgezooSaE4/v6vsMuAeC.It/RdaIPkIspfC3TI6gAk3VT6s1Vwq6",
+    "firstName": "vcxdsfasafsdsdda23dsdzx",
+    "lastName": null,
+    "phoneNumber": "66dssasaffdsdsff232ddssdsasss4335",
+    "emailAddress": "electroway@mailinator.com",
+    "address1": "xzcdsdsaf324dssxzasdsac",
+    "city": "cxzsafcx",
+    "country": "Rdsafcxzcxz",
+    "zipcode": "73sfad0",
+    "roles": [
+        "ROLE_DRIVER",
+        "ROLE_OWNER"
+    ]
+}
+```
+#LOGIN
+ * E o metoda POST 
+ * E folosit pentru autentificare , in urma careia se va obtine un token 
+ * URL : http://localhost:443/login
+ * 
+ * 
