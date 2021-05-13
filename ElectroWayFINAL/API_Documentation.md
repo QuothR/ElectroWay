@@ -114,4 +114,29 @@
    ```
    * Model response:
    ``` json 
+   {
+      "id" : valoare_numerica,
+      "latitude" : "-",
+      "longitude" : "-",
+      "user" : {
+          "id" : valoare_numerica ,
+          "username" : "-",
+          "firstname" : "-",
+          "lastname" : "-",
+          "phoneNumber" : "-",
+          "emailAddress" : "-",
+          "address1" : "-",
+          "address2" : "-",
+          "city" : "-",
+          "region" : "-",
+          "country" : "-",
+          "zipcode" : "-",
+          "passwordResetToken" : "-",
+          "enable": valoare_booleana,
+          "authorities" : "--",
+          "accountNonExpired" : valoare_booleana,
+          "accountNonLocked" : valoare_booleana,
+          "credentialsNonExpired" : valoare_booleana
+      }
+   }
    ```
