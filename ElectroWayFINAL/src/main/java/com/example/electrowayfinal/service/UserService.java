@@ -64,7 +64,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void addRole(User user, String roleName) throws UserNotFoundException, RoleNotFoundException {
+    public void addRole(User user, String roleName) throws RoleNotFoundException {
         Optional<Role> role = roleRepository.findByName(roleName);
         if (role.isEmpty())
             throw new RoleNotFoundException(roleName);

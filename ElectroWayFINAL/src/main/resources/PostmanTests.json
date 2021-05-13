@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "12592e69-4c86-429d-a128-c28d27da1879",
+		"_postman_id": "0b513c3a-b17d-4fff-9b03-02b736e40ad2",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"cxdsassasffdsvddsd\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": [\"ROLE_DRIVER\",\"ROLE_OWNER\"]\r\n}",
+							"raw": "{\r\n    \"username\": \"cxdsassasffdsvddsd\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroways@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": [\"ROLE_DRIVER\",\"ROLE_OWNER\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,7 +91,7 @@
 					"response": []
 				},
 				{
-					"name": "JWT Login Test",
+					"name": "Login",
 					"event": [
 						{
 							"listen": "test",
@@ -119,7 +119,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"electroway@mailinator.com\",\r\n    \"password\": \"ds5safddsas!Aa1\"\r\n}",
+							"raw": "{\r\n    \"email\": \"electroways@mailinator.com\",\r\n    \"password\": \"ds5safddsas!Aa1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

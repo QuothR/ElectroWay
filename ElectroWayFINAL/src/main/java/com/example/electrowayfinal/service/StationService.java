@@ -54,8 +54,8 @@ public class StationService {
             throw new WrongUserInServiceException("Wrong user in station service!");
         }
 
-        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_DRIVER"))){
-            userService.addRole(optionalUser.get(),"ROLE_DRIVER");
+        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_OWNER"))){
+            userService.addRole(optionalUser.get(),"ROLE_OWNER");
         }
         station.setUser(optionalUser.get());
 

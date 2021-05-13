@@ -1,8 +1,10 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
 import com.example.electrowayfinal.models.Car;
+import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.CarRepository;
 import io.jsonwebtoken.Claims;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +36,7 @@ public class CarService {
         this.userService = userService;
     }
 
-    public void createCar(Car car, Long userId, HttpServletRequest httpServletRequest) {
+    public void createCar(Car car, HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -42,18 +45,15 @@ public class CarService {
         String username = claims.getSubject();
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-        Optional<User> optionalUser1 = userService.getUserById(userId);
+        if (optionalUser.isEmpty())
+            throw new UserNotFoundException(username);
 
-        if (optionalUser.isEmpty() || optionalUser1.isEmpty()) {
-            throw new WrongUserInServiceException("Wrong user in car service!");
-        }
 
-        if (!optionalUser.get().equals(optionalUser1.get())) {
-            throw new WrongAccessException("You don't own this car!");
+        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_DRIVER"))){
+            userService.addRole(optionalUser.get(),"ROLE_DRIVER");
         }
 
         car.setUser(optionalUser.get());
-
         carRepository.save(car);
 
     }
@@ -62,7 +62,18 @@ public class CarService {
         return carRepository.getOne(id);
     }
 
-    public List<Car> getCars(Long userId) {
-        return carRepository.findAllByUserId(userId);
+    public List<Car> getCars(HttpServletRequest httpServletRequest) throws UserNotFoundException {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        bearerToken = bearerToken.substring(6);
+
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
+        String username = claims.getSubject();
+
+        Optional<User> user = userService.getOptionalUserByUsername(username);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException(username);
+
+        return carRepository.findAllByUserId(user.get().getId());
     }
 }
