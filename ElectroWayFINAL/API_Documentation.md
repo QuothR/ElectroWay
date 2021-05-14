@@ -276,7 +276,7 @@
   * Request body :
   ``` json
   {
-    "id": "val_numerica"
+    "id": "val_numerica",
     "model": "-",
     "year": "val_num",
     "batteryCapacity": "Val_num",
