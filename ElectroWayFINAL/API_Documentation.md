@@ -286,3 +286,38 @@
     "auxiliaryKwh": "val_numerica"
 }
   ```
+  * Model response : 
+  ```json 
+  {
+    "id": 2,
+    "model": "Tesla Model 3 Standard Range",
+    "year": 2019,
+    "batteryCapacity": 54,
+    "chargingCapacity": 7.0,
+    "plugType": "Type 2",
+    "vehicleMaxSpeed": 209,
+    "auxiliaryKwh": 1,
+    "user": {
+        "username": "cxdsasasffdsvddsd",
+        "password": "$2a$10$YeRzYn/glQX1k2fHVYqW5u3H2ZJn0ym2FE7iM.hFbVsOx4gkJtViG",
+        "firstName": "vcxdsfasafsdsdda23dsdzx",
+        "lastName": null,
+        "phoneNumber": "66dssasaffdsdsff232ddssdsasss4335",
+        "emailAddress": "iuliangeorge2017@gmail.com",
+        "address1": "xzcdsdsaf324dssxzasdsac",
+        "city": "cxzsafcx",
+        "country": "Rdsafcxzcxz",
+        "zipcode": "73sfad0",
+        "roles": [],
+        "id": 1,
+        "address2": null,
+        "region": null,
+        "passwordResetToken": null,
+        "enabled": true,
+        "authorities": null,
+        "accountNonExpired": true,
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+    }
+}
+```
