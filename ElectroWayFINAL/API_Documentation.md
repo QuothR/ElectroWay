@@ -276,13 +276,13 @@
   * Request body :
   ``` json
   {
-    "id": 2,
-    "model": "Tesla Model 3 Standard Range",
-    "year": 2019,
-    "batteryCapacity": 54,
-    "chargingCapacity": 7,
+    "id": "val_numerica"
+    "model": "-",
+    "year": "val_num",
+    "batteryCapacity": "Val_num",
+    "chargingCapacity": "val_numerica",
     "plugType": "Type 2",
-    "vehicleMaxSpeed": 209,
-    "auxiliaryKwh": 1.0
+    "vehicleMaxSpeed": "val_numerica",
+    "auxiliaryKwh": "val_numerica"
 }
   ```
