@@ -193,6 +193,10 @@
  * E o metoda PUT . 
  * URL : http://localhost:443/user
  * Ca si request body-ul si response body-ul e acelasi ca si ADD STATION
+ # DELETE USER
+ * E o metoda DELETE 
+ * URL : http://localhost:443/id_ul_user_de_sters
+ * Nu are un request body si nici un response . 
  # ADD REVIEW 
    * E o metoda POST .
    * URL : http://localhost:443/station/id_statie_la_care_Se_adauga_review
@@ -203,3 +207,62 @@
         "rating": "-"
    }
    ```
+   * Model response body : 
+   ``` json 
+   {
+    "id": 2,
+    "textReview": "prea blana statia",
+    "rating": 10,
+    "user": {
+        "username": "cxdsasasffdsvddsd",
+        "password": "$2a$10$YeRzYn/glQX1k2fHVYqW5u3H2ZJn0ym2FE7iM.hFbVsOx4gkJtViG",
+        "firstName": "vcxdsfasafsdsdda23dsdzx",
+        "lastName": null,
+        "phoneNumber": "66dssasaffdsdsff232ddssdsasss4335",
+        "emailAddress": "iuliangeorge2017@gmail.com",
+        "address1": "xzcdsdsaf324dssxzasdsac",
+        "city": "cxzsafcx",
+        "country": "Rdsafcxzcxz",
+        "zipcode": "73sfad0",
+        "roles": [],
+        "id": 1,
+        "address2": null,
+        "region": null,
+        "passwordResetToken": null,
+        "enabled": true,
+        "authorities": null,
+        "accountNonExpired": true,
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+    },
+    "station": {
+        "id": 1,
+        "address": "sss",
+        "latitude": 1.122231223E7,
+        "longitude": 1.12232133E7,
+        "user": {
+            "username": "cxdsasasffdsvddsd",
+            "password": "$2a$10$YeRzYn/glQX1k2fHVYqW5u3H2ZJn0ym2FE7iM.hFbVsOx4gkJtViG",
+            "firstName": "vcxdsfasafsdsdda23dsdzx",
+            "lastName": null,
+            "phoneNumber": "66dssasaffdsdsff232ddssdsasss4335",
+            "emailAddress": "iuliangeorge2017@gmail.com",
+            "address1": "xzcdsdsaf324dssxzasdsac",
+            "city": "cxzsafcx",
+            "country": "Rdsafcxzcxz",
+            "zipcode": "73sfad0",
+            "roles": [],
+            "id": 1,
+            "address2": null,
+            "region": null,
+            "passwordResetToken": null,
+            "enabled": true,
+            "authorities": null,
+            "accountNonExpired": true,
+            "accountNonLocked": true,
+            "credentialsNonExpired": true
+        }
+    }
+}
+```
+
