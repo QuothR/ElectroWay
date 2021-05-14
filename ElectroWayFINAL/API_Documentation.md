@@ -265,5 +265,9 @@
     }
 }
 ```
-
+# GET REVIEW 
+  * E o metoda GET 
+  * URL : http://localhost:443/station/id_statie/reviews
+  * Nu are un request body . 
+  * Response-ul e acelasi cu cel de la ADD REVIEW .
 
