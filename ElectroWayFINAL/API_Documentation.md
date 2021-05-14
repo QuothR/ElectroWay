@@ -161,28 +161,27 @@
    * URL : http://localhost:443/user
    * Nu are un request body .
    * Model response:
-   ```json 
+   ``` json 
    {
-    "id" : "valoare_numerica" ,
-          "username" : "-",
-          "password" : "-",
-          "firstname" : "-",
-          "lastname" : "-",
-          "phoneNumber" : "-",
-          "emailAddress" : "-",
-          "address1" : "-",
-          "address2" : "-",
-          "city" : "-",
-          "region" : "-",
-          "country" : "-",
-          "zipcode" : "-",
-          "passwordResetToken" : "-",
-          "enabled": "valoare_booleana",
-          "authorities" : "--",
-          "accountNonExpired" : "valoare_booleana",
-          "accountNonLocked" : "valoare_booleana",
-          "credentialsNonExpired" : "valoare_booleana"
+      "id" : "valoare_numerica" ,
+      "username" : "-",
+      "password" : "-",
+      "firstname" : "-",
+      "lastname" : "-",
+      "phoneNumber" : "-",
+      "emailAddress" : "-",
+      "address1" : "-",
+      "address2" : "-",
+      "city" : "-",
+      "region" : "-",
+      "country" : "-",
+      "zipcode" : "-",
+      "passwordResetToken" : "-",
+      "enabled": "valoare_booleana",
+      "authorities" : "--",
+      "accountNonExpired" : "valoare_booleana",
+      "accountNonLocked" : "valoare_booleana",
+      "credentialsNonExpired" : "valoare_booleana"
     }
-    
-    ```
+ ```
     
