@@ -270,4 +270,19 @@
   * URL : http://localhost:443/station/id_statie/reviews
   * Nu are un request body . 
   * Response-ul e acelasi cu cel de la ADD REVIEW .
-
+# ADD CAR 
+  * E o metoda POST 
+  * URL :  http://localhost:443/user/id_user
+  * Request body :
+  ``` json
+  {
+    "id": 2,
+    "model": "Tesla Model 3 Standard Range",
+    "year": 2019,
+    "batteryCapacity": 54,
+    "chargingCapacity": 7,
+    "plugType": "Type 2",
+    "vehicleMaxSpeed": 209,
+    "auxiliaryKwh": 1.0
+}
+  ```
