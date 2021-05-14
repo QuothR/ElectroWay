@@ -1,6 +1,5 @@
 package com.example.electrowayfinal.service;
 
-import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
@@ -37,7 +36,7 @@ public class CarService {
         this.userService = userService;
     }
 
-    public void createCar(Car car, HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
+    public void createCar(Car car, HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -46,15 +45,17 @@ public class CarService {
         String username = claims.getSubject();
 
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
         if (optionalUser.isEmpty())
             throw new UserNotFoundException(username);
 
-        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_DRIVER")))
+
+        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_DRIVER"))){
             userService.addRole(optionalUser.get(),"ROLE_DRIVER");
+        }
 
         car.setUser(optionalUser.get());
         carRepository.save(car);
+
     }
 
     public Car getCar(Long id) {

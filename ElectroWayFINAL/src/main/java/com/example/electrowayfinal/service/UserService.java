@@ -1,7 +1,6 @@
 package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.dtos.UserDto;
-import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Privilege;
 import com.example.electrowayfinal.models.Role;
@@ -65,20 +64,15 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void addRole(User user, String roleName) throws RoleNotFoundException, ForbiddenRoleAssignmentAttemptException {
+    public void addRole(User user, String roleName) throws RoleNotFoundException {
         Optional<Role> role = roleRepository.findByName(roleName);
         if (role.isEmpty())
             throw new RoleNotFoundException(roleName);
 
         Collection<Role> roleList = user.getRoles();
-        if  (!roleList.contains(roleRepository.findByName("ROLE_ADMIN").get()) && role.get().getName().equals("ROLE_ADMIN"))
-            throw new ForbiddenRoleAssignmentAttemptException(user);
-
         roleList.add(role.get());
 
-
         user.setRoles(roleList);
-        userRepository.save(user);
     }
 
     public void registerNewUserAccount(UserDto userDto) {

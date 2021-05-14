@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"cxdsassasffdsvddsd\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
+							"raw": "{\r\n    \"username\": \"cxdsassasffdsvddsd\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": [\"ROLE_DRIVER\",\"ROLE_OWNER\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -244,7 +244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"address\": \"sssss\",\r\n    \"latitude\": 112222222232312.23,\r\n    \"longitude\": 112222222223213.3\r\n    \r\n}",
+							"raw": "{\r\n    \"address\": \"ssss\",\r\n    \"latitude\": 112232312.23,\r\n    \"longitude\": 112223213.3\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -432,7 +432,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 6,\r\n    \"username\": \"cevadecent22222222222222\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdss232323asaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
+							"raw": "{\r\n    \"id\": 9,\r\n    \"username\": \"USERNAMESdsCHIMBAT\",\r\n    \"password\": \"$2a$10$ontVS4H7lAtw5ZlelsiIse5Lx2uHfDWc5JsK5pybRuF9.1ZUsCj.a\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66dssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"address2\": null,\r\n    \"city\": \"cxzsafcx\",\r\n    \"region\": null,\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"passwordResetToken\": null,\r\n    \"enabled\": true,\r\n    \"authorities\": null,\r\n    \"accountNonExpired\": true,\r\n    \"credentialsNonExpired\": true,\r\n    \"accountNonLocked\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -451,42 +451,6 @@
 							]
 						},
 						"description": "--Takes a json user and modifies the current user\r\n\r\n--Should not be able to modify name and id??\r\n\r\n--Need to get login token if you modify the username"
-					},
-					"response": []
-				},
-				{
-					"name": "Add new role",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:443/user/addrole?roleName=ROLE_DRIVER",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "443",
-							"path": [
-								"user",
-								"addrole"
-							],
-							"query": [
-								{
-									"key": "roleName",
-									"value": "ROLE_DRIVER"
-								}
-							]
-						}
 					},
 					"response": []
 				}
@@ -726,7 +690,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/1/points/1",
+							"raw": "https://localhost:443/station/1/points/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -736,7 +700,7 @@
 								"station",
 								"1",
 								"points",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -873,14 +837,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/car",
+							"raw": "https://localhost:443/user/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
-								"car"
+								"user",
+								"2"
 							]
 						}
 					},
