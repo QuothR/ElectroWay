@@ -142,3 +142,8 @@
       }
    }
    ```
+   # MODIFY STATION
+   * E o metoda PUT . 
+   * URL : http://localhost:443/station/id_statie .
+   * Request-ul e fix acelasi cu cel de adaugarea unei statii .
+   * Response-ul e acelasi cu cel de la adaugarea uneai statii .
