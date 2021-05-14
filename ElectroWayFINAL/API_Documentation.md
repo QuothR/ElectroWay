@@ -183,4 +183,6 @@
           "accountNonLocked" : "valoare_booleana",
           "credentialsNonExpired" : "valoare_booleana"
     }
+    
     ```
+    
