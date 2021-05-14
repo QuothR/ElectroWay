@@ -212,7 +212,7 @@
    {
     "id": "valoare_numerica",
     "textReview": "-",
-    "rating": "valoare_numerica"
+    "rating": "valoare_numerica",
     "user": {
         "username": "cxdsasasffdsvddsd",
         "password": "$2a$10$YeRzYn/glQX1k2fHVYqW5u3H2ZJn0ym2FE7iM.hFbVsOx4gkJtViG",
