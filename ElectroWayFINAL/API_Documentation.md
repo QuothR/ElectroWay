@@ -184,4 +184,22 @@
       "credentialsNonExpired" : "valoare_booleana"
     }
  ```
-    
+  # GET ALL USERS
+  * E o metoda GET , care returneaza date despre toti utilizatorii 
+  * URL : http://localhost:443/users
+  * Nu are un request body .
+  * Ca si response, se va primi acelasi response-ul de la GET LOGGED USER aplicat pentru fiecare utilizator in parte . 
+ # MODIFY CURRENT USER 
+ * E o metoda PUT . 
+ * URL : http://localhost:443/user
+ * Ca si request body-ul si response body-ul e acelasi ca si ADD STATION
+ # ADD REVIEW 
+   * E o metoda POST .
+   * URL : http://localhost:443/station/id_statie_la_care_Se_adauga_review
+   * Model request body :
+   ``` json
+   {
+       "textReview": "-",
+        "rating": "-"
+   }
+   ```
