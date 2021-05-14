@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
@@ -16,8 +17,11 @@ import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
@@ -36,7 +40,7 @@ public class CarService {
         this.userService = userService;
     }
 
-    public void createCar(Car car, HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException {
+    public void createCar(Car car, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -44,9 +48,16 @@ public class CarService {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
         String username = claims.getSubject();
 
+
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
+
         if (optionalUser.isEmpty())
             throw new UserNotFoundException(username);
+
+        if (!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")){
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
 
 
         if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_DRIVER"))){
@@ -62,18 +73,23 @@ public class CarService {
         return carRepository.getOne(id);
     }
 
-    public List<Car> getCars(HttpServletRequest httpServletRequest) throws UserNotFoundException {
+    public List<Car> getCars(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
 
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
         String username = claims.getSubject();
 
-        Optional<User> user = userService.getOptionalUserByUsername(username);
+        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
-        if (user.isEmpty())
+        if (optionalUser.isEmpty())
             throw new UserNotFoundException(username);
 
-        return carRepository.findAllByUserId(user.get().getId());
+        if (!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")){
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        }
+
+        return carRepository.findAllByUserId(optionalUser.get().getId());
     }
 }

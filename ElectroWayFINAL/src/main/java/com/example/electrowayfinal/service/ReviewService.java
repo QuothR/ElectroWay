@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class ReviewService {
         this.stationService = stationService;
     }
 
-    public void createReview(Review review, Long stationId, HttpServletRequest httpServletRequest) {
+    public void createReview(Review review, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -50,7 +51,7 @@ public class ReviewService {
 
         review.setUser(optionalUser.get());
 
-        Optional<Station> optionalStation = stationService.getCurrentStation(stationId, httpServletRequest);
+        Optional<Station> optionalStation = stationService.getCurrentStation(stationId, httpServletRequest,httpServletResponse);
         if (optionalStation.isEmpty()) {
             throw new WrongUserInServiceException("Wrong station in review service!");
         }

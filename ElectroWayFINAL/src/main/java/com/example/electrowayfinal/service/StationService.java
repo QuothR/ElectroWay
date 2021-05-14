@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.service;
 
+import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -40,7 +42,7 @@ public class StationService {
         this.roleRepository = roleRepository;
     }
 
-    public void createStation(Station station, HttpServletRequest httpServletRequest) throws UserNotFoundException, RoleNotFoundException {
+    public void createStation(Station station, HttpServletRequest httpServletRequest, HttpServletResponse response) throws UserNotFoundException, RoleNotFoundException, ForbiddenRoleAssignmentAttemptException {
 
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -48,10 +50,15 @@ public class StationService {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
         String username = claims.getSubject();
 
+
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
             throw new WrongUserInServiceException("Wrong user in station service!");
+        }
+        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return;
         }
 
         if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_OWNER"))){
@@ -63,8 +70,8 @@ public class StationService {
 
     }
 
-    public void deleteStation(Long id, HttpServletRequest httpServletRequest) {
-        Optional<Station> station = getCurrentStation(id, httpServletRequest);
+    public void deleteStation(Long id, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+        Optional<Station> station = getCurrentStation(id, httpServletRequest,httpServletResponse);
         if (station.isEmpty()) {
             throw new NoSuchElementException("Station does not exist!");
         }
@@ -78,11 +85,15 @@ public class StationService {
         if (optionalUser.isEmpty()) {
             throw new NoSuchElementException("User does not exist!");
         }
-
+        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
         if (station.get().getUser() != optionalUser.get()) {
             throw new WrongAccessException("You don't own this station!");
         }
         stationRepository.deleteById(id);
+
     }
 
     public Station getStation(Long id) {
@@ -90,7 +101,7 @@ public class StationService {
     }
 
     //station
-    public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest) {
+    public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         Optional<Station> station = stationRepository.findStationById(id);
         if (station.isEmpty()) {
             throw new NoSuchElementException("Station does not exist!");
@@ -107,24 +118,38 @@ public class StationService {
             throw new NoSuchElementException("User does not exist!");
         }
 
+        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return Optional.empty();
+        }
+
         if (station.get().getUser() != optionalUser.get()) {
             throw new WrongAccessException("You don't own this station!");
         }
         return station;
     }
 
-    public List<Station> getStations(HttpServletRequest httpServletRequest) {
+    public List<Station> getStations(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
 
         String bearToken = httpServletRequest.getHeader("Authorization");
         bearToken = bearToken.substring(6);
 
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearToken).getBody();
         String username = claims.getSubject();
+        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
+
+        if (optionalUser.isEmpty())
+            throw new UserNotFoundException(username);
+
+        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        }
 
         return stationRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
     }
 
-    public Station updateStation(Station station, Long id, HttpServletRequest httpServletRequest) {
+    public Station updateStation(Station station, Long id, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
         Optional<Station> stationToUpdate = stationRepository.findStationById(id);
 
         if (stationToUpdate.isEmpty()) {
@@ -144,7 +169,11 @@ public class StationService {
         Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
-            throw new WrongUserInServiceException("Wrong user in station service!");
+            throw new UserNotFoundException(username);
+        }
+        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         }
         if (stationToUpdate.get().getUser() != optionalUser.get()) {
             throw new WrongAccessException("You don't own this station!");

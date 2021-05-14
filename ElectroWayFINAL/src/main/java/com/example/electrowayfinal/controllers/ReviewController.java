@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -21,8 +22,8 @@ public class ReviewController {
     }
 
     @PostMapping(path = "station/{id}")
-    public Review createReview(@RequestBody Review review, @PathVariable("id") Long stationId, HttpServletRequest httpServletRequest) {
-        reviewService.createReview(review, stationId, httpServletRequest);
+    public Review createReview(@RequestBody Review review, @PathVariable("id") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        reviewService.createReview(review, stationId, httpServletRequest, httpServletResponse);
         return reviewService.getReview(review.getId());
     }
 

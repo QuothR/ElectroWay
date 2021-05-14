@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
+import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.service.CarService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -24,13 +26,13 @@ public class CarController {
     }
 
     @PostMapping(path = "car")
-    public Car createCar(@RequestBody Car car,  HttpServletRequest httpServletRequest) throws RoleNotFoundException, UserNotFoundException {
-        carService.createCar(car, httpServletRequest);
-        return carService.getCar(car.getId());
+    public Car createCar(@RequestBody Car car, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
+        carService.createCar(car, httpServletRequest,httpServletResponse);
+        return httpServletResponse.getStatus() == HttpServletResponse.SC_FORBIDDEN ? null : carService.getCar(car.getId());
     }
 
     @GetMapping(path = "cars")
-    public List<Car> getUserCars(HttpServletRequest httpServletRequest) throws UserNotFoundException {
-        return carService.getCars(httpServletRequest);
+    public List<Car> getUserCars(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        return carService.getCars(httpServletRequest,httpServletResponse);
     }
 }

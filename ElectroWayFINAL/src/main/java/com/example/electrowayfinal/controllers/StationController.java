@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
+import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.service.StationService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,33 +32,37 @@ public class StationController {
     }
 
     @GetMapping()
-    public List<Station> getUserStations(HttpServletRequest httpServletRequest) {
-        return stationService.getStations(httpServletRequest);
+    public List<Station> getUserStations(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        return stationService.getStations(httpServletRequest,httpServletResponse);
     }
 
     @PostMapping()
-    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest) throws UserNotFoundException, RoleNotFoundException {
-        stationService.createStation(station, httpServletRequest);
-        return stationService.getStation(station.getId());
+    public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException, RoleNotFoundException, ForbiddenRoleAssignmentAttemptException {
+        stationService.createStation(station, httpServletRequest, httpServletResponse);
+        return httpServletResponse.getStatus() == HttpServletResponse.SC_FORBIDDEN ?
+                null :
+                stationService.getStation(station.getId());
 
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public Station updateStation(@RequestBody Station newStation, @PathVariable Long id, HttpServletRequest httpServletRequest) {
-        return stationService.updateStation(newStation, id, httpServletRequest);
+    public Station updateStation(@RequestBody Station newStation, @PathVariable Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        return stationService.updateStation(newStation, id, httpServletRequest,httpServletResponse);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        stationService.deleteStation(id, httpServletRequest);
+    public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+        stationService.deleteStation(id, httpServletRequest,httpServletResponse);
     }
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Station> getStation(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        return stationService.getCurrentStation(id, httpServletRequest);
+    public Optional<Station> getStation(@PathVariable("id") Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        return  httpServletResponse.getStatus() == HttpServletResponse.SC_FORBIDDEN ?
+                Optional.empty() :
+                stationService.getCurrentStation(id, httpServletRequest,httpServletResponse);
     }
 
 }
