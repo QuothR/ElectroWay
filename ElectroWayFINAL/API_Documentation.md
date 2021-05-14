@@ -147,3 +147,40 @@
    * URL : http://localhost:443/station/id_statie .
    * Request-ul e fix acelasi cu cel de adaugarea unei statii .
    * Response-ul e acelasi cu cel de la adaugarea uneai statii .
+   # DELETE STATION
+   * E o metoda DELETE .
+   * URL : http://localhost:443/station/id_ul_statie de sters.
+   * Utilizatorul trebuie sa fie logat in ordine ca sa stearga o statie . 
+   # GET STATION 
+   * E o metoda GET .
+   * URL :  http://localhost:443/station
+   * Nu are un request body .
+   * Response-ul e acelasi cu cel de la ADD STATION ,returnand informatii despre fiecare statie in parte.
+   # GET LOGGED USER 
+   * E o metoda GET care returneaza informatii despre utilizatorul logat .
+   * URL : http://localhost:443/user
+   * Nu are un request body .
+   * Model response:
+   ```json 
+   {
+    "id" : "valoare_numerica" ,
+          "username" : "-",
+          "password" : "-",
+          "firstname" : "-",
+          "lastname" : "-",
+          "phoneNumber" : "-",
+          "emailAddress" : "-",
+          "address1" : "-",
+          "address2" : "-",
+          "city" : "-",
+          "region" : "-",
+          "country" : "-",
+          "zipcode" : "-",
+          "passwordResetToken" : "-",
+          "enabled": "valoare_booleana",
+          "authorities" : "--",
+          "accountNonExpired" : "valoare_booleana",
+          "accountNonLocked" : "valoare_booleana",
+          "credentialsNonExpired" : "valoare_booleana"
+    }
+    ```
