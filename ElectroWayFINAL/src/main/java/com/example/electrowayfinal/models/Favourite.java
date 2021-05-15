@@ -15,6 +15,15 @@ import javax.persistence.*;
 })
 public class Favourite {
     @Id
+    @SequenceGenerator(
+            name = "favourite_sequence",
+            sequenceName = "favourite_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "favourite_sequence"
+    )
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigint")
     private long id;
 

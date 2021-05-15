@@ -15,6 +15,15 @@ import javax.persistence.*;
 })
 public class TemplateCar {
     @Id
+    @SequenceGenerator(
+            name = "template_car_sequence",
+            sequenceName = "template_car_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "template_car_sequence"
+    )
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigint")
     private long id;
 

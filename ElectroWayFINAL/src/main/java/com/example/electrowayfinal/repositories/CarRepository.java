@@ -10,11 +10,14 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findAllByUserId(long user_id);
 
+    @Override
     List<Car> findAll();
 
+    @Override
     <C extends Car> C save(C entity);
 
     void deleteById(long id);
 
+    @Override
     void delete(Car entity);
 }

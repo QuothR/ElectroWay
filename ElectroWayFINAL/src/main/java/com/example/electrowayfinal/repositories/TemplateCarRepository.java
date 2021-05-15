@@ -9,11 +9,14 @@ import java.util.List;
 @Repository
 public interface TemplateCarRepository extends JpaRepository<TemplateCar, Long> {
 
+    @Override
     List<TemplateCar> findAll();
 
+    @Override
     <C extends TemplateCar> C save(C entity);
 
     void deleteById(long id);
 
+    @Override
     void delete(TemplateCar entity);
 }

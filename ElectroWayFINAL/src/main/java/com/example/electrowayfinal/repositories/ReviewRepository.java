@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.repositories;
 
 import com.example.electrowayfinal.models.Review;
+import com.example.electrowayfinal.models.TemplateCar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Override
     <R extends Review> R save(R entity);
+
+    void deleteById(long id);
+
+    @Override
+    void delete(Review entity);
 }
