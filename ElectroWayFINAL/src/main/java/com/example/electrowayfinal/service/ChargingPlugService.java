@@ -4,7 +4,6 @@ import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.models.ChargingPlug;
 import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.repositories.ChargingPlugRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -46,28 +45,6 @@ public class ChargingPlugService {
         chargingPlug.setChargingPoint(chargingPoint.get());
 
         chargingPlugRepository.save(chargingPlug);
-    }
-
-    public void deleteChargingPlug(ChargingPlug chargingPlug) {
-        chargingPlugRepository.delete(chargingPlug);
-    }
-
-    public void deleteChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
-        if (chargingPoint.isEmpty()) {
-            throw new NoSuchElementException("Charging point in charging plug search is empty!");
-        }
-        if (chargingPoint.get().getStation().getId() != id) {
-            throw new WrongAccessException("You don't own this station!");
-        }
-        Optional<ChargingPlug> chargingPlug = chargingPlugRepository.findChargingPlugById(pId);
-        if (chargingPlug.isEmpty()) {
-            throw new NoSuchElementException("Charging plug does not exist!");
-        }
-        if (chargingPoint.get().getId() != chargingPlug.get().getChargingPoint().getId()) {
-            throw new WrongAccessException("You don't own this charging point!");
-        }
-        chargingPlugRepository.deleteById(pId);
     }
 
     public List<ChargingPlug> getChargingPlugsByChargingPoint(ChargingPoint chargingPoint, Long id) {
@@ -113,5 +90,27 @@ public class ChargingPlugService {
         chargingPlugToUpdate.get().setPriceKw(chargingPlug.getPriceKw());
 
         return chargingPlugToUpdate.get();
+    }
+
+    public void deleteChargingPlug(ChargingPlug chargingPlug) {
+        chargingPlugRepository.delete(chargingPlug);
+    }
+
+    public void deleteChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
+        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
+        if (chargingPoint.isEmpty()) {
+            throw new NoSuchElementException("Charging point in charging plug search is empty!");
+        }
+        if (chargingPoint.get().getStation().getId() != id) {
+            throw new WrongAccessException("You don't own this station!");
+        }
+        Optional<ChargingPlug> chargingPlug = chargingPlugRepository.findChargingPlugById(pId);
+        if (chargingPlug.isEmpty()) {
+            throw new NoSuchElementException("Charging plug does not exist!");
+        }
+        if (chargingPoint.get().getId() != chargingPlug.get().getChargingPoint().getId()) {
+            throw new WrongAccessException("You don't own this charging point!");
+        }
+        chargingPlugRepository.deleteById(pId);
     }
 }

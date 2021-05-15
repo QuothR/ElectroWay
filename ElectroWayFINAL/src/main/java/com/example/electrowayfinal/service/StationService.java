@@ -1,14 +1,11 @@
 package com.example.electrowayfinal.service;
 
-import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
-import com.example.electrowayfinal.exceptions.UserNotFoundException;
-import com.example.electrowayfinal.exceptions.WrongAccessException;
-import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
+import com.example.electrowayfinal.exceptions.*;
 import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
-import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.StationRepository;
+import com.example.electrowayfinal.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,6 @@ import java.util.stream.Collectors;
 @Service
 public class StationService {
     private final StationRepository stationRepository;
-    private final RoleRepository roleRepository;
     private final UserService userService;
     private String secret;
 
@@ -36,63 +32,25 @@ public class StationService {
     }
 
     @Autowired
-    public StationService(StationRepository stationRepository, UserService userService, RoleRepository roleRepository) {
+    public StationService(StationRepository stationRepository, UserService userService) {
         this.stationRepository = stationRepository;
         this.userService = userService;
-        this.roleRepository = roleRepository;
     }
 
-    public void createStation(Station station, HttpServletRequest httpServletRequest, HttpServletResponse response) throws UserNotFoundException, RoleNotFoundException, ForbiddenRoleAssignmentAttemptException {
+    public void createStation(Station station, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, ForbiddenRoleAssignmentAttemptException, UserNotFoundException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
 
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
-        if (optionalUser.isEmpty()) {
-            throw new WrongUserInServiceException("Wrong user in station service!");
-        }
-        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            throw new WrongPrivilegesException("Can't access station without being a station owner!");
         }
 
-        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_OWNER"))){
-            userService.addRole(optionalUser.get(),"ROLE_OWNER");
+        if (user.getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_OWNER"))) {
+            userService.addRole(user, "ROLE_OWNER");
         }
-        station.setUser(optionalUser.get());
+        station.setUser(user);
 
         stationRepository.save(station);
-
-    }
-
-    public void deleteStation(Long id, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
-        Optional<Station> station = getCurrentStation(id, httpServletRequest,httpServletResponse);
-        if (station.isEmpty()) {
-            throw new NoSuchElementException("Station does not exist!");
-        }
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-        if (optionalUser.isEmpty()) {
-            throw new NoSuchElementException("User does not exist!");
-        }
-        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
-            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-        if (station.get().getUser() != optionalUser.get()) {
-            throw new WrongAccessException("You don't own this station!");
-        }
-        stationRepository.deleteById(id);
 
     }
 
@@ -101,85 +59,68 @@ public class StationService {
     }
 
     //station
-    public Optional<Station> getCurrentStation(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        Optional<Station> station = stationRepository.findStationById(id);
+    public Station getCurrentStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
+
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            throw new WrongPrivilegesException("Can't access station without being a station owner!");
+        }
+
+        Optional<Station> station = stationRepository.findStationById(stationId);
         if (station.isEmpty()) {
             throw new NoSuchElementException("Station does not exist!");
         }
 
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-        if (optionalUser.isEmpty()) {
-            throw new NoSuchElementException("User does not exist!");
+        if (station.get().getUser() != user) {
+            throw new WrongAccessException("You don't own this station!");
         }
 
-        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
+        return station.get();
+    }
+
+    public List<Station> getStations(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
+
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")) {
             httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return Optional.empty();
+            throw new WrongPrivilegesException("Can't access station without being a station owner!");
         }
 
-        if (station.get().getUser() != optionalUser.get()) {
+        return stationRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
+    }
+
+    public Station updateStation(Station station, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        Station stationToUpdate = checkUserAndStation(stationId, httpServletRequest, httpServletResponse);
+
+        stationToUpdate.setLongitude(station.getLongitude());
+        stationToUpdate.setAddress(station.getAddress());
+        stationToUpdate.setLatitude(station.getLatitude());
+
+        station.setUser(stationToUpdate.getUser());
+        stationRepository.save(stationToUpdate);
+        return stationToUpdate;
+    }
+
+    public void deleteStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        checkUserAndStation(stationId, httpServletRequest, httpServletResponse);
+
+        stationRepository.deleteById(stationId);
+    }
+
+    private Station checkUserAndStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
+
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            throw new WrongPrivilegesException("Can't access station without being a station owner!");
+        }
+
+        Station station = getCurrentStation(stationId, httpServletRequest, httpServletResponse);
+
+        if (station.getUser() != user) {
             throw new WrongAccessException("You don't own this station!");
         }
         return station;
-    }
-
-    public List<Station> getStations(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
-
-        String bearToken = httpServletRequest.getHeader("Authorization");
-        bearToken = bearToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearToken).getBody();
-        String username = claims.getSubject();
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
-        if (optionalUser.isEmpty())
-            throw new UserNotFoundException(username);
-
-        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
-            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return null;
-        }
-
-        return stationRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).collect(Collectors.toList());
-    }
-
-    public Station updateStation(Station station, Long id, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        Optional<Station> stationToUpdate = stationRepository.findStationById(id);
-
-        if (stationToUpdate.isEmpty()) {
-            throw new NoSuchElementException("Station does not exist!");
-        }
-
-        stationToUpdate.get().setLongitude(station.getLongitude());
-        stationToUpdate.get().setAddress(station.getAddress());
-        stationToUpdate.get().setLatitude(station.getLatitude());
-
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
-        if (optionalUser.isEmpty()) {
-            throw new UserNotFoundException(username);
-        }
-        if(!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_OWNER")){
-            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return null;
-        }
-        if (stationToUpdate.get().getUser() != optionalUser.get()) {
-            throw new WrongAccessException("You don't own this station!");
-        }
-        station.setUser(optionalUser.get());
-        stationRepository.save(stationToUpdate.get());
-        return stationToUpdate.get();
     }
 }

@@ -3,14 +3,12 @@ package com.example.electrowayfinal.service;
 import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
-import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
+import com.example.electrowayfinal.exceptions.WrongPrivilegesException;
 import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.CarRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
+import com.example.electrowayfinal.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,9 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,55 +37,50 @@ public class CarService {
     }
 
     public void createCar(Car car, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
 
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
-        if (optionalUser.isEmpty())
-            throw new UserNotFoundException(username);
-
-        if (!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")){
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
             httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
+            throw new WrongPrivilegesException("Can't access car without being a car owner!");
         }
 
-
-        if (optionalUser.get().getRoles().stream().map(Role::getName).noneMatch(s -> s.equals("ROLE_DRIVER"))){
-            userService.addRole(optionalUser.get(),"ROLE_DRIVER");
-        }
-
-        car.setUser(optionalUser.get());
+        car.setUser(user);
         carRepository.save(car);
-
     }
 
-    public Car getCar(Long id) {
+    public Car getCar(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
+
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            throw new WrongPrivilegesException("Can't access car without being a car owner!");
+        }
+
         return carRepository.getOne(id);
     }
 
-    public List<Car> getCars(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
+    public List<Car> getCars(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
 
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
-        if (optionalUser.isEmpty())
-            throw new UserNotFoundException(username);
-
-        if (!optionalUser.get().getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")){
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
             httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return null;
+            throw new WrongPrivilegesException("Can't access car without being a car owner!");
         }
 
-        return carRepository.findAllByUserId(optionalUser.get().getId());
+        return carRepository.findAllByUserId(user.getId());
+    }
+
+    public void deleteCar(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
+
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            throw new WrongPrivilegesException("Can't access car without being a car owner!");
+        }
+
+        if (carRepository.getOne(id).getUser() != user) {
+            throw new WrongAccessException("You don't own this car!");
+        }
+        carRepository.deleteById(id);
     }
 }

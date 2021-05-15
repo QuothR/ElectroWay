@@ -13,4 +13,8 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findAll();
 
     <C extends Car> C save(C entity);
+
+    void deleteById(long id);
+
+    void delete(Car entity);
 }

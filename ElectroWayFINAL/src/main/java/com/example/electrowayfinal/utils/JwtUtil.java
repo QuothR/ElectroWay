@@ -1,7 +1,9 @@
 package com.example.electrowayfinal.utils;
 
+import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.User;
+import com.example.electrowayfinal.service.UserService;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -81,6 +85,21 @@ public class JwtUtil {
             roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
         }
         return roles;
+    }
+
+    public static User getUserFromToken(UserService userService, String secret, HttpServletRequest httpServletRequest) throws UserNotFoundException {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        bearerToken = bearerToken.substring(6);
+
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
+        String username = claims.getSubject();
+
+        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException(username);
+        }
+        return optionalUser.get();
     }
 
 }

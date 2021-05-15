@@ -62,22 +62,6 @@ public class ChargingPointService {
         return chargingPoint;
     }
 
-    public void deleteChargingPoint(ChargingPoint chargingPoint) {
-        chargingPointRepository.delete(chargingPoint);
-    }
-
-    public void deleteChargingPointById(Long cId, Long id) {
-        Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
-
-        if (chargingPoint.isEmpty()) {
-            throw new NoSuchElementException("No charging point found!");
-        }
-        if (chargingPoint.get().getStation().getId() != id) {
-            throw new WrongAccessException("You don't own this station!");
-        }
-        chargingPointRepository.deleteById(cId);
-    }
-
     public Optional<ChargingPoint> findChargingPointById(Long id, Long cId, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(id);
 
@@ -125,6 +109,22 @@ public class ChargingPointService {
         }
 
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);
+    }
+
+    public void deleteChargingPoint(ChargingPoint chargingPoint) {
+        chargingPointRepository.delete(chargingPoint);
+    }
+
+    public void deleteChargingPointById(Long cId, Long id) {
+        Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
+
+        if (chargingPoint.isEmpty()) {
+            throw new NoSuchElementException("No charging point found!");
+        }
+        if (chargingPoint.get().getStation().getId() != id) {
+            throw new WrongAccessException("You don't own this station!");
+        }
+        chargingPointRepository.deleteById(cId);
     }
 
 }

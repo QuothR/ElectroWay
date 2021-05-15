@@ -6,6 +6,7 @@ import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
@@ -16,7 +17,6 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @Qualifier("car")
-
 public class CarController {
     private final CarService carService;
 
@@ -26,13 +26,21 @@ public class CarController {
     }
 
     @PostMapping(path = "car")
+    @ResponseStatus(HttpStatus.OK)
     public Car createCar(@RequestBody Car car, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
-        carService.createCar(car, httpServletRequest,httpServletResponse);
-        return httpServletResponse.getStatus() == HttpServletResponse.SC_FORBIDDEN ? null : carService.getCar(car.getId());
+        carService.createCar(car, httpServletRequest, httpServletResponse);
+        return carService.getCar(car.getId(), httpServletRequest, httpServletResponse);
     }
 
     @GetMapping(path = "cars")
-    public List<Car> getUserCars(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        return carService.getCars(httpServletRequest,httpServletResponse);
+    @ResponseStatus(HttpStatus.OK)
+    public List<Car> getUserCars(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        return carService.getCars(httpServletRequest, httpServletResponse);
+    }
+
+    @DeleteMapping(path = "/car/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        carService.deleteCar(id, httpServletRequest, httpServletResponse);
     }
 }
