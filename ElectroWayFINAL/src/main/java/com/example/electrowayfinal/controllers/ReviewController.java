@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
+@RequestMapping("/review")
 @Qualifier("review")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ReviewController {
@@ -23,28 +24,34 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @PostMapping(path = "station/{stationId}")
+    @PostMapping(path = "/create/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
     public Review createReview(@RequestBody Review review, @PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         reviewService.createReview(review, stationId, httpServletRequest, httpServletResponse);
         return reviewService.getReview(review.getId(), httpServletRequest, httpServletResponse);
     }
 
-    @GetMapping(path = "station/{stationId}/reviews")
+    @GetMapping(path = "all/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Review> getStationReviews(@PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         return reviewService.getReviews(stationId, httpServletRequest, httpServletResponse);
     }
 
-    @GetMapping(path = "station/{stationId}/review/{reviewId}")
+    @GetMapping(path = "{reviewId}/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
-    public Review getStationReview(@PathVariable("stationId") Long stationId, @PathVariable("reviewId") Long reviewId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        return reviewService.getReview(stationId, reviewId, httpServletRequest, httpServletResponse);
+    public Review getStationReview(@PathVariable("reviewId") Long reviewId, @PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        return reviewService.getReview(reviewId, stationId, httpServletRequest, httpServletResponse);
     }
 
-    @DeleteMapping(path = "station/{stationId}/review/delete/{reviewId}")
+    @RequestMapping(value = "update/{reviewId}/station/{stationId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteStationReview(@PathVariable("stationId") Long stationId, @PathVariable("reviewId") Long reviewId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        reviewService.deleteReview(stationId, reviewId, httpServletRequest, httpServletResponse);
+    public Review updateStationReview(@RequestBody Review newReview, @PathVariable("reviewId") Long reviewId, @PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        return reviewService.updateReview(newReview, reviewId, stationId, httpServletRequest, httpServletResponse);
+    }
+
+    @DeleteMapping(path = "delete/{reviewId}/station/{stationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteStationReview(@PathVariable("reviewId") Long reviewId, @PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        reviewService.deleteReview(reviewId, stationId, httpServletRequest, httpServletResponse);
     }
 }

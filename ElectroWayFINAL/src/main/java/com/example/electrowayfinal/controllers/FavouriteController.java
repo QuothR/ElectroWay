@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
+import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.models.Favourite;
 import com.example.electrowayfinal.service.FavouriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,14 @@ public class FavouriteController {
         this.favouriteService = favouriteService;
     }
 
-    @PostMapping(path = "station/{stationId}")
+    @PostMapping(path = "create/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
     public Favourite createFavourite(@RequestBody Favourite favourite, @PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         favouriteService.createFavourite(favourite, stationId, httpServletRequest, httpServletResponse);
         return favouriteService.getFavourite(favourite.getId(), httpServletRequest, httpServletResponse);
     }
 
-    @GetMapping(path = "station/{stationId}/all")
+    @GetMapping(path = "all/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Favourite> getStationFavourites(@PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         return favouriteService.getFavourites(stationId, httpServletRequest, httpServletResponse);
@@ -40,12 +41,12 @@ public class FavouriteController {
     @GetMapping(path = "{favouriteId}/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
     public Favourite getStationFavourite(@PathVariable("stationId") Long stationId, @PathVariable("favouriteId") Long favouriteId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        return favouriteService.getFavourite(stationId, favouriteId, httpServletRequest, httpServletResponse);
+        return favouriteService.getFavourite(favouriteId, stationId, httpServletRequest, httpServletResponse);
     }
 
     @DeleteMapping(path = "delete/{favouriteId}/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteStationFavourite(@PathVariable("stationId") Long stationId, @PathVariable("favouriteId") Long favouriteId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        favouriteService.deleteFavourite(stationId, favouriteId, httpServletRequest, httpServletResponse);
+        favouriteService.deleteFavourite(favouriteId, stationId, httpServletRequest, httpServletResponse);
     }
 }

@@ -55,7 +55,7 @@ public class FavouriteService {
         return favouriteRepository.getOne(stationId);
     }
 
-    public Favourite getFavourite(Long stationId, Long favouriteId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {
+    public Favourite getFavourite(Long favouriteId, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {
         checkUserAndStation(httpServletRequest, httpServletResponse);
 
         Optional<Favourite> optionalFavourite = favouriteRepository.findFavouriteByStationIdAndId(stationId, favouriteId);
@@ -71,7 +71,7 @@ public class FavouriteService {
         return favouriteRepository.findAllByStationId(stationId);
     }
 
-    public void deleteFavourite(Long stationId, Long favouriteId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException, WrongAccessException {
+    public void deleteFavourite(Long favouriteId, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException, WrongAccessException {
         checkUserAndStation(httpServletRequest, httpServletResponse);
 
         Optional<Favourite> optionalFavourite = favouriteRepository.findFavouriteByStationIdAndId(stationId, favouriteId);

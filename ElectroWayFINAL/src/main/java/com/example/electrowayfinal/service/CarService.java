@@ -48,7 +48,7 @@ public class CarService {
         carRepository.save(car);
     }
 
-    public Car getCar(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+    public Car getCar(Long carId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
 
         if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
@@ -56,7 +56,12 @@ public class CarService {
             throw new WrongPrivilegesException("Can't access car without being a car owner!");
         }
 
-        return carRepository.getOne(id);
+        Car car = carRepository.getOne(carId);
+
+        if (car.getUser() != user) {
+            throw new WrongAccessException("You don't own this car!");
+        }
+        return car;
     }
 
     public List<Car> getCars(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
@@ -70,17 +75,23 @@ public class CarService {
         return carRepository.findAllByUserId(user.getId());
     }
 
+    public Car updateCar(Car car, Long carId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        Car carToUpdate = getCar(carId, httpServletRequest, httpServletResponse);
+
+        carToUpdate.setModel(car.getModel());
+        carToUpdate.setYear(car.getYear());
+        carToUpdate.setBatteryCapacity(car.getBatteryCapacity());
+        carToUpdate.setChargingCapacity(car.getChargingCapacity());
+        carToUpdate.setPlugType(car.getPlugType());
+        carToUpdate.setVehicleMaxSpeed(car.getVehicleMaxSpeed());
+        carToUpdate.setAuxiliaryKwh(car.getAuxiliaryKwh());
+
+        carRepository.save(carToUpdate);
+        return carToUpdate;
+    }
+
     public void deleteCar(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
-
-        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            throw new WrongPrivilegesException("Can't access car without being a car owner!");
-        }
-
-        if (carRepository.getOne(id).getUser() != user) {
-            throw new WrongAccessException("You don't own this car!");
-        }
+        getCar(id, httpServletRequest, httpServletResponse);
         carRepository.deleteById(id);
     }
 }

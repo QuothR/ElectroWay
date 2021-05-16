@@ -520,13 +520,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/1",
+							"raw": "https://localhost:443/review/create/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
+								"review",
+								"create",
 								"station",
 								"1"
 							]
@@ -550,16 +552,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/1/reviews",
+							"raw": "https://localhost:443/review/all/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
+								"review",
+								"all",
 								"station",
-								"1",
-								"reviews"
+								"1"
 							]
 						}
 					},
@@ -581,17 +584,59 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/1/review/4",
+							"raw": "https://localhost:443/review/1001/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
-								"station",
-								"1",
 								"review",
-								"4"
+								"1001",
+								"station",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"textReview\": \"meh\",\r\n    \"rating\": \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/review/update/1001/station/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"review",
+								"update",
+								"1001",
+								"station",
+								"1"
 							]
 						}
 					},
@@ -613,18 +658,18 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/1/review/delete/4",
+							"raw": "https://localhost:443/review/delete/1001/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
-								"station",
-								"1",
 								"review",
 								"delete",
-								"4"
+								"1001",
+								"station",
+								"1"
 							]
 						}
 					},
@@ -938,14 +983,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/car",
+							"raw": "https://localhost:443/car/create",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
-								"car"
+								"car",
+								"create"
 							]
 						}
 					},
@@ -967,14 +1013,55 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/cars",
+							"raw": "https://localhost:443/car/all",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
-								"cars"
+								"car",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"Tesla Model 17 Standard Range\",\r\n    \"year\": 2019,\r\n    \"batteryCapacity\": 54,\r\n    \"chargingCapacity\": 7,\r\n    \"plugType\": \"Type 2\",\r\n    \"vehicleMaxSpeed\": 209,\r\n    \"auxiliaryKwh\": 1.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/car/update/1001",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"car",
+								"update",
+								"1001"
 							]
 						}
 					},
@@ -996,7 +1083,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/car/4",
+							"raw": "https://localhost:443/car/delete/1001",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1004,7 +1091,8 @@
 							"port": "443",
 							"path": [
 								"car",
-								"4"
+								"delete",
+								"1001"
 							]
 						}
 					},
@@ -1185,14 +1273,15 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/tcar",
+							"raw": "https://localhost:443/templatecar/create",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
-								"tcar"
+								"templatecar",
+								"create"
 							]
 						}
 					},
@@ -1214,14 +1303,55 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/tcars",
+							"raw": "https://localhost:443/templatecar/all",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
-								"tcars"
+								"templatecar",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update template car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"NMobil\",\r\n    \"year\": 2019,\r\n    \"batteryCapacity\": 54,\r\n    \"chargingCapacity\": 7,\r\n    \"plugType\": \"Type 2\",\r\n    \"vehicleMaxSpeed\": 209,\r\n    \"auxiliaryKwh\": 1.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/templatecar/update/1001",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"templatecar",
+								"update",
+								"1001"
 							]
 						}
 					},
@@ -1243,16 +1373,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/delete/tcar/1",
+							"raw": "https://localhost:443/templatecar/delete/1001",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "443",
 							"path": [
+								"templatecar",
 								"delete",
-								"tcar",
-								"1"
+								"1001"
 							]
 						}
 					},
@@ -1288,7 +1418,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/favourite/station/1",
+							"raw": "https://localhost:443/favourite/create/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1296,6 +1426,7 @@
 							"port": "443",
 							"path": [
 								"favourite",
+								"create",
 								"station",
 								"1"
 							]
@@ -1319,7 +1450,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/favourite/station/1/all",
+							"raw": "https://localhost:443/favourite/all/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1327,9 +1458,9 @@
 							"port": "443",
 							"path": [
 								"favourite",
+								"all",
 								"station",
-								"1",
-								"all"
+								"1"
 							]
 						}
 					},
@@ -1351,7 +1482,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/favourite/1/station/1",
+							"raw": "https://localhost:443/favourite/1001/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1359,7 +1490,7 @@
 							"port": "443",
 							"path": [
 								"favourite",
-								"1",
+								"1001",
 								"station",
 								"1"
 							]
@@ -1383,7 +1514,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/favourite/delete/1/station/1",
+							"raw": "https://localhost:443/favourite/delete/1001/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1392,7 +1523,7 @@
 							"path": [
 								"favourite",
 								"delete",
-								"1",
+								"1001",
 								"station",
 								"1"
 							]

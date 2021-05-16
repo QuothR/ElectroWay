@@ -4,10 +4,7 @@ import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongPrivilegesException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
-import com.example.electrowayfinal.models.Review;
-import com.example.electrowayfinal.models.Role;
-import com.example.electrowayfinal.models.Station;
-import com.example.electrowayfinal.models.User;
+import com.example.electrowayfinal.models.*;
 import com.example.electrowayfinal.repositories.ReviewRepository;
 import com.example.electrowayfinal.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +52,7 @@ public class ReviewService {
         return reviewRepository.getOne(stationId);
     }
 
-    public Review getReview(Long stationId, Long reviewId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {
+    public Review getReview(Long reviewId, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {
         checkUserAndStation(httpServletRequest, httpServletResponse);
 
         Optional<Review> optionalReview = reviewRepository.findReviewByStationIdAndId(stationId, reviewId);
@@ -71,7 +68,17 @@ public class ReviewService {
         return reviewRepository.findAllByStationId(stationId);
     }
 
-    public void deleteReview(Long stationId, Long reviewId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException, WrongAccessException {
+    public Review updateReview(Review review, Long reviewId, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        Review reviewToUpdate = getReview(reviewId, stationId, httpServletRequest, httpServletResponse);
+
+        reviewToUpdate.setTextReview(review.getTextReview());
+        reviewToUpdate.setRating(review.getRating());
+
+        reviewRepository.save(reviewToUpdate);
+        return reviewToUpdate;
+    }
+
+    public void deleteReview(Long reviewId, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException, WrongAccessException {
         checkUserAndStation(httpServletRequest, httpServletResponse);
 
         Optional<Review> optionalReview = reviewRepository.findReviewByStationIdAndId(stationId, reviewId);

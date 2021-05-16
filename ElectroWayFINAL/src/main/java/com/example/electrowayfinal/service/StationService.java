@@ -97,7 +97,7 @@ public class StationService {
         stationToUpdate.setAddress(station.getAddress());
         stationToUpdate.setLatitude(station.getLatitude());
 
-        station.setUser(stationToUpdate.getUser());
+        station.setUser(stationToUpdate.getUser());// TODO is this necessary?
         stationRepository.save(stationToUpdate);
         return stationToUpdate;
     }

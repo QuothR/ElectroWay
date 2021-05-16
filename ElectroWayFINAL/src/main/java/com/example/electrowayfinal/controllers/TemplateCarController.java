@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@RequestMapping("/templatecar")
 @CrossOrigin(origins = "http://localhost:3000")
 @Qualifier("template")
 public class TemplateCarController {
@@ -22,22 +23,28 @@ public class TemplateCarController {
         this.templateCarService = templateCarService;
     }
 
-    @PostMapping(path = "tcar")
+    @PostMapping(path = "create")
     @ResponseStatus(HttpStatus.OK)
-    public TemplateCar createCar(@RequestBody TemplateCar templateCar, HttpServletRequest httpServletRequest) throws UserNotFoundException {
+    public TemplateCar createTemplateCar(@RequestBody TemplateCar templateCar, HttpServletRequest httpServletRequest) throws UserNotFoundException {
         templateCarService.createTemplateCar(templateCar, httpServletRequest);
         return templateCarService.getTemplateCar(templateCar.getId(), httpServletRequest);
     }
 
-    @GetMapping(path = "tcars")
+    @GetMapping(path = "all")
     @ResponseStatus(HttpStatus.OK)
-    public List<TemplateCar> getUserCars(HttpServletRequest httpServletRequest) throws UserNotFoundException {
+    public List<TemplateCar> getTemplateCars(HttpServletRequest httpServletRequest) throws UserNotFoundException {
         return templateCarService.getTemplateCars(httpServletRequest);
     }
 
-    @DeleteMapping(path = "/delete/tcar/{id}")
+    @RequestMapping(value = "update/{templateCarId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws UserNotFoundException {
-        templateCarService.deleteTemplateCar(id, httpServletRequest);
+    public TemplateCar updateTemplateCar(@RequestBody TemplateCar newTemplateCar, @PathVariable("templateCarId") Long templateCarId, HttpServletRequest httpServletRequest) throws UserNotFoundException {
+        return templateCarService.updateTemplateCar(newTemplateCar, templateCarId, httpServletRequest);
+    }
+
+    @DeleteMapping(path = "/delete/{templateCarId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTemplateCar(@PathVariable("templateCarId") Long templateCarId, HttpServletRequest httpServletRequest) throws UserNotFoundException {
+        templateCarService.deleteTemplateCar(templateCarId, httpServletRequest);
     }
 }
