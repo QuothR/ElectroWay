@@ -1,15 +1,16 @@
 package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.*;
+import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
+import com.example.electrowayfinal.repositories.ChargingPointRepository;
 import com.example.electrowayfinal.repositories.StationRepository;
 import com.example.electrowayfinal.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class StationService {
     private final StationRepository stationRepository;
     private final UserService userService;
+    private final ChargingPointRepository chargingPointRepository;
     private String secret;
 
     @Value("${jwt.secret}")
@@ -31,10 +33,12 @@ public class StationService {
         this.secret = secret;
     }
 
+    @Lazy
     @Autowired
-    public StationService(StationRepository stationRepository, UserService userService) {
+    public StationService(StationRepository stationRepository, UserService userService, ChargingPointRepository chargingPointRepository) {
         this.stationRepository = stationRepository;
         this.userService = userService;
+        this.chargingPointRepository = chargingPointRepository;
     }
 
     public void createStation(Station station, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, ForbiddenRoleAssignmentAttemptException, UserNotFoundException {
@@ -104,8 +108,15 @@ public class StationService {
 
     public void deleteStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         checkUserAndStation(stationId, httpServletRequest, httpServletResponse);
-
-        stationRepository.deleteById(stationId);
+        List<ChargingPoint> chargingPoints = chargingPointRepository.getChargingPointsByStation_Id(stationId);
+        if(chargingPoints.isEmpty()){
+            stationRepository.deleteById(stationId);
+        }else{
+            for(ChargingPoint point : chargingPoints){
+                chargingPointRepository.deleteById(point.getId());
+            }
+            stationRepository.deleteById(stationId);
+        }
     }
 
     private Station checkUserAndStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {

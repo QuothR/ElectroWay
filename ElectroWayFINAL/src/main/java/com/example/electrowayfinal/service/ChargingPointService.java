@@ -2,6 +2,7 @@ package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
+import com.example.electrowayfinal.models.ChargingPlug;
 import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
@@ -9,9 +10,9 @@ import com.example.electrowayfinal.repositories.ChargingPlugRepository;
 import com.example.electrowayfinal.repositories.ChargingPointRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class ChargingPointService {
     public void setSecret(String secret) {
         this.secret = secret;
     }
-
+    @Lazy
     @Autowired
     public ChargingPointService(ChargingPointRepository chargingPointRepository, ChargingPlugRepository chargingPlugRepository, StationService stationService, UserService userService) {
         this.chargingPointRepository = chargingPointRepository;
@@ -110,9 +111,20 @@ public class ChargingPointService {
 
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);
     }
-
+    public List<ChargingPoint> getChargingPointsByStationId(long id){
+        return chargingPointRepository.getChargingPointsByStation_Id(id);
+    }
     public void deleteChargingPoint(ChargingPoint chargingPoint) {
-        chargingPointRepository.delete(chargingPoint);
+        List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(chargingPoint.getId());
+        if(chargingPlugs.isEmpty()){
+            chargingPointRepository.deleteById(chargingPoint.getId());
+        }else{
+            for(ChargingPlug plug:chargingPlugs){
+                chargingPlugRepository.deleteById(plug.getId());
+            }
+            chargingPointRepository.deleteById(chargingPoint.getId());
+        }
+
     }
 
     public void deleteChargingPointById(Long cId, Long id) {
