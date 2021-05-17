@@ -126,17 +126,25 @@ public class ChargingPointService {
         }
 
     }
-
+    //cid = id charging point
+    //id = id station
     public void deleteChargingPointById(Long cId, Long id) {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
-
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("No charging point found!");
         }
         if (chargingPoint.get().getStation().getId() != id) {
             throw new WrongAccessException("You don't own this station!");
         }
-        chargingPointRepository.deleteById(cId);
+        List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(cId);
+        if(chargingPlugs.isEmpty()){
+            chargingPointRepository.deleteById(cId);
+        }else{
+            for(ChargingPlug plug:chargingPlugs){
+                chargingPlugRepository.deleteById(plug.getId());
+            }
+            chargingPointRepository.deleteById(cId);
+        }
     }
 
 }

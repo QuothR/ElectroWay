@@ -45,6 +45,7 @@ public class ChargingPointController {
     public void delete(@PathVariable("cId") Long cId, @PathVariable("id") Long id) {
         chargingPointService.deleteChargingPointById(cId, id);
     }
-
+    //cId = id charging point
+    //id = id station
 
 }
