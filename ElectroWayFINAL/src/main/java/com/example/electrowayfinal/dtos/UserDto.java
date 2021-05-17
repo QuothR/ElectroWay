@@ -11,10 +11,12 @@ import java.util.List;
 public class UserDto {
     private String password;
     private String address1;
+    private String address2;
     private String firstName = null;
     private String lastName = null;
     private String zipcode = null;
     private String country = null;
+    private String region = null;
     private String city = null;
     private String username;
     private String phoneNumber;
@@ -30,8 +32,10 @@ public class UserDto {
             @JsonProperty("phoneNumber") String phoneNumber,
             @JsonProperty("emailAddress") String emailAddress,
             @JsonProperty("address1") String address1,
+            @JsonProperty("address2") String address2,
             @JsonProperty("city") String city,
             @JsonProperty("country") String country,
+            @JsonProperty("region") String region,
             @JsonProperty("zipcode") String zipcode,
             @JsonProperty("roles") List<String> roles) {
         this.username = username;
@@ -41,8 +45,10 @@ public class UserDto {
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.address1 = address1;
+        this.address2 = address2;
         this.city = city;
         this.country = country;
+        this.region = region;
         this.zipcode = zipcode;
         this.roles = roles;
     }

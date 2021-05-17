@@ -106,6 +106,7 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.address1 = address1;
