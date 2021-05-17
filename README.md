@@ -1,4 +1,3 @@
-
 # Uber For Electric Cars Api Route Data
 
 This is the documentation for ElectroWay, Uber For Electric Cars Api Route Data.
@@ -173,5 +172,3 @@ This is the documentation for ElectroWay, Uber For Electric Cars Api Route Data.
     ],
     "formatVersion": "0.0.12"
 }
-```
-
