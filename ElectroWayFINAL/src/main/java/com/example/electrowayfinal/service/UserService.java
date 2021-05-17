@@ -183,25 +183,27 @@ public class UserService implements UserDetailsService {
         if (optionalUser.isEmpty()) {
             throw new NoSuchElementException("User does not exist!");
         }
+        modifiedUser.setId(optionalUser.get().getId());
+        modifiedUser.setEnabled(true);
         userRepository.save(modifiedUser);
     }
 
     //TO DELETE???
-    @Transactional
-    public void updateUser(Long userId, String firstName, String lastName, String emailAddress) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + "does not exist"));
-        if (firstName != null && firstName.length() > 0 && !Objects.equals(user.getFirstName(), firstName))
-            user.setFirstName(firstName);
-        if (lastName != null && lastName.length() > 0 && !Objects.equals(user.getLastName(), lastName))
-            user.setFirstName(lastName);
-        if (emailAddress != null && emailAddress.length() > 0 && !Objects.equals(user.getEmailAddress(), emailAddress)) {
-            Optional<User> userOptional = userRepository.findUserByEmailAddress(emailAddress);
-            if (userOptional.isPresent()) {
-                throw new IllegalStateException("email taken");
-            }
-            user.setEmailAddress(emailAddress);
-        }
-    }
+//    @Transactional
+//    public void updateUser(Long userId, String firstName, String lastName, String emailAddress) {
+//        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + "does not exist"));
+//        if (firstName != null && firstName.length() > 0 && !Objects.equals(user.getFirstName(), firstName))
+//            user.setFirstName(firstName);
+//        if (lastName != null && lastName.length() > 0 && !Objects.equals(user.getLastName(), lastName))
+//            user.setFirstName(lastName);
+//        if (emailAddress != null && emailAddress.length() > 0 && !Objects.equals(user.getEmailAddress(), emailAddress)) {
+//            Optional<User> userOptional = userRepository.findUserByEmailAddress(emailAddress);
+//            if (userOptional.isPresent()) {
+//                throw new IllegalStateException("email taken");
+//            }
+//            user.setEmailAddress(emailAddress);
+//        }
+//    }
 
     @Transactional
     public void enableUser(Long userId) {
