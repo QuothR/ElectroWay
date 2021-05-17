@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8168eec1-4fd7-4fb9-bff1-7d53231f2dd1",
+		"_postman_id": "43fd8956-6288-4096-8912-60931e0413aa",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1383,6 +1383,52 @@
 								"templatecar",
 								"delete",
 								"1001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Routing",
+			"item": [
+				{
+					"name": "GenerateRoute",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNzYXNmZmRzdmRkc2QiLCJpc1VzZXIiOnRydWUsImV4cCI6MTYyMTI1MTM2NSwiaWF0IjoxNjIxMjUwNzY1fQ.ceEYKCcivxI3TR67MYI8jgZkWD62DEIXNaNxfEQyv7Xdum6ntALyLvVba_m4pzOZ0OEr6erVB28UFgl4CvoBPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"locationsCoords\": [\r\n        {\r\n            \"lat\" : 47.15591,\r\n            \"lon\" : 27.6059\r\n        },\r\n        {\r\n            \"lat\" : 44.42082,\r\n            \"lon\" : 26.16123\r\n        }\r\n    ],\r\n    \"avoid\": \"unpavedRoads\",\r\n    \"carData\": {\r\n        \"carId\": 1,\r\n        \"currentChargeInkW\": 7.0\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/routing",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"routing"
 							]
 						}
 					},
