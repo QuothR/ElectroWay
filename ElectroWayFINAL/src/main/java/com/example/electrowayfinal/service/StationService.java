@@ -1,10 +1,8 @@
 package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.*;
-import com.example.electrowayfinal.models.ChargingPoint;
-import com.example.electrowayfinal.models.Role;
-import com.example.electrowayfinal.models.Station;
-import com.example.electrowayfinal.models.User;
+import com.example.electrowayfinal.models.*;
+import com.example.electrowayfinal.repositories.ChargingPlugRepository;
 import com.example.electrowayfinal.repositories.ChargingPointRepository;
 import com.example.electrowayfinal.repositories.StationRepository;
 import com.example.electrowayfinal.utils.JwtUtil;
@@ -26,6 +24,7 @@ public class StationService {
     private final StationRepository stationRepository;
     private final UserService userService;
     private final ChargingPointRepository chargingPointRepository;
+    private final ChargingPlugRepository chargingPlugRepository;
     private String secret;
 
     @Value("${jwt.secret}")
@@ -35,10 +34,11 @@ public class StationService {
 
     @Lazy
     @Autowired
-    public StationService(StationRepository stationRepository, UserService userService, ChargingPointRepository chargingPointRepository) {
+    public StationService(StationRepository stationRepository, UserService userService, ChargingPointRepository chargingPointRepository, ChargingPlugRepository chargingPlugRepository) {
         this.stationRepository = stationRepository;
         this.userService = userService;
         this.chargingPointRepository = chargingPointRepository;
+        this.chargingPlugRepository = chargingPlugRepository;
     }
 
     public void createStation(Station station, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, ForbiddenRoleAssignmentAttemptException, UserNotFoundException {
@@ -113,7 +113,16 @@ public class StationService {
             stationRepository.deleteById(stationId);
         }else{
             for(ChargingPoint point : chargingPoints){
-                chargingPointRepository.deleteById(point.getId());
+                List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(point.getId());
+                if(chargingPlugs.isEmpty()){
+                    chargingPointRepository.deleteById(point.getId());
+                }else{
+                    for(ChargingPlug plug : chargingPlugs){
+                        chargingPlugRepository.deleteById(plug.getId());
+                    }
+                    chargingPointRepository.deleteById(point.getId());
+                }
+
             }
             stationRepository.deleteById(stationId);
         }
