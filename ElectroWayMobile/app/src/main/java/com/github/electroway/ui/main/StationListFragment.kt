@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.AddStationInfo
 import com.github.electroway.Application
+import com.github.electroway.GeocoderAddress
 import com.github.electroway.R
 
 class StationListFragment : Fragment() {
@@ -39,15 +40,15 @@ class StationListFragment : Fragment() {
         val session = (requireActivity().application as Application).session
         val recyclerView = view.findViewById<RecyclerView>(R.id.stationsRecyclerView)
         val adapter = StationListAdapter(mutableListOf()) {
-             val action = HomeFragmentDirections.actionHomeFragmentToStationFragment(it)
-             homeFragment.findNavController().navigate(action)
+            val action = HomeFragmentDirections.actionHomeFragmentToStationFragment(it)
+            homeFragment.findNavController().navigate(action)
         }
         val layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
 
-        val geocoder = Geocoder(requireContext())
+        val geocoderAddress = GeocoderAddress(requireContext())
 
         session.getStations {
             if (it != null) {
@@ -64,13 +65,7 @@ class StationListFragment : Fragment() {
         val homeArgs: HomeFragmentArgs by homeFragment.navArgs()
         if (homeArgs.stationToAdd != null) {
             val latLng = homeArgs.stationToAdd!!
-            val addresses =
-                geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            val addressLine =
-                if (addresses.size > 0 && addresses[0].maxAddressLineIndex != -1)
-                    addresses[0].getAddressLine(0)
-                else
-                    "${latLng.latitude}, ${latLng.longitude}"
+            val addressLine = geocoderAddress.getFromLatLng(latLng)
             session.addStation(AddStationInfo(addressLine, latLng.latitude, latLng.longitude)) {
                 if (it != null) {
                     adapter.add(it.getInt("id"), addressLine)

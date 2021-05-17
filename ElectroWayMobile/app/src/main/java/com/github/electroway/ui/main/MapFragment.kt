@@ -13,6 +13,7 @@ import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
 import android.location.LocationManager
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.provider.BaseColumns
@@ -28,8 +29,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.github.electroway.Application
-import com.github.electroway.R
+import androidx.room.Room
+import com.github.electroway.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -77,16 +78,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
             .build(requireContext())
 
-        view.findViewById<Toolbar>(R.id.toolbar).setOnMenuItemClickListener { item: MenuItem ->
-            when (item.itemId) {
-                R.id.home_button -> {
-                    findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
-                }
-                R.id.app_bar_search -> {
-                    startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
-                }
-            }
-            true
+        view.findViewById<ImageButton>(R.id.homeButton).setOnClickListener {
+            findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
+        }
+        view.findViewById<ImageButton>(R.id.searchButton).setOnClickListener {
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+        }
+        view.findViewById<ImageButton>(R.id.helpButton).setOnClickListener {
+            findNavController().navigate(R.id.action_mapFragment_to_helpFragment)
         }
 
         if (!Places.isInitialized()) {
@@ -180,11 +179,30 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 val action = MapFragmentDirections.actionMapFragmentToHomeFragment(it)
                 findNavController().navigate(action)
             }
-            val homeItem =
-                requireView().findViewById<Toolbar>(R.id.toolbar).menu.findItem(R.id.home_button)
-            homeItem.isEnabled = false
-            homeItem.isVisible = false
+            requireView().findViewById<ImageButton>(R.id.homeButton).apply {
+                isEnabled = false
+                visibility = View.INVISIBLE
+            }
         } else {
+            val db = BookmarkDatabase.getInstance(requireContext())
+            val bookmarkDao = db.bookmarkDao()
+            val bookmarks = bookmarkDao.getAll()
+            for (bookmark in bookmarks) {
+                googleMap.addMarker(
+                    MarkerOptions().position(
+                        LatLng(
+                            bookmark.latitude,
+                            bookmark.longitude
+                        )
+                    ).title(bookmark.address)
+                )
+            }
+            val geocoderAddress = GeocoderAddress(requireContext())
+            googleMap.setOnMapLongClickListener {
+                val addressLine = geocoderAddress.getFromLatLng(it)
+                googleMap.addMarker(MarkerOptions().position(it).title(addressLine))
+                bookmarkDao.insertAll(Bookmark(addressLine, it.latitude, it.longitude))
+            }
             val session = (requireActivity().application as Application).session
             session.getStations {
                 if (it != null) {
@@ -209,16 +227,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         val address = obj.getString("address")
                         val latitude = obj.getDouble("latitude")
                         val longitude = obj.getDouble("longitude")
+                        val id = obj.getInt("id")
                         markersPos[googleMap.addMarker(
                             MarkerOptions().position(LatLng(latitude, longitude)).title(address)
                                 .icon(markerBitmap)
-                        )] = i
+                        )] = id
                     }
 
                     googleMap.setOnInfoWindowClickListener {
-                        val action =
-                            MapFragmentDirections.actionMapFragmentToReviewsFragment(markersPos[it]!!)
-                        findNavController().navigate(action)
+                        if (markersPos[it] != null) {
+                            val action =
+                                MapFragmentDirections.actionMapFragmentToReviewsFragment(markersPos[it]!!)
+                            findNavController().navigate(action)
+                        }
                     }
                 }
             }

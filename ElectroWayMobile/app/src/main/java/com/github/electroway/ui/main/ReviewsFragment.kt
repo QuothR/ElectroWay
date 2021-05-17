@@ -44,7 +44,6 @@ class ReviewsFragment : Fragment() {
 
         val session = (requireActivity().application as Application).session
         val recyclerView = view.findViewById<RecyclerView>(R.id.reviewsRecyclerView)
-        recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         val adapter = ReviewsAdapter()
         val layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         recyclerView.layoutManager = layoutManager

@@ -474,6 +474,28 @@ class Session(val handler: Handler) {
         })
     }
 
+    fun forgetPassword(email: String, callback: (Boolean) -> Unit) {
+        val request = Request.Builder()
+            .url(buildBasePath()
+                .addPathSegment("forgot_password")
+                .addQueryParameter("email", email)
+                .build())
+            .post("".toRequestBody())
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
     private fun buildBasePath(): HttpUrl.Builder {
         return HttpUrl.Builder().scheme("https").host("192.168.1.7").port(443)
     }

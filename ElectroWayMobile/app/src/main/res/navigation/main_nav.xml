@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_mapFragment_to_reviewsFragment"
             app:destination="@id/reviewsFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -152,5 +155,13 @@
         <argument
             android:name="station"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.github.electroway.ui.main.HelpFragment"
+        android:label="HelpFragment" >
+        <action
+            android:id="@+id/action_helpFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

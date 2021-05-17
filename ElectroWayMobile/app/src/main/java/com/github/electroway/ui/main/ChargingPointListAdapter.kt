@@ -29,7 +29,7 @@ internal class ChargingPointListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.stationText.text = "Charging point $position"
+        holder.stationText.text = "Charging point ${position + 1}"
         holder.bind(onClick)
     }
 

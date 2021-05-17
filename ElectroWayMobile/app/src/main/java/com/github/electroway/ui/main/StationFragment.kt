@@ -90,12 +90,6 @@ class StationFragment : Fragment() {
 
         val reviewsAdapter = ReviewsAdapter()
         val reviewsRecyclerView = view.findViewById<RecyclerView>(R.id.ownerReviewsRecyclerView)
-        reviewsRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
         reviewsRecyclerView.layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         reviewsRecyclerView.adapter = reviewsAdapter
         reviewsAdapter.notifyDataSetChanged()
