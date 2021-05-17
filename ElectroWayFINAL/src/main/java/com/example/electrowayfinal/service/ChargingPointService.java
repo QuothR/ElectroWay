@@ -32,6 +32,7 @@ public class ChargingPointService {
     public void setSecret(String secret) {
         this.secret = secret;
     }
+
     @Lazy
     @Autowired
     public ChargingPointService(ChargingPointRepository chargingPointRepository, ChargingPlugRepository chargingPlugRepository, StationService stationService, UserService userService) {
@@ -111,21 +112,24 @@ public class ChargingPointService {
 
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);
     }
-    public List<ChargingPoint> getChargingPointsByStationId(long id){
+
+    public List<ChargingPoint> getChargingPointsByStationId(long id) {
         return chargingPointRepository.getChargingPointsByStation_Id(id);
     }
+
     public void deleteChargingPoint(ChargingPoint chargingPoint) {
         List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(chargingPoint.getId());
-        if(chargingPlugs.isEmpty()){
+        if (chargingPlugs.isEmpty()) {
             chargingPointRepository.deleteById(chargingPoint.getId());
-        }else{
-            for(ChargingPlug plug:chargingPlugs){
+        } else {
+            for (ChargingPlug plug : chargingPlugs) {
                 chargingPlugRepository.deleteById(plug.getId());
             }
             chargingPointRepository.deleteById(chargingPoint.getId());
         }
 
     }
+
     //cid = id charging point
     //id = id station
     public void deleteChargingPointById(Long cId, Long id) {
@@ -137,10 +141,10 @@ public class ChargingPointService {
             throw new WrongAccessException("You don't own this station!");
         }
         List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(cId);
-        if(chargingPlugs.isEmpty()){
+        if (chargingPlugs.isEmpty()) {
             chargingPointRepository.deleteById(cId);
-        }else{
-            for(ChargingPlug plug:chargingPlugs){
+        } else {
+            for (ChargingPlug plug : chargingPlugs) {
                 chargingPlugRepository.deleteById(plug.getId());
             }
             chargingPointRepository.deleteById(cId);

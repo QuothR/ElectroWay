@@ -2,7 +2,6 @@ package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.service.ChargingPointService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

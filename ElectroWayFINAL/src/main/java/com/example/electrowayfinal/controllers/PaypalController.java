@@ -2,13 +2,11 @@ package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.models.Order;
 import com.example.electrowayfinal.service.PaypalService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/payment")
@@ -31,9 +29,9 @@ public class PaypalController {
             Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
                     order.getIntent(), order.getDescription(), "http://localhost:443/" + CANCEL_URL,
                     "http://localhost:443/" + SUCCESS_URL);
-            for(Links link:payment.getLinks()) {
-                if(link.getRel().equals("approval_url")) {
-                    return ("<h1>redirect:"+link.getHref());
+            for (Links link : payment.getLinks()) {
+                if (link.getRel().equals("approval_url")) {
+                    return ("<h1>redirect:" + link.getHref());
                 }
             }
 

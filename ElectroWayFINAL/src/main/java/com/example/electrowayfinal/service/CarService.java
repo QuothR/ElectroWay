@@ -1,6 +1,5 @@
 package com.example.electrowayfinal.service;
 
-import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongPrivilegesException;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -36,7 +34,7 @@ public class CarService {
         this.userService = userService;
     }
 
-    public void createCar(Car car, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, UserNotFoundException, ForbiddenRoleAssignmentAttemptException {
+    public void createCar(Car car, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
 
         if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
