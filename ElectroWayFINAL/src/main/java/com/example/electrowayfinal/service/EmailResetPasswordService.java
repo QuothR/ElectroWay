@@ -32,7 +32,7 @@ public class EmailResetPasswordService {
         if (verificationToken != null) {
             String token = user.getPasswordResetToken();
             Context context = new Context();
-            context.setVariable("title", "Click here to reset your password");
+            context.setVariable("title", "Please use the following code to reset your password: ");
             context.setVariable("link", "http://localhost:8090/reset_password?token=" + token);
 
             String body = templateEngine.process("verification", context);

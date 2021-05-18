@@ -2,6 +2,7 @@ package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.exceptions.WrongUserInServiceException;
+import com.example.electrowayfinal.models.ChargingPlug;
 import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
@@ -9,9 +10,9 @@ import com.example.electrowayfinal.repositories.ChargingPlugRepository;
 import com.example.electrowayfinal.repositories.ChargingPointRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ public class ChargingPointService {
         this.secret = secret;
     }
 
+    @Lazy
     @Autowired
     public ChargingPointService(ChargingPointRepository chargingPointRepository, ChargingPlugRepository chargingPlugRepository, StationService stationService, UserService userService) {
         this.chargingPointRepository = chargingPointRepository;
@@ -41,14 +43,17 @@ public class ChargingPointService {
     }
 
     public ChargingPoint createChargingPoint(Long id, HttpServletRequest httpServletRequest) {
+        verifyStation(id, httpServletRequest);
         Station station = stationService.getStation(id);
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
+        ChargingPoint chargingPoint = new ChargingPoint();
+        chargingPoint.setStation(station);
+        chargingPointRepository.save(chargingPoint);
+        return chargingPoint;
+    }
 
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
+    private void verifyStation(Long id, HttpServletRequest httpServletRequest) {
+        Station station = stationService.getStation(id);
+        Optional<User> optionalUser =  verifyUser(httpServletRequest);
 
         if (optionalUser.isEmpty()) {
             throw new WrongUserInServiceException("Wrong user in station service!");
@@ -56,10 +61,16 @@ public class ChargingPointService {
         if (!station.getUser().equals(optionalUser.get())) {
             throw new WrongAccessException("You don't own this station!");
         }
-        ChargingPoint chargingPoint = new ChargingPoint();
-        chargingPoint.setStation(station);
-        chargingPointRepository.save(chargingPoint);
-        return chargingPoint;
+    }
+
+    private Optional<User> verifyUser(HttpServletRequest httpServletRequest) {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        bearerToken = bearerToken.substring(6);
+
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
+        String username = claims.getSubject();
+
+        return userService.getOptionalUserByUsername(username);
     }
 
     public Optional<ChargingPoint> findChargingPointById(Long id, Long cId, HttpServletRequest httpServletRequest) {
@@ -72,13 +83,7 @@ public class ChargingPointService {
             throw new WrongAccessException("You don't own this station!");
         }
         Station station = stationService.getStation(chargingPoint.get().getStation().getId());
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
+        Optional<User> optionalUser = verifyUser(httpServletRequest);
 
         if (optionalUser.isEmpty()) {
             throw new NoSuchElementException("Empty user in charging point search!");
@@ -92,37 +97,41 @@ public class ChargingPointService {
 
     public List<ChargingPoint> getAllChargingPointsByStationId(Long stationId, HttpServletRequest httpServletRequest) {
 
-        Station station = stationService.getStation(stationId);
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
-        if (optionalUser.isEmpty()) {
-            throw new WrongUserInServiceException("Wrong user in station service!");
-        }
-        if (!station.getUser().equals(optionalUser.get())) {
-            throw new WrongAccessException("You don't own this station!");
-        }
+        verifyStation(stationId, httpServletRequest);
 
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);
     }
 
-    public void deleteChargingPoint(ChargingPoint chargingPoint) {
-        chargingPointRepository.delete(chargingPoint);
+    public List<ChargingPoint> getChargingPointsByStationId(long id) {
+        return chargingPointRepository.getChargingPointsByStation_Id(id);
     }
 
+    public void deleteChargingPoint(ChargingPoint chargingPoint) {
+        List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(chargingPoint.getId());
+        if (!chargingPlugs.isEmpty()) {
+            for (ChargingPlug plug : chargingPlugs) {
+                chargingPlugRepository.deleteById(plug.getId());
+            }
+        }
+        chargingPointRepository.deleteById(chargingPoint.getId());
+
+    }
+
+    //cid = id charging point
+    //id = id station
     public void deleteChargingPointById(Long cId, Long id) {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
-
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("No charging point found!");
         }
         if (chargingPoint.get().getStation().getId() != id) {
             throw new WrongAccessException("You don't own this station!");
+        }
+        List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(cId);
+        if (!chargingPlugs.isEmpty()) {
+            for (ChargingPlug plug : chargingPlugs) {
+                chargingPlugRepository.deleteById(plug.getId());
+            }
         }
         chargingPointRepository.deleteById(cId);
     }

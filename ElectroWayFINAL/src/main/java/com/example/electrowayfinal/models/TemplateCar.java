@@ -36,8 +36,8 @@ public class TemplateCar {
     private long year;
 
     @Basic
-    @Column(name = "battery_capacity", nullable = false, columnDefinition = "bigint")
-    private long batteryCapacity;
+    @Column(name = "battery_capacity", nullable = false, columnDefinition = "double")
+    private double batteryCapacity;
 
     @Basic
     @Column(name = "charging_capacity", nullable = false, columnDefinition = "double")
@@ -52,6 +52,6 @@ public class TemplateCar {
     private long vehicleMaxSpeed;
 
     @Basic
-    @Column(name = "auxiliary_kwh", nullable = false, columnDefinition = "bigint")
-    private long auxiliaryKwh;
+    @Column(name = "auxiliary_kwh", nullable = false, columnDefinition = "double")
+    private double auxiliaryKwh;
 }

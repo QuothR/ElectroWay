@@ -25,4 +25,6 @@ public interface ChargingPlugRepository extends JpaRepository<ChargingPlug, Long
 
     Optional<ChargingPlug> findChargingPlugById(Long id);
 
+    List<ChargingPlug> findChargingPlugsByChargingPointId(long chargingPoint_id);
+
 }

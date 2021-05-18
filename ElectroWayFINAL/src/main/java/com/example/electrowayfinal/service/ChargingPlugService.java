@@ -3,6 +3,7 @@ package com.example.electrowayfinal.service;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.models.ChargingPlug;
 import com.example.electrowayfinal.models.ChargingPoint;
+import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.repositories.ChargingPlugRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+//TODO De adaugat verificare de ROLE_OWNER la toate metodele
 @Service
 public class ChargingPlugService {
     private final ChargingPlugRepository chargingPlugRepository;
@@ -96,6 +98,7 @@ public class ChargingPlugService {
         chargingPlugRepository.delete(chargingPlug);
     }
 
+    //TODO de schimbat exceptiile astea, nu asa ar trebui sa arate
     public void deleteChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
         if (chargingPoint.isEmpty()) {
@@ -112,5 +115,23 @@ public class ChargingPlugService {
             throw new WrongAccessException("You don't own this charging point!");
         }
         chargingPlugRepository.deleteById(pId);
+    }
+
+    public Optional<ChargingPlug> updateChargingPlug(Long pId, Long id, Long cId, ChargingPlug chargingPlug, HttpServletRequest httpServletRequest) throws Exception {
+        Optional<ChargingPlug> optionalChargingPlug = chargingPlugRepository.findChargingPlugById(pId);
+
+        if (optionalChargingPlug.isEmpty())
+            throw new Exception(id.toString());
+
+
+        optionalChargingPlug.get().setChargingSpeedKw(chargingPlug.getChargingSpeedKw());
+        optionalChargingPlug.get().setConnectorType(chargingPlug.getConnectorType());
+        optionalChargingPlug.get().setPriceKw(chargingPlug.getPriceKw());
+        optionalChargingPlug.get().setLevel(chargingPlug.getLevel());
+        optionalChargingPlug.get().setStatus(chargingPlug.getStatus());
+
+        chargingPlugRepository.save(optionalChargingPlug.get());
+
+        return optionalChargingPlug;
     }
 }

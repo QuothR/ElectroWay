@@ -100,14 +100,14 @@ public class UserService implements UserDetailsService {
 
         user.setUsername(userDto.getUsername());
         user.setFirstName(userDto.getFirstName());
-        //user.setLastName(userDto.getLastName());
+        user.setLastName(userDto.getLastName());
         user.setAddress1(userDto.getAddress1());
-        //user.setAddress2(userDto.getAddress2());
+        user.setAddress2(userDto.getAddress2());
         user.setCity(userDto.getCity());
         user.setEmailAddress(userDto.getEmailAddress());
         user.setCountry(userDto.getCountry());
         user.setPhoneNumber(userDto.getPhoneNumber());
-        //user.setRegion(userDto.getRegion());
+        user.setRegion(userDto.getRegion());
         user.setZipcode(userDto.getZipcode());
 
         Optional<User> saved = Optional.of(user);
@@ -161,8 +161,8 @@ public class UserService implements UserDetailsService {
             return Optional.empty();
 
         return Optional.of(new UserDto(user.get().getUsername(), user.get().getPassword(), user.get().getFirstName(), user.get().getLastName(),
-                user.get().getPhoneNumber(), user.get().getEmailAddress(), user.get().getAddress1(), user.get().getCity(),
-                user.get().getCountry(), user.get().getZipcode(), user.get().getRoles().stream().map(Role::getName).collect(Collectors.toCollection(ArrayList::new))));
+                user.get().getPhoneNumber(), user.get().getEmailAddress(), user.get().getAddress1(),user.get().getAddress2(), user.get().getCity(),
+                user.get().getCountry(),user.get().getRegion(), user.get().getZipcode(), user.get().getRoles().stream().map(Role::getName).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     public void deleteUser(Long id) {
@@ -183,25 +183,27 @@ public class UserService implements UserDetailsService {
         if (optionalUser.isEmpty()) {
             throw new NoSuchElementException("User does not exist!");
         }
+        modifiedUser.setId(optionalUser.get().getId());
+        modifiedUser.setEnabled(true);
         userRepository.save(modifiedUser);
     }
 
     //TO DELETE???
-    @Transactional
-    public void updateUser(Long userId, String firstName, String lastName, String emailAddress) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + "does not exist"));
-        if (firstName != null && firstName.length() > 0 && !Objects.equals(user.getFirstName(), firstName))
-            user.setFirstName(firstName);
-        if (lastName != null && lastName.length() > 0 && !Objects.equals(user.getLastName(), lastName))
-            user.setFirstName(lastName);
-        if (emailAddress != null && emailAddress.length() > 0 && !Objects.equals(user.getEmailAddress(), emailAddress)) {
-            Optional<User> userOptional = userRepository.findUserByEmailAddress(emailAddress);
-            if (userOptional.isPresent()) {
-                throw new IllegalStateException("email taken");
-            }
-            user.setEmailAddress(emailAddress);
-        }
-    }
+//    @Transactional
+//    public void updateUser(Long userId, String firstName, String lastName, String emailAddress) {
+//        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + "does not exist"));
+//        if (firstName != null && firstName.length() > 0 && !Objects.equals(user.getFirstName(), firstName))
+//            user.setFirstName(firstName);
+//        if (lastName != null && lastName.length() > 0 && !Objects.equals(user.getLastName(), lastName))
+//            user.setFirstName(lastName);
+//        if (emailAddress != null && emailAddress.length() > 0 && !Objects.equals(user.getEmailAddress(), emailAddress)) {
+//            Optional<User> userOptional = userRepository.findUserByEmailAddress(emailAddress);
+//            if (userOptional.isPresent()) {
+//                throw new IllegalStateException("email taken");
+//            }
+//            user.setEmailAddress(emailAddress);
+//        }
+//    }
 
     @Transactional
     public void enableUser(Long userId) {

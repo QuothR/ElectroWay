@@ -102,10 +102,11 @@ public class User implements UserDetails {
             @JsonProperty("city") String city,
             @JsonProperty("country") String country,
             @JsonProperty("zipcode") String zipcode,
-            @JsonProperty("roles") List<String> roles){
+            @JsonProperty("roles") List<String> roles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.address1 = address1;
@@ -201,7 +202,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(

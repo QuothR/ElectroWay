@@ -13,7 +13,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -55,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Optional<UserDto> registerNewUser(@Valid @RequestBody UserDto userDto) throws DataIntegrityViolationException, MessagingException {
+    public Optional<UserDto> registerNewUser(@Valid @RequestBody UserDto userDto) throws DataIntegrityViolationException {
         userService.registerNewUserAccount(userDto);
         return userService.getOptionalUserDto(userDto.getEmailAddress());
     }
@@ -72,7 +71,7 @@ public class UserController {
 
     @PostMapping("/user/addrole")
     public void addRoleToUser(@RequestParam String roleName, HttpServletRequest httpservletRequest) throws UserNotFoundException, RoleNotFoundException, ForbiddenRoleAssignmentAttemptException {
-        userService.addRole(userService.getCurrentUser(httpservletRequest),roleName);
+        userService.addRole(userService.getCurrentUser(httpservletRequest), roleName);
     }
 
     @GetMapping("/activation")

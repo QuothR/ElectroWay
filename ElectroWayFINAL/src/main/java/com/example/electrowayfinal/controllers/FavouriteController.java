@@ -1,7 +1,6 @@
 package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
-import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.models.Favourite;
 import com.example.electrowayfinal.service.FavouriteService;
 import org.springframework.beans.factory.annotation.Autowired;

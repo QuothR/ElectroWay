@@ -21,4 +21,6 @@ public interface ChargingPointRepository extends JpaRepository<ChargingPoint, Lo
     <C extends ChargingPoint> C save(C entity);
 
     void delete(ChargingPoint chargingPoint);
+
+    List<ChargingPoint> getChargingPointsByStation_Id(long station_id);
 }

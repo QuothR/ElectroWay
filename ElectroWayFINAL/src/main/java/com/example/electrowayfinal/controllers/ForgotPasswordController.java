@@ -8,7 +8,6 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Random;
 
 @Slf4j
 @RestController
@@ -39,16 +39,21 @@ public class ForgotPasswordController {
 
     @PostMapping("/forgot_password")
     public String processForgotPasswordForm(HttpServletRequest request) throws MessagingException {
+        Random random = new Random();
+        int intToken = 1000 + random.nextInt(9999);
+
         String email = request.getParameter("email");
-        String token = RandomString.make(45);
+        String token = String.valueOf(intToken);
+
 
         log.info("token: " + token);
 
         userService.updateResetPasswordToken(token, email);
 
-        String resetPasswordLink = "http://localhost:8090/reset_password?token=" + token;
+//        String resetPasswordLink = "http://localhost:8090/reset_password?token=" + token;
 
-        sendEmail(email, resetPasswordLink);
+
+        sendEmail(email, token);
 
         return "<h1>Forgot password form</h1>";
     }

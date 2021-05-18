@@ -2,7 +2,6 @@ package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.service.ChargingPointService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +44,7 @@ public class ChargingPointController {
     public void delete(@PathVariable("cId") Long cId, @PathVariable("id") Long id) {
         chargingPointService.deleteChargingPointById(cId, id);
     }
-
+    //cId = id charging point
+    //id = id station
 
 }

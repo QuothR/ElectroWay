@@ -48,6 +48,12 @@ public class ChargingPlugController {
         return chargingPlugService.getChargingPlugById(pId, id, cId, httpServletRequest);
     }
 
+    @PutMapping(path = "/{id}/points/{cId}/plugs/{pId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<ChargingPlug> updateChargingPlug(@RequestBody ChargingPlug chargingPlug, @PathVariable("pId") Long pId, @PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) throws Exception {
+        return chargingPlugService.updateChargingPlug(pId,id,cId,chargingPlug,httpServletRequest);
+    }
+
     @DeleteMapping(path = "/{id}/points/{cId}/plugs/{pId}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("pId") Long pId, @PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) {

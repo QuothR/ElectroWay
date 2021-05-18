@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS `template_car`
     `id`                bigint(20)   NOT NULL,
     `model`             varchar(255) NOT NULL,
     `year`              bigint(20)   NOT NULL,
-    `battery_capacity`  bigint(20)   NOT NULL,
+    `battery_capacity`  double       NOT NULL,
     `charging_capacity` double       NOT NULL,
     `plug_type`         varchar(255) NOT NULL,
     `vehicle_max_speed` bigint(20)   NOT NULL,
-    `auxiliary_kwh`     bigint(20)   NOT NULL,
+    `auxiliary_kwh`     double       NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
@@ -41,11 +41,11 @@ CREATE TABLE IF NOT EXISTS `car`
     `id`                bigint(20)   NOT NULL,
     `model`             varchar(255) NOT NULL,
     `year`              bigint(20)   NOT NULL,
-    `battery_capacity`  bigint(20)   NOT NULL,
+    `battery_capacity`  double       NOT NULL,
     `charging_capacity` double       NOT NULL,
     `plug_type`         varchar(255) NOT NULL,
     `vehicle_max_speed` bigint(20)   NOT NULL,
-    `auxiliary_kwh`     bigint(20)   NOT NULL,
+    `auxiliary_kwh`     double       NOT NULL,
     `owner_id`          bigint references user (id),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB

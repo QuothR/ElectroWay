@@ -58,11 +58,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
+        http.csrf().disable().cors().disable()
 //                .antMatchers("/helloadmin").hasRole("ADMIN")
 //                .antMatchers("/hellouser").hasAnyRole("USER","ADMIN")
                 .authorizeRequests().antMatchers("/station/**").hasRole("OWNER").and()
-                .authorizeRequests().antMatchers("/register", "/login", "/", "/activation", "/forgot_password", "/reset_password","/station/**").permitAll().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/register", "/login", "/", "/activation", "/forgot_password", "/reset_password", "/station/**").permitAll().anyRequest().authenticated()
                 .and().logout().permitAll()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler).and().
