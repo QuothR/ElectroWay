@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import Login from './login-register/Login'
+import Register from './login-register/Register'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import './main page/Similar components/MainPage.css'
+import MainPage from './main page/MainPage'
+import MainContent from './MainPageLanding/compForMain/MainContent'
+import ProtectedRoute from './Routes/ProtectedRoute'
+import ProtectedLoginRoute from './Routes/ProtectedLoginRoute'
+import axios from 'axios'
+import { connect } from 'react-redux'
 
-function App() {
+function App(props) {
+
+  const { user } = props;
+  const isAuth = user.loginReducer.isLogged;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <ProtectedLoginRoute path="/" exact component={MainContent} isAuth={isAuth} />
+          <ProtectedRoute path="/home" component={MainPage} isAuth={isAuth} />
+          <ProtectedLoginRoute path="/register" component={Register} isAuth={isAuth} />
+          <ProtectedLoginRoute path="/login" component={Login} isAuth={isAuth} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state,
+  };
+};
+
+
+
+export default connect(mapStateToProps)(App);

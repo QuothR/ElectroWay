@@ -1,0 +1,161 @@
+.AdmMasini {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-weight: 600;
+    font-size: 20px !important;
+}
+
+.AdmMasini .AdmBox {
+    background: linear-gradient(to right, #8585ac, #dbd3e6) !important;
+    margin: 1% 3.5%;
+    width: 80%;
+    height: 500px;
+    padding: 0;
+    justify-content: space-between;
+    display: flex;
+    box-shadow: 0px 0px 8px 0px #000;
+    border-radius: 10px;
+
+}
+
+.AdmMasini .AdmBox .Inregistrate {
+    flex: 61%;
+    padding: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
+.AdmMasini .AdmBox .Adaugare {
+    flex: 39%;
+    padding: 5% 5% 5% 2%;
+}
+
+.AdmMasini .TitluInreg{
+    font-size: 22px !important;
+    margin-bottom: 5px !important;
+}
+
+.AdmMasini .TabelBox {
+    background-color:white;
+    margin: 0;
+    max-width: 100%;
+    height: 360px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 5px 0px #000;
+    border-radius: 5px;
+
+}
+
+
+.AdmMasini input {
+    border-radius: 13px;
+    width: 100%;
+    box-shadow: 0px 1px 7px 0px #000;
+
+}
+
+.AdmMasini .TitluAdaug {
+    font-size: 22px !important;
+    margin-bottom: 5px !important;
+}
+
+.AdmMasini .DivButonAdaug{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.AdmMasini .ButonAdaug {
+    margin-top: 18px;
+    border-radius: 18px;
+    background-color: #66628f;
+    box-shadow: 0px 0px 3px 0px #000;
+
+}
+
+.AdmMasini .TabelBox .TitleLine {
+    margin: 0;
+    padding: 0;
+    background-color: #66628f;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.AdmMasini .TabelBox .TitleLine .TitleLine-stg {
+    flex: 95%;
+}
+.AdmMasini .TabelBox .TitleLine .TitleLine-drp {
+    flex: 5%;
+    padding: 1%;
+}
+
+.AdmMasini .TabelBox .TitleLine ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 1%;
+    margin: 0;
+
+}
+
+.AdmMasini .TabelBox .TitleLine ul li{
+    overflow: hidden;
+    margin: .5%;
+    width: 25%;
+    text-align: center;
+}
+
+.AdmMasini .TabelBox .ContentLines {
+    margin: 0;
+    padding: 1.2% 0%;
+    background-color: #f4efff;
+    box-shadow: 0px 0px 4px 0px #000;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.AdmMasini .TabelBox .ContentLines .ContentLines-stg{
+    flex:95%;
+}
+.AdmMasini .TabelBox .ContentLines .ContentLines-drp{
+    flex:5%;
+    padding: 1%;
+    align-items: center;
+}
+
+.AdmMasini .TabelBox .ContentLines .ContentLines-drp .ExitButton{
+    width: 100%;
+}
+
+.AdmMasini .TabelBox .ContentLines ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 1%;
+    margin: 0;
+
+}
+
+.AdmMasini .TabelBox .ContentLines ul li{
+    overflow: hidden;
+    margin: 1%;
+    width: 25%;
+    text-align: center;
+}
+
+.AdmMasini .scrollForTabelPlati{
+    overflow: hidden;
+    overflow-y: scroll;
+}

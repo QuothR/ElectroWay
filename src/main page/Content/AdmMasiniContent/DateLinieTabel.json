@@ -1,0 +1,21 @@
+[
+    {
+        "producator": "Kia",
+        "model" : "Soul EV",
+        "consum" : "77.4",
+        "distanta" : "400"
+    },
+
+    {
+        "producator": "Dacia",
+        "model" : "Spring",
+        "consum" : "26.8",
+        "distanta" : "170"
+    },
+    {
+        "producator": "BMW",
+        "model" : "i4",
+        "consum" : "80",
+        "distanta" : "450"
+    }
+]

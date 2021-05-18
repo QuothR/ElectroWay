@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux'
+import myStore from './redux/store'
+
+
+// window.addEventListener("beforeunload", () => {
+
+//   localStorage.removeItem("loginState");
+//   localStorage.removeItem('userState');
+// })
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={myStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
