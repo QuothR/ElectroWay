@@ -78,7 +78,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     // TODO this should be void
     @Transactional
-    private Role createRoleIfNotFound(
+    Role createRoleIfNotFound(
             String name, Collection<Privilege> privileges) {
 
         Role role = null;

@@ -27,9 +27,18 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtil jwtTokenUtil;
 
     //when this call??
+    //once per request lol
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin, Access-Control-Allow-Credentials");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addIntHeader("Access-Control-Max-Age", 50);
 
         // JWT Token is in the form "Bearer token". Remove Bearer word and
         // get  only the Token
