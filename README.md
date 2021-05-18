@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Laborator1IP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Link documentatie:
+https://docs.google.com/document/d/1SVMCBZBSY-kZaLvztw2mwiyWb7dKnzf9moRMKJVa5cE/edit?usp=sharing
 
-In the project directory, you can run:
 
-### `npm start`
+Tutorial instalare React:
+https://nodejs.org/en/ v 14.16.0
+1) intalati oriunde
+2) Creati un folder unde vreti  cu orice nume (de preferat react)
+3) Din VS deschideti un terminal new si rulati: 
+npx create-react-app “nume proiect (avand doar litere mici)” 
+4) Pentru a rula proiectul, din terminal rulati comanda : npm start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Instalare Router pentru management ul paginilor:      
+- npm install react-router-dom
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Instalare Bootstrap: 
+- npm install react-bootstrap bootstrap
 
-### `npm run build`
+Pentru harti:
+- npm install react react-dom leaflet
+- npm install react-leaflet
+- npm install -D @types/leaflet
+ 
+Pt generare facturi:
+- npm install easyinvoice --save
+- sau mai bun
+- npm i easyinvoice
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Pentru instalare recharts:
+- npm install recharts
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Pentru o parte din icons(download):
+- npm install react-icons
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Pt cod icon: 
+- https://react-icons.github.io/react-icons/icons?name=io
+- https://www.npmjs.com/package/react-icons
 
-### `npm run eject`
+Pentru comunicarea cu backend:
+- npm install axios
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Pentru gestionarea variabilelor globale (JWT Token ...):
+- npm install redux react-redux
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Pentru project v.1.1 :
+- npm install jwt-decode
+- npm install react-router
+- npm install redux-thunk
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Pentru project v.1.2 :
+- npm install react-svg-star-rating
+- npm install react-animated-slider@^1
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Pentru v.1.3 v.1.4 v.1.5 :
+- READ redux -> store.js 
 
-## Learn More
+Pentru v.1.6 :
+- am setat la axios ca default host, hostul de la server, de acum pentru orice request axios trebuie sa puneti doar path-ul de dupa host 
+- de ex: axios.post("http://localhost:443/login", data ...) s a transformat in axios.post("/login", data ...) 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Pentru suport ro-eng:
+- npm install react-flags-select --save
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
