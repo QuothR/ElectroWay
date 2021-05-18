@@ -33,6 +33,11 @@ public class StationController {
         return stationService.getStations(httpServletRequest, httpServletResponse);
     }
 
+    @GetMapping(path = "/all")
+    public List<Station> getAllStations() throws UserNotFoundException {
+        return stationService.getAllStations();
+    }
+
     @PostMapping()
     public Station createStation(@RequestBody Station station, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, ForbiddenRoleAssignmentAttemptException, UserNotFoundException {
         stationService.createStation(station, httpServletRequest, httpServletResponse);

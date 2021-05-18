@@ -124,6 +124,10 @@ public class StationService {
         stationRepository.deleteById(stationId);
     }
 
+    public List<Station> getAllStations() throws UserNotFoundException {
+        return stationRepository.findAll();
+    }
+
     private Station checkUserAndStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
 
@@ -139,4 +143,5 @@ public class StationService {
         }
         return station;
     }
+
 }
