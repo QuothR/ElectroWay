@@ -109,23 +109,19 @@ public class StationService {
     public void deleteStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         checkUserAndStation(stationId, httpServletRequest, httpServletResponse);
         List<ChargingPoint> chargingPoints = chargingPointRepository.getChargingPointsByStation_Id(stationId);
-        if(chargingPoints.isEmpty()){
-            stationRepository.deleteById(stationId);
-        }else{
-            for(ChargingPoint point : chargingPoints){
+        if (!chargingPoints.isEmpty()) {
+            for (ChargingPoint point : chargingPoints) {
                 List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(point.getId());
-                if(chargingPlugs.isEmpty()){
-                    chargingPointRepository.deleteById(point.getId());
-                }else{
-                    for(ChargingPlug plug : chargingPlugs){
+                if (!chargingPlugs.isEmpty()) {
+                    for (ChargingPlug plug : chargingPlugs) {
                         chargingPlugRepository.deleteById(plug.getId());
                     }
-                    chargingPointRepository.deleteById(point.getId());
                 }
+                chargingPointRepository.deleteById(point.getId());
 
             }
-            stationRepository.deleteById(stationId);
         }
+        stationRepository.deleteById(stationId);
     }
 
     private Station checkUserAndStation(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {

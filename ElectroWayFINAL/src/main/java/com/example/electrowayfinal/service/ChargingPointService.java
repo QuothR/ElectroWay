@@ -43,14 +43,17 @@ public class ChargingPointService {
     }
 
     public ChargingPoint createChargingPoint(Long id, HttpServletRequest httpServletRequest) {
+        verifyStation(id, httpServletRequest);
         Station station = stationService.getStation(id);
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
+        ChargingPoint chargingPoint = new ChargingPoint();
+        chargingPoint.setStation(station);
+        chargingPointRepository.save(chargingPoint);
+        return chargingPoint;
+    }
 
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
+    private void verifyStation(Long id, HttpServletRequest httpServletRequest) {
+        Station station = stationService.getStation(id);
+        Optional<User> optionalUser =  verifyUser(httpServletRequest);
 
         if (optionalUser.isEmpty()) {
             throw new WrongUserInServiceException("Wrong user in station service!");
@@ -58,10 +61,16 @@ public class ChargingPointService {
         if (!station.getUser().equals(optionalUser.get())) {
             throw new WrongAccessException("You don't own this station!");
         }
-        ChargingPoint chargingPoint = new ChargingPoint();
-        chargingPoint.setStation(station);
-        chargingPointRepository.save(chargingPoint);
-        return chargingPoint;
+    }
+
+    private Optional<User> verifyUser(HttpServletRequest httpServletRequest) {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        bearerToken = bearerToken.substring(6);
+
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
+        String username = claims.getSubject();
+
+        return userService.getOptionalUserByUsername(username);
     }
 
     public Optional<ChargingPoint> findChargingPointById(Long id, Long cId, HttpServletRequest httpServletRequest) {
@@ -74,13 +83,7 @@ public class ChargingPointService {
             throw new WrongAccessException("You don't own this station!");
         }
         Station station = stationService.getStation(chargingPoint.get().getStation().getId());
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
+        Optional<User> optionalUser = verifyUser(httpServletRequest);
 
         if (optionalUser.isEmpty()) {
             throw new NoSuchElementException("Empty user in charging point search!");
@@ -94,21 +97,7 @@ public class ChargingPointService {
 
     public List<ChargingPoint> getAllChargingPointsByStationId(Long stationId, HttpServletRequest httpServletRequest) {
 
-        Station station = stationService.getStation(stationId);
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> optionalUser = userService.getOptionalUserByUsername(username);
-
-        if (optionalUser.isEmpty()) {
-            throw new WrongUserInServiceException("Wrong user in station service!");
-        }
-        if (!station.getUser().equals(optionalUser.get())) {
-            throw new WrongAccessException("You don't own this station!");
-        }
+        verifyStation(stationId, httpServletRequest);
 
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);
     }
@@ -119,14 +108,12 @@ public class ChargingPointService {
 
     public void deleteChargingPoint(ChargingPoint chargingPoint) {
         List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(chargingPoint.getId());
-        if (chargingPlugs.isEmpty()) {
-            chargingPointRepository.deleteById(chargingPoint.getId());
-        } else {
+        if (!chargingPlugs.isEmpty()) {
             for (ChargingPlug plug : chargingPlugs) {
                 chargingPlugRepository.deleteById(plug.getId());
             }
-            chargingPointRepository.deleteById(chargingPoint.getId());
         }
+        chargingPointRepository.deleteById(chargingPoint.getId());
 
     }
 
@@ -141,14 +128,12 @@ public class ChargingPointService {
             throw new WrongAccessException("You don't own this station!");
         }
         List<ChargingPlug> chargingPlugs = chargingPlugRepository.findChargingPlugsByChargingPointId(cId);
-        if (chargingPlugs.isEmpty()) {
-            chargingPointRepository.deleteById(cId);
-        } else {
+        if (!chargingPlugs.isEmpty()) {
             for (ChargingPlug plug : chargingPlugs) {
                 chargingPlugRepository.deleteById(plug.getId());
             }
-            chargingPointRepository.deleteById(cId);
         }
+        chargingPointRepository.deleteById(cId);
     }
 
 }
