@@ -45,9 +45,10 @@ public class ForgotPasswordController {
 
         userService.updateResetPasswordToken(token, email);
 
-        String resetPasswordLink = "http://localhost:8090/reset_password?token=" + token;
+//        String resetPasswordLink = "http://localhost:8090/reset_password?token=" + token;
 
-        sendEmail(email, resetPasswordLink);
+
+        sendEmail(email, token);
 
         return "<h1>Forgot password form</h1>";
     }
