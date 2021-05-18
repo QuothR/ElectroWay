@@ -1,4 +1,3 @@
-
 import LinieTabel from './LinieTabel'
 import axios from "axios";
 import { connect } from "react-redux";
@@ -12,17 +11,23 @@ const items = titleWords.map((word, idx) => {
 });
 
 function Tabel(props) {
-function deleteCar(param){
-    axios.delete(`http://localhost:443/delete/${param}`, {
-        headers: {
-            'Authorization': `Basic ${myToken}`
-        }
-    })
-        .then((res) => {
-            console.log(res.data);
+
+
+    function deleteCar(param) {
+        axios.delete(`http://localhost:443/car/delete/${param}`, {
+            headers: {
+                'Authorization': `Basic ${myToken}`
+            }
         })
-window.location.reload();
-}
+            .then((res) => {
+                console.log(res.data);
+            })
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 10)
+
+    }
     const { user } = props;
     const myToken = user.loginReducer.user.token;
     const [DateLinieTabel, getMasini] = useState([]);
@@ -30,22 +35,22 @@ window.location.reload();
 
     useEffect(() => {
         axios
-          .get("http://localhost:443/car/all", {
-            headers: {
-              'Authorization': `Basic ${myToken}`,
-            },
-          })
-          .then((response) => {
-            getMasini(Array.from(response.data));
-          });
-      }, []);
-    
+            .get("http://localhost:443/car/all", {
+                headers: {
+                    'Authorization': `Basic ${myToken}`,
+                },
+            })
+            .then((response) => {
+                getMasini(Array.from(response.data));
+            });
+    }, []);
 
-   //console.log(DateLinieTabel);
-    if(DateLinieTabel.length > 4){
+
+    //console.log(DateLinieTabel);
+    if (DateLinieTabel.length > 3) {
         text = "TabelBox scrollForTabelPlati";
     }
-    else{
+    else {
         text = "TabelBox";
     }
 
@@ -62,13 +67,13 @@ window.location.reload();
             </div>
             {DateLinieTabel.map((val, key) => {
                 return (
-                 
+
                     <div className="ContentLines" key={key}>
                         <div className="ContentLines-stg">
                             <LinieTabel model={val.model} year={val.year} batteryCapacity={val.batteryCapacity} vehicleMaxSpeed={val.vehicleMaxSpeed} />
                         </div>
                         <div className="ContentLines-drp" >
-                            <img src={Exit} className="ExitButton" alt="" onClick={()=>deleteCar(val.id) }/>
+                            <img src={Exit} className="ExitButton" alt="" onClick={() => deleteCar(val.id)} />
                         </div>
                     </div>
 
@@ -81,7 +86,7 @@ window.location.reload();
 }
 const mapStateToProps = (state) => {
     return {
-      user: state,
+        user: state,
     };
-  };
-export default  connect(mapStateToProps)(Tabel);
+};
+export default connect(mapStateToProps)(Tabel);

@@ -41,6 +41,10 @@ function EditareStatie(props) {
                 'Authorization': `Basic ${myToken}`
             }
         })
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 5)
     }
 
     function handleDelStation() {
@@ -51,7 +55,9 @@ function EditareStatie(props) {
             }
         })
 
+       setTimeout(() => {
         history.push("/home/Adm-station")
+       },100)
     }
 
     function handleModifyStation() {
@@ -62,6 +68,7 @@ function EditareStatie(props) {
             longitude: formImput.longitude ? formImput.longitude : stationAddr.longitude
         }
 
+
         axios.put(`http://localhost:443/station/${stationAddr.id}`, dataBackend, {
             headers: {
                 'Authorization': `Basic ${myToken}`
@@ -69,8 +76,13 @@ function EditareStatie(props) {
         })
             .then((res) => {
                 console.log(res.data);
-                sessionStorage.setItem('stationId', res.data.id);
             })
+
+        stationAddr.address=dataBackend.address
+        stationAddr.latitude=dataBackend.latitude
+        stationAddr.longitude=dataBackend.longitude
+        sessionStorage.setItem('stationAddr', JSON.stringify(stationAddr))
+
     }
 
     function handleAdaugarePunct() {
@@ -86,11 +98,13 @@ function EditareStatie(props) {
         })
             .then((res) => {
                 console.log(res.data);
+                sessionStorage.setItem('pointId', res.data.id);
+                history.push("/home/Adm-station/edit/point");
             })
     }
 
     let text = "";
-    if (puncte.length > 4) {
+    if (puncte.length > 3) {
         text = "scrollForTabelPlati";
     }
     else {

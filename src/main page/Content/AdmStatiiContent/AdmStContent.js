@@ -30,41 +30,23 @@ function AdmStContent(props) {
 
 
   let text = "";
-  if(statii.length > 4){
+  if (statii.length > 4) {
     text = "scrollForTabelPlati";
-}
-else{
+  }
+  else {
     text = "";
-}
-
-  // function test() {
-  //   axios
-  //     .get("", {
-  //       headers: {
-  //         Authorization: `Basic ${myToken}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     });
-  // }
-
-  // const stations = [
-  //   { id: "1", address: "00", lat: "00", long: "00" },
-  //   { id: "1", address: "00", lat: "00", long: "00" },
-  //   { id: "1", address: "00", lat: "00", long: "00" },
-  // ];
+  }
 
   const renderStation = (station, index) => {
     return (
       <tr key={index}>
         <td style={{ width: "100%" }}>{station.address}</td>
         <td>
-          <img className="edit-img" src={Edit} 
-          onClick={(e) =>{
-              sessionStorage.setItem('stationAddr',JSON.stringify(station));
+          <img className="edit-img" src={Edit}
+            onClick={(e) => {
+              sessionStorage.setItem('stationAddr', JSON.stringify(station));
               history.push("/home/Adm-station/edit");
-          }}
+            }}
           ></img>
         </td>
       </tr>
@@ -93,14 +75,6 @@ else{
             </thead>
             <tbody>{statii.map(renderStation)}</tbody>
           </ReactBootStrap.Table>
-          {/* <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  test();
-                }}
-              >
-                test
-              </button> */}
         </div>
 
         <div className="StationBlock">

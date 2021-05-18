@@ -24,14 +24,14 @@
 }
 
 .AdmMasini .AdmBox .Inregistrate {
-    flex: 61%;
-    padding: 5%;
+    flex: 80%;
+    padding: 5% 3% 5% 5% ;
     justify-content: center;
     align-items: center;
 }
 
 .AdmMasini .AdmBox .Adaugare {
-    flex: 39%;
+    flex: 20%;
     padding: 5% 5% 5% 2%;
 }
 
@@ -168,7 +168,7 @@
   
   .AdmMasini .CarBlock {
     height: 500px !important;
-    padding: 100px 49px 100px 49px !important;
+    padding: 40px 20px 100px 0px !important;
     display: block !important;
   }
   

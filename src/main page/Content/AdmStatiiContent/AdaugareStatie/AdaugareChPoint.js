@@ -46,16 +46,32 @@ function AdaugareChPoint(props) {
                 nValue: formImput.nrPlugs,
                 iValue: 1
             }
-            
-            sessionStorage.setItem('nrPlugs', JSON.stringify(plugObj));
-            history.push(`/home/Adm-station/add/point/plug/${plugObj.iValue}`);
+
             handleAdd();
-            // refreshPage();
+            sessionStorage.setItem('nrPlugs', JSON.stringify(plugObj));
+            setTimeout(() => {
+                history.push(`/home/Adm-station/add/point/plug/${plugObj.iValue}`);
+                window.location.reload()
+            },50)
  
         }
         else {
             return (<h1>null</h1>);
         }
+    }
+
+    function handleDelete() {
+
+        const stationId = sessionStorage.getItem('stationId')
+        axios.delete(`http://localhost:443/station/${stationId}`, {
+            headers: {
+                'Authorization': `Basic ${myToken}`
+            }
+        })
+
+        
+        setTimeout(()=>{history.push("/home/Adm-station")}, 100)
+        //history.push("/home/Adm-station")
     }
 
     return (
@@ -81,7 +97,11 @@ function AdaugareChPoint(props) {
 
                         </div>
                         <div className="formRowBottom">
-                            <Link to="/home/Adm-station"><button className="ButonRenunta">Renunta</button></Link>
+                            <button className="ButonRenunta"
+                            onClick={(e) =>{
+                                e.preventDefault();
+                                handleDelete();
+                            }}>Renunta</button>
                             <button className="ButonAdaug" type="submit">Urmator</button>
                         </div>
                     </form>

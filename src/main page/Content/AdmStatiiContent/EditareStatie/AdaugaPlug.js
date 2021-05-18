@@ -1,32 +1,38 @@
 import React, { useState } from 'react'
-import './EditarePlug.css'
+import './AdaugaPlug.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 
-function EditarePlug(props) {
+function AdaugaPlug(props) {
 
     const { user } = props;
     const myToken = user.loginReducer.user.token;
     const stationAddr = JSON.parse(sessionStorage.getItem('stationAddr'))
-    const plugAddr = JSON.parse(sessionStorage.getItem('plugAddr'))
-    const pointId = sessionStorage.getItem('pointId');
+    const pointId = sessionStorage.getItem('pointId')
     const [formImput, setFormInput] = useState({});
     const history = useHistory();
 
-    function handleModify() {
+    function refreshPage() {
+        window.location.reload();
+    }
+
+    function handleAdd() {
+
+        console.log(pointId)
 
         const dataBackend = {
             status: 0,
-            level: formImput.level ? parseInt(formImput.level, 10) : parseInt(plugAddr.level, 10),
-            connectorType: formImput.connectorType ? formImput.connectorType : plugAddr.connectorType, 
-            priceKw: formImput.priceKw ? formImput.priceKw : plugAddr.priceKw,
-            chargingSpeedKw: formImput.chargingSpeedKw ? formImput.chargingSpeedKw : plugAddr.chargingSpeedKw
+            level: formImput.level ? parseInt(formImput.level, 10) : 1,
+            connectorType: formImput.connectorType ? formImput.connectorType : "Type B", //se pune valoarea default
+            priceKw: formImput.priceKw,
+            chargingSpeedKw: formImput.chargingSpeedKw
         }
 
+        console.log(dataBackend.level)
 
-        axios.put(`http://localhost:443/station/${stationAddr.id}/points/${pointId}`, dataBackend, {
+        axios.post(`http://localhost:443/station/${stationAddr.id}/points/${pointId}`, dataBackend, {
             headers: {
                 'Authorization': `Basic ${myToken}`
             }
@@ -34,35 +40,37 @@ function EditarePlug(props) {
             .then((res) => {
                 console.log(res.data);
             })
+        
+        setTimeout(()=>{history.push("/home/Adm-station/edit/point")},100)
     }
 
+
     return (
-        <div className="EditarePlug">
-            <div className="EditarePlugBox">
+        <div className="AdaugaPlug">
+            <div className="AdaugaPlugBox">
                 <div className="TitleRow">
-                    <p>Editare plug</p>
-                    
+                    <p>Adaugare Plug</p>
                 </div>
                 <div className="FormRow">
                     <form className="Formularul" onSubmit={(e) => {
                         e.preventDefault();
-                        handleModify()
+                        handleAdd();
                     }}>
                         <div className="FormRowTop">
+                            {/* <label>Status</label>
+                            <input type="text" placeholder="introdu status" /> */}
                             <label>Nivel</label>
-                            <select list="nivel" className="input-field" placeholder="Nivel" defaultValue={plugAddr.level}
+                            <select list="nivel" className="input-field" placeholder="Nivel"
                                 onChange={(e) => {
                                     const level = e.target.value;
                                     setFormInput({ ...formImput, ...{ level } });
-                                    console.log(level)
-
                                 }} >
-                                <option value="Nivel1">1</option>
-                                <option value="Nivel2">2</option>
-                                <option value="Nivel3">3</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
                             <label>Conector</label>
-                            <select list="conector" className="input-field" placeholder="Tip" defaultValue={plugAddr.connectorType}
+                            <select list="conector" className="input-field" placeholder="Tip"
                                 onChange={(e) => {
                                     const connectorType = e.target.value;
                                     setFormInput({ ...formImput, ...{ connectorType } });
@@ -73,7 +81,7 @@ function EditarePlug(props) {
                                 <option value="Type C">Type C</option>
                             </select>
                             <label>Pret (RON/kWh)</label>
-                            <input type="text" placeholder="introdu pret" defaultValue={plugAddr.priceKw} required
+                            <input type="text" placeholder="introdu pret"
                                 onChange={(e) => {
                                     const priceKw = e.target.value;
                                     setFormInput({ ...formImput, ...{ priceKw } });
@@ -81,7 +89,7 @@ function EditarePlug(props) {
                                 }}
                             />
                             <label>Viteza de incarcare kW/h</label>
-                            <input type="text" placeholder="introdu viteza incarcare" defaultValue={plugAddr.chargingSpeedKw} required
+                            <input type="text" placeholder="introdu viteza incarcare"
                                 onChange={(e) => {
                                     const chargingSpeedKw = e.target.value;
                                     setFormInput({ ...formImput, ...{ chargingSpeedKw } });
@@ -92,7 +100,7 @@ function EditarePlug(props) {
                         </div>
                         <div className="formRowBottom">
                             <Link to="/home/Adm-station/edit/point"><button className="ButonRenunta">Renunta</button></Link>
-                            <button className="ButonAdaug" type="submit">Modifica</button>
+                            <button className="ButonAdaug" type="submit">Adauga</button>
                         </div>
                     </form>
                 </div>
@@ -109,4 +117,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps)(EditarePlug);
+export default connect(mapStateToProps)(AdaugaPlug);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './AdaugareMasina.css'
 import { connect } from 'react-redux'
+import { useHistory } from 'react-router'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
@@ -10,7 +11,7 @@ function AdaugareMasina(props) {
     const [formImput, setFormInput] = useState({});
     //const [formImput, setFormInput] = useState();
 
-
+    const history = useHistory();
 
     function handleAdd() {
         const dataBackend = {
@@ -31,7 +32,10 @@ function AdaugareMasina(props) {
             .then((res) => {
                 console.log(res.data);
             })
-            //window.location.reload();
+           
+            setTimeout(() => {
+                history.push("/home/Adm-cars")
+            }, 100)
     }
 
     return (

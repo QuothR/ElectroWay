@@ -54,7 +54,7 @@ const getLoginState = () => {
 
 let newLoginState = getLoginState();
 setTimeout(() => {
-    newLoginState = setInterval(getLoginState, 120000)
+    newLoginState = setInterval(getLoginState, 60000)
 }, 5);
 
 

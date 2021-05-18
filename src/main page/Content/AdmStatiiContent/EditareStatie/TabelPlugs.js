@@ -30,14 +30,6 @@ function TabelPlugs(props) {
             });
     }, []);
 
-    let text = "";
-    if (pluguri.length > 4) {
-        text = "scrollForTabelPlati";
-    }
-    else {
-        text = "";
-    }
-
     function handleDelete(plugId) {
         
         axios.delete(`http://localhost:443/station/${stationAddr.id}/points/${pointId}/plugs/${plugId}`, {
@@ -45,24 +37,31 @@ function TabelPlugs(props) {
                 'Authorization': `Basic ${myToken}`
             }
         })
+        setTimeout(() => {
+            window.location.reload();
+        }, 10)
+    }
+
+    function handleAddPlug() {
+        history.push("/home/Adm-station/edit/point/addPlug")
     }
 
 
     const renderPlugs = (plug, index) => {
         return (
             <tr key={index}>
-                <td >Plug-ul numarul {index + 1}</td>
-                <td >{plug.level}</td>
-                <td >{plug.connectorType}</td>
-                <td >{plug.priceKw}</td>
-                <td >{plug.chargingSpeedKw}</td>
-                <td
+                <td style={{ width: "29%" }}>Plug-ul numarul {index + 1}</td>
+                <td style={{ width: "10%" }}>{plug.level}</td>
+                <td style={{ width: "24%" }}>{plug.connectorType}</td>
+                <td style={{ width: "15%" }}>{plug.priceKw}</td>
+                <td style={{ width: "10%" }}>{plug.chargingSpeedKw}</td>
+                <td style={{ width: "5%" }}
                 onClick={(e) => {
                     sessionStorage.setItem('plugAddr',JSON.stringify(plug));
                     history.push("/home/Adm-station/edit/point/plug")
                 }}
                 ><GrEdit /></td>
-                <td
+                <td style={{ width: "5%" }}
                     onClick={(e) => {
                         handleDelete(plug.id);
                     }}
@@ -71,6 +70,13 @@ function TabelPlugs(props) {
         );
     }
 
+    let text = "";
+    if (pluguri.length > 4) {
+        text = "scrollForTabelPlati";
+    }
+    else {
+        text = "";
+    }
 
     return (
         <div className="TabelPlugs">
@@ -84,13 +90,13 @@ function TabelPlugs(props) {
                     <ReactBootStrap.Table striped bordered hover className={text}>
                         <thead>
                             <tr>
-                                <th >Numar Plug</th>
-                                <th >Nivel</th>
-                                <th >Tip Conector</th>
-                                <th >Pret</th>
-                                <th >Viteza</th>
-                                <th><GrEdit /></th>
-                                <td><RiDeleteBinLine /></td>
+                                <th style={{ width: "30%" }}>Numar Plug</th>
+                                <th style={{ width: "10%" }}>Nivel</th>
+                                <th style={{ width: "25%" }}>Tip Conector</th>
+                                <th style={{ width: "15%" }}>Pret</th>
+                                <th style={{ width: "10%" }}>Viteza</th>
+                                <th style={{ width: "5%" }}><GrEdit /></th>
+                                <td style={{ width: "5%" }}><RiDeleteBinLine /></td>
 
                             </tr>
                         </thead>
@@ -99,6 +105,11 @@ function TabelPlugs(props) {
                 </div>
                 <div className="ButtonRow">
                     <Link to="/home/Adm-station/edit"><button className="ButonRenunta">Renunta</button></Link>
+                    <button className="ButonAdaugaPlug" onClick={(e) => {
+                            e.preventDefault();
+                            handleAddPlug();
+                        }}
+                        >Adauga plug</button>
                 </div>
             </div>
         </div>

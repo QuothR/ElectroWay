@@ -14,9 +14,6 @@ function AdaugarePlug(props) {
     const [formImput, setFormInput] = useState({});
     const history = useHistory();
 
-    function refreshPage() {
-        window.location.reload();
-    }
 
     function handleAdd() {
 
@@ -48,18 +45,39 @@ function AdaugarePlug(props) {
         plugObj.iValue = plugObj.iValue + 1;
         sessionStorage.setItem('nrPlugs', JSON.stringify(plugObj));
         if (plugObj.iValue <= plugObj.nValue) {
-            history.push(`/home/Adm-station/add/point/plug/${plugObj.iValue}`);
-            //refreshPage();
+            setTimeout(() => {
+                history.push(`/home/Adm-station/add/point/plug/${plugObj.iValue}`);
+                window.location.reload()
+            },50)
+            
         }
         else if (chPointObj.iValue < chPointObj.nValue) {
             chPointObj.iValue = chPointObj.iValue + 1;
             sessionStorage.setItem('nrChPoint', JSON.stringify(chPointObj));
-            history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
-            //refreshPage();
+            setTimeout(() => {
+                history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
+                window.location.reload()
+            },50)
+           
         }
         else {
-            history.push("/home/Adm-station");
+            setTimeout(() => {
+                history.push("/home/Adm-station");
+            },50)
+            
         }
+    }
+
+    function handleDelete() {
+        const stationId = sessionStorage.getItem('stationId')
+        axios.delete(`http://localhost:443/station/${stationId}`, {
+            headers: {
+                'Authorization': `Basic ${myToken}`
+            }
+        })
+
+        
+        setTimeout(()=>{history.push("/home/Adm-station")}, 100)
     }
 
     return (
@@ -119,7 +137,11 @@ function AdaugarePlug(props) {
 
                         </div>
                         <div className="formRowBottom">
-                            <Link to="/home/Adm-station"><button className="ButonRenunta">Renunta</button></Link>
+                            <button className="ButonRenunta"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleDelete();
+                                }}>Renunta</button>
                             <button className="ButonAdaug" type="submit">Urmator</button>
                         </div>
                     </form>

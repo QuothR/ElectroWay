@@ -11,13 +11,15 @@ import Reviews from './Content/ReviewsContent/Reviews'
 import AdmStContent from './Content/AdmStatiiContent/AdmStContent'
 import TripPlanner from './Content/Trip Planner/TripPlanner'
 import Statistici from './Content/StatisticiContent/Statistici'
-import AdaugareStatie from './Content/AdmStatiiContent/AdaugareStatie'
-import AdaugarePlug from './Content/AdmStatiiContent/AdaugarePlug'
-import AdaugareChPoint from './Content/AdmStatiiContent/AdaugareChPoint'
+import AdaugareStatie from './Content/AdmStatiiContent/AdaugareStatie/AdaugareStatie'
+import AdaugarePlug from './Content/AdmStatiiContent/AdaugareStatie/AdaugarePlug'
+import AdaugareChPoint from './Content/AdmStatiiContent/AdaugareStatie/AdaugareChPoint'
 import EditareStatie from './Content/AdmStatiiContent/EditareStatie/EditareStatie'
 import AdaugareMasina from './Content/AdmMasiniContent/AdaugareMasina'
 import TabelPlugs from './Content/AdmStatiiContent/EditareStatie/TabelPlugs'
 import EditarePlug from './Content/AdmStatiiContent/EditareStatie/EditarePlug'
+import EditareAddPlug from './Content/AdmStatiiContent/EditareStatie/AdaugaPlug'
+
 function MainPage() {
 
     const chPointObj = sessionStorage.getItem('nrChPoint') ? JSON.parse(sessionStorage.getItem('nrChPoint')) : {iValue : "" , nValue : ""} ;
@@ -45,6 +47,7 @@ function MainPage() {
                             <Route path="/home/Adm-station/edit" exact component={EditareStatie} />
                             <Route path="/home/Adm-station/edit/point" exact component={TabelPlugs} />
                             <Route path="/home/Adm-station/edit/point/plug" exact component={EditarePlug} />
+                            <Route path="/home/Adm-station/edit/point/addPlug" exact component={EditareAddPlug} />
                             <Route path="/home/Adm-cars/addCar" exact component={AdaugareMasina} />
                         </Switch>
                     </div>
