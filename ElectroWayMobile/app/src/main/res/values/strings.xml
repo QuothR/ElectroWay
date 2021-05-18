@@ -48,4 +48,11 @@
     <string name="add_review">Add review</string>
     <string name="submit">Submit</string>
     <string name="review_text">Review text</string>
+    <string name="add_car">Add car</string>
+    <string name="battery_capacity">Battery capacity</string>
+    <string name="charging_capacity">Charging capacity</string>
+    <string name="plug_type">Plug type</string>
+    <string name="vehicle_max_speed">Vehicle max speed</string>
+    <string name="auxiliary_kwh">Auxiliary KWh</string>
+    <string name="update">Update</string>
 </resources>

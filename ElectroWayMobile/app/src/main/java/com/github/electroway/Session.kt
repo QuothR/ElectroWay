@@ -1,11 +1,6 @@
 package com.github.electroway
 
-import android.content.Context
 import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -13,8 +8,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.security.cert.X509Certificate
-import java.util.*
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
@@ -474,12 +467,132 @@ class Session(val handler: Handler) {
         })
     }
 
+    fun addCar(
+        addCarInfo: AddCarInfo,
+        callback: (Boolean) -> Unit
+    ) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("car")
+                    .addPathSegment("create").build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .post(addCarInfo.getJson().toString().toRequestBody(json))
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
+    fun updateCar(
+        addCarInfo: AddCarInfo,
+        callback: (Boolean) -> Unit
+    ) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("car")
+                    .addPathSegment("update")
+                    .addPathSegment(addCarInfo.id.toString()).build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .put(addCarInfo.getJson().toString().toRequestBody(json))
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
+    fun removeCar(
+        id: Int,
+        callback: (Boolean) -> Unit
+    ) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("car")
+                    .addPathSegment("delete")
+                    .addPathSegment(id.toString()).build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .delete()
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
+    fun getCars(callback: (JSONArray?) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("car")
+                    .addPathSegment("all")
+                    .build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .get()
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val json = JSONArray(response.body!!.string())
+                    handler.post {
+                        callback(json)
+                    }
+                } else {
+                    handler.post {
+                        callback(null)
+                    }
+                }
+            }
+        })
+    }
+
     fun forgetPassword(email: String, callback: (Boolean) -> Unit) {
         val request = Request.Builder()
-            .url(buildBasePath()
-                .addPathSegment("forgot_password")
-                .addQueryParameter("email", email)
-                .build())
+            .url(
+                buildBasePath()
+                    .addPathSegment("forgot_password")
+                    .addQueryParameter("email", email)
+                    .build()
+            )
             .post("".toRequestBody())
             .build()
         client.newCall(request).enqueue(object : Callback {

@@ -96,6 +96,12 @@
         <action
             android:id="@+id/action_homeFragment_to_station_fragment"
             app:destination="@id/station_fragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addCarFragment"
+            app:destination="@id/addCarFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateCarFragment"
+            app:destination="@id/updateCarFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountNextFragment"
@@ -163,5 +169,24 @@
         <action
             android:id="@+id/action_helpFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCarFragment"
+        android:name="com.github.electroway.ui.main.AddCarFragment"
+        android:label="AddCarFragment" >
+        <action
+            android:id="@+id/action_addCarFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateCarFragment"
+        android:name="com.github.electroway.ui.main.UpdateCarFragment"
+        android:label="UpdateCarFragment" >
+        <action
+            android:id="@+id/action_updateCarFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="car"
+            app:argType="com.github.electroway.AddCarInfo" />
     </fragment>
 </navigation>
