@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Random;
 
 @Slf4j
 @RestController
@@ -38,8 +39,12 @@ public class ForgotPasswordController {
 
     @PostMapping("/forgot_password")
     public String processForgotPasswordForm(HttpServletRequest request) throws MessagingException {
+        Random random = new Random();
+        int intToken = 1000 + random.nextInt(9999);
+
         String email = request.getParameter("email");
-        String token = RandomString.make(45);
+        String token = String.valueOf(intToken);
+
 
         log.info("token: " + token);
 
