@@ -21,7 +21,7 @@
 .historyContent .title{
     font-size: 28px;
     font-weight: bolder;
-    margin: 10px 0px 10px 0px;
+    margin: 40px 0px 10px 0px;
 }
 .historyContent .tabelPlati{
     height: 370px;
@@ -124,5 +124,3 @@
 .historyContent .btnDownload:hover{
     cursor: pointer;
 }
-
-

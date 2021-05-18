@@ -1,169 +1,317 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./adm.css";
 import axios from "axios";
+import { useHistory } from "react-router";
 
-import { connect } from 'react-redux'
-import DateCont from "./DateCont.json";
+import { connect } from "react-redux";
+// import DateCont from "./DateCont.json";
 
 function Adm(props) {
+  const { user } = props;
+  const myToken = user.loginReducer.user.token;
+  //const [dateCont, getDate] = useState("");
+  var [formImput, setFormInput] = useState({});
 
+  const history = useHistory();
 
-    const { user } = props;
-    const myToken = user.loginReducer.user.token;
+  function handleAdd() {
+    const dataBackend = {
+      id: formImput.id,
+      username: formImput.username,
+      password: formImput.password,
+      firstName: formImput.firstName,
+      lastName: formImput.lastName,
+      phoneNumber: formImput.phoneNumber,
+      emailAddress: formImput.emailAddress,
+      address1: formImput.address1,
+      address2: formImput.address2,
+      city: formImput.city,
+      region: formImput.region,
+      country: formImput.country,
+      zipcode: formImput.zipcode
+    };
+    console.log(dataBackend);
+    axios
+      .put("http://localhost:443/user", dataBackend, {
+        headers: {
+          Authorization: `Basic ${myToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
 
+  function refreshPage() {
+    window.location.reload();
+  }
 
-    function test() {
-        axios.get("http://localhost:443/station", {
-            headers: {
-                'Authorization': `Bearer ${myToken}`,
-            }
-        }).then(res => {
-            console.log(res.data);
-        }
-        );
+  function handleWorkflow() {
+    // if (
+    //   formImput.username != null &&
+    //   formImput.firstName != null &&
+    //   formImput.lastName != null &&
+    //   formImput.phoneNumber != null &&
+    //   formImput.emailAddress != null &&
+    //   formImput.address1 != null &&
+    //   formImput.city != null &&
+    //   formImput.country != null &&
+    //   formImput.zipcode != null
+    // ) {
+      handleAdd();
+      // refreshPage();
+    // } else {
+    //   return <h1>null</h1>;
+    // }
+  }
 
-    }
+  useEffect(() => {
+    axios
+      .get("http://localhost:443/user", {
+        headers: {
+          Authorization: `Basic ${myToken}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        ///getDate(response.data);
+        setFormInput(response.data);
+      });
+  }, []);
 
+  // function test() {
+  //     axios.get("http://localhost:443/user", {
+  //         headers: {
+  //             'Authorization': `Basic ${myToken}`
+  //         }
+  //     }).then(res => {
+  //         console.log(res.data);
+  //     }
+  //     );
+  // }
 
-    return (
-        <div className="admin">
-            <h3>Administrate your account</h3>
-            <div className="change-forms">
-                <div className="column">
-                    <form method="post" className="form-administrate">
-                        <div className="form-in">
-                            <label htmlFor="username" required>
-                                Username
+  return (
+    <div className="admin">
+      <h3>Administrate your account</h3>
+      <form
+        className="change-forms"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleWorkflow();
+        }}
+      >
+        <div className="form-administrate">
+          <div className="form-in">
+            <label htmlFor="username" required>
+              Username
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              defaultValue={formImput.username}
+              required
+              onChange={(e) => {
+                const username = e.target.value;
+                setFormInput({ ...formImput, ...{ username } });
+              }}
+            />
+          </div>
+          <div className="form-in">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              defaultValue={formImput.emailAddress}
+              required
+              onChange={(e) => {
+                const emailAddress = e.target.value;
+                setFormInput({ ...formImput, ...{ emailAddress } });
+              }}
+            />
+          </div>
+
+          <div className="form-in">
+            <label htmlFor="nume">Nume</label>
+            <input
+              type="text"
+              name="nume"
+              id="nume"
+              defaultValue={formImput.lastName}
+              required
+              onChange={(e) => {
+                const lastName = e.target.value;
+                setFormInput({ ...formImput, ...{ lastName } });
+              }}
+            />
+          </div>
+
+          <div className="form-in">
+            <label htmlFor="prenume">Prenume</label>
+            <input
+              type="text"
+              name="prenume"
+              id="prenume"
+              defaultValue={formImput.firstName}
+              required
+              onChange={(e) => {
+                const firstName = e.target.value;
+                setFormInput({ ...formImput, ...{ firstName } });
+              }}
+            />
+          </div>
+
+          <div className="form-in">
+            <label htmlFor="numarDeTelefon">Numar de telefon</label>
+            <input
+              type="text"
+              name="telefon"
+              id="telefon"
+              defaultValue={formImput.phoneNumber}
+              required
+              onChange={(e) => {
+                const phoneNumber = e.target.value;
+                setFormInput({ ...formImput, ...{ phoneNumber } });
+              }}
+            />
+          </div>
+
+          <div className="form-in">
+            <label htmlFor="codPostal">Cod postal</label>
+            <input
+              type="text"
+              name="codPostal"
+              id="codPostal"
+              defaultValue={formImput.zipcode}
+              required
+              onChange={(e) => {
+                const zipcode = e.target.value;
+                setFormInput({ ...formImput, ...{ zipcode } });
+              }}
+            />
+          </div>
+
+          {/* <div className="form-in">
+              <label htmlFor="adresa2">Adresa 2</label>
+              <input
+                type="text"
+                name="ad2"
+                id="ad2"
+                defaultValue={dateCont.address2}
+              />
+            </div> */}
+        </div>
+
+        <div className="form-administrate">
+          <div className="form-in">
+            <label htmlFor="tara">Tara</label>
+            <input
+              type="text"
+              name="tara"
+              id="tara"
+              defaultValue={formImput.country}
+              required
+              onChange={(e) => {
+                const country = e.target.value;
+                setFormInput({ ...formImput, ...{ country } });
+              }}
+            />
+          </div>
+
+          <div className="form-in">
+            <label htmlFor="regiune">Regiune</label>
+            <input
+              type="text"
+              name="regiune"
+              id="regiune"
+              defaultValue={formImput.region}
+              required
+              onChange={(e) => {
+                const region = e.target.value;
+                setFormInput({ ...formImput, ...{ region } });
+              }}
+            />
+          </div>
+
+          <div className="form-in">
+            <label htmlFor="oras">Oras</label>
+            <input
+              type="text"
+              name="oras"
+              id="oras"
+              defaultValue={formImput.city}
+              required
+              onChange={(e) => {
+                const city = e.target.value;
+                setFormInput({ ...formImput, ...{ city } });
+              }}
+            />
+          </div>
+
+          <div className="form-in">
+            <label htmlFor="adresa1">Adresa 1</label>
+            <input
+              type="text"
+              name="ad1"
+              id="ad1"
+              defaultValue={formImput.address1}
+              required
+              onChange={(e) => {
+                const address1 = e.target.value;
+                setFormInput({ ...formImput, ...{ address1 } });
+              }}
+            />
+          </div>
+
+          {/* <div className="form-in">
+              <label htmlFor="parolaVeche" required>
+                Parola veche
               </label>
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                defaultValue={DateCont.username}
-                            />
-                        </div>
-                        <div className="form-in">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                defaultValue={DateCont.emailAddress}
-                            />
-                        </div>
+              <input
+                type="password"
+                name="parolaVeche"
+                id="parolaVeche"
+                placeholder="parola veche"
+              />
+            </div>
 
-                        <div className="form-in">
-                            <label htmlFor="nume">Nume</label>
-                            <input type="text" name="nume" id="nume"
-                                defaultValue={DateCont.lastName} />
-                        </div>
+            <div className="form-in">
+              <label htmlFor="parolaNoua">Parola noua</label>
+              <input
+                type="password"
+                name="parolaNoua"
+                id="parolaNoua"
+                placeholder="parola noua"
+              />
+            </div> */}
 
-                        <div className="form-in">
-                            <label htmlFor="prenume">Prenume</label>
-                            <input
-                                type="text"
-                                name="prenume"
-                                id="prenume"
-                                defaultValue={DateCont.firstName}
-                            />
-                        </div>
-
-                        <div className="form-in">
-                            <label htmlFor="numarDeTelefon">Numar de telefon</label>
-                            <input
-                                type="text"
-                                name="telefon"
-                                id="telefon"
-                                defaultValue={DateCont.phoneNumber}
-                            />
-                        </div>
-
-                        <div className="form-in">
-                            <label htmlFor="adresa1">Adresa 1</label>
-                            <input type="text" name="ad1" id="ad1"
-                                defaultValue={DateCont.address1} />
-                        </div>
-
-                        <div className="form-in">
-                            <label htmlFor="adresa2">Adresa 2</label>
-                            <input type="text" name="ad2" id="ad2"
-                                defaultValue={DateCont.address2} />
-                        </div>
-                    </form>
-                </div>
-
-                <div className="column">
-                    <form method="post" className="form-administrate">
-                        <div className="form-in">
-                            <label htmlFor="tara">Tara</label>
-                            <input type="text" name="tara" id="tara"
-                                defaultValue={DateCont.country} />
-                        </div>
-
-                        <div className="form-in">
-                            <label htmlFor="oras">Oras</label>
-                            <input type="text" name="oras" id="oras"
-                                defaultValue={DateCont.city} />
-                        </div>
-
-                        <div className="form-in">
-                            <label htmlFor="regiune">Regiune</label>
-                            <input
-                                type="text"
-                                name="regiune"
-                                id="regiune"
-                                defaultValue={DateCont.region}
-                            />
-                        </div>
-                        <div className="form-in">
-                            <label htmlFor="codPostal">Cod postal</label>
-                            <input
-                                type="text"
-                                name="codPostal"
-                                id="codPostal"
-                                defaultValue={DateCont.zipcode}
-                            />
-                        </div>
-                        <div className="form-in">
-                            <label htmlFor="parolaVeche" required>
-                                Parola veche
-              </label>
-                            <input
-                                type="password"
-                                name="parolaVeche"
-                                id="parolaVeche"
-                                placeholder="parola veche"
-                            />
-                        </div>
-
-                        <div className="form-in">
-                            <label htmlFor="parolaNoua">Parola noua</label>
-                            <input
-                                type="password"
-                                name="parolaNoua"
-                                id="parolaNoua"
-                                placeholder="parola noua"
-                            />
-                        </div>
-
-                        <div className="change">
-                            <input type="submit" defaultValue="Save" />
-                            <button onClick={ (e) => {
+          <div className="change">
+            <input type="submit" defaultValue="Save" />
+            {/* <button onClick={(e) => {
                                 e.preventDefault();
                                 test();
-                            }}>dsadsa</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                            }}>test</button> */}
+          </div>
+          <div className="change">
+            <button
+            // onClick={(e) => {
+            //   e.preventDefault();
+            //   test();
+            // }}
+            >
+              Resetare parola
+            </button>
+          </div>
         </div>
-    );
+      </form>
+    </div>
+  );
 }
 const mapStateToProps = (state) => {
-    return {
-        user: state,
-    };
+  return {
+    user: state,
+  };
 };
-
 
 export default connect(mapStateToProps)(Adm);

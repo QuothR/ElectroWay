@@ -1,8 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";import axios from "axios";
+import './AdmMasini.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Exit from './exit.svg'
+import Masina from '../../../Images/masina.svg'
+import { useHistory } from 'react-router'
+import * as ReactBootStrap from "react-bootstrap";
 import './AdmMasini.css'
 import Tabel from './Tabel'
-
+import { connect } from 'react-redux'
 function AdmMasini() {
+
+//  function altaFunctie(){
+//     handleGet();
+//     redirectionare();
+//  }
+//     function handleGet() {
+//         axios.get("http://localhost:443", {
+//             headers: {
+//                 Authorization: `Basic ${myToken}`
+//             }
+//         })
+//             .then((res) => {
+//                 console.log('sunt prost');
+//                  console.log(res.data);
+//                 sessionStorage.setItem('userId',res.data.id);
+//             })
+//     }
+
+
+
+
+  const history = useHistory();
+      const redirectionare = () => {
+        history.push("/home/Adm-cars/AddCar");
+        
+        //window.location.reload();
+    }
     return (
         <div className="AdmMasini">
             <div className="AdmBox">
@@ -11,25 +44,26 @@ function AdmMasini() {
                     <Tabel />
                 </div>
                 <div className="Adaugare">
-
-                    <form>
-                        <p className="TitluAdaug">Adaugare masina</p>
-                        <label>Producator</label>
-                        <input type="text" placeholder="introdu producator" />
-                        <label>Model</label>
-                        <input type="text" placeholder="introdu model" />
-                        <label>Consum kW/h</label>
-                        <input type="text" placeholder="introdu consum" />
-                        <label>Distanta maxima</label>
-                        <input type="text" placeholder="introdu distanta maxima" />
-                        <div className="DivButonAdaug">
-                            <button className="ButonAdaug" type="submit">Salveaza</button>
-                        </div>
-                    </form>
+                      <div className="CarBlock">
+          <div className="HomePhoto">
+            {" "}
+            <img className="S-C-Img" src={Masina} alt="MasinaImg" />{" "}
+          </div>
+          <button className="btn-class"  onClick={(e) => {
+          e.preventDefault();
+          redirectionare();
+          //  altaFunctie();
+            
+          }}>Adaugare masina</button>
+        </div>
                 </div>
             </div>
         </div>
     );
 }
-
+// const mapStateToProps = (state) => {
+//     return {
+//         user: state,
+//     };
+// };
 export default AdmMasini;

@@ -5,10 +5,10 @@ const LinieTabel = (props) => (
 
     <div className="LinieTabel">
         <ul>
-            <li>{props.producator}</li>
             <li>{props.model}</li>
-            <li>{props.consum}</li>
-            <li>{props.distanta}</li>             
+            <li>{props.year}</li>
+            <li>{props.batteryCapacity}</li>
+            <li>{props.vehicleMaxSpeed}</li>             
         </ul>
     </div>
 

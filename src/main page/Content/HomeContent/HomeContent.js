@@ -1,20 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './HomeContent.css'
 import HomeImg from '../../../Images/HomeCarImg.png'
 import Statie from '../../../Images/statie.svg'
 import Masina from '../../../Images/masina.svg'
+import axios from "axios";
+import { connect } from "react-redux";
 
+function HomeContent(props) {
 
-function HomeContent() {
-    const CarsNumber = 0;
-    const StationsNumber = 0;
+    const { user } = props;
+    const myToken = user.loginReducer.user.token;
+    const [statii, getStatii] = useState([]);
+    const [cars, getCars] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:443/station", {
+                headers: {
+                    Authorization: `Basic ${myToken}`,
+                },
+            })
+            .then((response) => {
+                getStatii(Array.from(response.data));
+            });
+    }, []);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:443/car/all", {
+                headers: {
+                    Authorization: `Basic ${myToken}`,
+                },
+            })
+            .then((response) => {
+                getCars(Array.from(response.data));
+            });
+    }, []);
+
     return (
 
         <div className="HomeContent d-flex">
             <div className="CarBlock">
                 <div className="HomePhoto"> <img className="S-C-Img" src={Masina} alt="MasinaImg" />  </div>
-                <p>{CarsNumber}</p>
+                <p>{cars.length}</p>
                 <p>masini</p>
                 <p>inregistrate</p>
             </div>
@@ -25,7 +54,7 @@ function HomeContent() {
 
             <div className="StationBlock">
                 <div className="HomePhoto"> <img className="S-C-Img" src={Statie} alt="StatieImg" />  </div>
-                <p>{StationsNumber}</p>
+                <p>{statii.length}</p>
                 <p>statii</p>
                 <p>inregistrate</p>
             </div>
@@ -34,5 +63,10 @@ function HomeContent() {
 
     );
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state,
+    };
+};
 
-export default HomeContent;
+export default connect(mapStateToProps)(HomeContent);

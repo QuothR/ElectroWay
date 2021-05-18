@@ -3,8 +3,7 @@ import './Statistici.css'
 import Tabel from './Components/BartChart'
 import showBar from './Components/connect'
 import { useState } from 'react';
-import MyTranslator from '../../../MyTranslator.js'
-import ReactFlagsSelect from 'react-flags-select';
+
 
 
 function onInputChangedMod(e) {
@@ -64,22 +63,8 @@ function onInputChangedMod(e) {
   }
 
 
-  class Statistici extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {selected: MyTranslator.staticProperty};
-    }
 
-    setSelected = (code) => {
-        this.setState({
-          selected: code
-    });
-    
-    MyTranslator.staticProperty = code;
-    }
-     
-    render () {
-    const translate = new MyTranslator("statistici");
+function Statistici() {
 //    var state = {
 //         reload: false
 //       };
@@ -94,30 +79,22 @@ function onInputChangedMod(e) {
     return (
         <div id="statistici-Id" className="Statistici">
             <div className="StatisticiBox">
-            <ReactFlagsSelect
-              selected={this.state.selected}
-              onSelect={code => this.setSelected(code)}
-              countries={["GB", "RO"]}
-              showSelectedLabel={false}
-              showOptionLabel={false}
-              fullWidth={false}
-            />
                 <div className="StatisticiButtons">
 
                     <div className="StatisticiButtons-unu">
                         <input list="perioada" className="input-field" placeholder={localStorage.getItem("perioada")} onChange={onInputChangedMod}/>                    
                         <datalist id="perioada">
-                            <option value="saptamanal">{translate.useTranslation("sapt")}</option>
-                            <option value="lunar">{translate.useTranslation("lunar")}</option>
-                            <option value="anual">{translate.useTranslation("anual")}</option>
+                            <option value="saptamanal">Saptamanal</option>
+                            <option value="lunar">Lunar</option>
+                            <option value="anual">Anual</option>
                             </datalist>
                     </div>
 
                     <div className="StatisticiButtons-doi">
                         <input list="sume" className="input-field" placeholder="sume" onChange={onSumChanged}/>
                         <datalist id="sume">
-                            <option value="incasate">{translate.useTranslation("sapt")}</option>
-                            <option value="platite">{translate.useTranslation("anual")}</option>
+                            <option value="incasate">Saptamanal</option>
+                            <option value="platite">Anual</option>
                         </datalist>
                     </div>
 
@@ -130,6 +107,6 @@ function onInputChangedMod(e) {
         </div>
         
     );
-    }
+
 }
 export default Statistici

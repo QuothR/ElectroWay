@@ -6,7 +6,6 @@ import Edit from "./Images/edit.svg";
 import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-
 import axios from "axios";
 import { connect } from "react-redux";
 
@@ -14,6 +13,8 @@ function AdmStContent(props) {
   const { user } = props;
   const myToken = user.loginReducer.user.token;
   const [statii, getStatii] = useState([]);
+
+  sessionStorage.removeItem('stationAddr');
 
   useEffect(() => {
     axios
@@ -59,7 +60,12 @@ else{
       <tr key={index}>
         <td style={{ width: "100%" }}>{station.address}</td>
         <td>
-          <img className="edit-img" src={Edit}></img>
+          <img className="edit-img" src={Edit} 
+          onClick={(e) =>{
+              sessionStorage.setItem('stationAddr',JSON.stringify(station));
+              history.push("/home/Adm-station/edit");
+          }}
+          ></img>
         </td>
       </tr>
     );

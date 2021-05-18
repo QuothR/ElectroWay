@@ -1,21 +1,21 @@
 [
     {
-        "producator": "Kia",
-        "model" : "Soul EV",
-        "consum" : "77.4",
-        "distanta" : "400"
+        "model": "Kia",
+        "an" : "Soul EV",
+        "capIncarcare" : "77.4",
+        "viteza" : "400"
     },
 
     {
-        "producator": "Dacia",
-        "model" : "Spring",
-        "consum" : "26.8",
-        "distanta" : "170"
+        "model": "Kia",
+        "an" : "Soul EV",
+        "capIncarcare" : "77.4",
+        "viteza" : "400"
     },
     {
-        "producator": "BMW",
-        "model" : "i4",
-        "consum" : "80",
-        "distanta" : "450"
+        "model": "Kia",
+        "an" : "Soul EV",
+        "capIncarcare" : "77.4",
+        "viteza" : "400"
     }
 ]
