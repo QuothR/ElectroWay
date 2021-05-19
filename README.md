@@ -59,4 +59,10 @@ Pentru project v.1.2 :
 Pentru v.1.3 v.1.4 v.1.5 :
 - READ redux -> store.js 
 
+Pentru v.1.6 :
+- am setat la axios ca default host, hostul de la server, de acum pentru orice request axios trebuie sa puneti doar path-ul de dupa host 
+- de ex: axios.post("http://localhost:443/login", data ...) s a transformat in axios.post("/login", data ...) 
+
+Pentru suport ro-eng:
+- npm install react-flags-select --save
 
