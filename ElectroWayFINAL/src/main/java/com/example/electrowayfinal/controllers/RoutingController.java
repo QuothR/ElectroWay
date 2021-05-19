@@ -21,7 +21,7 @@ public class RoutingController {
         this.routingService = routingService;
     }
 
-    @GetMapping
+    @PostMapping
     public @ResponseBody
     ResponseEntity<Object> getRoute(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException {
         return routingService.generateRoute(routingRequestData);

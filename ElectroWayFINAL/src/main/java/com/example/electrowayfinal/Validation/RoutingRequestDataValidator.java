@@ -16,10 +16,9 @@ public class RoutingRequestDataValidator implements ConstraintValidator<RoutingR
 
     @Override
     public boolean isValid(RoutingRequestData routingRequestData, ConstraintValidatorContext constraintValidatorContext) {
-        return routingRequestData.getLocationsCoords().size() == 2;
-/*        return routeData != null & routeData.getLocationsCoords() != null && routeData.getLocationsCoords().size() == 2 &&
-                (routeData.getAvoid() == null || avoidValues.contains(routeData.getAvoid())) &&
-                ((routeData.getCarData().getCar().getId() == 0 && routeData.getCarData().getCurrentChargeInkW() == null) ||
-                        (routeData.getCarData().getCar().getId() != 0 && routeData.getCarData().getCurrentChargeInkW() != null));*/
+        return routingRequestData != null & routingRequestData.getLocationsCoords() != null && routingRequestData.getLocationsCoords().size() == 2 &&
+                (routingRequestData.getAvoid() == null || avoidValues.contains(routingRequestData.getAvoid())) &&
+                ((routingRequestData.getCarData().getCarId() == null && routingRequestData.getCarData().getCurrentChargeInkW() == null) ||
+                        (routingRequestData.getCarData().getCarId() != null && routingRequestData.getCarData().getCurrentChargeInkW() != null));
     }
 }

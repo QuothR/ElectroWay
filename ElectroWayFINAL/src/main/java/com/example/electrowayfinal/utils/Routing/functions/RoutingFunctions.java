@@ -375,11 +375,20 @@ public class RoutingFunctions {
                     )
             );
 
+            boolean stationAlreadyTaken = false;
+            for(LegData leg : finalResponse.getLegs()) {
+                if(station.getStation().getId() == leg.getStationId()) {
+                    stationAlreadyTaken = true;
+                    break;
+                }
+            }
+
             /*
                 Daca "station" este reachable si are un timp acceptabil fata de timpul lui "initial station", atunci ea
                 va fi cea selectata.
              */
-            if(travelTimesAndDistances.get(initialStation).getFirst() + travelTimeOffset > travelTimeAndDistance.getFirst() &&
+            if(!stationAlreadyTaken &&
+                    travelTimesAndDistances.get(initialStation).getFirst() + travelTimeOffset > travelTimeAndDistance.getFirst() &&
                     isReachable(routeData, auxiliarRouteVar)) {
                 return station;
             }

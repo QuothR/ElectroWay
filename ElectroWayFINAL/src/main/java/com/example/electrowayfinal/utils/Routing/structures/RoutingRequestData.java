@@ -1,10 +1,12 @@
 package com.example.electrowayfinal.utils.Routing.structures;
 
+import com.example.electrowayfinal.Validation.RoutingRequestDataConstraint;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+@RoutingRequestDataConstraint
 public class RoutingRequestData {
     private List<Coords> locationsCoords;
     private String avoid;

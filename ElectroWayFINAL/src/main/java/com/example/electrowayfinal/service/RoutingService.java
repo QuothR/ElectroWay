@@ -170,7 +170,7 @@ public class RoutingService {
             );
 
             // Nu putem ajunge, stuck.
-            if (reachableStation == null) {
+            if (reachableStation == null /*|| isTooFar(routeData, reachableStation)*/) {
                 throw new ImpossibleRouteException();
             }
 
@@ -203,6 +203,30 @@ public class RoutingService {
         return ResponseEntity.status(200).body(finalResponse);
     }
 
+    public static boolean isTooFar(RouteData routeData, StationData stationData) {
+        Coords currentPoint = routeData.getLocationsCoords().get(0);
+        Coords finalPoint = routeData.getLocationsCoords().get(1);
+        Coords stationCoords = new Coords(
+                stationData.getStation().getLatitude(),
+                stationData.getStation().getLongitude());
+
+        Double distCurrentPointToFinalPoint = calculateDistance(
+                currentPoint.getLat(),
+                currentPoint.getLon(),
+                finalPoint.getLat(),
+                finalPoint.getLon()
+        );
+
+        Double distReachableStationToFinalPoint = calculateDistance(
+                stationCoords.getLat(),
+                stationCoords.getLon(),
+                finalPoint.getLat(),
+                finalPoint.getLon()
+        );
+
+        return (distCurrentPointToFinalPoint < distReachableStationToFinalPoint);
+    }
+
     private static void addDataToResponse(
             RoutingFinalResponse finalResponse,
             AuxiliarRouteUtil auxiliarRouteVar,
@@ -232,11 +256,12 @@ public class RoutingService {
 
         // Adaugarea punctelor pentru ruta.
         lastLeg.setPoints(
-                jsonArrayToList(
+                /*jsonArrayToList(
                         TomTomService.getRoutePoints(
                                 auxiliarRouteVar.getRoute()
                         )
-                )
+                )*/
+                null
         );
 
         // TravelPrice in u.m.
