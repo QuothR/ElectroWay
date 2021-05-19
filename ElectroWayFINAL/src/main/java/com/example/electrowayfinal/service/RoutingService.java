@@ -232,12 +232,11 @@ public class RoutingService {
 
         // Adaugarea punctelor pentru ruta.
         lastLeg.setPoints(
-                /*jsonArrayToList(
+                jsonArrayToList(
                         TomTomService.getRoutePoints(
                                 auxiliarRouteVar.getRoute()
                         )
-                )*/
-                null
+                )
         );
 
         // TravelPrice in u.m.

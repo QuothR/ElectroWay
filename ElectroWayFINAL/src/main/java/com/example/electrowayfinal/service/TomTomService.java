@@ -72,9 +72,12 @@ public class TomTomService {
         var summary = routes.getJSONObject("summary");
 
         // Extragem consumul.
-        Double batteryConsumptionInkWh = batteryConsumptionInkWh = summary.getDouble("batteryConsumptionInkWh");
-
-        return batteryConsumptionInkWh;
+        try {
+            Double batteryConsumptionInkWh = summary.getDouble("batteryConsumptionInkWh");
+            return batteryConsumptionInkWh;
+        } catch(Exception e) {
+            return null;
+        }
     }
 
     /**

@@ -27,6 +27,8 @@
   "vehicleMaxSpeed": 225,
   "auxiliaryKwh": 0.1
 }
+    Deocamdata ConstantSpeedConsumption-ul este hardocat in cod(in RoutingService -> getConstantSpeedConsumption(Long carId))
+    si daca vreti sa-l modificati, modificati in cod.
 */
 
 # De acum poti rula script-ul pentru populare.
