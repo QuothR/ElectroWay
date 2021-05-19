@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "43fd8956-6288-4096-8912-60931e0413aa",
+		"_postman_id": "3a34b49c-efa9-4f8f-9f1f-9dc9beac920d",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -91,7 +91,7 @@
 					"response": []
 				},
 				{
-					"name": "JWT Login Test",
+					"name": "Login",
 					"event": [
 						{
 							"listen": "test",
@@ -300,6 +300,15 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get All Stations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
 				}
 			]
 		},
@@ -432,7 +441,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 6,\r\n    \"username\": \"cevadecent22222222222222\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdss232323asaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
+							"raw": "{\r\n    \"username\": \"cevadecent22222222222222\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdss232323asaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -912,6 +921,39 @@
 								"3",
 								"points",
 								"2",
+								"plugs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Plug",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":14,\r\n    \"level\":88,\r\n    \"connectorType\":\"lmao\",\r\n    \"priceKw\":69,\r\n    \"chargingSpeedKw\":96\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/station/1/points/1/plugs/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"station",
+								"1",
+								"points",
+								"1",
 								"plugs",
 								"1"
 							]
