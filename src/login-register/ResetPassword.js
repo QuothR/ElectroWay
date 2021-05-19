@@ -7,14 +7,40 @@ import "./login-register.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from "react-redux";
 import { LoginActionType, LoginAuthAction } from "../redux/actions/LoginAction";
+import axios from "axios";
 
-function Login(props) {
+function ResetPassword(props) {
   const { user, login } = props;
   const [userState, setUser] = useState({});
   const history = useHistory();
   const [errorHandler, setErrorHandler] = useState({
     message: "",
   });
+
+  function handleAddEmail() {
+    console.log(userState.email);
+    axios
+      .post(`http://localhost:443/forgot_password?email=${userState.email}`)
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+
+  function handleChange() {
+    console.log(userState);
+    axios
+      .post(
+        `http://localhost:443/reset_password?token=${userState.token}&password=${userState.password}`
+      )
+      .then((res) => {
+        console.log(res.data);
+      });
+    history.push(`/login`);
+  }
+
+  function refreshPage() {
+    window.location.reload();
+  }
 
   return (
     <div className="login-register">
@@ -23,17 +49,19 @@ function Login(props) {
           <div className="col-md-6 mb-3">
             <img src={carPicture} className="img-fluid img" alt="carP" />
           </div>
-          <div className="col-md6 mx-5 my-4 sigin-col" id="signin">
+          <div className="col-md6 mx-5 sigin-col" id="signin">
             <h3 className="sigin-text">
               {" "}
-              <img src={logo} className="img-fluid logo" alt="logo" /> Sign in{" "}
+              <img src={logo} className="img-fluid logo" alt="logo" /> Reset
+              Password{" "}
             </h3>
 
             <form
               className="form"
               onSubmit={(e) => {
                 e.preventDefault();
-                login(userState, history, setErrorHandler);
+                handleAddEmail();
+                ///login(userState, history, setErrorHandler);
               }}
             >
               <div className="form-group">
@@ -49,13 +77,42 @@ function Login(props) {
                   }}
                 />
               </div>
+                <button type="submit" className="btn btn-class1">
+                  Get token
+                </button>
+                <div className="error-response">
+                  <p>{errorHandler.message}</p>
+                </div>
+            </form>
+
+            <form
+              className="form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleChange();
+                // login(userState, history, setErrorHandler);
+              }}
+            >
+              <div className="form-group">
+                <label htmlFor="token">TOKEN</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter reset token"
+                  onChange={(e) => {
+                    const token = e.target.value;
+                    setUser({ ...userState, ...{ token } });
+                    setErrorHandler("");
+                  }}
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   name="password"
                   className="form-control"
-                  placeholder="Enter password"
+                  placeholder="Enter new password"
                   onChange={(e) => {
                     const password = e.target.value;
                     setUser({ ...userState, ...{ password } });
@@ -64,16 +121,17 @@ function Login(props) {
                 />
               </div>
               <div className="form-group">
-                <Link to="./resetpassword"> Reset Password</Link>
                 <p>
                   Don't have an account?
                   <Link to="./register"> Register here.</Link>
                 </p>
+                
               </div>
+              
 
               <div className=" form-group-bottom">
                 <button type="submit" className="btn btn-class">
-                  Sign in
+                  Change
                 </button>
                 <div className="error-response">
                   <p>{errorHandler.message}</p>
@@ -101,4 +159,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

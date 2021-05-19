@@ -50,11 +50,14 @@ function AdaugareStatie(props) {
                     nValue : formImput.nrChPoint, 
                     iValue : 1
                 }
-                
-                sessionStorage.setItem('nrChPoint', JSON.stringify(chPointObj));
-                history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
                 handleAdd();
-                // refreshPage();
+                sessionStorage.setItem('nrChPoint', JSON.stringify(chPointObj));
+                setTimeout(() => {
+                    history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
+                    window.location.reload()
+                }, 100)
+                
+                
                 
             }
             else{

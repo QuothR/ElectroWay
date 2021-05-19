@@ -56,7 +56,6 @@ function AdmStContent(props) {
   const history = useHistory();
   const redirectionare = () => {
     history.push("/home/Adm-station/Add");
-    window.location.reload();
   };
 
   return (

@@ -103,9 +103,9 @@ function AdaugarePlug(props) {
                                     console.log(level)
 
                                 }} >
-                                <option value="Nivel1">1</option>
-                                <option value="Nivel2">2</option>
-                                <option value="Nivel3">3</option>
+                                <option value="1">Nivel 1</option>
+                                <option value="2">Nivel 2</option>
+                                <option value="3">Nivel 3</option>
                             </select>
                             <label>Conector</label>
                             <select list="conector" className="input-field" placeholder="Tip"

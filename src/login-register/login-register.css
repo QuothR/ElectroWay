@@ -1,109 +1,126 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-
-
-body, html{
-    margin: 0 !important;
-    padding: 0 !important;
-    background: linear-gradient(to right, #3f3446, #525289, #726c91,#c6bfd2) !important;
+body,
+html {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: linear-gradient(
+    to right,
+    #3f3446,
+    #525289,
+    #726c91,
+    #c6bfd2
+  ) !important;
 }
 
-.login-register{
-    font-family: 'Poppins', sans-serif !important;
-   
-   
+.login-register {
+  font-family: "Poppins", sans-serif !important;
 }
 
-.login-register
-    .container{
-    padding-top: 0;
-    padding-bottom: 0;
+.login-register .container {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.login-register .content{
-    margin: 5% 0% !important;
-    background:linear-gradient(to right, #8585ac , #c6bfd2, #dcdce7, #ffff, #ffff) !important;
-    padding: 32px 0px 32px 0px !important;
-    box-shadow: 0 0 40px 0px #000;
-    border-radius: 50px !important;
-    
+.login-register .content {
+  margin: 5% 0% !important;
+  background: linear-gradient(
+    to right,
+    #8585ac,
+    #c6bfd2,
+    #dcdce7,
+    #ffff,
+    #ffff
+  ) !important;
+  padding: 32px 0px 32px 0px !important;
+  box-shadow: 0 0 40px 0px #000;
+  border-radius: 50px !important;
 }
-.login-register .sigin-col{
-    padding: 48px 0px 52px 0px !important;
-}
-
-.login-register h3.sigin-text{
-    font-style: normal !important;
-    font-weight: 700 !important;
-}
-
-
-.login-register .form-control{
-    display: block;
-    width: 100%;
-    font-size: 1rem !important;
-    font-weight: 400 !important;
-    line-height: 1.5 !important;
-    border-color: #292944;
-    border-style: solid !important;
-    border-radius: 10px !important;
-    color: #494949;
-    height: auto;
-    border-radius: 0;
-    background-color: whitesmoke;
-    background-clip: padding-box;
-    box-shadow: 2px 2px 3px 0px;
+.login-register .sigin-col {
+  padding: 48px 0px 52px 0px !important;
 }
 
-.login-register .form-control:focus{
-    color: #495057;
-    background-color: whitesmoke;
-    border-color:#3366BB;
-    outline: 0;
-    box-shadow: 0px 0px 3px 0px;
+.login-register h3.sigin-text {
+  font-style: normal !important;
+  font-weight: 700 !important;
 }
 
-.login-register .btn-class{
-    border-color: #525289 !important;
-    color: #525289 !important;
-    width: 30%;
-    height: 40px;
+.login-register .form-control {
+  display: block;
+  width: 100%;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  border-color: #292944;
+  border-style: solid !important;
+  border-radius: 10px !important;
+  color: #494949;
+  height: auto;
+  border-radius: 0;
+  background-color: whitesmoke;
+  background-clip: padding-box;
+  box-shadow: 2px 2px 3px 0px;
 }
 
-.login-register .btn-class:hover{
-    background-color: #525289 !important;
-    color: white !important;
+.login-register .form-control:focus {
+  color: #495057;
+  background-color: whitesmoke;
+  border-color: #3366bb;
+  outline: 0;
+  box-shadow: 0px 0px 3px 0px;
 }
 
-
-.login-register .form-hidden{
-    display: none;
+.login-register .btn-class {
+  border-color: #525289 !important;
+  color: #525289 !important;
+  width: 30%;
+  height: 40px;
 }
 
-.login-register .right-container{
-    background-color: #000 !important;
+.login-register .btn-class:hover {
+  background-color: #525289 !important;
+  color: white !important;
+}
+.login-register .btn-class1 {
+  border-color: #525289 !important;
+  color: #525289 !important;
+  width: fit-content;
+  height: 40px;
 }
 
-.login-register .logo{
-    width: 35px;
-    height: 35px;
-}
- 
-.login-register .img{
-    padding-top: 10%;
-}
-.login-register .form-group-bottom{
-    width: 100%;
-    display: flex;
-    align-items: center;
+.login-register .btn-class1:hover {
+  background-color: #525289 !important;
+  color: white !important;
 }
 
-.login-register .error-response{
-    width: 70%;
-    height: 100%;
-    margin-left: 10px;
-    text-align: left;
-    font-size: 15px;
-    font-weight: bold;
-    color: red;
+.login-register .form-hidden {
+  display: none;
+}
+
+.login-register .right-container {
+  background-color: #000 !important;
+}
+
+.login-register .logo {
+  width: 35px;
+  height: 35px;
+}
+
+.login-register .img {
+  padding-top: 10%;
+}
+.login-register .form-group-bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.login-register .error-response {
+  width: 70%;
+  height: 100%;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+  color: red;
 }

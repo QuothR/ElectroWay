@@ -13,6 +13,10 @@ function Adm(props) {
   var [formImput, setFormInput] = useState({});
 
   const history = useHistory();
+  const redirectionare = () => {
+    history.push("/home/Adm-station/Reset");
+    window.location.reload();
+  };
 
   function handleAdd() {
     const dataBackend = {
@@ -47,22 +51,8 @@ function Adm(props) {
   }
 
   function handleWorkflow() {
-    // if (
-    //   formImput.username != null &&
-    //   formImput.firstName != null &&
-    //   formImput.lastName != null &&
-    //   formImput.phoneNumber != null &&
-    //   formImput.emailAddress != null &&
-    //   formImput.address1 != null &&
-    //   formImput.city != null &&
-    //   formImput.country != null &&
-    //   formImput.zipcode != null
-    // ) {
-      handleAdd();
-      // refreshPage();
-    // } else {
-    //   return <h1>null</h1>;
-    // }
+    handleAdd();
+
   }
 
   useEffect(() => {
@@ -79,16 +69,6 @@ function Adm(props) {
       });
   }, []);
 
-  // function test() {
-  //     axios.get("http://localhost:443/user", {
-  //         headers: {
-  //             'Authorization': `Basic ${myToken}`
-  //         }
-  //     }).then(res => {
-  //         console.log(res.data);
-  //     }
-  //     );
-  // }
 
   return (
     <div className="admin">
@@ -264,6 +244,20 @@ function Adm(props) {
             />
           </div>
 
+          <div className="form-in">
+            <label htmlFor="adresa2">Adresa 2</label>
+            <input
+              type="text"
+              name="ad2"
+              id="ad2"
+              defaultValue={formImput.address2}
+              onChange={(e) => {
+                const address2 = e.target.value;
+                setFormInput({ ...formImput, ...{ address2 } });
+              }}
+            />
+          </div>
+
           {/* <div className="form-in">
               <label htmlFor="parolaVeche" required>
                 Parola veche
@@ -292,16 +286,6 @@ function Adm(props) {
                                 e.preventDefault();
                                 test();
                             }}>test</button> */}
-          </div>
-          <div className="change">
-            <button
-            // onClick={(e) => {
-            //   e.preventDefault();
-            //   test();
-            // }}
-            >
-              Resetare parola
-            </button>
           </div>
         </div>
       </form>

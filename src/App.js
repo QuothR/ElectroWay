@@ -3,6 +3,7 @@ import Login from './login-register/Login'
 import Register from './login-register/Register'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './main page/Similar components/MainPage.css'
+import ResetPassword from './login-register/ResetPassword'
 import MainPage from './main page/MainPage'
 import MainContent from './MainPageLanding/compForMain/MainContent'
 import ProtectedRoute from './Routes/ProtectedRoute'
@@ -19,6 +20,7 @@ function App(props) {
     <Router>
       <div>
         <Switch>
+          <ProtectedLoginRoute path="/resetpassword" exact component={ResetPassword} isAuth={isAuth} />
           <ProtectedLoginRoute path="/" exact component={MainContent} isAuth={isAuth} />
           <ProtectedRoute path="/home" component={MainPage} isAuth={isAuth} />
           <ProtectedLoginRoute path="/register" component={Register} isAuth={isAuth} />
