@@ -1,6 +1,6 @@
 package com.example.electrowayfinal.utils.Routing.URLBuilders;
 
-import com.example.electrowayfinal.utils.Routing.structures.Car;
+import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.utils.Routing.structures.RouteData;
 
 import java.net.MalformedURLException;
@@ -98,12 +98,12 @@ public class TomTomURLBuilder {
 
             // Add max charge Charge.
             stringBuilder.append("maxChargeInkWh=");
-            stringBuilder.append(car.getMaxChargeInkWh());
+            stringBuilder.append(car.getBatteryCapacity());
             stringBuilder.append("&");
 
             // Add auxiliary Ink.
             stringBuilder.append("auxiliaryPowerInkW=");
-            stringBuilder.append(car.getAuxiliaryInkW());
+            stringBuilder.append(car.getAuxiliaryKwh());
             stringBuilder.append("&");
         }
 

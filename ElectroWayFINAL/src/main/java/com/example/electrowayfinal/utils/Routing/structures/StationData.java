@@ -1,72 +1,38 @@
 package com.example.electrowayfinal.utils.Routing.structures;
 
+import com.example.electrowayfinal.models.ChargingPlug;
+import com.example.electrowayfinal.models.Station;
+
 public class StationData {
-    private Long stationId;
-    private Coords coords;
-    private Double priceKw;
-    private Double chargingSpeedKw;
-    // Pentru Testing, ca sa ne fie mai usor sa vedem ce statii a ales.
-    private String address;
+    private Station station;
+    private ChargingPlug chargingPlug;
 
-    public StationData() {
+    public StationData(Station station, ChargingPlug chargingPlug) {
+        this.station = station;
+        this.chargingPlug = chargingPlug;
     }
 
-    public StationData(Long stationId, Coords coords, Double priceKw, Double chargingSpeedKw, String address) {
-        this.stationId = stationId;
-        this.coords = coords;
-        this.priceKw = priceKw;
-        this.chargingSpeedKw = chargingSpeedKw;
-        this.address = address;
+    public Station getStation() {
+        return station;
     }
 
-    public Long getStationId() {
-        return stationId;
+    public void setStation(Station station) {
+        this.station = station;
     }
 
-    public void setStationId(Long stationId) {
-        this.stationId = stationId;
+    public ChargingPlug getChargingPlug() {
+        return chargingPlug;
     }
 
-    public Coords getCoords() {
-        return coords;
-    }
-
-    public void setCoords(Coords coords) {
-        this.coords = coords;
-    }
-
-    public Double getPriceKw() {
-        return priceKw;
-    }
-
-    public void setPriceKw(Double priceKw) {
-        this.priceKw = priceKw;
-    }
-
-    public Double getChargingSpeedKw() {
-        return chargingSpeedKw;
-    }
-
-    public void setChargingSpeedKw(Double chargingSpeedKw) {
-        this.chargingSpeedKw = chargingSpeedKw;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setChargingPlug(ChargingPlug chargingPlug) {
+        this.chargingPlug = chargingPlug;
     }
 
     @Override
     public String toString() {
         return "StationData{" +
-                "stationId=" + stationId +
-                ", coords=" + coords +
-                ", priceKw=" + priceKw +
-                ", chargingSpeedKw=" + chargingSpeedKw +
-                ", address='" + address + '\'' +
-                '}';
+                "\n\tstation=" + station +
+                "\n\tchargingPlug=" + chargingPlug +
+                "\n}\n";
     }
 }

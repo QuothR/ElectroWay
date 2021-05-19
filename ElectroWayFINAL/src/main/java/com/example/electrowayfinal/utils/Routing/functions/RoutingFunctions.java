@@ -1,5 +1,6 @@
 package com.example.electrowayfinal.utils.Routing.functions;
 
+import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.service.TomTomService;
 import com.example.electrowayfinal.utils.Routing.structures.*;
 import org.json.JSONArray;
@@ -78,9 +79,9 @@ public class RoutingFunctions {
      */
     public static Double calculateChargingTime(Car car, StationData station) {
         // Determinam care capacitate de incarcare este mai mica. Pentru ca aia va reprezenta adevarata viteza de incarcare.
-        Double actualChargingSpeed = Math.min(car.getChargingSpeed(), station.getChargingSpeedKw());
+        Double actualChargingSpeed = Math.min(car.getChargingCapacity(), station.getChargingPlug().getChargingSpeedKw());
 
-        return car.getMaxChargeInkWh() / actualChargingSpeed;
+        return car.getBatteryCapacity() / actualChargingSpeed;
     }
 
     /**
@@ -172,8 +173,8 @@ public class RoutingFunctions {
             Double distAToCurrentStation = calculateDistance(
                     pointA.getLat(),
                     pointA.getLon(),
-                    station.getCoords().getLat(),
-                    station.getCoords().getLon()
+                    station.getStation().getLatitude(),
+                    station.getStation().getLongitude()
             ) / 1000; // "/ 1000" ca sa fie in km
 
             // Calculam timpul pentru parcurgerea acestei distante, timp in functie de o viteza si il adaugam la rezultatul final.
@@ -182,8 +183,8 @@ public class RoutingFunctions {
             // ++++++++++ statie_curenta ---> reachablePoint ++++++++++
             // Calculam distanta geografica, in linie dreapta, de la statie_curenta la reachablePoint.
             Double distCurrentStationToReachablePoint = calculateDistance(
-                    station.getCoords().getLat(),
-                    station.getCoords().getLon(),
+                    station.getStation().getLatitude(),
+                    station.getStation().getLongitude(),
                     reachablePoint.getLat(),
                     reachablePoint.getLon()
             ) / 1000; // "/ 1000" ca sa fie in km;
@@ -278,7 +279,7 @@ public class RoutingFunctions {
      * @param routeData - Un obiect care contine datele necesare pentru generarea rutei, vezi definitia obiectului.
      * @param finalResponse - Va fi returnat ca response la request-ul clientului.
      * @param auxiliarRouteVar - Parametru pentru a trimite mai departe datele rutei generate de TomTom.
-     * @return - Returneaza statia intermediara cea mai convenabila ca timp si distanta fata de reachablePoint.
+     * @return Statia intermediara cea mai convenabila ca timp si distanta fata de reachablePoint.
      */
     public static StationData reachableStation(
             Map<StationData, Pair<Double, Double>> travelTimesAndDistances,
@@ -301,7 +302,7 @@ public class RoutingFunctions {
             // Ne asiguram ca statia nu este luata pentru ca nu are rost sa ne intoarcem intr-o statie.
             boolean stationAlreadyTaken = false;
             for(LegData leg : finalResponse.getLegs()) {
-                if(station.getStationId() == leg.getStationId()) {
+                if(station.getStation().getId() == leg.getStationId()) {
                     stationAlreadyTaken = true;
                     break;
                 }
@@ -312,8 +313,8 @@ public class RoutingFunctions {
                     Arrays.asList(
                             routeData.getLocationsCoords().get(0),
                             new Coords(
-                                    station.getCoords().getLat(),
-                                    station.getCoords().getLon()
+                                    station.getStation().getLatitude(),
+                                    station.getStation().getLongitude()
                             )
                     )
             );
@@ -354,7 +355,7 @@ public class RoutingFunctions {
             Map.Entry m = (Map.Entry) i.next();
             StationData station = (StationData) m.getKey();
             Pair<Double, Double> travelTimeAndDistance = (Pair<Double, Double>) m.getValue();
-            System.out.println(station + "    " + travelTimeAndDistance);
+            System.out.println(station.getStation().getAddress() + "    " + travelTimeAndDistance);
         }
 
         i = sortedMapByDistance.entrySet().iterator();
@@ -368,8 +369,8 @@ public class RoutingFunctions {
                     Arrays.asList(
                             routeData.getLocationsCoords().get(0),
                             new Coords(
-                                    station.getCoords().getLat(),
-                                    station.getCoords().getLon()
+                                    station.getStation().getLatitude(),
+                                    station.getStation().getLongitude()
                             )
                     )
             );
@@ -385,5 +386,20 @@ public class RoutingFunctions {
         }
 
         return null;
+    }
+
+    /**
+     * Functie ajutatoare care sa returneze distanta maxima pe care o poate parcurge masina.
+     * @param routeData - Contine date despre consum, nivelul curent de energie si altele..
+     * @return Distanta in km pe care o poate parcurge vehiculul cu nivelul actual de energie.
+     */
+    public static Double getTotalElectricalRange(RouteData routeData) {
+        // Distanta maxima pe care o poate parcurge masina.
+        // Consumul.
+        Double consumption = routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(0).getConsumptionKWh();
+        Double totalElectricalRange = routeData.getCurrentChargeInkWh() / consumption * 100;
+        totalElectricalRange = Math.floor(totalElectricalRange);
+
+        return totalElectricalRange;
     }
 }

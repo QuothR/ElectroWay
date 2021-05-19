@@ -2,7 +2,13 @@ package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.CarNotFoundException;
 import com.example.electrowayfinal.exceptions.ImpossibleRouteException;
-import com.example.electrowayfinal.temporaryDB.StationsDB;
+import com.example.electrowayfinal.models.Car;
+import com.example.electrowayfinal.models.ChargingPlug;
+import com.example.electrowayfinal.models.ChargingPoint;
+import com.example.electrowayfinal.models.Station;
+import com.example.electrowayfinal.repositories.ChargingPlugRepository;
+import com.example.electrowayfinal.repositories.ChargingPointRepository;
+import com.example.electrowayfinal.repositories.StationRepository;
 import com.example.electrowayfinal.utils.Routing.structures.*;
 import com.example.electrowayfinal.repositories.CarRepository;
 import org.json.JSONArray;
@@ -20,10 +26,95 @@ import static com.example.electrowayfinal.utils.Routing.functions.RoutingFunctio
 public class RoutingService {
 
     private final CarRepository carRepository;
+    private final StationRepository stationRepository;
+    private final ChargingPointRepository chargingPointRepository;
+    private final ChargingPlugRepository chargingPlugRepository;
 
     @Autowired
-    public RoutingService(CarRepository carRepository) {
+    public RoutingService(
+            CarRepository carRepository,
+            StationRepository stationRepository,
+            ChargingPointRepository chargingPointRepository,
+            ChargingPlugRepository chargingPlugRepository) {
         this.carRepository = carRepository;
+        this.stationRepository = stationRepository;
+        this.chargingPointRepository = chargingPointRepository;
+        this.chargingPlugRepository = chargingPlugRepository;
+    }
+
+    /**
+     * Extragerea tuturor statiilor din baza de date pentru a le folosi in algoritm.
+     * @return O lista cu toate statiile din baza de date.
+     */
+    public List<Station> getStations() {
+        return stationRepository.findAll();
+    }
+
+    public List<Station> getPossibleReachableStations(RouteData routeData) {
+        // Toate statiile din baza de date.
+        List<Station> stationList = getStations();
+
+        // Pentru a verifica daca am putea ajunge macar in linie dreapta la acea statie.
+        Coords pointA = routeData.getLocationsCoords().get(0);
+        Double totalElectricalRange = getTotalElectricalRange(routeData);
+
+        // Construim o lista de statii la care am putea ajunge in linie dreapta.
+        List<Station> possibleReachableStations = new ArrayList<>();
+
+        for(Station station : stationList) {
+            // Distanta de la A la acea statie.
+            Double distAtoCurrentStation = calculateDistance(
+                    pointA.getLat(),
+                    pointA.getLon(),
+                    station.getLatitude(),
+                    station.getLongitude()
+            );
+
+            // Rotunjim.
+            distAtoCurrentStation = Math.floor(distAtoCurrentStation / 1000);
+
+            if(distAtoCurrentStation < totalElectricalRange) {
+                possibleReachableStations.add(station);
+            }
+        }
+
+        return possibleReachableStations;
+    }
+
+    public List<StationData> getStationsData(RouteData routeData) {
+
+        // O lista cu statii la care am putea ajunge in linie dreapta cu nivelul actual de energie.
+        List<Station> possibleReachableStations = getPossibleReachableStations(routeData);
+
+        // O lista care contine obiecte in care retinem date despre statie, chargingPlug, ...
+        List<StationData> stationDataList = new ArrayList<>();
+
+        List<ChargingPoint> chargingPointList = new ArrayList<>();
+
+        for(Station station : possibleReachableStations) {
+            // Obtinerea chargingPoint-urilor statiei.
+            chargingPointList = chargingPointRepository.findChargingPointsByStation_Id(station.getId());
+
+            // Initializez un plug cu viteza 0.
+            ChargingPlug chargingPlug = new ChargingPlug();
+            chargingPlug.setChargingSpeedKw(0);
+
+            for(ChargingPoint chargingPoint : chargingPointList) {
+                // Plugul cu viteza maxima corespunzator fiecarui chargingPoint.
+                ChargingPlug aux = chargingPlugRepository.findChargingPlugsByChargingPoint(chargingPoint)
+                        .stream()
+                        .max(Comparator.comparing(ChargingPlug::getChargingSpeedKw))
+                        .orElse(null);
+
+                // Plugul cu viteza maxima per total, pt toate chargingPoint-urile.
+                if((aux != null) && (aux.getChargingSpeedKw() > chargingPlug.getChargingSpeedKw()))
+                    chargingPlug = aux;
+            }
+
+            stationDataList.add(new StationData(station, chargingPlug));
+        }
+
+        return stationDataList;
     }
 
     public ResponseEntity<Object> generateRoute(
@@ -52,7 +143,7 @@ public class RoutingService {
             );
 
             // Obtinere statii in functie de punctul A.
-            List<StationData> stations = getStations(routeData);
+            List<StationData> stations = getStationsData(routeData);
 
             // Obtinerea timpului total si distanta in linie dreapta fata de reachablePoint pentru fiecare statie.
             Map<StationData, Pair<Double, Double>> travelTimesAndDistances = stationsTravelTimesAndDistances(
@@ -66,9 +157,9 @@ public class RoutingService {
                 Map.Entry m = (Map.Entry) i.next();
                 StationData station = (StationData) m.getKey();
                 Pair<Double, Double> travelTimeAndDistance = (Pair<Double, Double>) m.getValue();
-                System.out.println(station + "    " + travelTimeAndDistance);
+                System.out.println(station.getStation().getAddress() + "    " + travelTimeAndDistance);
             }
-            System.out.println("\n");
+            System.out.println("");
 
             // Determinarea celei mai convenabile statii ca timp si distanta.
             StationData reachableStation = reachableStation(
@@ -78,24 +169,27 @@ public class RoutingService {
                     auxiliarRouteVar
             );
 
-            System.out.println("S-a ales: " + reachableStation.getAddress());
-
             // Nu putem ajunge, stuck.
             if (reachableStation == null) {
                 throw new ImpossibleRouteException();
             }
+
+            System.out.println("S-a ales: " + reachableStation.getStation().getAddress());
 
             // adaugam leg-ul la final response.
             addDataToResponse(finalResponse, auxiliarRouteVar, reachableStation);
 
             // Recharge.
             Car car = routeData.getCar();
-            routeData.setCurrentChargeInkWh(8 * car.getMaxChargeInkWh() / 10);
+            routeData.setCurrentChargeInkWh(8 * car.getBatteryCapacity() / 10);
 
             // continuam cu ruta statie-B
             routeData.setLocationsCoords(
                     Arrays.asList(
-                            reachableStation.getCoords(),
+                            new Coords(
+                                    reachableStation.getStation().getLatitude(),
+                                    reachableStation.getStation().getLongitude()
+                            ),
                             routeData.getLocationsCoords().get(1)
                     )
             );
@@ -128,13 +222,13 @@ public class RoutingService {
         LegData lastLeg = new LegData();
 
         // Id statiei in care vom opri la finalul acestui leg.
-        lastLeg.setStationId(((stationData == null) ? null : stationData.getStationId()));
+        lastLeg.setStationId(((stationData == null) ? null : stationData.getStation().getId()));
 
         // Adresa statiei in care vom opri la finalul acestui leg.
-        lastLeg.setAddress(((stationData == null) ? null : stationData.getAddress()));
+        lastLeg.setAddress(((stationData == null) ? null : stationData.getStation().getAddress()));
 
         // Pretul statiei in care vom opri la finalul acestui leg.
-        lastLeg.setPriceKw(((stationData == null) ? null : stationData.getPriceKw()));
+        lastLeg.setPriceKw(((stationData == null) ? null : stationData.getChargingPlug().getPriceKw()));
 
         // Adaugarea punctelor pentru ruta.
         lastLeg.setPoints(
@@ -150,7 +244,7 @@ public class RoutingService {
         Double currentTravelPrice = finalResponse.getTotalTravelPrice();
         Double batteryConsumption = TomTomService.getBatteryConsumptionInkWh(auxiliarRouteVar.getRoute());
         if(stationData != null) {
-            Double currentStationPrice =  batteryConsumption * stationData.getPriceKw();
+            Double currentStationPrice =  batteryConsumption * stationData.getChargingPlug().getPriceKw();
             currentTravelPrice += currentStationPrice;
             finalResponse.setTotalTravelPrice(currentTravelPrice);
         }
@@ -163,37 +257,6 @@ public class RoutingService {
         // Adaugam leg-ul pentru iteratia curenta.
         finalResponse.getLegs().add(lastLeg);
 
-    }
-
-    private static List<StationData> getStations(RouteData routeData) {
-        // Pentru a verifica daca am putea ajunge macar in linie dreapta la acea statie.
-        Coords pointA = routeData.getLocationsCoords().get(0);
-
-        // Distanta maxima pe care o poate parcurge masina.
-        // Consumul.
-        Double consumption = routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(0).getConsumptionKWh();
-        Double totalElectricalRange = routeData.getCurrentChargeInkWh() / consumption * 100;
-        totalElectricalRange = Math.floor(totalElectricalRange);
-
-        List<StationData> goodStations = new ArrayList<>();
-        for(StationData s : StationsDB.getStations()) {
-            // Distanta de la A la acea statie.
-            Double distA = calculateDistance(
-                    pointA.getLat(),
-                    pointA.getLon(),
-                    s.getCoords().getLat(),
-                    s.getCoords().getLon()
-            );
-
-            // Rotunjim.
-            distA = Math.floor(distA / 1000);
-
-            if(distA <= totalElectricalRange) {
-                goodStations.add(s);
-            }
-        }
-
-        return goodStations;
     }
 
     public RouteData dataProcessing(RoutingRequestData routingRequestData) throws CarNotFoundException {
@@ -244,25 +307,12 @@ public class RoutingService {
             trebuie sa treaca).
          */
 
-        com.example.electrowayfinal.models.Car carTest = null; // de scos
         // Incercam sa extragem obiectul "car" din baza de date.
-        Optional<com.example.electrowayfinal.models.Car> car = carRepository.findById(carId); // de scos
-        // Optional<Car> car = carRepository.findById(carId);
+        Optional<Car> car = carRepository.findById(carId);
 
         if(car.isPresent()) {
             // Daca s-a gasit o masina cu acel id in baza de date atunci se va returna.
-            // return car.get();
-            // TEMPORAR --------------------------------
-            return new Car(
-                    "Audi Q7 e-tron quattro",
-                    2016L,
-                    15.8,
-                    3.7,
-                    "Type 2",
-                    230L,
-                    0.05
-            );
-            // -----------------------------------------
+            return car.get();
         }
         else {
             throw new CarNotFoundException(carId);

@@ -1,5 +1,7 @@
 package com.example.electrowayfinal.utils.Routing.structures;
 
+import com.example.electrowayfinal.models.Car;
+
 import java.util.List;
 
 public class RouteData {
