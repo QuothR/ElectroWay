@@ -2,7 +2,6 @@ package com.github.electroway.ui.start
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.electroway.R
-import com.github.electroway.RegisterInfo
 
 class CreateAccountFragment : Fragment() {
     companion object {

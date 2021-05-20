@@ -1,20 +1,16 @@
 package com.github.electroway.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.setupWithNavController
 import com.github.electroway.AddReviewInfo
 import com.github.electroway.Application
 import com.github.electroway.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AddReviewFragment : Fragment() {
     override fun onCreateView(

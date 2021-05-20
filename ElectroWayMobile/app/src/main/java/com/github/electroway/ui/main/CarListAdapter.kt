@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.AddCarInfo
 import com.github.electroway.R
-import org.json.JSONObject
 
 internal class CarListAdapter(
     private var itemsList: MutableList<AddCarInfo>,

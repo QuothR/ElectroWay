@@ -1,7 +1,6 @@
 package com.github.electroway.ui.start
 
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.github.electroway.Application
 import com.github.electroway.R
 import com.github.electroway.RegisterInfo
-import com.github.electroway.ui.main.ProfileFragment
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import java.io.IOException
 
 class CreateAccountNextFragment : Fragment() {
     lateinit var firstName: Editable

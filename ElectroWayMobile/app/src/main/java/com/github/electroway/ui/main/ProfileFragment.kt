@@ -2,25 +2,15 @@ package com.github.electroway.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.findFragment
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import com.github.electroway.Application
 import com.github.electroway.R
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import org.json.JSONObject
-import java.io.IOException
 
 class ProfileFragment : Fragment() {
     override fun onCreateView(

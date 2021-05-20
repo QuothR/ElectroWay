@@ -55,4 +55,12 @@
     <string name="vehicle_max_speed">Vehicle max speed</string>
     <string name="auxiliary_kwh">Auxiliary KWh</string>
     <string name="update">Update</string>
+    <string name="find_route">Find route</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="status">Status</string>
+    <string name="level">Level</string>
+    <string name="price_kw">Price (kW)</string>
+    <string name="charging_speed_kw">Charging Speed (kW)</string>
+    <string name="connector_type">Connector type</string>
+    <string name="current_charge_in_kw">Current charge in kW</string>
 </resources>

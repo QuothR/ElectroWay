@@ -1,14 +1,13 @@
 package com.github.electroway.ui.main
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.R
-import org.w3c.dom.Text
 
 internal class HelpAdapter(private var itemsList: List<Pair<String, String>>) :
     RecyclerView.Adapter<HelpAdapter.ViewHolder>() {
@@ -26,7 +25,7 @@ internal class HelpAdapter(private var itemsList: List<Pair<String, String>>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.questionTextView.text = itemsList[position].first
-        holder.answerTextView.text = itemsList[position].second
+        holder.answerTextView.text = Html.fromHtml(itemsList[position].second, 0)
         holder.toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 holder.answerTextView.visibility = View.VISIBLE
