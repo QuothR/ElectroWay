@@ -61,9 +61,9 @@ public class TemplateCarService {
         return templateCarToUpdate;
     }
 
-    public void deleteTemplateCar(Long id, HttpServletRequest httpServletRequest) throws UserNotFoundException {
+    public void deleteTemplateCar(Long carId, HttpServletRequest httpServletRequest) throws UserNotFoundException {
         JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
 
-        templateCarRepository.deleteById(id);
+        templateCarRepository.deleteById(carId);
     }
 }

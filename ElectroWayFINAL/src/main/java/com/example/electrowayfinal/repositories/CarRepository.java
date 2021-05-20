@@ -16,6 +16,9 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Override
     <C extends Car> C save(C entity);
 
+    @Override
+    Car getOne(Long carId);
+
     void deleteById(long id);
 
     @Override

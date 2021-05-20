@@ -88,8 +88,8 @@ public class CarService {
         return carToUpdate;
     }
 
-    public void deleteCar(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        getCar(id, httpServletRequest, httpServletResponse);
-        carRepository.deleteById(id);
+    public void deleteCar(Long carId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        getCar(carId, httpServletRequest, httpServletResponse);
+        carRepository.deleteById(carId);
     }
 }

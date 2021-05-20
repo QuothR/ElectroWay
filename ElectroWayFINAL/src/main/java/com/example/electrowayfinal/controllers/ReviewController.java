@@ -27,7 +27,7 @@ public class ReviewController {
     @PostMapping(path = "/create/station/{stationId}")
     @ResponseStatus(HttpStatus.OK)
     public Review createReview(@RequestBody Review review, @PathVariable("stationId") Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        reviewService.createReview(review, stationId, httpServletRequest, httpServletResponse);
+        reviewService.createReview(review, stationId, httpServletRequest);
         return reviewService.getReview(review.getId(), httpServletRequest, httpServletResponse);
     }
 
