@@ -128,6 +128,9 @@ public class RoutingService {
         // In el retinem datele de la TomTom, datele obtinute dintr-un request in isReachable.
         AuxiliarRouteUtil auxiliarRouteVar = new AuxiliarRouteUtil();
 
+        // Daca s-a incercat ocolirea de 3 ori atunci algoritmul va fi oprit
+        Integer movedAwayTimes = 3;
+
         // Cat timp nu putem ajunge la B.
         while(!isReachable(routeData, auxiliarRouteVar)) {
             // Determinarea unui punct la care se poate ajunge, punct care sa fie cat mai aproape de B.
@@ -169,8 +172,13 @@ public class RoutingService {
                     auxiliarRouteVar
             );
 
+            // Masina s-a indepartat de ruta finala.
+            if(isTooFar(routeData, reachableStation)) {
+                movedAwayTimes--;
+            }
+
             // Nu putem ajunge, stuck.
-            if (reachableStation == null /*|| isTooFar(routeData, reachableStation)*/) {
+            if (reachableStation == null || movedAwayTimes == 0) {
                 throw new ImpossibleRouteException();
             }
 

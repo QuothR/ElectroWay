@@ -341,7 +341,7 @@ public class RoutingFunctions {
         }
 
         // Offset-ul pentru timp. Trecut in ore!
-        Double travelTimeOffset = 1.0;
+        Double travelTimeOffset = travelTimesAndDistances.get(initialStation).getFirst() / 4;
 
         // Sortam mapa dupa distanta fata de reachablePoint. Punctele mai apropiate de reachablePoint vor fi primele.
         Map<StationData, Pair<Double, Double>> sortedMapByDistance = new LinkedHashMap<>();

@@ -16,7 +16,14 @@
 }
     POST URL: https://localhost:443/register
 
+    1.1) # Enable the user.
+        UPDATE user SET is_enabled = 1 WHERE user_name = 'cxdsasasffdsvddsd';
     2) Va logati cu noul user.
+    2.2) Daca user-ul pe care tocmai l ati inserat nu are rol de driver si owner, atunci executati in Heidi urmatoarele comenzi:
+
+    INSERT INTO user_role VALUES(1, 2, 3);
+    INSERT INTO user_role VALUES(2, 2, 2);
+
     3) Creati o noua masina folosind body-ul.
 {
   "model": "Audi Q7 e-tron quattro",
@@ -33,29 +40,26 @@
 
 # De acum poti rula script-ul pentru populare.
 
-# Enable the user.
-UPDATE user SET is_enabled = 1 WHERE user_name = 'cxdsasasffdsvddsd';
-
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(1,"Targu Frumos",47.22197,27.06514,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(2,"Vaslui",46.63387, 27.71967,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(3,"Barlad",46.22585, 27.66664,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(4,"Tecuci",45.85389, 27.42921,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(5,"Focsani",45.69681, 27.18202,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(6,"Brasov",45.67795, 25.63295,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(7,"Bacau",46.58017, 26.92384,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(8,"Galati",45.42035, 27.99313,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(9,"Braila",45.26242, 27.96711,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(10,"Tulcea",45.14825, 28.77186,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(11,"Buzau",45.15354, 26.8163,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(12,"Piatra Neamt",46.95267, 26.35487,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(13,"Onesti",46.26588, 26.76136,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(14,"Iasi",47.17005, 27.61742,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(15,"Iasi Tatarasi",47.15718, 27.60624,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(16,"Bucuresti Titan",44.4224, 26.16088,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(17,"Suceava",47.66773, 26.23916,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(18,"Botosani",47.75644, 26.65664,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(19,"Gura Humorului",47.57146, 25.83267,1001);
-INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(20,"Vatra Dornei",47.39327, 25.31631,1001);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(1,"Targu Frumos",47.22197,27.06514,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(2,"Vaslui",46.63387, 27.71967,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(3,"Barlad",46.22585, 27.66664,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(4,"Tecuci",45.85389, 27.42921,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(5,"Focsani",45.69681, 27.18202,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(6,"Brasov",45.67795, 25.63295,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(7,"Bacau",46.58017, 26.92384,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(8,"Galati",45.42035, 27.99313,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(9,"Braila",45.26242, 27.96711,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(10,"Tulcea",45.14825, 28.77186,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(11,"Buzau",45.15354, 26.8163,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(12,"Piatra Neamt",46.95267, 26.35487,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(13,"Onesti",46.26588, 26.76136,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(14,"Iasi",47.17005, 27.61742,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(15,"Iasi Tatarasi",47.15718, 27.60624,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(16,"Bucuresti Titan",44.4224, 26.16088,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(17,"Suceava",47.66773, 26.23916,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(18,"Botosani",47.75644, 26.65664,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(19,"Gura Humorului",47.57146, 25.83267,2);
+INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(20,"Vatra Dornei",47.39327, 25.31631,2);
 
 INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(1,1,1,"Type 1",0.1,7.2);
 INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(2,1,2,"Type 1",0.3,8.1);

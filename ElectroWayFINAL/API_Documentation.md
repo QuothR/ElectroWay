@@ -698,3 +698,108 @@
  * Request : - 
  * Response : - 
 
+# GENERATE ROUTE
+* Metoda POST
+* URL : https://localhost:443/routing
+* Exemplu Request :
+```json
+{
+  "locationsCoords": [
+    {
+      "lat" : 44.18508,
+      "lon" : 28.51904
+    },
+    {
+      "lat" : 46.21379,
+      "lon" : 24.7817
+    }
+  ],
+  "avoid": "unpavedRoads",
+  "carData": {
+    "carId": 1,
+    "currentChargeInkW": 11.0
+  }
+}
+```
+* Constrangeri Request Body:
+    * **locationsCoords** trebuie sa continta exact 2 perechi de coordonate.
+    * **avoid** trebuie sa fie egal cu una dintre urmatoarele lucruri: ["tollRoads", "motorways", "ferries", "unpavedRoads", "carpools", "alreadyUsedRoads"].
+    * **carId** si **currentChargeInkW** sunt ori amandoua null, ori amandoua contin valori.
+    * **carId** nu trebuie sa fie null.
+* Exemplu Response:
+```json
+{
+    "totalTravelTime": 667.7333333333333,
+    "totalTravelDistance": 672.7370000000001,
+    "totalTravelPrice": 22.228371399999997,
+    "legs": [
+        {
+            "stationId": 19,
+            "priceKw": 0.4,
+            "currentChargeInkWhAfterRecharge": 6.711208,
+            "points": [
+              {
+                "lat": 47.95795,
+                "lon": 26.40887
+              },
+              {
+                "lat": 47.95747,
+                "lon": 26.40968
+              },
+              {
+                "lat": 47.95732,
+                "lon": 26.40993
+              },
+              {
+                "lat": 47.95667,
+                "lon": 26.41087
+              },
+              ....
+            ],
+            "address": "Gura Humorului"
+        },
+        {
+            "stationId": 20,
+            "priceKw": 0.4,
+            "currentChargeInkWhAfterRecharge": 13.449475999999999,
+            "points": null,
+            "address": "Vatra Dornei"
+        },
+        {
+            "stationId": 12,
+            "priceKw": 0.7,
+            "currentChargeInkWhAfterRecharge": 8.09135,
+            "points": similar cu elementul anterior,
+            "address": "Piatra Neamt"
+        },
+        {
+            "stationId": 13,
+            "priceKw": 0.24,
+            "currentChargeInkWhAfterRecharge": 10.67599,
+            "points": similar cu elementul anterior,
+            "address": "Onesti"
+        },
+        {
+            "stationId": 6,
+            "priceKw": 0.5,
+            "currentChargeInkWhAfterRecharge": 10.058119999999999,
+            "points": similar cu elementul anterior,
+            "address": "Brasov"
+        },
+        {
+            "stationId": null,
+            "priceKw": null,
+            "currentChargeInkWhAfterRecharge": null,
+            "points": *similar cu elementul anterior*,
+            "address": null
+        }
+    ]
+}
+```
+* Mentiuni pentru Response:
+    * Fiecare element din **legs** reprezinta traseul de la o oprire anterioara la locatia curenta.
+    * Ultimul element din **legs** reprezinta destinatia finala, de aceea toate campurile in afara de **points** vor fi null.
+    * Response-ul are minim un element in **legs**, daca este exact unul inseamna ca user-ul nu trebuie sa se opreasca la nici o statie.
+    * Ultimul element din **legs[i].points** este identic cu primul element din **legs[i+1].points**.
+    
+
