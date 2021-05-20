@@ -1,6 +1,7 @@
 {
 	"info": {
-		"_postman_id": "8168eec1-4fd7-4fb9-bff1-7d53231f2dd1",
+
+		"_postman_id": "c49638be-2527-4bdc-84a6-22ed30e37318",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -297,6 +298,17 @@
 							"path": [
 								"station"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Stations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
@@ -952,6 +964,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Plug Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"total\": 10,\r\n    \"description\": \"asd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/station/3/points/12/plugs/4/pay",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"station",
+								"3",
+								"points",
+								"12",
+								"plugs",
+								"4",
+								"pay"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1270,6 +1326,39 @@
 								"pay",
 								"cancel"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "asdas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "asd",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
@@ -1767,6 +1856,22 @@
 								"update",
 								"4"
 							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PaypalDetail",
+			"item": [
+				{
+					"name": "addDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []

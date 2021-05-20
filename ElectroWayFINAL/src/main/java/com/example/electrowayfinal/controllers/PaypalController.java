@@ -23,25 +23,6 @@ public class PaypalController {
         return ("<h1>home");
     }
 
-    @PostMapping("/pay")
-    public String payment(@RequestBody Order order) {
-        try {
-            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescription(), "http://localhost:443/" + CANCEL_URL,
-                    "http://localhost:443/" + SUCCESS_URL);
-            for (Links link : payment.getLinks()) {
-                if (link.getRel().equals("approval_url")) {
-                    return ("<h1>redirect:" + link.getHref());
-                }
-            }
-
-        } catch (PayPalRESTException e) {
-
-            e.printStackTrace();
-        }
-        return ("<h1>redirect:/");
-    }
-
     @GetMapping(value = CANCEL_URL)
     public String cancelPay() {
         return ("<h1>cancel");

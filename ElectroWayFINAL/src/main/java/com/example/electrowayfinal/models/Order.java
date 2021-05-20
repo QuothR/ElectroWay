@@ -11,10 +11,10 @@ import lombok.ToString;
 @ToString
 public class Order {
 
-    private double price;
-    private String currency;
-    private String method;
-    private String intent;
+    private double total;
+    private final String currency = "EUR";
+    private final String method = "paypal";
+    private final String intent = "sale";
     private String description;
 
 }

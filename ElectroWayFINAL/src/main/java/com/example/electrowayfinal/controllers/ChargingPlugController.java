@@ -2,8 +2,13 @@ package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.models.ChargingPlug;
 import com.example.electrowayfinal.models.ChargingPoint;
+import com.example.electrowayfinal.models.Order;
 import com.example.electrowayfinal.service.ChargingPlugService;
 import com.example.electrowayfinal.service.ChargingPointService;
+import com.example.electrowayfinal.service.PaypalService;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +24,12 @@ import java.util.Optional;
 public class ChargingPlugController {
     private final ChargingPlugService chargingPlugService;
     private final ChargingPointService chargingPointService;
+
+    @Autowired
+    PaypalService paypalService;
+
+    public static final String SUCCESS_URL = "pay/success";
+    public static final String CANCEL_URL = "pay/cancel";
 
     @Autowired
     public ChargingPlugController(ChargingPlugService chargingPlugService, ChargingPointService chargingPointService) {
@@ -58,6 +69,26 @@ public class ChargingPlugController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("pId") Long pId, @PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) {
         chargingPlugService.deleteChargingPlugById(pId, id, cId, httpServletRequest);
+    }
+
+    @PostMapping("/{id}/points/{cId}/plugs/{pId}/pay")
+    public String payment(@RequestBody Order order, @PathVariable("pId") Long plugId) {
+        try {
+            Payment payment = paypalService.createPayment(plugId,order, "https://localhost:443/" + CANCEL_URL,
+                    "https://localhost:443/" + SUCCESS_URL);
+            for (Links link : payment.getLinks()) {
+                if (link.getRel().equals("approval_url")) {
+                    return ("<h1>redirect:" + link.getHref());
+                }
+            }
+
+        } catch (PayPalRESTException e) {
+
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ("<h1>redirect:/");
     }
 
 }

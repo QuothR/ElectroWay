@@ -63,7 +63,12 @@ public class ChargingPlugService {
     public List<ChargingPlug> getChargingPlugsByConnectorType(String connectorType) {
         return chargingPlugRepository.findChargingPlugsByConnectorType(connectorType);
     }
-
+    public ChargingPlug getOnePlug(Long id){
+        if(chargingPlugRepository.findChargingPlugById(id).isEmpty()){
+            throw new NoSuchElementException(id + "charging plug does not exist");
+        }
+        return chargingPlugRepository.findChargingPlugById(id).get();
+    }
     public Optional<ChargingPlug> getChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
         if (chargingPoint.isEmpty()) {

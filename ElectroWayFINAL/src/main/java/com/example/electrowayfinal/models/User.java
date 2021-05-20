@@ -211,7 +211,7 @@ public class User implements UserDetails {
                     name = "role_id", referencedColumnName = "id"))
     @JsonIgnore
     private Collection<Role> roles;
-
+    
     @Override
     public String toString() {
         return "User{" +
