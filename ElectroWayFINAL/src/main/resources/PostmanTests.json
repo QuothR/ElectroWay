@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3a34b49c-efa9-4f8f-9f1f-9dc9beac920d",
+		"_postman_id": "8168eec1-4fd7-4fb9-bff1-7d53231f2dd1",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -91,7 +91,7 @@
 					"response": []
 				},
 				{
-					"name": "Login",
+					"name": "JWT Login Test",
 					"event": [
 						{
 							"listen": "test",
@@ -300,15 +300,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Get All Stations",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": null
-					},
-					"response": []
 				}
 			]
 		},
@@ -441,7 +432,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"cevadecent22222222222222\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdss232323asaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
+							"raw": "{\r\n    \"id\": 6,\r\n    \"username\": \"cevadecent22222222222222\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdss232323asaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -479,7 +470,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/user/addrole?roleName=ROLE_OWNER",
+							"raw": "https://localhost:443/user/addrole?roleName=ROLE_DRIVER",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -492,7 +483,7 @@
 							"query": [
 								{
 									"key": "roleName",
-									"value": "ROLE_OWNER"
+									"value": "ROLE_DRIVER"
 								}
 							]
 						}
@@ -929,39 +920,6 @@
 					"response": []
 				},
 				{
-					"name": "Update Plug",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"status\":14,\r\n    \"level\":88,\r\n    \"connectorType\":\"lmao\",\r\n    \"priceKw\":69,\r\n    \"chargingSpeedKw\":96\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:443/station/1/points/1/plugs/1",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "443",
-							"path": [
-								"station",
-								"1",
-								"points",
-								"1",
-								"plugs",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete Plug",
 					"request": {
 						"auth": {
@@ -1034,6 +992,37 @@
 							"path": [
 								"car",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:443/car/get/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"car",
+								"get",
+								"1"
 							]
 						}
 					},
@@ -1330,6 +1319,37 @@
 					"response": []
 				},
 				{
+					"name": "Get template car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:443/templatecar/get/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"templatecar",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get all template cars",
 					"request": {
 						"auth": {
@@ -1425,52 +1445,6 @@
 								"templatecar",
 								"delete",
 								"1001"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Routing",
-			"item": [
-				{
-					"name": "GenerateRoute",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjeGRzYXNzYXNmZmRzdmRkc2QiLCJpc1VzZXIiOnRydWUsImV4cCI6MTYyMTI1MTM2NSwiaWF0IjoxNjIxMjUwNzY1fQ.ceEYKCcivxI3TR67MYI8jgZkWD62DEIXNaNxfEQyv7Xdum6ntALyLvVba_m4pzOZ0OEr6erVB28UFgl4CvoBPw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"locationsCoords\": [\r\n        {\r\n            \"lat\" : 47.15591,\r\n            \"lon\" : 27.6059\r\n        },\r\n        {\r\n            \"lat\" : 44.42082,\r\n            \"lon\" : 26.16123\r\n        }\r\n    ],\r\n    \"avoid\": \"unpavedRoads\",\r\n    \"carData\": {\r\n        \"carId\": 1,\r\n        \"currentChargeInkW\": 7.0\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:443/routing",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "443",
-							"path": [
-								"routing"
 							]
 						}
 					},
@@ -1614,6 +1588,184 @@
 								"1001",
 								"station",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consumption",
+			"item": [
+				{
+					"name": "Add consumption",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"speed\": \"80\",\r\n    \"consumptionKwh\": \"17.5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/consumption/create/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"consumption",
+								"create",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get consumption",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:443/consumption/get/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"consumption",
+								"get",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get car consumptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:443/consumption/all/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"consumption",
+								"all",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete consumption",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:443/consumption/delete/5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"consumption",
+								"delete",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update consumption",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"speed\": \"80\",\r\n    \"consumptionKwh\": \"17.5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/consumption/update/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"consumption",
+								"update",
+								"4"
 							]
 						}
 					},

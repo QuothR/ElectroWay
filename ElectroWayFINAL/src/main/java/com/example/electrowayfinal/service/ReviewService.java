@@ -36,11 +36,11 @@ public class ReviewService {
         this.stationService = stationService;
     }
 
-    public void createReview(Review review, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+    public void createReview(Review review, Long stationId, HttpServletRequest httpServletRequest) throws UserNotFoundException {
         User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
         review.setUser(user);
 
-        Station station = stationService.getCurrentStation(stationId, httpServletRequest, httpServletResponse);
+        Station station = stationService.getStation(stationId);
         review.setStation(station);
 
         reviewRepository.save(review);

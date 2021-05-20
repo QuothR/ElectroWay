@@ -31,6 +31,12 @@ public class CarController {
         return carService.getCar(car.getId(), httpServletRequest, httpServletResponse);
     }
 
+    @GetMapping(path = "get/{carId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Car getCar(@PathVariable("carId") Long carId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        return carService.getCar(carId, httpServletRequest, httpServletResponse);
+    }
+
     @GetMapping(path = "all")
     @ResponseStatus(HttpStatus.OK)
     public List<Car> getUserCars(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {

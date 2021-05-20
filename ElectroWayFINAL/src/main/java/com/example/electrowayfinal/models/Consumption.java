@@ -15,6 +15,15 @@ import javax.persistence.*;
 })
 public class Consumption {
     @Id
+    @SequenceGenerator(
+            name = "consumption_sequence",
+            sequenceName = "consumption_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "consumption_sequence"
+    )
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigint")
     private long id;
 
@@ -23,8 +32,8 @@ public class Consumption {
     private long speed;
 
     @Basic
-    @Column(name = "consumption_kWh", nullable = false, columnDefinition = "bigint")
-    private long consumptionKWh;
+    @Column(name = "consumption_kwh", nullable = false, columnDefinition = "double")
+    private double consumptionKwh;
 
     @ManyToOne
     @JoinColumn(name = "car_id", referencedColumnName = "id", columnDefinition = "bigint")

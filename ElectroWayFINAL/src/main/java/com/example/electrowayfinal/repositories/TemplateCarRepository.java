@@ -15,6 +15,9 @@ public interface TemplateCarRepository extends JpaRepository<TemplateCar, Long> 
     @Override
     <C extends TemplateCar> C save(C entity);
 
+    @Override
+    TemplateCar getOne(Long templateCarId);
+
     void deleteById(long id);
 
     @Override
