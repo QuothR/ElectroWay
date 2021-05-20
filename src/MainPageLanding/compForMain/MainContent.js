@@ -35,7 +35,8 @@ function MainContent() {
         <div className="page">
             <aside className="my-aside">
 
-            <select className="selectpicker" data-width="fit" onChange={(e) => {
+            <select className="selectpicker" data-width="fit" defaultValue={language}
+             onChange={(e) => {
                     setLanguage(e.target.value);
                 }}>
                     <option value='1'>English</option>

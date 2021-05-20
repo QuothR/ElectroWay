@@ -19,14 +19,14 @@ function EditarePlug(props) {
 
         const dataBackend = {
             status: 0,
-            level: formImput.level ? parseInt(formImput.level, 10) : parseInt(plugAddr.level, 10),
+            level: formImput.level ? formImput.level : plugAddr.level,
             connectorType: formImput.connectorType ? formImput.connectorType : plugAddr.connectorType, 
             priceKw: formImput.priceKw ? formImput.priceKw : plugAddr.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw ? formImput.chargingSpeedKw : plugAddr.chargingSpeedKw
         }
 
-
-        axios.put(`http://localhost:443/station/${stationAddr.id}/points/${pointId}`, dataBackend, {
+        console.log(dataBackend);
+        axios.put(`http://localhost:443/station/${stationAddr.id}/points/${pointId}/plugs/${plugAddr.id}`, dataBackend, {
             headers: {
                 'Authorization': `Basic ${myToken}`
             }
@@ -57,9 +57,9 @@ function EditarePlug(props) {
                                     console.log(level)
 
                                 }} >
-                                <option value="Nivel1">1</option>
-                                <option value="Nivel2">2</option>
-                                <option value="Nivel3">3</option>
+                                <option value="1">Nivel 1</option>
+                                <option value="2">Nivel 2</option>
+                                <option value="3">Nivel 3</option>
                             </select>
                             <label>Conector</label>
                             <select list="conector" className="input-field" placeholder="Tip" defaultValue={plugAddr.connectorType}
@@ -69,8 +69,10 @@ function EditarePlug(props) {
 
                                 }}
                             >
-                                <option value="Type B">Type B</option>
-                                <option value="Type C">Type C</option>
+                                <option value="Type 1">Type 1</option>
+                                <option value="Type 2">Type 2</option>
+                                <option value="CSS">Type CSS</option>
+                                <option value="CHAdeMO">Type CHAdeMO</option>
                             </select>
                             <label>Pret (RON/kWh)</label>
                             <input type="text" placeholder="introdu pret" defaultValue={plugAddr.priceKw} required

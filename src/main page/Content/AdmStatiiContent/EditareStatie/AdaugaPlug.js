@@ -24,8 +24,8 @@ function AdaugaPlug(props) {
 
         const dataBackend = {
             status: 0,
-            level: formImput.level ? parseInt(formImput.level, 10) : 1,
-            connectorType: formImput.connectorType ? formImput.connectorType : "Type B", //se pune valoarea default
+            level: formImput.level ? formImput.level : 1,
+            connectorType: formImput.connectorType ? formImput.connectorType : "Type 1", //se pune valoarea default
             priceKw: formImput.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw
         }
@@ -65,9 +65,9 @@ function AdaugaPlug(props) {
                                     const level = e.target.value;
                                     setFormInput({ ...formImput, ...{ level } });
                                 }} >
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                                <option value="1">Nivel 1</option>
+                                <option value="2">Nivel 2</option>
+                                <option value="3">Nivel 3</option>
                             </select>
                             <label>Conector</label>
                             <select list="conector" className="input-field" placeholder="Tip"
@@ -77,8 +77,10 @@ function AdaugaPlug(props) {
 
                                 }}
                             >
-                                <option value="Type B">Type B</option>
-                                <option value="Type C">Type C</option>
+                                <option value="Type 1">Type 1</option>
+                                <option value="Type 2">Type 2</option>
+                                <option value="CSS">Type CSS</option>
+                                <option value="CHAdeMO">Type CHAdeMO</option>
                             </select>
                             <label>Pret (RON/kWh)</label>
                             <input type="text" placeholder="introdu pret"

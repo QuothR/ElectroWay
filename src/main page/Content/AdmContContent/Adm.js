@@ -172,15 +172,6 @@ function Adm(props) {
             />
           </div>
 
-          {/* <div className="form-in">
-              <label htmlFor="adresa2">Adresa 2</label>
-              <input
-                type="text"
-                name="ad2"
-                id="ad2"
-                defaultValue={dateCont.address2}
-              />
-            </div> */}
         </div>
 
         <div className="form-administrate">
@@ -206,7 +197,6 @@ function Adm(props) {
               name="regiune"
               id="regiune"
               defaultValue={formImput.region}
-              required
               onChange={(e) => {
                 const region = e.target.value;
                 setFormInput({ ...formImput, ...{ region } });
@@ -258,34 +248,9 @@ function Adm(props) {
             />
           </div>
 
-          {/* <div className="form-in">
-              <label htmlFor="parolaVeche" required>
-                Parola veche
-              </label>
-              <input
-                type="password"
-                name="parolaVeche"
-                id="parolaVeche"
-                placeholder="parola veche"
-              />
-            </div>
-
-            <div className="form-in">
-              <label htmlFor="parolaNoua">Parola noua</label>
-              <input
-                type="password"
-                name="parolaNoua"
-                id="parolaNoua"
-                placeholder="parola noua"
-              />
-            </div> */}
 
           <div className="change">
             <input type="submit" defaultValue="Save" />
-            {/* <button onClick={(e) => {
-                                e.preventDefault();
-                                test();
-                            }}>test</button> */}
           </div>
         </div>
       </form>

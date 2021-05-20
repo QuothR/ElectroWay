@@ -24,7 +24,7 @@ function AdaugarePlug(props) {
         const dataBackend = {
             status: 0,
             level: formImput.level ? parseInt(formImput.level, 10) : 1,
-            connectorType: formImput.connectorType ? formImput.connectorType : "Type B", //se pune valoarea default
+            connectorType: formImput.connectorType ? formImput.connectorType : "Type 1", //se pune valoarea default
             priceKw: formImput.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw
         }
@@ -115,8 +115,11 @@ function AdaugarePlug(props) {
 
                                 }}
                             >
-                                <option value="Type B">Type B</option>
-                                <option value="Type C">Type C</option>
+                                <option value="Type 1">Type 1</option>
+                                <option value="Type 2">Type 2</option>
+                                <option value="Type CSS">CSS</option>
+                                <option value="Type CHAdeMO">CHAdeMO</option>
+                                
                             </select>
                             <label>Pret (RON/kWh)</label>
                             <input type="text" placeholder="introdu pret"
