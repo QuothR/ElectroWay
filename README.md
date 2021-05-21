@@ -13,6 +13,7 @@ https://nodejs.org/en/ v 14.16.0
 npx create-react-app “nume proiect (avand doar litere mici)” 
 4) Pentru a rula proiectul, din terminal rulati comanda : npm start
 
+!!!Aveti grija sa fiti in folderul creat cand faceti instalarile de mai jos:
 
 Instalare Router pentru management ul paginilor:      
 - npm install react-router-dom
