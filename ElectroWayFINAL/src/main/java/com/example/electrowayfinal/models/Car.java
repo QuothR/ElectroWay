@@ -3,6 +3,8 @@ package com.example.electrowayfinal.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -42,10 +44,6 @@ public class Car {
     @Basic
     @Column(name = "charging_capacity", nullable = false, columnDefinition = "double")
     private double chargingCapacity;
-
-    @Basic
-    @Column(name = "plug_type", nullable = false, columnDefinition = "varchar(255)")
-    private String plugType;
 
     @Basic
     @Column(name = "vehicle_max_speed", nullable = false, columnDefinition = "bigint")

@@ -19,7 +19,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Override
     Car getOne(Long carId);
 
-    void deleteById(long id);
+    void deleteById(long carId);
 
     @Override
     void delete(Car entity);

@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.utils;
 
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
+import com.example.electrowayfinal.exceptions.WrongPrivilegesException;
 import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.service.UserService;
@@ -100,6 +101,16 @@ public class JwtUtil {
             throw new UserNotFoundException(username);
         }
         return optionalUser.get();
+    }
+
+    public static User checkUserIsDriver(UserService userService, String secret, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        User user = getUserFromToken(userService, secret, httpServletRequest);
+
+        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            throw new WrongPrivilegesException("Can't access car without being a car owner!");
+        }
+        return user;
     }
 
 }

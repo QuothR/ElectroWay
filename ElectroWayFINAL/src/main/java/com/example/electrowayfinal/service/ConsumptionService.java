@@ -2,10 +2,8 @@ package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.exceptions.WrongAccessException;
-import com.example.electrowayfinal.exceptions.WrongPrivilegesException;
 import com.example.electrowayfinal.models.Car;
 import com.example.electrowayfinal.models.Consumption;
-import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.ConsumptionRepository;
 import com.example.electrowayfinal.utils.JwtUtil;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ConsumptionService {
@@ -38,7 +35,7 @@ public class ConsumptionService {
     }
 
     public void createConsumption(Consumption consumption, Long carId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        User user = checkUser(httpServletRequest, httpServletResponse);
+        User user = JwtUtil.checkUserIsDriver(userService, secret, httpServletRequest, httpServletResponse);
 
         Car car = carService.getCar(carId, httpServletRequest, httpServletResponse);
 
@@ -52,7 +49,7 @@ public class ConsumptionService {
     }
 
     public Consumption getConsumption(Long consumptionId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        User user = checkUser(httpServletRequest, httpServletResponse);
+        User user = JwtUtil.checkUserIsDriver(userService, secret, httpServletRequest, httpServletResponse);
 
         Consumption consumption = consumptionRepository.getOne(consumptionId);
 
@@ -64,7 +61,7 @@ public class ConsumptionService {
     }
 
     public List<Consumption> getCarConsumptions(Long carId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        User user = checkUser(httpServletRequest, httpServletResponse);
+        User user = JwtUtil.checkUserIsDriver(userService, secret, httpServletRequest, httpServletResponse);
 
         Car car = carService.getCar(carId, httpServletRequest, httpServletResponse);
 
@@ -88,15 +85,5 @@ public class ConsumptionService {
     public void deleteConsumption(Long consumptionId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         getConsumption(consumptionId, httpServletRequest, httpServletResponse);
         consumptionRepository.deleteById(consumptionId);
-    }
-
-    private User checkUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
-        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
-
-        if (!user.getRoles().stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_DRIVER")) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            throw new WrongPrivilegesException("Can't access car without being a car owner!");
-        }
-        return user;
     }
 }

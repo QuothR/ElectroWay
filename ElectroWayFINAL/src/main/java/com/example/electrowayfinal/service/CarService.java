@@ -80,7 +80,6 @@ public class CarService {
         carToUpdate.setYear(car.getYear());
         carToUpdate.setBatteryCapacity(car.getBatteryCapacity());
         carToUpdate.setChargingCapacity(car.getChargingCapacity());
-        carToUpdate.setPlugType(car.getPlugType());
         carToUpdate.setVehicleMaxSpeed(car.getVehicleMaxSpeed());
         carToUpdate.setAuxiliaryKwh(car.getAuxiliaryKwh());
 
