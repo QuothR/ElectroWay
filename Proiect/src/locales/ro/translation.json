@@ -1,0 +1,56 @@
+{
+  "mainContent": {
+  "signin" : "Conectare",
+  "title": "Scopul nostru e sa va oferim energie",
+  "tip1" : "Incarcare rapida",
+  "tip2": "Usor de platit",
+  "tip3": "Salveaza-ti calatoriile",
+  "tip4": "Navigare",
+  "text1": "Vi s-a intamplat vreodata sa ramaneti fara baterie si sa nu stiti unde sa vaincarcati masina electrica? Ati avut vreodata probleme cu nivelul bateriei masinii dumneavoastra in calatoriile lungi?",
+  "text2": "Suntem aici sa te ajutam! Website-ul nostru va va arata o harta cu statiile de incarcare, si aplicatia noastra va calcula cea mai mica distanta pana la destinatia dumneavoastra, tinand cont de statiile de incarcare de pe drum.",
+  "text3": "Bucurati-va de experienta electrica! Aflati cat de eficient este sa calatoriti cu noi! O modalitate optima de a calatori fara sa te gandesti ca ai putea ramane fara baterie."
+  },
+
+  "adm" : {
+    "adm": "Administreaza-ti contul",
+    "username": "Username",
+        "email" : "Email",   
+        "nume" : "Nume",  
+        "prenume" : "Prenume",  
+        "telefon" : "Numar de telefon",  
+        "ad1" : "Adresa 1",  
+        "ad2" : "Adresa 2",  
+        "tara" : "Tara",  
+        "oras" : "Oras",  
+        "regiune" : "Regiune",  
+        "cod" : "Cod postal",  
+        "veche" : "Parola veche",  
+        "noua" : "Parola noua"   
+},
+
+"admMasini" : {
+  "masInreg" : "Masini inregistrate",
+  "add" : "Adauga masina",
+  "brand" : "Producator",
+  "model" : "Model",
+  "consum" : "Consum", 
+  "distMax" : "Distanta maxima",
+  "save" :  "Salveaza"
+},
+
+"statistici" : {
+  "sapt" : "Saptamanal",
+  "lunar" : "Lunar",
+  "anual" : "Anual"
+},
+
+"historyContent" : {
+  "istoric" : "Istoric plati"
+},
+
+"formTripPlanner" : {
+  "pctPornire" : "Punct de pornire",
+  "destinatie" : "Destinatie",
+  "genereaza" : "Genereaza"
+}
+}
