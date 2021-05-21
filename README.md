@@ -64,3 +64,8 @@ Pentru v.1.6 :
 - am setat la axios ca default host, hostul de la server, de acum pentru orice request axios trebuie sa puneti doar path-ul de dupa host 
 - de ex: axios.post("http://localhost:443/login", data ...) s a transformat in axios.post("/login", data ...) 
 
+---------------------
+!!!!!: trebuie sa aveti versiunile astea de bootstrap in package.json
+"bootstrap": "^4.6.0",
+"react-bootstrap": "^1.5.2",
+
