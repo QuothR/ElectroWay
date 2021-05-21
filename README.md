@@ -66,6 +66,6 @@ Pentru v.1.6 :
 
 ---------------------
 !!!!!: trebuie sa aveti versiunile astea de bootstrap in package.json
-"bootstrap": "^4.6.0",
-"react-bootstrap": "^1.5.2",
+*"bootstrap": "^4.6.0",
+*"react-bootstrap": "^1.5.2",
 
