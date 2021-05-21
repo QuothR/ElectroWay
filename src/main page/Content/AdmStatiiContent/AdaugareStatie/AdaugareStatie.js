@@ -55,7 +55,7 @@ function AdaugareStatie(props) {
                 setTimeout(() => {
                     history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
                     window.location.reload()
-                }, 100)
+                }, 200)
                 
                 
                 

@@ -52,7 +52,7 @@ function AdaugareChPoint(props) {
             setTimeout(() => {
                 history.push(`/home/Adm-station/add/point/plug/${plugObj.iValue}`);
                 window.location.reload()
-            },50)
+            },200)
  
         }
         else {

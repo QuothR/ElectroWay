@@ -48,7 +48,7 @@ function AdaugarePlug(props) {
             setTimeout(() => {
                 history.push(`/home/Adm-station/add/point/plug/${plugObj.iValue}`);
                 window.location.reload()
-            },50)
+            },200)
             
         }
         else if (chPointObj.iValue < chPointObj.nValue) {
@@ -57,13 +57,13 @@ function AdaugarePlug(props) {
             setTimeout(() => {
                 history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
                 window.location.reload()
-            },50)
+            },200)
            
         }
         else {
             setTimeout(() => {
                 history.push("/home/Adm-station");
-            },50)
+            },200)
             
         }
     }

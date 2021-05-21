@@ -7,7 +7,6 @@ import HomeContent from './Content/HomeContent/HomeContent'
 import Footer from './Similar components/Footer'
 import HistoryContent from './Content/HistoryContent/HistoryContent'
 import AdmMasini from './Content/AdmMasiniContent/AdmMasini'
-import Reviews from './Content/ReviewsContent/Reviews'
 import AdmStContent from './Content/AdmStatiiContent/AdmStContent'
 import TripPlanner from './Content/Trip Planner/TripPlanner'
 import Statistici from './Content/StatisticiContent/Statistici'
@@ -19,6 +18,9 @@ import AdaugareMasina from './Content/AdmMasiniContent/AdaugareMasina'
 import TabelPlugs from './Content/AdmStatiiContent/EditareStatie/TabelPlugs'
 import EditarePlug from './Content/AdmStatiiContent/EditareStatie/EditarePlug'
 import EditareAddPlug from './Content/AdmStatiiContent/EditareStatie/AdaugaPlug'
+import Reviews from './Content/ReviewsContent/Reviews'
+import AdaugareReview from './Content/ReviewsContent/AdaugareReview'
+import StationReview from './Content/ReviewsContent/StationReview'
 
 function MainPage() {
 
@@ -49,6 +51,9 @@ function MainPage() {
                             <Route path="/home/Adm-station/edit/point/plug" exact component={EditarePlug} />
                             <Route path="/home/Adm-station/edit/point/addPlug" exact component={EditareAddPlug} />
                             <Route path="/home/Adm-cars/addCar" exact component={AdaugareMasina} />
+                            <Route path="/home/Reviews" exact component={Reviews} />
+                            <Route path="/home/Reviews/add" exact component={AdaugareReview} />
+                            <Route path="/home/Reviews/station" exact component={StationReview} />
                         </Switch>
                     </div>
                 </Router>

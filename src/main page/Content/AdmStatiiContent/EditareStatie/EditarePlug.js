@@ -14,6 +14,7 @@ function EditarePlug(props) {
     const pointId = sessionStorage.getItem('pointId');
     const [formImput, setFormInput] = useState({});
     const history = useHistory();
+    console.log(plugAddr.connectorType)
 
     function handleModify() {
 
@@ -71,8 +72,8 @@ function EditarePlug(props) {
                             >
                                 <option value="Type 1">Type 1</option>
                                 <option value="Type 2">Type 2</option>
-                                <option value="CSS">Type CSS</option>
-                                <option value="CHAdeMO">Type CHAdeMO</option>
+                                <option value="Type CSS">Type CSS</option>
+                                <option value="Type CHAdeMO">Type CHAdeMO</option>
                             </select>
                             <label>Pret (RON/kWh)</label>
                             <input type="text" placeholder="introdu pret" defaultValue={plugAddr.priceKw} required

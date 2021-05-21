@@ -25,7 +25,7 @@ function Tabel(props) {
 
         setTimeout(() => {
             window.location.reload();
-        }, 10)
+        }, 50)
 
     }
     const { user } = props;

@@ -35,7 +35,7 @@ function AdaugareMasina(props) {
            
             setTimeout(() => {
                 history.push("/home/Adm-cars")
-            }, 100)
+            }, 200)
     }
 
     return (

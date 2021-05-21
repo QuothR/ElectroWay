@@ -41,7 +41,7 @@ function AdaugaPlug(props) {
                 console.log(res.data);
             })
         
-        setTimeout(()=>{history.push("/home/Adm-station/edit/point")},100)
+        setTimeout(()=>{history.push("/home/Adm-station/edit/point")},200)
     }
 
 

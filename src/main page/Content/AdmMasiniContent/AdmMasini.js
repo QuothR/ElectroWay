@@ -10,32 +10,12 @@ import Tabel from './Tabel'
 import { connect } from 'react-redux'
 function AdmMasini() {
 
-//  function altaFunctie(){
-//     handleGet();
-//     redirectionare();
-//  }
-//     function handleGet() {
-//         axios.get("http://localhost:443", {
-//             headers: {
-//                 Authorization: `Basic ${myToken}`
-//             }
-//         })
-//             .then((res) => {
-//                 console.log('sunt prost');
-//                  console.log(res.data);
-//                 sessionStorage.setItem('userId',res.data.id);
-//             })
-//     }
 
 
 
 
   const history = useHistory();
-      const redirectionare = () => {
-        history.push("/home/Adm-cars/AddCar");
-        
-        //window.location.reload();
-    }
+
     return (
         <div className="AdmMasini">
             <div className="AdmBox">
@@ -51,9 +31,7 @@ function AdmMasini() {
           </div>
           <button className="btn-class"  onClick={(e) => {
           e.preventDefault();
-          redirectionare();
-          //  altaFunctie();
-            
+          history.push("/home/Adm-cars/AddCar");
           }}>Adaugare masina</button>
         </div>
                 </div>
@@ -61,9 +39,5 @@ function AdmMasini() {
         </div>
     );
 }
-// const mapStateToProps = (state) => {
-//     return {
-//         user: state,
-//     };
-// };
+
 export default AdmMasini;

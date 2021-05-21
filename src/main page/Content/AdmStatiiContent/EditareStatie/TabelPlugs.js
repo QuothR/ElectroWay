@@ -39,7 +39,7 @@ function TabelPlugs(props) {
         })
         setTimeout(() => {
             window.location.reload();
-        }, 10)
+        }, 20)
     }
 
     function handleAddPlug() {

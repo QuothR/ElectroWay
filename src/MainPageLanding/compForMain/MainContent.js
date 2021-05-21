@@ -153,7 +153,9 @@ function MainContent() {
                         <img className="combine-image-right-third" src={Third} alt="third" />
                     </div>
                 </section>
-                <section>
+
+                {/* dc e asta aici ca si asa nu apare pe pagina?!?! */}
+                {/* <section>
                     <div className="map-section">
                         <div className="map-container">
 
@@ -161,7 +163,7 @@ function MainContent() {
                             <Mapp />
                         </div>
                     </div>
-                </section>
+                </section> */}
 
                 <footer className="footer-class">
                     <div className="footer-div">

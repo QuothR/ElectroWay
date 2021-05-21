@@ -12,11 +12,11 @@ function TripPlanner() {
             <div className="TripContainer">
                     <Mapp />
 
-                <div className="TripForm">
+                {/* <div className="TripForm">
 
                     <Form />
 
-                </div>
+                </div> */}
 
 
 
