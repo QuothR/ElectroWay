@@ -51,5 +51,5 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10sp"
         android:layout_marginEnd="10sp"
-        android:text="@string/remove_plug" />
+        android:text="@string/remove_charging_point" />
 </LinearLayout>

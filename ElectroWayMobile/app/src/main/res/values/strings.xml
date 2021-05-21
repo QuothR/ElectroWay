@@ -63,4 +63,8 @@
     <string name="charging_speed_kw">Charging Speed (kW)</string>
     <string name="connector_type">Connector type</string>
     <string name="current_charge_in_kw">Current charge in kW</string>
+    <string name="close">Close</string>
+    <string name="remove_charging_point">Remove Charging Point</string>
+    <string name="remove_charging_plug">Remove charging plug</string>
+    <string name="update_charging_plug">Update charging plug</string>
 </resources>

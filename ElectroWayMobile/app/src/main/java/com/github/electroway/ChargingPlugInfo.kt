@@ -1,6 +1,7 @@
 package com.github.electroway
 
 import org.json.JSONObject
+import java.io.Serializable
 
 class ChargingPlugInfo(
     val id: Int?,
@@ -9,7 +10,7 @@ class ChargingPlugInfo(
     val connectorType: String,
     val priceKw: Double,
     val chargingSpeedKw: Double
-) {
+) : Serializable {
     fun getJson(): JSONObject {
         return JSONObject()
             .put("id", id)

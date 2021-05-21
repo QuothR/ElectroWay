@@ -1,7 +1,11 @@
 package com.github.electroway.ui.start
 
+import android.accounts.Account
+import android.accounts.AccountManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +16,13 @@ import com.github.electroway.Application
 import com.github.electroway.LoginInfo
 import com.github.electroway.R
 import com.github.electroway.Session
+import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.IOException
 
 class SignInFragment : Fragment() {
     lateinit var session: Session
@@ -29,8 +40,8 @@ class SignInFragment : Fragment() {
 
         session = (requireActivity().application as Application).session
 
-        val emailEditable = view.findViewById<EditText>(R.id.sign_in_email_edit_text).text
-        val passwordEditable = view.findViewById<EditText>(R.id.sign_in_password_edit_text).text
+        val emailEditable = view.findViewById<TextInputEditText>(R.id.sign_in_email_edit_text)
+        val passwordEditable = view.findViewById<TextInputEditText>(R.id.sign_in_password_edit_text)
 
         view.findViewById<TextView>(R.id.sign_in_forgot_password_text).setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
@@ -42,7 +53,7 @@ class SignInFragment : Fragment() {
 
         view.findViewById<Button>(R.id.sign_in_button).setOnClickListener {
             login(
-                LoginInfo(emailEditable.toString(), passwordEditable.toString())
+                LoginInfo(emailEditable.text.toString(), passwordEditable.text.toString())
             )
         }
 
@@ -64,7 +75,7 @@ class SignInFragment : Fragment() {
                     val editor = preferences.edit()
                     editor.putString("email", info.email)
                     editor.putString("password", info.password)
-                    editor.commit()
+                    editor.apply()
                 }
                 findNavController().navigate(R.id.action_signInFragment_to_mapFragment)
             } else {

@@ -136,6 +136,9 @@
             app:argType="integer" />
         <argument android:name="chargingPoint"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_chargingPointFragment_to_chargingPlugFragment"
+            app:destination="@id/chargingPlugFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewsFragment"
@@ -188,5 +191,22 @@
         <argument
             android:name="car"
             app:argType="com.github.electroway.AddCarInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/chargingPlugFragment"
+        android:name="com.github.electroway.ui.main.ChargingPlugFragment"
+        android:label="ChargingPlugFragment" >
+        <argument
+            android:name="plug"
+            app:argType="com.github.electroway.ChargingPlugInfo" />
+        <action
+            android:id="@+id/action_chargingPlugFragment_to_chargingPointFragment"
+            app:destination="@id/chargingPointFragment" />
+        <argument
+            android:name="station"
+            app:argType="integer" />
+        <argument
+            android:name="chargingPoint"
+            app:argType="integer" />
     </fragment>
 </navigation>

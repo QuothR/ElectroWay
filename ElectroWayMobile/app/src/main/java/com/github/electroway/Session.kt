@@ -465,7 +465,12 @@ class Session(val handler: Handler) {
         })
     }
 
-    fun removePlug(station: Int, chargingPoint: Int, plug: Int, callback: (Boolean) -> Unit) {
+    fun removeChargingPlug(
+        station: Int,
+        chargingPoint: Int,
+        plug: Int,
+        callback: (Boolean) -> Unit
+    ) {
         refreshTokenIfNeeded()
         val request = Request.Builder()
             .url(
@@ -475,8 +480,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("points")
                     .addPathSegment(chargingPoint.toString())
                     .addPathSegment("plugs")
-                    .addPathSegment(plug.toString())
-                    .addPathSegment(station.toString()).build()
+                    .addPathSegment(plug.toString()).build()
             )
             .header("Authorization", "Bearer " + token!!)
             .delete()
@@ -495,6 +499,40 @@ class Session(val handler: Handler) {
                     handler.post {
                         callback(false)
                     }
+                }
+            }
+        })
+    }
+
+    fun updateChargingPlug(
+        station: Int,
+        chargingPoint: Int,
+        chargingPlug: ChargingPlugInfo,
+        callback: (Boolean) -> Unit
+    ) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString())
+                    .addPathSegment("points")
+                    .addPathSegment(chargingPoint.toString())
+                    .addPathSegment("plugs")
+                    .addPathSegment(chargingPlug.id.toString()).build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .put(chargingPlug.getJson().toString().toRequestBody(json))
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                handler.post {
+                    callback(success)
                 }
             }
         })
@@ -682,10 +720,12 @@ class Session(val handler: Handler) {
 
     fun forgotPassword(email: String, callback: (Boolean) -> Unit) {
         val request = Request.Builder()
-            .url(buildBasePath()
-                .addPathSegment("forgot_password")
-                .addQueryParameter("email", email)
-                .build())
+            .url(
+                buildBasePath()
+                    .addPathSegment("forgot_password")
+                    .addQueryParameter("email", email)
+                    .build()
+            )
             .post("".toRequestBody())
             .build()
         client.newCall(request).enqueue(object : Callback {

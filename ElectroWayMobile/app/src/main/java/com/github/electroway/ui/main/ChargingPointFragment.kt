@@ -31,7 +31,7 @@ class ChargingPointFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dialog = BottomSheetDialog(requireActivity())
-        dialog.setContentView(inflater.inflate(R.layout.charging_point_dialog, container, false))
+        dialog.setContentView(inflater.inflate(R.layout.charging_plug_dialog, container, false))
         return inflater.inflate(R.layout.fragment_charging_point, container, false)
     }
 
@@ -43,17 +43,25 @@ class ChargingPointFragment : Fragment() {
         view.findViewById<Button>(R.id.removeChargingPointButton).setOnClickListener {
             session.removeChargingPoint(args.station, args.chargingPoint) {
                 if (it) {
-                    val action = ChargingPointFragmentDirections.actionChargingPointFragmentToStationFragment(args.station)
+                    val action =
+                        ChargingPointFragmentDirections.actionChargingPointFragmentToStationFragment(
+                            args.station
+                        )
                     findNavController().navigate(action)
                 } else {
-                    Toast.makeText(requireContext(), "Failed to remove charging point", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to remove charging point",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
         }
 
         view.findViewById<ImageButton>(R.id.chargingPointBackButton).setOnClickListener {
-            val action = ChargingPointFragmentDirections.actionChargingPointFragmentToStationFragment(args.station)
+            val action =
+                ChargingPointFragmentDirections.actionChargingPointFragmentToStationFragment(args.station)
             findNavController().navigate(action)
         }
 
@@ -65,14 +73,16 @@ class ChargingPointFragment : Fragment() {
             val priceKw = dialog.findViewById<TextView>(R.id.priceKwText)!!.text
             val chargingSpeedKw = dialog.findViewById<TextView>(R.id.chargingSpeedKwText)!!.text
             dialog.findViewById<Button>(R.id.confirmPlugButton)!!.setOnClickListener {
-                session.addChargingPlug(args.station, args.chargingPoint, ChargingPlugInfo(
-                    null,
-                    status.toString().toInt(),
-                    level.toString().toInt(),
-                    connectorType.toString(),
-                    priceKw.toString().toDouble(),
-                    chargingSpeedKw.toString().toDouble()
-                )) {
+                session.addChargingPlug(
+                    args.station, args.chargingPoint, ChargingPlugInfo(
+                        null,
+                        status.toString().toInt(),
+                        level.toString().toInt(),
+                        connectorType.toString(),
+                        priceKw.toString().toDouble(),
+                        chargingSpeedKw.toString().toDouble()
+                    )
+                ) {
                     addChargingPoint(it!!)
                     adapter.notifyDataSetChanged()
                 }
@@ -80,7 +90,15 @@ class ChargingPointFragment : Fragment() {
         }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.plugRecyclerView)
-        adapter = ChargingPlugListAdapter(mutableListOf())
+        adapter = ChargingPlugListAdapter(mutableListOf()) {
+            val action =
+                ChargingPointFragmentDirections.actionChargingPointFragmentToChargingPlugFragment(
+                    it,
+                    args.station,
+                    args.chargingPoint
+                )
+            findNavController().navigate(action)
+        }
         val layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
@@ -99,9 +117,10 @@ class ChargingPointFragment : Fragment() {
     private fun addChargingPoint(obj: JSONObject) {
         val id = obj.getInt("id")
         val status = obj.getInt("status")
+        val level = obj.getInt("level")
         val connectorType = obj.getString("connectorType")
         val priceKw = obj.getDouble("priceKw")
         val chargingSpeedKw = obj.getDouble("chargingSpeedKw")
-        adapter.add(id, "$status, $connectorType, $priceKw, $chargingSpeedKw")
+        adapter.add(ChargingPlugInfo(id, status, level, connectorType, priceKw, chargingSpeedKw))
     }
 }

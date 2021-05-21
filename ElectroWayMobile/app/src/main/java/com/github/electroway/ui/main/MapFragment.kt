@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -33,10 +34,6 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.json.JSONObject
-import java.io.InputStreamReader
-import java.lang.StringBuilder
-import java.net.URL
-import java.util.concurrent.Executors
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private var mapFragment: SupportMapFragment? = null
@@ -52,6 +49,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val args: MapFragmentArgs by navArgs()
     private lateinit var locationDialog: BottomSheetDialog
     private lateinit var routeDialog: BottomSheetDialog
+    private lateinit var waypointsDialog: BottomSheetDialog
     private val cars = mutableMapOf<String, Int>()
 
     override fun onCreateView(
@@ -71,6 +69,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         routeDialog.setContentView(
             inflater.inflate(
                 R.layout.route_configuration_dialog,
+                container,
+                false
+            )
+        )
+        waypointsDialog = BottomSheetDialog(requireActivity())
+        waypointsDialog.setContentView(
+            inflater.inflate(
+                R.layout.waypoints_dialog,
                 container,
                 false
             )
@@ -237,6 +243,47 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
             val geocoderAddress = GeocoderAddress(requireContext())
             val session = (requireActivity().application as Application).session
+            val stations = mutableMapOf<Int, String>()
+            session.getAllStations {
+                if (it != null) {
+                    markerBitmap =
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_baseline_ev_station
+                        )!!.run {
+                            setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+                            val bitmap =
+                                Bitmap.createBitmap(
+                                    intrinsicWidth,
+                                    intrinsicHeight,
+                                    Bitmap.Config.ARGB_8888
+                                )
+                            draw(Canvas(bitmap))
+                            BitmapDescriptorFactory.fromBitmap(bitmap)
+                        }
+                    val markersPos = mutableMapOf<Marker, Int>()
+                    for (i in 0 until it.length()) {
+                        val obj = it.getJSONObject(i)
+                        val address = obj.getString("address")
+                        val latitude = obj.getDouble("latitude")
+                        val longitude = obj.getDouble("longitude")
+                        val id = obj.getInt("id")
+                        stations.put(id, address)
+                        markersPos[googleMap.addMarker(
+                            MarkerOptions().position(LatLng(latitude, longitude)).title(address)
+                                .icon(markerBitmap)
+                        )] = id
+                    }
+
+                    googleMap.setOnInfoWindowClickListener {
+                        if (markersPos[it] != null) {
+                            val action =
+                                MapFragmentDirections.actionMapFragmentToReviewsFragment(markersPos[it]!!)
+                            findNavController().navigate(action)
+                        }
+                    }
+                }
+            }
             googleMap.setOnMapLongClickListener { latLng ->
                 locationDialog.show()
                 locationDialog.findViewById<Button>(R.id.bookmarkButton)!!.setOnClickListener {
@@ -265,14 +312,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                     val destination = latLng
                                     session.findRoute(
                                         FindRouteInfo(
-                                            arrayOf(origin, destination),
+                                            arrayOf(
+                                                origin,
+                                                destination
+                                                /*LatLng(44.18508, 28.51904),
+                                                LatLng(46.21379, 24.7817)*/
+                                            ),
                                             cars[routeCarSpinner!!.selectedItem.toString()]!!,
                                             currentChargeInkWText!!.text.toString().toDouble()
                                         )
                                     ) {
                                         Log.e("a", it.toString())
                                         if (it != null) {
-                                            drawRoute(googleMap, it)
+                                            drawRoute(googleMap, stations, it)
                                         }
                                     }
                                 }
@@ -280,70 +332,34 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         }
                 }
             }
-            session.getAllStations {
-                if (it != null) {
-                    markerBitmap =
-                        ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.ic_baseline_ev_station
-                        )!!.run {
-                            setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-                            val bitmap =
-                                Bitmap.createBitmap(
-                                    intrinsicWidth,
-                                    intrinsicHeight,
-                                    Bitmap.Config.ARGB_8888
-                                )
-                            draw(Canvas(bitmap))
-                            BitmapDescriptorFactory.fromBitmap(bitmap)
-                        }
-                    val markersPos = mutableMapOf<Marker, Int>()
-                    for (i in 0 until it.length()) {
-                        val obj = it.getJSONObject(i)
-                        val address = obj.getString("address")
-                        val latitude = obj.getDouble("latitude")
-                        val longitude = obj.getDouble("longitude")
-                        val id = obj.getInt("id")
-                        markersPos[googleMap.addMarker(
-                            MarkerOptions().position(LatLng(latitude, longitude)).title(address)
-                                .icon(markerBitmap)
-                        )] = id
-                    }
-
-                    googleMap.setOnInfoWindowClickListener {
-                        if (markersPos[it] != null) {
-                            val action =
-                                MapFragmentDirections.actionMapFragmentToReviewsFragment(markersPos[it]!!)
-                            findNavController().navigate(action)
-                        }
-                    }
-                }
-            }
         }
     }
 
-    private fun drawRoute(googleMap: GoogleMap, obj: JSONObject) {
-        val session = (requireActivity().application as Application).session
+    private fun drawRoute(googleMap: GoogleMap, stations: MutableMap<Int, String>, obj: JSONObject) {
         val legs = obj.getJSONArray("legs");
-        session.getAllStations {
-            val stations = mutableMapOf<Int, LatLng>()
-            for (i in 0 until it!!.length()) {
-                val obj = it.getJSONObject(i)
-                stations.put(
-                    obj.getInt("id"),
-                    LatLng(obj.getDouble("latitude"), obj.getDouble("longitude"))
-                )
+        val polylineOptions = PolylineOptions().color(0xff726c91.toInt()).clickable(true)
+        val adapter = WaypointListAdapter(mutableListOf())
+        for (i in 0 until legs.length()) {
+            val leg = legs.getJSONObject(i)
+            val stationId = leg.optInt("stationId")
+            if (stationId != 0) {
+                val price = leg.getDouble("priceKw")
+                val charge = leg.getDouble("currentChargeInkWhAfterRecharge")
+                adapter.add("${stations[stationId]!!}, price (kW): $price, charge: $charge")
             }
-            val polylineOptions = PolylineOptions().color(0xff726c91.toInt())
-            for (i in 0 until legs.length()) {
-                val leg = legs.getJSONObject(i)
-                val points = leg.getJSONArray("points")
-                for (j in 0 until points.length()) {
-                    val point = points.getJSONObject(j)
-                    polylineOptions.add(LatLng(point.getDouble("lat"), point.getDouble("lon")))
-                }
+            val points = leg.getJSONArray("points")
+            for (j in 0 until points.length()) {
+                val point = points.getJSONObject(j)
+                polylineOptions.add(LatLng(point.getDouble("lat"), point.getDouble("lon")))
             }
-            googleMap.addPolyline(polylineOptions)
+        }
+        googleMap.addPolyline(polylineOptions)
+        googleMap.setOnPolylineClickListener {
+            val waypointsRecyclerView =
+                waypointsDialog.findViewById<RecyclerView>(R.id.waypointsRecyclerView)!!
+            waypointsRecyclerView.adapter = adapter
+            adapter.notifyDataSetChanged()
+            waypointsDialog.show()
         }
     }
 }

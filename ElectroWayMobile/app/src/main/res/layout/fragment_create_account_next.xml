@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10sp"
+    android:orientation="vertical"
     tools:context=".ui.start.CreateAccountFragment">
 
 
@@ -18,150 +20,150 @@
         app:srcCompat="@drawable/start"
         tools:ignore="ContentDescription" />
 
-    <EditText
-        android:id="@+id/create_account_first_name_edit_text"
-        android:layout_width="386dp"
-        android:layout_height="43dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/first_name"
-        android:inputType="textPersonName"
-        android:textColor="@color/purple_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/first_name">
 
-    <EditText
-        android:id="@+id/create_account_last_name_edit_text"
-        android:layout_width="385dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/last_name"
-        android:inputType="textPersonName"
-        android:textColor="@color/purple_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_first_name_edit_text"
-        app:layout_constraintVertical_bias="0" />
+        <EditText
+            android:id="@+id/create_account_first_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/purple_dark"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/create_account_phone_number_edit_text"
-        android:layout_width="385dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/phone_number"
-        android:inputType="phone"
-        android:textColor="@color/purple_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_last_name_edit_text"
-        app:layout_constraintVertical_bias="0.0" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/last_name">
 
-    <EditText
-        android:id="@+id/create_account_country_edit_text"
-        android:layout_width="385dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/country"
-        android:inputType="text"
-        android:textColor="@color/purple_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_phone_number_edit_text"
-        app:layout_constraintVertical_bias="0.0" />
+        <EditText
+            android:id="@+id/create_account_last_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/purple_dark"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/create_account_city_edit_text"
-        android:layout_width="385dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/city"
-        android:inputType="text"
-        android:textColor="@color/purple_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_country_edit_text"
-        app:layout_constraintVertical_bias="0.0" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/phone_number">
 
-    <EditText
-        android:id="@+id/create_account_address_edit_text"
-        android:layout_width="385dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/address"
-        android:inputType="text"
-        android:textColor="@color/purple_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_city_edit_text"
-        app:layout_constraintVertical_bias="0.0" />
+        <EditText
+            android:id="@+id/create_account_phone_number_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="phone"
+            android:textColor="@color/purple_dark"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/create_account_zipcode_edit_text"
-        android:layout_width="385dp"
-        android:layout_height="46dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/zip_code"
-        android:inputType="text"
-        android:textColor="@color/purple_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_address_edit_text"
-        app:layout_constraintVertical_bias="0.126" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/country">
+
+        <EditText
+            android:id="@+id/create_account_country_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@color/purple_dark"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/city">
+
+        <EditText
+            android:id="@+id/create_account_city_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/city"
+            android:inputType="text"
+            android:textColor="@color/purple_dark" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/address">
+
+        <EditText
+            android:id="@+id/create_account_address_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@color/purple_dark"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/zip_code">
+
+        <EditText
+            android:id="@+id/create_account_zipcode_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@color/purple_dark"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/create_account_next_sign_up_button"
-        android:layout_width="189dp"
-        android:layout_height="51dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#726c91"
         android:text="@string/sign_up"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        app:layout_constraintWidth_percent="0.5" />
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/create_account_next_cancel_button"
-        android:layout_width="177dp"
-        android:layout_height="53dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#726c91"
         android:text="@string/cancel"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977"
-        app:layout_constraintWidth_percent="0.5" />
+        android:textColor="@android:color/white" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
