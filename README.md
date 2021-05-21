@@ -68,7 +68,8 @@ Pentru ro-eng
 - npm install react-flags-select --save
 
 ---------------------
-!!!!!: trebuie sa aveti versiunile astea de bootstrap in package.json
+- !!!!!: trebuie sa aveti versiunile astea de bootstrap in package.json
 *"bootstrap": "^4.6.0",
-*"react-bootstrap": "^1.5.2",
+*"react-bootstrap": "^1.5.2"
+- !!!!!: daca primiti eroare, intrati in redux -> store.js si urmati "pasii"
 
