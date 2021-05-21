@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.admin .main {
+  background: linear-gradient(to right, #3f3446, #525289, #726c91);
+  flex: 1;
+  box-shadow: 0px 10px 15px 0px #000;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  height: 100%;
+}
+
+.admin .change-forms {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border-radius: 25px;
+}
+
+.admin .form-in input {
+  width: 92%;
+  height: 40%;
+  padding: 0 5px;
+  font-size: 18px;
+  border-radius: 13px;
+  background-color: #c6bfd2;
+}
+.admin .form-in input:focus {
+  outline: none;
+}
+/* .admin .column {
+  width: 50%;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  color: #f5deb3;
+} */
+.admin {
+  background: linear-gradient(to right, #8585ac, #c6bfd2) !important;
+  margin: auto;
+  border-radius: 25px;
+  /* height: 550px; */
+  height: 89%;
+  width: 70%;
+  top: 3%;
+  position: relative;
+}
+.admin h3 {
+  top: 3%;
+  margin-bottom: -10px;
+  text-align: center;
+  position: relative;
+  font-family: "Poppins", sans-serif !important;
+}
+.admin label {
+  color: black;
+  margin: 3%;
+  margin-bottom: 0px;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif !important;
+}
+.admin .form-administrate input[type="submit"] {
+  width: 45%;
+  height: fit-content;
+  margin-top: 10px;
+  font-size: 18px;
+  color: black;
+  background: linear-gradient(to right, #8585ac, #c6bfd2) !important;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.admin .form-administrate button {
+  height: fit-content;
+  margin-top: 10px;
+  font-size: 18px;
+  color: black;
+  background: linear-gradient(to right, #8585ac, #c6bfd2) !important;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.admin .form-administrate input[type="submit"]:hover {
+  box-shadow: 0px 0px 5px 5px #ffff;
+}
+.admin .form-administrate {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: auto;
+}
+.admin .form-in {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+.admin .change {
+  width: 100%;
+  margin: auto;
+}
+.admin .admin-first {
+  width: 100%;
+  height: 100%;
+  padding: 5% 2% 5% 2%;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px !important;
+}

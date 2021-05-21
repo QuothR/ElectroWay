@@ -1,0 +1,21 @@
+{
+    "id": 1,
+    "username": "Mircea99",
+    "password": "",
+    "firstName": "Mircea",
+    "lastName": "Dimov",
+    "phoneNumber": "0789749713",
+    "emailAddress": "mirceadimov19878@yahoo.com",
+    "address1": "Str. Indepensentei Nr. 5",
+    "address2": "",
+    "city": "Iasi",
+    "region": "Moldova",
+    "country": "Romania",
+    "zipcode": "7896654",
+    "passwordResetToken": "",
+    "enabled": true,
+    "authorities": true,
+    "accountNonExpired": true,
+    "accountNonLocked": true,
+    "credentialsNonExpired": true
+}
