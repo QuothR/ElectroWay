@@ -14,6 +14,7 @@ import com.example.electrowayfinal.repositories.CarRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -173,8 +174,10 @@ public class RoutingService {
             );
 
             // Masina s-a indepartat de ruta finala.
-            if(isTooFar(routeData, reachableStation)) {
-                movedAwayTimes--;
+            if(reachableStation != null) {
+                if(isTooFar(routeData, reachableStation)) {
+                    movedAwayTimes--;
+                }
             }
 
             // Nu putem ajunge, stuck.
@@ -264,12 +267,12 @@ public class RoutingService {
 
         // Adaugarea punctelor pentru ruta.
         lastLeg.setPoints(
-                /*jsonArrayToList(
+                jsonArrayToList(
                         TomTomService.getRoutePoints(
                                 auxiliarRouteVar.getRoute()
                         )
-                )*/
-                null
+                )
+                //null
         );
 
         // TravelPrice in u.m.
@@ -291,6 +294,7 @@ public class RoutingService {
 
     }
 
+    // De lucrat.
     public RouteData dataProcessing(RoutingRequestData routingRequestData) throws CarNotFoundException {
         // Construim routeData. Mai intai adaugam locatiile si "avoid".
         RouteData routeData = new RouteData(routingRequestData);
@@ -325,7 +329,7 @@ public class RoutingService {
     }
 
     /**
-     *
+     * Citirea datelor masinii din baza de date.
      * @param carId - Id-ul masinii oferit de client la request. Id dupa care se va face cautarea in baza de date.
      * @return Car - Masina citita din baza de date.
      */
@@ -351,10 +355,46 @@ public class RoutingService {
         }
     }
 
+    // De lucrat.
     public List<Consumption> getConstantSpeedConsumption(Long carId) {
         // Obtinerea constantSpeedConsumption din baza de date.
         List<Consumption> listConsumption = new ArrayList<>();
         listConsumption.add(new Consumption(50, 8.2));
         return listConsumption;
+    }
+
+    public ResponseEntity<Object> convertToShortAnswer(ResponseEntity<Object> currentResponse) {
+        if(currentResponse.getStatusCode() == HttpStatus.OK) {
+            RoutingFinalResponse finalResponse = (RoutingFinalResponse) currentResponse.getBody();
+
+            // Concatenam toate punctele din finalResponse.
+            List<Coords> allPoints = new ArrayList<>();
+
+            for(int i = 0; i < finalResponse.getLegs().size() - 1; i++) {
+                List<Coords> currentLegPoints = finalResponse.getLegs().get(i).getPoints();
+
+                // Scoatem ultimul element din lista i pentru ca el coincide cu primul element din lista i + 1.
+                currentLegPoints.remove(currentLegPoints.size() - 1);
+                allPoints.addAll(currentLegPoints);
+            }
+
+            // Adaugam si ultima lista.
+            allPoints.addAll(
+                    finalResponse.getLegs().get(finalResponse.getLegs().size() - 1).getPoints()
+            );
+
+            System.out.println(allPoints);
+            return ResponseEntity.status(200).body(
+                    Map.of(
+                            "totalTravelTime", finalResponse.getTotalTravelTime(),
+                            "totalTravelDistance", finalResponse.getTotalTravelDistance(),
+                            "totalTravelPrice", finalResponse.getTotalTravelPrice(),
+                            "points", allPoints
+                    )
+            );
+        }
+        else {
+            return currentResponse;
+        }
     }
 }
