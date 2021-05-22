@@ -132,7 +132,6 @@ public class ChargingPlugService {
         optionalChargingPlug.get().setChargingSpeedKw(chargingPlug.getChargingSpeedKw());
         optionalChargingPlug.get().setConnectorType(chargingPlug.getConnectorType());
         optionalChargingPlug.get().setPriceKw(chargingPlug.getPriceKw());
-        optionalChargingPlug.get().setLevel(chargingPlug.getLevel());
         optionalChargingPlug.get().setStatus(chargingPlug.getStatus());
 
         chargingPlugRepository.save(optionalChargingPlug.get());

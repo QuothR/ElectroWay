@@ -32,10 +32,6 @@ public class ChargingPlug {
     private byte status;
 
     @Basic
-    @Column(name = "level", nullable = false, columnDefinition = "bigint")
-    private long level;
-
-    @Basic
     @Column(name = "connector_type", nullable = false, columnDefinition = "varchar(255)")
     private String connectorType;
 

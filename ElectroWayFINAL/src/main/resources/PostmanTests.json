@@ -213,7 +213,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/33",
+							"raw": "https://localhost:443/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -221,7 +221,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"33"
+								"1"
 							]
 						}
 					},
@@ -669,7 +669,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/review/delete/1001/station/1",
+							"raw": "https://localhost:443/review/delete/2/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -678,7 +678,7 @@
 							"path": [
 								"review",
 								"delete",
-								"1001",
+								"2",
 								"station",
 								"1"
 							]
@@ -770,7 +770,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/1/points",
+							"raw": "https://localhost:443/station/1001/points",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -778,7 +778,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"1",
+								"1001",
 								"points"
 							]
 						}
@@ -839,7 +839,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\":11,\r\n    \"level\":1,\r\n    \"connectorType\":\"xd\",\r\n    \"priceKw\":12.2,\r\n    \"chargingSpeedKw\":12\r\n}",
+							"raw": "{\r\n    \"status\":11,\r\n    \"connectorType\":\"xd\",\r\n    \"priceKw\":12.2,\r\n    \"chargingSpeedKw\":12\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -847,7 +847,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/1/points/1",
+							"raw": "https://localhost:443/station/1001/points/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -855,7 +855,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"1",
+								"1001",
 								"points",
 								"1"
 							]
@@ -937,7 +937,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\":14,\r\n    \"level\":88,\r\n    \"connectorType\":\"lmao\",\r\n    \"priceKw\":69,\r\n    \"chargingSpeedKw\":96\r\n}",
+							"raw": "{\r\n    \"status\":14,\r\n    \"connectorType\":\"lmao\",\r\n    \"priceKw\":69,\r\n    \"chargingSpeedKw\":96\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1681,7 +1681,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/favourite/delete/1001/station/1",
+							"raw": "https://localhost:443/favourite/delete/1/station/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1690,7 +1690,7 @@
 							"path": [
 								"favourite",
 								"delete",
-								"1001",
+								"1",
 								"station",
 								"1"
 							]
