@@ -1,5 +1,7 @@
 package com.example.electrowayfinal.Validation;
 
+import com.example.electrowayfinal.utils.Routing.structures.CarData;
+import com.example.electrowayfinal.utils.Routing.structures.Coords;
 import com.example.electrowayfinal.utils.Routing.structures.RoutingRequestData;
 
 import javax.validation.ConstraintValidator;
@@ -16,9 +18,30 @@ public class RoutingRequestDataValidator implements ConstraintValidator<RoutingR
 
     @Override
     public boolean isValid(RoutingRequestData routingRequestData, ConstraintValidatorContext constraintValidatorContext) {
-        return routingRequestData != null & routingRequestData.getLocationsCoords() != null && routingRequestData.getLocationsCoords().size() == 2 &&
-                (routingRequestData.getAvoid() == null || avoidValues.contains(routingRequestData.getAvoid())) &&
-                ((routingRequestData.getCarData().getCarId() == null && routingRequestData.getCarData().getCurrentChargeInkW() == null) ||
-                        (routingRequestData.getCarData().getCarId() != null && routingRequestData.getCarData().getCurrentChargeInkW() != null));
+
+        List<Coords> locs = routingRequestData.getLocationsCoords();
+        // Check for locations.
+        if(
+                locs == null ||
+                locs.size() != 2 ||
+                locs.get(0) == null || locs.get(1) == null ||
+                locs.get(0).getLat() == null || locs.get(0).getLon() == null ||
+                locs.get(1).getLat() == null || locs.get(1).getLon() == null) {
+            return false;
+        }
+
+        String avoid = routingRequestData.getAvoid();
+        if(avoid == null || !(avoidValues.contains(avoid))) {
+            return false;
+        }
+
+        CarData carData = routingRequestData.getCarData();
+        if(
+                carData == null ||
+                (carData.getCarId() == null && carData.getCurrentChargeInkW() != null) ||
+                (carData.getCarId() != null && carData.getCurrentChargeInkW() == null)) {
+            return false;
+        }
+        return true;
     }
 }

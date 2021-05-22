@@ -287,6 +287,10 @@ public class RoutingFunctions {
             RoutingFinalResponse finalResponse,
             AuxiliarRouteUtil auxiliarRouteVar
     ) throws IOException, InterruptedException {
+        // Daca nu s-au gasit statii.
+        if(travelTimesAndDistances.size() == 0) {
+            return null;
+        }
 
         // Statia initiala care va fi selectata in functie de totalTravelTime.
         StationData initialStation = null;

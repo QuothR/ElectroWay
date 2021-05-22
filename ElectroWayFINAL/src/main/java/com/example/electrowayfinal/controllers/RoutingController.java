@@ -26,4 +26,12 @@ public class RoutingController {
     ResponseEntity<Object> getRoute(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException {
         return routingService.generateRoute(routingRequestData);
     }
+
+    @PostMapping(path = "points")
+    public @ResponseBody
+    ResponseEntity<Object> getRoutePoints(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException {
+        return routingService.convertToShortAnswer(
+                routingService.generateRoute(routingRequestData)
+        );
+    }
 }
