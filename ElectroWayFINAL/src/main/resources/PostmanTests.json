@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "36c7a123-7190-4d28-8c50-14425a8ddc57",
+		"_postman_id": "6b7ee3a6-e05b-4473-b275-e5f6b30ce40b",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1022,7 +1022,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/3/points/12/plugs/4/pay",
+							"raw": "https://localhost:443/station/1/points/1/plugs/1/pay",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1030,11 +1030,11 @@
 							"port": "443",
 							"path": [
 								"station",
-								"3",
+								"1",
 								"points",
-								"12",
+								"1",
 								"plugs",
-								"4",
+								"1",
 								"pay"
 							]
 						}
@@ -1275,25 +1275,27 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/payment/pay/success?paymentId=1&PayerID=1",
+							"raw": "https://localhost/payment/success?paymentId=PAYID-MCUU5CI12S19070PH5495525&token=EC-5YG73851DK982592D&PayerID=MG6BQK2DGHKR4",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "443",
 							"path": [
 								"payment",
-								"pay",
 								"success"
 							],
 							"query": [
 								{
 									"key": "paymentId",
-									"value": "1"
+									"value": "PAYID-MCUU5CI12S19070PH5495525"
+								},
+								{
+									"key": "token",
+									"value": "EC-5YG73851DK982592D"
 								},
 								{
 									"key": "PayerID",
-									"value": "1"
+									"value": "MG6BQK2DGHKR4"
 								}
 							]
 						}
@@ -1327,39 +1329,6 @@
 								"pay",
 								"cancel"
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "asdas",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "pee",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "asd",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
 						}
 					},
 					"response": []
@@ -1704,12 +1673,79 @@
 			"name": "PaypalDetail",
 			"item": [
 				{
-					"name": "addDetails",
+					"name": "addWalletDetails",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"clientId\": \"AdjuGbFslEEhk1PxJxkk06lIMd4PMySHK32EQeP2q8OtJ-16XkHom_CqUvxgFjU24WGuGbW3jn33K08C\",     \r\n    \"secret\": \"EGPTeh1vU_uR034rjo_0oyUX2_396B-YbqeZKFNxT3PpsR3nfBEzLABH5AVGiKh4sPt2PaJw-rizRkQd\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "https://localhost:443/user/wallet",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"user",
+								"wallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editWallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"clientId\": \"AdjuGbFslEEhk1PxJxkk06lIMd4PMySHK32EQeP2q8OtJ-16XkHom_CqUvxgFjU24WGuGbW3jn33K08C\",     \r\n    \"secret\": \"EGPTeh1vU_uR034rjo_0oyUX2_396B-YbqeZKFNxT3PpsR3nfBEzLABH5AVGiKh4sPt2PaJw-rizRkQd\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:443/user/wallet",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"user",
+								"wallet"
+							]
 						}
 					},
 					"response": []

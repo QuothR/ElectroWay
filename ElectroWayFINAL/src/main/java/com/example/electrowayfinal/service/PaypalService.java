@@ -30,105 +30,50 @@ public class PaypalService {
     @Autowired
     private PaypalDetailService paypalDetailService;
 
-    public Payment createPaymentToElectroway(
-            Order order,
-            String cancelUrl,
-            String successUrl) throws PayPalRESTException{
-
-
-        Amount amount = new Amount();
-        amount.setCurrency(order.getCurrency());
-        double total = new BigDecimal(order.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        amount.setTotal(String.format("%.2f", total));
-
-
-//        Map<String, String> configMap = new HashMap<>();
-//        configMap.put("mode", "sandbox");
-//        OAuthTokenCredential oAuthTokenCredential = new OAuthTokenCredential("AeHjx7i-OuKFEAgZb_L_XlVGxZS34jP5TkeMQFFzhY4KGJJf4g3D_U-INqW3U4yGI1bzThpUs_HAFKK2","EGxHuCSAe_6PQ975S2I4CnuWlO06i3t-rAy5gY4WexC_LKNEGqKyJDlsfFKPm7kFdoCXmFFQyDvSEWT6",configMap);
-//
-//        System.out.printf("%s\n", oAuthTokenCredential.getAccessToken());
-//
-//        apiContext = new APIContext(oAuthTokenCredential.getAccessToken());
-
-        Transaction transaction = new Transaction();
-        transaction.setDescription(order.getDescription());
-        transaction.setAmount(amount);
-
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(transaction);
-
-        Payer payer = new Payer();
-        payer.setPaymentMethod(order.getMethod());
-
-        Payment payment = new Payment();
-        payment.setIntent(order.getIntent());
-        payment.setPayer(payer);
-        payment.setTransactions(transactions);
-        RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(cancelUrl);
-        redirectUrls.setReturnUrl(successUrl);
-        payment.setRedirectUrls(redirectUrls);
-
-        System.out.println(payment);
-
-        return payment.create(apiContext);
-    }
-
     public Payment createPayment(
             Long plugId,
             Order order,
             String cancelUrl,
             String successUrl) throws Exception {
 
-
+        //To get station owner details
         PaypalDetail paypalDetail = paypalDetailService.getPaypalDetailByOwnerId(chargingPlugService.getOnePlug(plugId).getChargingPoint().getStation().getUser().getId());
-
+        //To set sandbox mode
         Map<String, String> configMap = new HashMap<>();
         configMap.put("mode", "sandbox");
+        //To create a token with secret and userId
         OAuthTokenCredential oAuthTokenCredential = new OAuthTokenCredential(paypalDetail.getClientId(),paypalDetail.getSecret(),configMap);
-
-        System.out.printf("%s\n", oAuthTokenCredential.getAccessToken());
-
-        System.out.println(apiContext);
+        //To set the path for paypal
         apiContext = new APIContext(oAuthTokenCredential.getAccessToken());
         apiContext.setConfigurationMap(configMap);
-        System.out.println(apiContext);
-
-        int breakpoint=  14;
 
         Details details = new Details();
-        details.setSubtotal("400");
-        details.setTax("428");
+        details.setSubtotal(String.valueOf(order.getTotal()*chargingPlugService.getOnePlug(plugId).getPriceKw()));
+        details.setTax("0");
 
         Amount amount = new Amount();
         amount.setDetails(details);
 
         amount.setCurrency(order.getCurrency());
-        double total = new BigDecimal(order.getTotal() * chargingPlugService.getOnePlug(plugId).getPriceKw()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        double total = BigDecimal.valueOf(order.getTotal() * chargingPlugService.getOnePlug(plugId).getPriceKw()).setScale(2, RoundingMode.HALF_UP).doubleValue();
         amount.setTotal(String.format("%.2f", total));
 
         Item item = new Item();
         item.setCurrency("EUR");
-        item.setName("1h charge");
-        item.setDescription("charging for one hour");
-        item.setCurrency("EUR");
-        item.setPrice("400");
-        item.setQuantity("1");
+        item.setPrice(String.valueOf(chargingPlugService.getOnePlug(plugId).getPriceKw()));
+        item.setQuantity(String.valueOf((int) order.getTotal()));
+        item.setName(" KW consumed for " + "charging at plug " + plugId);
+        item.setDescription(order.getDescription() + "\n");
 
         ItemList itemList = new ItemList();
         itemList.setItems(List.of(item));
 
         Transaction transaction = new Transaction();
-        transaction.setDescription("ELECTROWAY \n -->"+ plugId +"<-- \n"+"Total: "+order.getTotal());
+        transaction.setDescription("ELECTROWAY" + "\n" + "-->" + plugId + "<--" + "\n" + "Total: "+amount.getTotal());
         transaction.setAmount(amount);
         transaction.setItemList(itemList);
-
-        List<Transaction> transactions = new ArrayList<Transaction>();
+        List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
-
-
-//        transaction.setTransactions(transactions);
-
         Payer payer = new Payer();
         payer.setPaymentMethod(order.getMethod());
 
@@ -141,8 +86,6 @@ public class PaypalService {
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);
         payment.setRedirectUrls(redirectUrls);
-        System.out.println(payment);
-        System.out.println(transactions);
 
         return payment.create(apiContext);
     }

@@ -31,16 +31,20 @@ public class PaypalDetailService {
     public PaypalDetail addPaypalDetail(PaypalDetail paypalDetail, HttpServletRequest httpServletRequest) throws Exception {
         User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
         paypalDetail.setUser(user);
-
+        if(paypalDetailRepository.findByUser_Id(paypalDetail.getUser().getId()).isPresent()){
+            throw new NoSuchFieldException("This user already has a wallet");
+        }
         paypalDetailRepository.save(paypalDetail);
         return paypalDetailRepository.findByUser_Id(paypalDetail.getUser().getId()).get();
     }
 
-    public void updatePaypalDetail(Long id, PaypalDetail paypalDetail, HttpServletRequest httpServletRequest) throws Exception {
-        PaypalDetail paypalDetailToChange = paypalDetailRepository.findById(id).orElseThrow(() -> new Exception("Can't find paypal detail for ID " + id));
+    public void updatePaypalDetail(PaypalDetail paypalDetail, HttpServletRequest httpServletRequest) throws Exception {
+        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
+        PaypalDetail paypalDetailToChange = paypalDetailRepository.findByUser_Id(user.getId()).orElseThrow(() -> new Exception("Can't find paypal detail for ID " + user.getId()));
 
         paypalDetailToChange.setClientId(paypalDetail.getClientId());
         paypalDetailToChange.setSecret(paypalDetail.getSecret());
+        paypalDetailRepository.save(paypalDetailToChange);
     }
 
     public PaypalDetail getPaypalDetailByOwnerId(Long id) throws Exception {

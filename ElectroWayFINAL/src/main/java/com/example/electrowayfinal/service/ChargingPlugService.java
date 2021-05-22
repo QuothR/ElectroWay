@@ -4,6 +4,7 @@ import com.example.electrowayfinal.exceptions.WrongAccessException;
 import com.example.electrowayfinal.models.ChargingPlug;
 import com.example.electrowayfinal.models.ChargingPoint;
 import com.example.electrowayfinal.models.Station;
+import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.ChargingPlugRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +50,11 @@ public class ChargingPlugService {
         chargingPlugRepository.save(chargingPlug);
     }
 
+    public User getUserFromPlug(Long plugId) {
+        ChargingPlug chargingPlug = chargingPlugRepository.getOne(plugId);
+        return chargingPlug.getChargingPoint().getStation().getUser();
+    }
+
     public List<ChargingPlug> getChargingPlugsByChargingPoint(ChargingPoint chargingPoint, Long id) {
         if (chargingPoint.getStation().getId() != id) {
             throw new WrongAccessException("You don't own this station!");
@@ -63,12 +69,14 @@ public class ChargingPlugService {
     public List<ChargingPlug> getChargingPlugsByConnectorType(String connectorType) {
         return chargingPlugRepository.findChargingPlugsByConnectorType(connectorType);
     }
-    public ChargingPlug getOnePlug(Long id){
-        if(chargingPlugRepository.findChargingPlugById(id).isEmpty()){
+
+    public ChargingPlug getOnePlug(Long id) {
+        if (chargingPlugRepository.findChargingPlugById(id).isEmpty()) {
             throw new NoSuchElementException(id + "charging plug does not exist");
         }
         return chargingPlugRepository.findChargingPlugById(id).get();
     }
+
     public Optional<ChargingPlug> getChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
         Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
         if (chargingPoint.isEmpty()) {

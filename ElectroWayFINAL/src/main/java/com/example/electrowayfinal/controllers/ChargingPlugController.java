@@ -28,8 +28,8 @@ public class ChargingPlugController {
     @Autowired
     PaypalService paypalService;
 
-    public static final String SUCCESS_URL = "pay/success";
-    public static final String CANCEL_URL = "pay/cancel";
+    public static final String SUCCESS_URL = "payment/success";
+    public static final String CANCEL_URL = "payment/cancel";
 
     @Autowired
     public ChargingPlugController(ChargingPlugService chargingPlugService, ChargingPointService chargingPointService) {
@@ -74,17 +74,6 @@ public class ChargingPlugController {
     @PostMapping("/{id}/points/{cId}/plugs/{pId}/pay")
     public String payment(@RequestBody Order order, @PathVariable("pId") Long plugId) {
         try {
-
-//            //Pay to electroway
-//            Payment payment = paypalService.createPaymentToElectroway(order, "https://localhost:443/" + CANCEL_URL,
-//                    "https://localhost:443/" + SUCCESS_URL);
-//            for (Links link : payment.getLinks()) {
-//                if (link.getRel().equals("approval_url")) {
-//                    return ("<h1>redirect:" + link.getHref());
-//                }
-//            }
-
-            //Pay from electroway to station owner
             Payment payment = paypalService.createPayment(plugId,order, "https://localhost:443/" + CANCEL_URL,
                     "https://localhost:443/" + SUCCESS_URL);
             for (Links link : payment.getLinks()) {
@@ -93,10 +82,8 @@ public class ChargingPlugController {
                 }
             }
 
-        } catch (PayPalRESTException e) {
-
-            e.printStackTrace();
         } catch (Exception e) {
+
             e.printStackTrace();
         }
         return ("<h1>redirect:/");

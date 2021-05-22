@@ -8,27 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/add")
+@RequestMapping("/user/wallet")
 public class PaypalDetailController {
 
     @Autowired
     PaypalDetailService paypalDetailService;
 
-    /*@GetMapping(path = "{id}")
-    public PaypalDetail getPaypalDetail(@PathVariable Long id){
-        return paypalDetailService.getPaypalDetail(id);
-    }*/
-
     @PostMapping
     public PaypalDetail addPaypalDetail(@RequestBody PaypalDetail paypalDetail, HttpServletRequest httpServletRequest) throws Exception {
         return paypalDetailService.addPaypalDetail(paypalDetail,httpServletRequest);
     }
-    /*@DeleteMapping(path = "{id}")
-    public void deletePaypalDetail(@PathVariable Long id){
-        paypalDetailService.deletePaypalDetail(id);
-    }*/
-    @PutMapping(path = "{id}")
-    public void updatePPDetail(@RequestBody PaypalDetail paypalDetail,@PathVariable Long id,HttpServletRequest httpServletRequest) throws Exception {
-        paypalDetailService.updatePaypalDetail(id,paypalDetail,httpServletRequest);
+
+    @PutMapping
+    public void updatePPDetail(@RequestBody PaypalDetail paypalDetail,HttpServletRequest httpServletRequest) throws Exception {
+        paypalDetailService.updatePaypalDetail(paypalDetail,httpServletRequest);
     }
 }

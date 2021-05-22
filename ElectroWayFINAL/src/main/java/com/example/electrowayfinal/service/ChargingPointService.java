@@ -62,7 +62,9 @@ public class ChargingPointService {
             throw new WrongAccessException("You don't own this station!");
         }
     }
-
+    public Optional<ChargingPoint> getChargingPoint(Long id){
+        return chargingPointRepository.findById(id);
+    }
     private Optional<User> verifyUser(HttpServletRequest httpServletRequest) {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
