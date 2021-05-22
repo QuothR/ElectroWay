@@ -84,17 +84,31 @@ CREATE TABLE IF NOT EXISTS `charging_point` (
 
 -- Data exporting was unselected.
 
--- Dumping structure for table electroway.charging_point_sequence
-CREATE TABLE IF NOT EXISTS `charging_point_sequence` (
-                                                         `next_not_cached_value` bigint(21) NOT NULL,
-                                                         `minimum_value` bigint(21) NOT NULL,
-                                                         `maximum_value` bigint(21) NOT NULL,
-                                                         `start_value` bigint(21) NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
-                                                         `increment` bigint(21) NOT NULL COMMENT 'increment value',
-                                                         `cache_size` bigint(21) unsigned NOT NULL,
-                                                         `cycle_option` tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
-                                                         `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE=InnoDB SEQUENCE=1;
+-- Dumping structure for table electroway.paypal_detail
+CREATE TABLE IF NOT EXISTS `paypal_detail`
+(
+    `owner_id`  bigint(20)   NOT NULL,
+    `client_id` varchar(255) NOT NULL,
+    `secret`    varchar(255) NOT NULL,
+    `id`        bigint(20)   NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `paypal_detail_owner_id_uindex` (`owner_id`),
+    CONSTRAINT `paypal_detail_user_id_fk` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 6
+  DEFAULT CHARSET = latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table electroway.privilege
+CREATE TABLE IF NOT EXISTS `privilege`
+(
+    `id`   bigint(20)   NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -125,28 +139,32 @@ CREATE TABLE IF NOT EXISTS `favourite` (
 
 -- Data exporting was unselected.
 
--- Dumping structure for table electroway.favourite_sequence
-CREATE TABLE IF NOT EXISTS `favourite_sequence` (
-                                                    `next_not_cached_value` bigint(21) NOT NULL,
-                                                    `minimum_value` bigint(21) NOT NULL,
-                                                    `maximum_value` bigint(21) NOT NULL,
-                                                    `start_value` bigint(21) NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
-                                                    `increment` bigint(21) NOT NULL COMMENT 'increment value',
-                                                    `cache_size` bigint(21) unsigned NOT NULL,
-                                                    `cycle_option` tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
-                                                    `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE=InnoDB SEQUENCE=1;
+-- Dumping structure for table electroway.role
+CREATE TABLE IF NOT EXISTS `role`
+(
+    `id`   bigint(20)   NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 5
+  DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
--- Dumping structure for table electroway.password_reset_token
-CREATE TABLE IF NOT EXISTS `password_reset_token` (
-                                                      `id` bigint(11) NOT NULL AUTO_INCREMENT,
-                                                      `user_id` bigint(20) DEFAULT NULL,
-                                                      `token` varchar(255) DEFAULT NULL,
-                                                      PRIMARY KEY (`id`),
-                                                      KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- Dumping structure for table electroway.role_privilege
+CREATE TABLE IF NOT EXISTS `role_privilege`
+(
+    `id`           bigint(20) NOT NULL AUTO_INCREMENT,
+    `role_id`      bigint(20) DEFAULT NULL,
+    `privilege_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `role_id` (`role_id`),
+    KEY `privilege_id` (`privilege_id`),
+    CONSTRAINT `role_privilege_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+    CONSTRAINT `role_privilege_ibfk_2` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 7
+  DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -172,18 +190,18 @@ CREATE TABLE IF NOT EXISTS `privilege` (
 
 -- Data exporting was unselected.
 
--- Dumping structure for table electroway.report
-CREATE TABLE IF NOT EXISTS `report` (
-                                        `id` bigint(20) NOT NULL,
-                                        `text_report` varchar(255) NOT NULL,
-                                        `user_id` bigint(20) DEFAULT NULL,
-                                        `station_id` bigint(20) DEFAULT NULL,
-                                        PRIMARY KEY (`id`),
-                                        KEY `user_id` (`user_id`),
-                                        KEY `station_id` (`station_id`),
-                                        CONSTRAINT `report_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-                                        CONSTRAINT `report_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `station` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `verification_token`
+(
+    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `user_id`     bigint(20)          DEFAULT NULL,
+    `token`       varchar(255)        DEFAULT NULL,
+    `expiry_date` timestamp  NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`),
+    CONSTRAINT `verification_token_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 43
+  DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -217,17 +235,20 @@ CREATE TABLE IF NOT EXISTS `review` (
 
 -- Data exporting was unselected.
 
--- Dumping structure for table electroway.review_sequence
-CREATE TABLE IF NOT EXISTS `review_sequence` (
-                                                 `next_not_cached_value` bigint(21) NOT NULL,
-                                                 `minimum_value` bigint(21) NOT NULL,
-                                                 `maximum_value` bigint(21) NOT NULL,
-                                                 `start_value` bigint(21) NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
-                                                 `increment` bigint(21) NOT NULL COMMENT 'increment value',
-                                                 `cache_size` bigint(21) unsigned NOT NULL,
-                                                 `cycle_option` tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
-                                                 `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE=InnoDB SEQUENCE=1;
+-- Dumping structure for table electroway.user_role
+CREATE TABLE IF NOT EXISTS `user_role`
+(
+    `id`      bigint(20) NOT NULL AUTO_INCREMENT,
+    `user_id` bigint(20) DEFAULT NULL,
+    `role_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`),
+    KEY `role_id` (`role_id`),
+    CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+    CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 9
+  DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -335,33 +356,19 @@ CREATE TABLE IF NOT EXISTS `user` (
                                       UNIQUE KEY `phone_number` (`phone_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
-
--- Dumping structure for table electroway.user_role
-CREATE TABLE IF NOT EXISTS `user_role` (
-                                           `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                           `user_id` bigint(20) DEFAULT NULL,
-                                           `role_id` bigint(20) DEFAULT NULL,
-                                           PRIMARY KEY (`id`),
-                                           KEY `user_id` (`user_id`),
-                                           KEY `role_id` (`role_id`),
-                                           CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-                                           CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-
--- Data exporting was unselected.
-
--- Dumping structure for table electroway.user_sequence
-CREATE TABLE IF NOT EXISTS `user_sequence` (
-                                               `next_not_cached_value` bigint(21) NOT NULL,
-                                               `minimum_value` bigint(21) NOT NULL,
-                                               `maximum_value` bigint(21) NOT NULL,
-                                               `start_value` bigint(21) NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
-                                               `increment` bigint(21) NOT NULL COMMENT 'increment value',
-                                               `cache_size` bigint(21) unsigned NOT NULL,
-                                               `cycle_option` tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
-                                               `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE=InnoDB SEQUENCE=1;
+-- Data exporting was unselected.-- Dumping structure for table electroway.consumption_sequence
+DROP TABLE IF EXISTS `consumption_sequence`;
+CREATE TABLE IF NOT EXISTS `consumption_sequence`
+(
+    `next_not_cached_value` bigint(21)          NOT NULL,
+    `minimum_value`         bigint(21)          NOT NULL,
+    `maximum_value`         bigint(21)          NOT NULL,
+    `start_value`           bigint(21)          NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
+    `increment`             bigint(21)          NOT NULL COMMENT 'increment value',
+    `cache_size`            bigint(21) unsigned NOT NULL,
+    `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
+    `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
+) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.
 
