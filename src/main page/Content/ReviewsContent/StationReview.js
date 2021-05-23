@@ -1,6 +1,7 @@
 import React from "react";
 import "./Reviews.css";
-import ElementeJosDrp from "./Components/ElementeJosDrp";
+import ElementeReview from "./Components/ElementeReview";
+import { Link } from "react-router-dom";
 
 function Reviews() {
   return (
@@ -8,7 +9,7 @@ function Reviews() {
       <div className="ReviewsBox">
         <div className="Primite">
           <p className="TabeleTitlu">Review-uri primite</p>
-          <ElementeJosDrp />
+          <ElementeReview />
         </div>
       </div>
     </div>

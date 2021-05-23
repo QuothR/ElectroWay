@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import "./Reviews.css";
 import { connect } from "react-redux";
 import axios from "axios";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import StarRating from "react-svg-star-rating";
 
 function AddReviews(props) {
   const { user } = props;
   const myToken = user.loginReducer.user.token;
   const [formImput, setFormInput] = useState({});
-
+  const [rating4, setRating4] = useState(0);
   const station1 = JSON.parse(sessionStorage.getItem("station1"));
-
   const history = useHistory();
-  const redirectionare = () => {
-    history.push("/home/Reviews");
-    window.location.reload();
+
+  const handleOnClick4 = (rating) => {
+    setRating4(rating * 2);
   };
 
   function handleAdd() {
     const dataBackend = {
       textReview: formImput.textReview,
-      rating: formImput.rating,
+      rating: rating4,
     };
 
     console.log(dataBackend);
@@ -40,22 +40,11 @@ function AddReviews(props) {
       });
   }
 
-  function refreshPage() {
-    window.location.reload();
-  }
-
   function handleWorkflow() {
-    // if (
-    //   formImput.textReview != null &&
-    //   formImput.rating > 0 &&
-    //   formImput.rating < 11
-    // ) {
     handleAdd();
-    //redirectionare();
-    // refreshPage();
-    // } else {
-    //   return <h1>null</h1>;
-    // }
+    setTimeout(() => {
+      history.push(`/home/Reviews`);
+    }, 200);
   }
 
   return (
@@ -71,17 +60,8 @@ function AddReviews(props) {
           <div className="form-administrate">
             <h3>Add review</h3>
             <div className="form-in">
-              <label>Rating</label>
-              <input
-                type="text"
-                id="rating"
-                placeholder="introdu rating"
-                required
-                onChange={(e) => {
-                  const rating = e.target.value;
-                  setFormInput({ ...formImput, ...{ rating } });
-                }}
-              />
+              <label>Rating: {rating4}</label>
+              <StarRating isHalfRating={true} handleOnClick={handleOnClick4} />
             </div>
             <div className="form-in">
               <label>Text Review</label>
@@ -99,8 +79,11 @@ function AddReviews(props) {
               />{" "}
             </div>
 
-            <div className="change">
-              <input type="submit" defaultValue="Save" />
+            <div className="SubmitButtonRow">
+              <Link to="/home/Reviews">
+                <button>Renunta</button>
+              </Link>
+              <button type="submit">Submit</button>
             </div>
           </div>
         </form>

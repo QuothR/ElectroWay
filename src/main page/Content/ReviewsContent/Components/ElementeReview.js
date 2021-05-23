@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Tabel from "./Tabel";
-import DateTabel from "./DateTabelPrimite.json";
+// import DateTabel from "./DateTabelPrimite.json";
+import { Link } from "react-router-dom";
 import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import axios from "axios";
@@ -49,10 +50,7 @@ function ElementeJosDrp(props) {
         </Slider>
       </div>
     );
-  } else
-    return (
-        <p>Nu exista rating-uri pentru statie</p>
-    );
+  } else return <p>Nu exista rating-uri pentru statie</p>;
 }
 const mapStateToProps = (state) => {
   return {

@@ -51,7 +51,6 @@ function TabelPlugs(props) {
         return (
             <tr key={index}>
                 <td style={{ width: "29%" }}>Plug-ul numarul {index + 1}</td>
-                <td style={{ width: "10%" }}>{plug.level}</td>
                 <td style={{ width: "24%" }}>{plug.connectorType}</td>
                 <td style={{ width: "15%" }}>{plug.priceKw}</td>
                 <td style={{ width: "10%" }}>{plug.chargingSpeedKw}</td>
@@ -91,7 +90,6 @@ function TabelPlugs(props) {
                         <thead>
                             <tr>
                                 <th style={{ width: "30%" }}>Numar Plug</th>
-                                <th style={{ width: "10%" }}>Nivel</th>
                                 <th style={{ width: "25%" }}>Tip Conector</th>
                                 <th style={{ width: "15%" }}>Pret</th>
                                 <th style={{ width: "10%" }}>Viteza</th>

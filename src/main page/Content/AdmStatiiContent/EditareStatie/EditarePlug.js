@@ -20,7 +20,7 @@ function EditarePlug(props) {
 
         const dataBackend = {
             status: 0,
-            connectorType: formImput.connectorType ? formImput.connectorType : plugAddr.connectorType, 
+            connectorType: formImput.connectorType ? formImput.connectorType : plugAddr.connectorType,
             priceKw: formImput.priceKw ? formImput.priceKw : plugAddr.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw ? formImput.chargingSpeedKw : plugAddr.chargingSpeedKw
         }
@@ -34,6 +34,14 @@ function EditarePlug(props) {
             .then((res) => {
                 console.log(res.data);
             })
+
+
+        // trebuie verificat daca da eroare de la backend sau nu
+        // daca nu da se apeleaza functia de jos
+        setTimeout(()=>{
+
+            history.push("/home/Adm-station/edit/point")
+        }, 200)
     }
 
     return (
@@ -41,7 +49,7 @@ function EditarePlug(props) {
             <div className="EditarePlugBox">
                 <div className="TitleRow">
                     <p>Editare plug</p>
-                    
+
                 </div>
                 <div className="FormRow">
                     <form className="Formularul" onSubmit={(e) => {

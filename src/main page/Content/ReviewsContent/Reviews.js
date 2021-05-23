@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Reviews.css";
-import ElementeJosStg from "./Components/ElementeJosStg";
-import ElementeJosDrp from "./Components/ElementeJosDrp";
+// import ElementeJosStg from "./Components/ElementeJosStg";
+// import ElementeJosDrp from "./Components/ElementeJosDrp";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import axios from "axios";
@@ -16,8 +16,8 @@ function Reviews(props) {
   const [statii, getStatii] = useState([]);
   const [allstatii, getAllStatii] = useState([]);
 
-  sessionStorage.removeItem('station1');
-  sessionStorage.removeItem('station2');
+  sessionStorage.removeItem("station1");
+  sessionStorage.removeItem("station2");
 
   useEffect(() => {
     axios
@@ -30,7 +30,7 @@ function Reviews(props) {
         getStatii(Array.from(response.data));
       });
 
-      axios
+    axios
       .get("http://localhost:443/station/all", {
         headers: {
           Authorization: `Basic ${myToken}`,
@@ -39,7 +39,6 @@ function Reviews(props) {
       .then((response) => {
         getAllStatii(Array.from(response.data));
       });
-
   }, []);
 
   let text1 = "";
@@ -48,7 +47,7 @@ function Reviews(props) {
   } else {
     text1 = "";
   }
-  
+
   let text2 = "";
   if (statii.length > 5) {
     text2 = "scrollForTabelPlati";
@@ -60,12 +59,14 @@ function Reviews(props) {
     return (
       <tr key={index}>
         <td style={{ width: "100%" }}>{station.address}</td>
-        <td><GrAdd
-        onClick={(e) => {
-          sessionStorage.setItem('station1', JSON.stringify(station));
-          history.push("/home/Reviews/add");
-        }}
-        /></td>
+        <td>
+          <GrAdd
+            onClick={(e) => {
+              sessionStorage.setItem("station1", JSON.stringify(station));
+              history.push("/home/Reviews/add");
+            }}
+          />
+        </td>
         {/* <td>
           <img className="edit-img" src={Edit}></img>
         </td> */}
@@ -76,12 +77,14 @@ function Reviews(props) {
     return (
       <tr key={index}>
         <td style={{ width: "100%" }}>{station.address}</td>
-        <td><GrView
-        onClick={(e) => {
-          sessionStorage.setItem('station2', JSON.stringify(station));
-          history.push("/home/Reviews/station");
-        }}
-        /></td>
+        <td>
+          <GrView
+            onClick={(e) => {
+              sessionStorage.setItem("station2", JSON.stringify(station));
+              history.push("/home/Reviews/station");
+            }}
+          />
+        </td>
         {/* <td>
           <img className="edit-img" src={Edit}></img>
         </td> */}
@@ -122,7 +125,7 @@ function Reviews(props) {
             Add review
           </button> */}
         </div>
-        
+
         <div className="Tabele">
           <p className="TabeleTitlu">Statii proprii</p>
           <ReactBootStrap.Table striped bordered hover className={text2}>

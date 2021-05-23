@@ -42,7 +42,7 @@
 
 .Reviews .TabeleTitlu {
   font-size: 22px !important;
-  margin-bottom: 18px !important;
+  /* margin-bottom: 18px !important; */
 }
 
 .Reviews .TabelBox {
@@ -83,7 +83,7 @@
 }
 
 .TabelBox {
-    background-color: brown;
+  background-color: brown;
 }
 .Reviews .TabelBox .ReviewContent {
   padding-left: 10%;
@@ -97,7 +97,7 @@
 .Reviews .ElementeJos {
   padding: 0% 2.5%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -259,4 +259,18 @@
 }
 .Tabele th {
   width: 430px;
+}
+
+.Reviews .SubmitButtonRow button {
+  border-radius: 18px;
+  background-color: #66628f;
+  margin-right: 15px;
+  padding: 2px 20px;
+  box-shadow: 0px 1px 4px 0px #000;
+  transition: 0.5s;
+  color: #ffff;
+}
+
+.Reviews .SubmitButtonRow button:hover {
+  box-shadow: 0px 0px 7px 3px #ffff;
 }
