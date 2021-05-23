@@ -11,9 +11,4 @@
         android:layout_height="wrap_content"
         android:text="@string/find_route" />
 
-    <Button
-        android:id="@+id/bookmarkButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/bookmark" />
 </LinearLayout>

@@ -228,19 +228,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 visibility = View.INVISIBLE
             }
         } else {
-            val db = BookmarkDatabase.getInstance(requireContext())
-            val bookmarkDao = db.bookmarkDao()
-            val bookmarks = bookmarkDao.getAll()
-            for (bookmark in bookmarks) {
-                googleMap.addMarker(
-                    MarkerOptions().position(
-                        LatLng(
-                            bookmark.latitude,
-                            bookmark.longitude
-                        )
-                    ).title(bookmark.address)
-                )
-            }
             val geocoderAddress = GeocoderAddress(requireContext())
             val session = (requireActivity().application as Application).session
             val stations = mutableMapOf<Int, String>()
@@ -286,12 +273,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
             googleMap.setOnMapLongClickListener { latLng ->
                 locationDialog.show()
-                locationDialog.findViewById<Button>(R.id.bookmarkButton)!!.setOnClickListener {
-                    val addressLine = geocoderAddress.getFromLatLng(latLng)
-                    googleMap.addMarker(MarkerOptions().position(latLng).title(addressLine))
-                    bookmarkDao.insertAll(Bookmark(addressLine, latLng.latitude, latLng.longitude))
-                    locationDialog.hide()
-                }
                 locationDialog.findViewById<Button>(R.id.findRouteButton)!!.setOnClickListener {
                     locationDialog.hide()
                     routeDialog.show()

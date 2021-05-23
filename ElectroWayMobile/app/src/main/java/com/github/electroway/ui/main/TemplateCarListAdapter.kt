@@ -1,5 +1,6 @@
 package com.github.electroway.ui.main
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.CarInfo
 import com.github.electroway.R
+import java.lang.StringBuilder
 
 internal class TemplateCarListAdapter(
     private var itemsList: MutableList<CarInfo>,
@@ -31,7 +33,14 @@ internal class TemplateCarListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(onClick)
-        holder.templateCarText.text = "${itemsList[position].model}, ${itemsList[position].year}"
+        holder.templateCarText.text =
+            Html.fromHtml(
+                StringBuilder().append("<b>${itemsList[position].model}, ${itemsList[position].year}</b>")
+                    .append(", Battery capacity: ${itemsList[position].batteryCapacity}")
+                    .append(", Charging capacity: ${itemsList[position].chargingCapacity}")
+                    .append(", Max speed: ${itemsList[position].vehicleMaxSpeed}")
+                    .toString(), 0
+            )
     }
 
     override fun getItemCount(): Int {
