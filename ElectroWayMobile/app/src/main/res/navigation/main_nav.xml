@@ -190,7 +190,7 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="car"
-            app:argType="com.github.electroway.AddCarInfo" />
+            app:argType="com.github.electroway.CarInfo" />
     </fragment>
     <fragment
         android:id="@+id/chargingPlugFragment"

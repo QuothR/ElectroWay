@@ -3,7 +3,7 @@ package com.github.electroway
 import org.json.JSONObject
 import java.io.Serializable
 
-class AddCarInfo(
+class CarInfo(
     val id: Int?,
     val model: String,
     val year: Int,

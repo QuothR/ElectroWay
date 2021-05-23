@@ -601,7 +601,7 @@ class Session(val handler: Handler) {
     }
 
     fun addCar(
-        addCarInfo: AddCarInfo,
+        addCarInfo: CarInfo,
         callback: (Boolean) -> Unit
     ) {
         refreshTokenIfNeeded()
@@ -630,7 +630,7 @@ class Session(val handler: Handler) {
     }
 
     fun updateCar(
-        addCarInfo: AddCarInfo,
+        addCarInfo: CarInfo,
         callback: (Boolean) -> Unit
     ) {
         refreshTokenIfNeeded()
@@ -738,6 +738,38 @@ class Session(val handler: Handler) {
                 val success = response.isSuccessful
                 handler.post {
                     callback(success)
+                }
+            }
+        })
+    }
+
+    fun getTemplateCars(callback: (JSONArray?) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("templatecar")
+                    .addPathSegment("all")
+                    .build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .get()
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val json = JSONArray(response.body!!.string())
+                    handler.post {
+                        callback(json)
+                    }
+                } else {
+                    handler.post {
+                        callback(null)
+                    }
                 }
             }
         })
