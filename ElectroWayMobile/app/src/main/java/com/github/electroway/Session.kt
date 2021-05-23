@@ -775,6 +775,101 @@ class Session(val handler: Handler) {
         })
     }
 
+    fun isFavourite(station: Int, callback: (Int?) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("favourite")
+                    .addPathSegment("all")
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString())
+                    .build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .get()
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val json = JSONArray(response.body!!.string())
+                    if (json.length() > 0) {
+                        handler.post {
+                            callback(json.getJSONObject(0).getInt("id"))
+                        }
+                        return
+                    }
+                }
+                handler.post {
+                    callback(null)
+                }
+            }
+        })
+    }
+
+    fun deleteFavourite(station: Int, favourite: Int, callback: (Boolean) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("favourite")
+                    .addPathSegment("delete")
+                    .addPathSegment(favourite.toString())
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString())
+                    .build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .delete()
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
+
+    fun createFavourite(station: Int, callback: (Boolean) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("favourite")
+                    .addPathSegment("create")
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString())
+                    .build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .post(JSONObject().toString().toRequestBody(json))
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
+                Log.e("a", response.body!!.string())
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
     private fun buildBasePath(): HttpUrl.Builder {
         return HttpUrl.Builder().scheme("https").host("192.168.1.7").port(443)
     }

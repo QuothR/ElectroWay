@@ -50,6 +50,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationDialog: BottomSheetDialog
     private lateinit var routeDialog: BottomSheetDialog
     private lateinit var waypointsDialog: BottomSheetDialog
+    private lateinit var stationDialog: BottomSheetDialog
     private val cars = mutableMapOf<String, Int>()
 
     override fun onCreateView(
@@ -77,6 +78,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         waypointsDialog.setContentView(
             inflater.inflate(
                 R.layout.waypoints_dialog,
+                container,
+                false
+            )
+        )
+        stationDialog = BottomSheetDialog(requireActivity())
+        stationDialog.setContentView(
+            inflater.inflate(
+                R.layout.station_dialog,
                 container,
                 false
             )
@@ -228,7 +237,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 visibility = View.INVISIBLE
             }
         } else {
-            val geocoderAddress = GeocoderAddress(requireContext())
             val session = (requireActivity().application as Application).session
             val stations = mutableMapOf<Int, String>()
             session.getAllStations {
@@ -255,18 +263,81 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         val latitude = obj.getDouble("latitude")
                         val longitude = obj.getDouble("longitude")
                         val id = obj.getInt("id")
-                        stations.put(id, address)
-                        markersPos[googleMap.addMarker(
-                            MarkerOptions().position(LatLng(latitude, longitude)).title(address)
-                                .icon(markerBitmap)
-                        )] = id
+                        session.isFavourite(id) {
+                            if (it != null) {
+                                markersPos[googleMap.addMarker(
+                                    MarkerOptions().position(
+                                        LatLng(
+                                            latitude,
+                                            longitude
+                                        )
+                                    ).title(address)
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.favourite))
+                                )] = id
+                            } else {
+                                markersPos[googleMap.addMarker(
+                                    MarkerOptions().position(LatLng(latitude, longitude))
+                                        .title(address)
+                                        .icon(markerBitmap)
+                                )] = id
+                            }
+                        }
                     }
 
-                    googleMap.setOnInfoWindowClickListener {
-                        if (markersPos[it] != null) {
-                            val action =
-                                MapFragmentDirections.actionMapFragmentToReviewsFragment(markersPos[it]!!)
-                            findNavController().navigate(action)
+                    googleMap.setOnInfoWindowClickListener { marker ->
+                        stationDialog.show()
+                        val showReviewsButton =
+                            stationDialog.findViewById<Button>(R.id.showReviewsButton)!!
+                        val removeFavouriteButton =
+                            stationDialog.findViewById<Button>(R.id.removeFavouriteButton)!!
+                        showReviewsButton.setOnClickListener {
+                            stationDialog.hide()
+                            if (markersPos[marker] != null) {
+                                val action =
+                                    MapFragmentDirections.actionMapFragmentToReviewsFragment(
+                                        markersPos[marker]!!
+                                    )
+                                findNavController().navigate(action)
+                            }
+                        }
+                        session.isFavourite(markersPos[marker]!!) { favourite ->
+                            val favouriteButton =
+                                stationDialog.findViewById<Button>(R.id.favouriteButton)!!
+                            if (favourite == null) {
+                                favouriteButton.visibility = View.VISIBLE
+                                removeFavouriteButton.visibility = View.GONE
+                                favouriteButton.setOnClickListener {
+                                    stationDialog.hide()
+                                    if (markersPos[marker] != null) {
+                                        session.createFavourite(markersPos[marker]!!) {
+                                            if (it) {
+                                                marker.setIcon(
+                                                    BitmapDescriptorFactory.fromResource(
+                                                        R.drawable.favourite
+                                                    )
+                                                )
+                                                val info = markersPos.remove(marker)
+                                                markersPos[marker] = info!!
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                favouriteButton.visibility = View.GONE
+                                removeFavouriteButton.visibility = View.VISIBLE
+                                removeFavouriteButton.setOnClickListener {
+                                    stationDialog.hide()
+                                    if (markersPos[marker] != null) {
+                                        session.deleteFavourite(markersPos[marker]!!, favourite) {
+                                            if (it) {
+                                                marker.setIcon(markerBitmap)
+                                                val info = markersPos.remove(marker)
+                                                markersPos[marker] = info!!
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -316,7 +387,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun drawRoute(googleMap: GoogleMap, stations: MutableMap<Int, String>, obj: JSONObject) {
+    private fun drawRoute(
+        googleMap: GoogleMap,
+        stations: MutableMap<Int, String>,
+        obj: JSONObject
+    ) {
         val legs = obj.getJSONArray("legs");
         val polylineOptions = PolylineOptions().color(0xff726c91.toInt()).clickable(true)
         val adapter = WaypointListAdapter(mutableListOf())
