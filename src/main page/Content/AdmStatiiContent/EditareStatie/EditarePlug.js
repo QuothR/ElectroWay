@@ -20,7 +20,6 @@ function EditarePlug(props) {
 
         const dataBackend = {
             status: 0,
-            level: formImput.level ? formImput.level : plugAddr.level,
             connectorType: formImput.connectorType ? formImput.connectorType : plugAddr.connectorType, 
             priceKw: formImput.priceKw ? formImput.priceKw : plugAddr.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw ? formImput.chargingSpeedKw : plugAddr.chargingSpeedKw
@@ -50,18 +49,6 @@ function EditarePlug(props) {
                         handleModify()
                     }}>
                         <div className="FormRowTop">
-                            <label>Nivel</label>
-                            <select list="nivel" className="input-field" placeholder="Nivel" defaultValue={plugAddr.level}
-                                onChange={(e) => {
-                                    const level = e.target.value;
-                                    setFormInput({ ...formImput, ...{ level } });
-                                    console.log(level)
-
-                                }} >
-                                <option value="1">Nivel 1</option>
-                                <option value="2">Nivel 2</option>
-                                <option value="3">Nivel 3</option>
-                            </select>
                             <label>Conector</label>
                             <select list="conector" className="input-field" placeholder="Tip" defaultValue={plugAddr.connectorType}
                                 onChange={(e) => {
@@ -72,8 +59,8 @@ function EditarePlug(props) {
                             >
                                 <option value="Type 1">Type 1</option>
                                 <option value="Type 2">Type 2</option>
-                                <option value="Type CSS">Type CSS</option>
-                                <option value="Type CHAdeMO">Type CHAdeMO</option>
+                                <option value="CSS">CSS</option>
+                                <option value="CHAdeMO">CHAdeMO</option>
                             </select>
                             <label>Pret (RON/kWh)</label>
                             <input type="text" placeholder="introdu pret" defaultValue={plugAddr.priceKw} required

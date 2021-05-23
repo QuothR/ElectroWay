@@ -14,9 +14,6 @@ function AdaugaPlug(props) {
     const [formImput, setFormInput] = useState({});
     const history = useHistory();
 
-    function refreshPage() {
-        window.location.reload();
-    }
 
     function handleAdd() {
 
@@ -24,13 +21,12 @@ function AdaugaPlug(props) {
 
         const dataBackend = {
             status: 0,
-            level: formImput.level ? formImput.level : 1,
             connectorType: formImput.connectorType ? formImput.connectorType : "Type 1", //se pune valoarea default
             priceKw: formImput.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw
         }
 
-        console.log(dataBackend.level)
+        console.log(dataBackend)
 
         axios.post(`http://localhost:443/station/${stationAddr.id}/points/${pointId}`, dataBackend, {
             headers: {
@@ -57,18 +53,6 @@ function AdaugaPlug(props) {
                         handleAdd();
                     }}>
                         <div className="FormRowTop">
-                            {/* <label>Status</label>
-                            <input type="text" placeholder="introdu status" /> */}
-                            <label>Nivel</label>
-                            <select list="nivel" className="input-field" placeholder="Nivel"
-                                onChange={(e) => {
-                                    const level = e.target.value;
-                                    setFormInput({ ...formImput, ...{ level } });
-                                }} >
-                                <option value="1">Nivel 1</option>
-                                <option value="2">Nivel 2</option>
-                                <option value="3">Nivel 3</option>
-                            </select>
                             <label>Conector</label>
                             <select list="conector" className="input-field" placeholder="Tip"
                                 onChange={(e) => {
@@ -79,8 +63,8 @@ function AdaugaPlug(props) {
                             >
                                 <option value="Type 1">Type 1</option>
                                 <option value="Type 2">Type 2</option>
-                                <option value="CSS">Type CSS</option>
-                                <option value="CHAdeMO">Type CHAdeMO</option>
+                                <option value="CSS">CSS</option>
+                                <option value="CHAdeMO">CHAdeMO</option>
                             </select>
                             <label>Pret (RON/kWh)</label>
                             <input type="text" placeholder="introdu pret"

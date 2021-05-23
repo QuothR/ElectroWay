@@ -11,17 +11,17 @@ import {
 //function chart(ian,feb,mar,apr,mai,iun,iul,aug,sept,oct,nov,dec){
 //function chart(ian,feb,mar,apr,mai,iun,iul,aug,sept,oct,nov,dec)  {
 
-function myChart(ian,feb,mar,apr,mai,iun,iul,aug,sep,oct,nov,dec) {
-var data = [
-    { name: "Ian", suma: ian},
-    { name: "Feb", suma: feb},
-    { name: "Mar", suma: mar},
-    { name: "Apr", suma: apr},
-    { name: "Mai", suma: mai},
-    { name: "Iun", suma: iun},
-    { name: "Iul", suma: iul},
-    { name: "Aug", suma: aug},
-    { name: "Sept", suma: sep},
+function myChart(ian, feb, mar, apr, mai, iun, iul, aug, sep, oct, nov, dec) {
+  var data = [
+    { name: "Ian", suma: ian },
+    { name: "Feb", suma: feb },
+    { name: "Mar", suma: mar },
+    { name: "Apr", suma: apr },
+    { name: "Mai", suma: mai },
+    { name: "Iun", suma: iun },
+    { name: "Iul", suma: iul },
+    { name: "Aug", suma: aug },
+    { name: "Sept", suma: sep },
     { name: "Oct", suma: oct },
     { name: "Nov", suma: nov },
     { name: "Dec", suma: dec }
@@ -56,8 +56,8 @@ var data = [
             orientation="left"
 
           />
-         
-          
+
+
 
           <Bar dataKey="suma" fill="#8884d8" background={{ fill: "#eee" }} />
         </BarChart>

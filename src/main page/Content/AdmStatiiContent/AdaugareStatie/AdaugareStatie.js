@@ -60,9 +60,6 @@ function AdaugareStatie(props) {
                 
                 
             }
-            else{
-                return (<h1>null</h1>);
-            }
     }
 
     return (

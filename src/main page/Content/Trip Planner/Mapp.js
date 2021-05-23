@@ -11,21 +11,24 @@ function Mapp(props) {
   const { user } = props;
   const myToken = user.loginReducer.user.token;
   const [statii, getStatii] = useState([]);
-  const [coord, getCoord] = useState([]);
+  const [route, setRoute] = useState(props.ruta);
+  const [, rerender] = useState({});
+  
+  useEffect (() => {
+    setRoute(props.ruta)
+  },[props.ruta])
 
 
-  const testT = () => {
-    let vector = [];
-    testObj.legs.map((val, key) => {
-      console.log(val.points.length);
-      val.points.map((val1, key1) => {
-        vector.push(val1);
-      })
-    })
-    return vector;
-  }
-
-  const [l, setl] = useState([]);
+  // const testT = () => {
+  //   let vector = [];
+  //   testObj.legs.map((val, key) => {
+  //     console.log(val.points.length);
+  //     val.points.map((val1, key1) => {
+  //       vector.push(val1);
+  //     })
+  //   })
+  //   return vector;
+  // }
 
   useEffect(() => {
     axios
@@ -38,14 +41,7 @@ function Mapp(props) {
         getStatii(Array.from(response.data));
       });
 
-    setTimeout(setl(testT()), 50);
-
-
   }, []);
-
-
-
-
 
 
 
@@ -75,12 +71,12 @@ function Mapp(props) {
 
 
         {
-          l.map((val, key) => {
+          route.points.map((val, key) => {
 
-            if (key < l.length - 1) {
+            if (key < route.points.length - 1) {
               return (
                 <Polyline key={key} positions={[
-                  [l[key].lat, l[key].lon], [l[key + 1].lat, l[key + 1].lon],
+                  [route.points[key].lat, route.points[key].lon], [route.points[key + 1].lat, route.points[key + 1].lon],
                 ]} color="blue" />
               );
             }
