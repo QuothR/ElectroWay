@@ -31,7 +31,7 @@ internal class TemplateCarListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(onClick)
-        holder.templateCarText.text = itemsList[position].model
+        holder.templateCarText.text = "${itemsList[position].model}, ${itemsList[position].year}"
     }
 
     override fun getItemCount(): Int {
