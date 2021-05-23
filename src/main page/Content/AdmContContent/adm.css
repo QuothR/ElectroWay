@@ -39,9 +39,10 @@
   color: #f5deb3;
 } */
 .admin {
-  background: linear-gradient(to right, #8585ac, #c6bfd2) !important;
+  background: linear-gradient(to top left, #8585ac, #afa7ca) !important;
   margin: auto;
-  border-radius: 25px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 15px 5px;
   /* height: 550px; */
   height: 89%;
   width: 70%;

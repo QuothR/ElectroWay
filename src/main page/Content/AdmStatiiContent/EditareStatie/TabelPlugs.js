@@ -31,7 +31,7 @@ function TabelPlugs(props) {
     }, []);
 
     function handleDelete(plugId) {
-        
+
         axios.delete(`http://localhost:443/station/${stationAddr.id}/points/${pointId}/plugs/${plugId}`, {
             headers: {
                 'Authorization': `Basic ${myToken}`
@@ -55,10 +55,10 @@ function TabelPlugs(props) {
                 <td style={{ width: "15%" }}>{plug.priceKw}</td>
                 <td style={{ width: "10%" }}>{plug.chargingSpeedKw}</td>
                 <td style={{ width: "5%" }}
-                onClick={(e) => {
-                    sessionStorage.setItem('plugAddr',JSON.stringify(plug));
-                    history.push("/home/Adm-station/edit/point/plug")
-                }}
+                    onClick={(e) => {
+                        sessionStorage.setItem('plugAddr', JSON.stringify(plug));
+                        history.push("/home/Adm-station/edit/point/plug")
+                    }}
                 ><GrEdit /></td>
                 <td style={{ width: "5%" }}
                     onClick={(e) => {
@@ -102,12 +102,14 @@ function TabelPlugs(props) {
                     </ReactBootStrap.Table>
                 </div>
                 <div className="ButtonRow">
-                    <Link to="/home/Adm-station/edit"><button className="ButonRenunta">Renunta</button></Link>
+                    <Link to="/home/Adm-station/edit"><button className="ButonRenunta" onClick={() => {
+                        sessionStorage.removeItem("pointId")
+                    }}>Renunta</button></Link>
                     <button className="ButonAdaugaPlug" onClick={(e) => {
-                            e.preventDefault();
-                            handleAddPlug();
-                        }}
-                        >Adauga plug</button>
+                        e.preventDefault();
+                        handleAddPlug();
+                    }}
+                    >Adauga plug</button>
                 </div>
             </div>
         </div>

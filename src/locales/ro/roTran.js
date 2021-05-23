@@ -16,7 +16,7 @@ export const RO = {
             admCars: "Administrare masini",
             admStations: "Administrare statii",
             history: "Istoric",
-            tripPlanner: "planificator de rute",
+            tripPlanner: "Planificator de rute",
             reviews: "Recenzii",
             statistics: "Statistici"
         },

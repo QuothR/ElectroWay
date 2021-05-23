@@ -31,14 +31,14 @@
 }
 
 .AdmStatii .AdmBox {
-  background: linear-gradient(to right, #8585ac, #dbd3e6) !important;
+  background: linear-gradient(to top left, #8585ac, #b3acca) !important;
   width: 980px;
   height: 500px;
   padding: 0;
   justify-content: space-between;
   display: flex;
-  box-shadow: 0px 0px 8px 0px #000;
-  border-radius: 10px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 15px 5px;
 }
 
 .AdmStatii .AdmBox .Inregistrate {

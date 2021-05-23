@@ -15,6 +15,8 @@ function AdmStContent(props) {
   const [statii, getStatii] = useState([]);
 
   sessionStorage.removeItem('stationAddr');
+  sessionStorage.removeItem('nrChPoint')
+  sessionStorage.removeItem('nrPlugs')
 
   useEffect(() => {
     axios

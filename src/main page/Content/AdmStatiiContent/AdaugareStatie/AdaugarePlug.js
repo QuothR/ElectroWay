@@ -22,7 +22,7 @@ function AdaugarePlug(props) {
         console.log(pointId)
 
         const dataBackend = {
-            status: 0,
+            status: 1,
             connectorType: formImput.connectorType ? formImput.connectorType : "Type 1", //se pune valoarea default
             priceKw: formImput.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw
@@ -76,7 +76,10 @@ function AdaugarePlug(props) {
         })
 
         
-        setTimeout(()=>{history.push("/home/Adm-station")}, 100)
+        setTimeout(()=>{
+            sessionStorage.removeItem("nrPlugs")
+            sessionStorage.removeItem("nrChPoint")
+            history.push("/home/Adm-station")}, 100)
     }
 
     return (

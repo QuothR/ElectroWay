@@ -131,7 +131,6 @@ function EditareStatie(props) {
                     }}
                 ><RiDeleteBinLine /></td>
             </tr>
-            // {pluguri.map(renderPlugs)}
 
         );
 
@@ -215,7 +214,7 @@ function EditareStatie(props) {
                     </div>
 
                     <div className="ButonRenuntaRow">
-                        <Link to="/home/Adm-station"><button className="ButonRenunta">Renunta</button></Link>
+                        <Link to="/home/Adm-station"><button className="ButonRenunta" >Renunta</button></Link>
                         <button className="ButonAdaugaPunct" onClick={(e) => {
                             e.preventDefault();
                             handleAdaugarePunct();

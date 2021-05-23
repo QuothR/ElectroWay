@@ -70,7 +70,9 @@ function AdaugareChPoint(props) {
         })
 
         
-        setTimeout(()=>{history.push("/home/Adm-station")}, 100)
+        setTimeout(()=>{
+            sessionStorage.removeItem("nrChPoint")
+            history.push("/home/Adm-station")}, 100)
         //history.push("/home/Adm-station")
     }
 

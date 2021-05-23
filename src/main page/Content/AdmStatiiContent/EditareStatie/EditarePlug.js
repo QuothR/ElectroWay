@@ -39,8 +39,9 @@ function EditarePlug(props) {
         // trebuie verificat daca da eroare de la backend sau nu
         // daca nu da se apeleaza functia de jos
         setTimeout(()=>{
-
+            sessionStorage.removeItem("plugAddr")
             history.push("/home/Adm-station/edit/point")
+            
         }, 200)
     }
 
@@ -89,7 +90,9 @@ function EditarePlug(props) {
 
                         </div>
                         <div className="formRowBottom">
-                            <Link to="/home/Adm-station/edit/point"><button className="ButonRenunta">Renunta</button></Link>
+                            <Link to="/home/Adm-station/edit/point"><button className="ButonRenunta" onClick={()=>{
+                                sessionStorage.removeItem("plugAddr")
+                            }}>Renunta</button></Link>
                             <button className="ButonAdaug" type="submit">Modifica</button>
                         </div>
                     </form>
