@@ -6,10 +6,10 @@ import { useHistory } from "react-router";
 import "./login-register.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from "react-redux";
-import { LoginActionType, LoginAuthAction } from "../redux/actions/LoginAction";
+import { LoginAuthAction } from "../redux/actions/LoginAction";
 import axios from "axios";
-import {RO} from "../locales/ro/roTran"
-import {ENG} from "../locales/en/engTran"
+import { RO } from "../locales/ro/roTran"
+import { ENG } from "../locales/en/engTran"
 
 function ResetPassword(props) {
   const { user, login } = props;
@@ -19,8 +19,8 @@ function ResetPassword(props) {
     message: "",
   });
 
-  const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
-  let text = language == 1 ? ENG : RO;
+  const language = sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1
+  let languageText = language === 1 ? ENG : RO;
 
   function handleAddEmail() {
     console.log(userState.email);
@@ -40,12 +40,13 @@ function ResetPassword(props) {
       .then((res) => {
         console.log(res.data);
       });
-    history.push(`/login`);
+
+    setTimeout(() => {
+      history.push(`/login`);
+    }, 50)
+
   }
 
-  function refreshPage() {
-    window.location.reload();
-  }
 
   return (
     <div className="login-register">
@@ -75,6 +76,7 @@ function ResetPassword(props) {
                   type="email"
                   className="form-control"
                   placeholder="name@example.com"
+                  required
                   onChange={(e) => {
                     const email = e.target.value;
                     setUser({ ...userState, ...{ email } });
@@ -82,12 +84,12 @@ function ResetPassword(props) {
                   }}
                 />
               </div>
-                <button type="submit" className="btn btn-class1">
-                  Get token
+              <button type="submit" className="btn btn-class1">
+                Get token
                 </button>
-                <div className="error-response">
-                  <p>{errorHandler.message}</p>
-                </div>
+              <div className="error-response">
+                <p>{errorHandler.message}</p>
+              </div>
             </form>
 
             <form
@@ -104,6 +106,7 @@ function ResetPassword(props) {
                   type="text"
                   className="form-control"
                   placeholder="Enter reset token"
+                  required
                   onChange={(e) => {
                     const token = e.target.value;
                     setUser({ ...userState, ...{ token } });
@@ -118,6 +121,7 @@ function ResetPassword(props) {
                   name="password"
                   className="form-control"
                   placeholder="Enter new password"
+                  required
                   onChange={(e) => {
                     const password = e.target.value;
                     setUser({ ...userState, ...{ password } });
@@ -130,9 +134,9 @@ function ResetPassword(props) {
                   Don't have an account?
                   <Link to="./register"> Register here.</Link>
                 </p>
-                
+
               </div>
-              
+
 
               <div className=" form-group-bottom">
                 <button type="submit" className="btn btn-class">

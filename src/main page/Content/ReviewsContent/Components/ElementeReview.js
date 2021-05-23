@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Tabel from "./Tabel";
-// import DateTabel from "./DateTabelPrimite.json";
-import { Link } from "react-router-dom";
 import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import axios from "axios";
-import { useHistory } from "react-router";
 import { connect } from "react-redux";
 
 function ElementeJosDrp(props) {

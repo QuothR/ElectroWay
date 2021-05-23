@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import './Register.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { RegisterAuthAction } from '../redux/actions/AuthAction'
 import {ENG} from "../locales/en/engTran"
@@ -21,8 +19,8 @@ function Register(props) {
             message: "",
         }
     );
-    const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
-    let text = language == 1 ? ENG : RO;
+    const language = sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1
+    let languageText = language === 1 ? ENG : RO;
 
 
 

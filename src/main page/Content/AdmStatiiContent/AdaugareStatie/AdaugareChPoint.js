@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './AdaugareChPoint.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 
 function AdaugareChPoint(props) {
@@ -34,11 +33,6 @@ function AdaugareChPoint(props) {
                 sessionStorage.setItem('pointId',res.data.id);
             })
     }
-
-    function refreshPage(){ 
-        window.location.reload(); 
-    }
-
     function handleWorkflow() {
         if (formImput.nrPlugs > 0) {
             

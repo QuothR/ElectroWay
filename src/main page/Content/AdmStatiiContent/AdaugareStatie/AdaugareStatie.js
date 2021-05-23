@@ -4,15 +4,12 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
-import AdaugareChPoint from './AdaugareChPoint'
 
 
 function AdaugareStatie(props) {
     const { user } = props;
     const myToken = user.loginReducer.user.token;
     const [formImput, setFormInput] = useState({});
-    const [responseText, setResponseTest] = useState(null);
-
     const history = useHistory();
 
     function handleAdd() {
@@ -22,7 +19,6 @@ function AdaugareStatie(props) {
             latitude: formImput.latitude,
             longitude: formImput.longitude
         }
-
 
         axios.post("http://localhost:443/station", dataBackend, {
             headers: {
@@ -35,9 +31,6 @@ function AdaugareStatie(props) {
             })
     }
 
-    function refreshPage(){ 
-        window.location.reload(); 
-    }
 
     function handleWorkflow() {
         if (formImput.address != null &&

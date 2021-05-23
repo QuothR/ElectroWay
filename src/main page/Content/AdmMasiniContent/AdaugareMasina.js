@@ -13,17 +13,17 @@ function AdaugareMasina(props) {
     const [formImput, setFormInput] = useState({});
     const history = useHistory();
 
-    const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
-    let text = language == 1 ? ENG : RO;
+    const language= sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1
+    let languageText = language === 1 ? ENG : RO;
 
     function handleAdd() {
         const dataBackend = {
             model: formImput.model,
             year: formImput.year,
             batteryCapacity: formImput.batteryCapacity,
-            chargingCapacity: formImput. chargingCapacity,
+            chargingCapacity: formImput.chargingCapacity,
             plugType: formImput.plugType ? formImput.plugType:'Type 1',
-            vehicleMaxSpeed: formImput. vehicleMaxSpeed,
+            vehicleMaxSpeed: formImput.vehicleMaxSpeed,
             auxiliaryKwh: formImput.auxiliaryKwh
         }
         console.log(dataBackend);

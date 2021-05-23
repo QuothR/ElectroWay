@@ -1,7 +1,6 @@
-import react, {useState} from 'react'
 import LinieTabel from './LinieTabel'
 import IstoricInfo from './IstoricInfo.json'
-import { IoMdDownload } from "react-icons/io";
+
 
 function TabelPlati() {
     let text = "";
@@ -35,7 +34,6 @@ function TabelPlati() {
                             sumaInt={val.sumaInt}
                             sumaFloat={val.sumaFloat}
                             cod={val.cod}
-                            key={key}
                         />
 
                 );

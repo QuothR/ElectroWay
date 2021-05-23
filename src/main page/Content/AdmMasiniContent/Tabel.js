@@ -2,15 +2,13 @@ import LinieTabel from './LinieTabel'
 import axios from "axios";
 import { connect } from "react-redux";
 import Exit from './exit.svg'
-import AdmMasini from './AdmMasini';
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
 import { RO } from "../../../locales/ro/roTran"
 import { ENG } from "../../../locales/en/engTran"
 
 function Tabel(props) {
-    const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
-    let languageText = language == 1 ? ENG : RO;
+    const language = sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1
+    let languageText = language === 1 ? ENG : RO;
 
     const titleWords = [
         languageText.admMasini.model,

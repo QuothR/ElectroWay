@@ -12,12 +12,6 @@ function Adm(props) {
   //const [dateCont, getDate] = useState("");
   var [formImput, setFormInput] = useState({});
 
-  const history = useHistory();
-  const redirectionare = () => {
-    history.push("/home/Adm-station/Reset");
-    window.location.reload();
-  };
-
   function handleAdd() {
     const dataBackend = {
       id: formImput.id,
@@ -46,9 +40,6 @@ function Adm(props) {
       });
   }
 
-  function refreshPage() {
-    window.location.reload();
-  }
 
   function handleWorkflow() {
     handleAdd();

@@ -5,22 +5,17 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import * as ReactBootStrap from "react-bootstrap";
-import Edit from "../Images/edit.svg";
-import Exit from "../Images/exit.svg"
 import { GrEdit } from 'react-icons/gr';
 import { RiDeleteBinLine } from 'react-icons/ri'
 
 function EditareStatie(props) {
     const { user } = props;
     const myToken = user.loginReducer.user.token;
-    const [formImput, setFormInput] = useState({});
-    const [responseText, setResponseTest] = useState(null);
-
+    const [formImput, setFormInput] = useState({})
     const history = useHistory();
     const stationAddr = JSON.parse(sessionStorage.getItem('stationAddr'))
 
     const [puncte, getPuncte] = useState([]);
-    const [pluguri, getPlugs] = useState([]);
     useEffect(() => {
         axios
             .get(`http://localhost:443/station/${stationAddr.id}/points`, {

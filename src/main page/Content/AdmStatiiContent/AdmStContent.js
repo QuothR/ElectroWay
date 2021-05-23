@@ -4,7 +4,6 @@ import "./AdmStContent.css";
 import Statie from "./Images/statie.svg";
 import Edit from "./Images/edit.svg";
 import * as ReactBootStrap from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import axios from "axios";
 import { connect } from "react-redux";

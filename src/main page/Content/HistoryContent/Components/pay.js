@@ -1,9 +1,8 @@
 //var easyinvoice = require('easyinvoice');
 import easyinvoice from 'easyinvoice';
-import logo from './logo.png';
 function downloadInvoice(data,destinatar,suma,cod) {
  
-    var data = {
+    data = {
         "documentTitle": "Receipt", //Defaults to INVOICE
         "currency": "RON",
         

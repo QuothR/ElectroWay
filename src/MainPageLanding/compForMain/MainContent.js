@@ -15,18 +15,14 @@ import iGitHub from '../main pictures/iGitHub.svg'
 import iInstagram from '../main pictures/iInstagram.svg'
 import Logo from '../../login-register/logo3.png'
 import './styling.css'
-import Mapp from '../../main page/Content/Trip Planner/Mapp'
 import { ENG } from '../../locales/en/engTran'
 import { RO } from '../../locales/ro/roTran'
 function MainContent() {
     const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
 
-    let languageText = language == 1 ? ENG : RO
-
-
-
+    let languageText = language === 1 ? ENG : RO
     useEffect(() => {
-        languageText = language == 1 ? ENG : RO
+        languageText = language === 1 ? ENG : RO
         console.log(languageText)
         sessionStorage.setItem('language', language);
     });
@@ -44,7 +40,7 @@ function MainContent() {
                 </select>
                 <div className="asider">
                     <div className="col-md6 mx-5 my-2">
-                        <a href="#"><img src={Logo} className="img-fluid img" alt="LogoMainPage" /></a></div>
+                        <img src={Logo} className="img-fluid img" alt="LogoMainPage" /></div>
 
 
                     <button className="btn-class" onClick={() => { window.location.pathname = "/login" }}>Sign in</button>

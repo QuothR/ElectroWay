@@ -1,5 +1,3 @@
-  
-import react from 'react'
 import './HistoryContent.css'
 import TabelPlati from './Components/TabelPlati'
 

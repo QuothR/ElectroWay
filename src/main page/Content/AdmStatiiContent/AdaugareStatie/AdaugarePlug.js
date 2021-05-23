@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './AdaugarePlug.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 
 function AdaugarePlug(props) {
