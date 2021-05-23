@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class Order {
 
-    private double total;
+    private double totalKW;
     private final String currency = "EUR";
     private final String method = "paypal";
     private final String intent = "sale";

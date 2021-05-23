@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6b7ee3a6-e05b-4473-b275-e5f6b30ce40b",
+		"_postman_id": "69689e3f-f5d7-48da-b2f5-a20982751880",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -770,7 +770,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/1001/points",
+							"raw": "https://localhost:443/station/1/points",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -778,7 +778,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"1001",
+								"1",
 								"points"
 							]
 						}
@@ -847,7 +847,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/1001/points/1",
+							"raw": "https://localhost:443/station/1/points/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -855,7 +855,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"1001",
+								"1",
 								"points",
 								"1"
 							]
@@ -1014,7 +1014,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"total\": 10,\r\n    \"description\": \"asd\"\r\n}",
+							"raw": "{\r\n    \"totalKW\": 10,\r\n    \"description\": \"asd\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
