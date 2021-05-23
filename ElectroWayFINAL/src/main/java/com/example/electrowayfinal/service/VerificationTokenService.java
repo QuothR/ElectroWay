@@ -33,14 +33,14 @@ public class VerificationTokenService {
     public void save(User user, String token) {
         VerificationToken verificationToken = new VerificationToken(token, user);
         // set expiry date to 5m
-        verificationToken.setExpiryDate(calculateExpiryDate(300));
+        verificationToken.setExpiryDate(calculateExpiryDate());
         verificationTokenRepository.save(verificationToken);
     }
 
     //calculate expiry date
-    private Timestamp calculateExpiryDate(int expiryTimeInMinutes) {
+    private Timestamp calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, expiryTimeInMinutes);
+        cal.add(Calendar.MINUTE, 300);
         return new Timestamp(cal.getTime().getTime());
     }
 }

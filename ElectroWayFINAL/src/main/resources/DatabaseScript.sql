@@ -425,6 +425,7 @@ CREATE TABLE IF NOT EXISTS `station`
     `address`                varchar(255) NOT NULL,
     `map_latitude_location`  double       NOT NULL,
     `map_longitude_location` double       NOT NULL,
+    `description`            varchar(255) DEFAULT NULL,
     `owner_id`               bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `map_latitude_location` (`map_latitude_location`, `map_longitude_location`, `owner_id`),
