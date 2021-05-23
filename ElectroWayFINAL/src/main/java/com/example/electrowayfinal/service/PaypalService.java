@@ -54,13 +54,14 @@ public class PaypalService {
         amount.setDetails(details);
 
         amount.setCurrency(order.getCurrency());
-        double total = BigDecimal.valueOf(order.getTotalKW() * chargingPlugService.getOnePlug(plugId).getPriceKw()).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        amount.setTotal(String.valueOf(subtotal + tax));
+        double total = BigDecimal.valueOf(subtotal + tax).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+        amount.setTotal(String.valueOf(total));
 
         Item item = new Item();
         item.setCurrency("EUR");
         item.setPrice(String.valueOf(chargingPlugService.getOnePlug(plugId).getPriceKw()));
-        item.setQuantity(String.valueOf(order.getTotalKW()));
+        item.setQuantity(String.valueOf((int) order.getTotalKW()));
         item.setName(" KW consumed for " + "charging at plug " + plugId);
         item.setDescription(order.getDescription() + "\n");
 
@@ -85,6 +86,8 @@ public class PaypalService {
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);
         payment.setRedirectUrls(redirectUrls);
+
+        System.out.println(payment);
 
         return payment.create(apiContext);
     }
