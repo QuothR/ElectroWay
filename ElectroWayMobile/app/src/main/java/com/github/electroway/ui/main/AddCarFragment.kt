@@ -35,7 +35,6 @@ class AddCarFragment : Fragment() {
                 view.findViewById<EditText>(R.id.batteryCapacityEditText).text.toString().toDouble()
             val chargingCapacity =
                 view.findViewById<EditText>(R.id.chargingCapacityEditText).text.toString().toDouble()
-            val plugType = view.findViewById<EditText>(R.id.plugTypeEditText).text.toString()
             val vehicleMaxSpeed =
                 view.findViewById<EditText>(R.id.vehicleMaxSpeedEditText).text.toString().toDouble()
             val auxiliaryKwh =
@@ -47,7 +46,6 @@ class AddCarFragment : Fragment() {
                     year,
                     batteryCapacity,
                     chargingCapacity,
-                    plugType,
                     vehicleMaxSpeed,
                     auxiliaryKwh
                 )

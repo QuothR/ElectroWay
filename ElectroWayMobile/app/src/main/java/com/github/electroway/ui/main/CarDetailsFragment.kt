@@ -52,7 +52,6 @@ class CarDetailsFragment : Fragment() {
                             obj.getInt("year"),
                             obj.getDouble("batteryCapacity"),
                             obj.getDouble("chargingCapacity"),
-                            obj.getString("plugType"),
                             obj.getDouble("vehicleMaxSpeed"),
                             obj.getDouble("auxiliaryKwh")
                         )

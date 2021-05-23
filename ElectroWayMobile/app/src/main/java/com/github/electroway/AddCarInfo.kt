@@ -9,7 +9,6 @@ class AddCarInfo(
     val year: Int,
     val batteryCapacity: Double,
     val chargingCapacity: Double,
-    val plugType: String,
     val vehicleMaxSpeed: Double,
     val auxiliaryKwh: Double
 ) : Serializable {
@@ -19,7 +18,6 @@ class AddCarInfo(
             .put("year", year)
             .put("batteryCapacity", batteryCapacity)
             .put("chargingCapacity", chargingCapacity)
-            .put("plugType", plugType)
             .put("vehicleMaxSpeed", vehicleMaxSpeed)
             .put("auxiliaryKwh", auxiliaryKwh)
     }

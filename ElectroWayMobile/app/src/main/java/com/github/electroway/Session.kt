@@ -621,6 +621,7 @@ class Session(val handler: Handler) {
 
             override fun onResponse(call: Call, response: Response) {
                 val success = response.isSuccessful
+                Log.e("a", response.body!!.string())
                 handler.post {
                     callback(success)
                 }
