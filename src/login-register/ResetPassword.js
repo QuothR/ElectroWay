@@ -8,6 +8,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from "react-redux";
 import { LoginActionType, LoginAuthAction } from "../redux/actions/LoginAction";
 import axios from "axios";
+import {RO} from "../locales/ro/roTran"
+import {ENG} from "../locales/en/engTran"
 
 function ResetPassword(props) {
   const { user, login } = props;
@@ -16,6 +18,9 @@ function ResetPassword(props) {
   const [errorHandler, setErrorHandler] = useState({
     message: "",
   });
+
+  const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
+  let text = language == 1 ? ENG : RO;
 
   function handleAddEmail() {
     console.log(userState.email);

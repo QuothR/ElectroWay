@@ -21,13 +21,13 @@ import { RO } from '../../locales/ro/roTran'
 function MainContent() {
     const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
 
-    let text = language == 1 ? ENG : RO
+    let languageText = language == 1 ? ENG : RO
 
 
 
     useEffect(() => {
-        text = language == 1 ? ENG : RO
-        console.log(text)
+        languageText = language == 1 ? ENG : RO
+        console.log(languageText)
         sessionStorage.setItem('language', language);
     });
 
@@ -47,7 +47,7 @@ function MainContent() {
                         <a href="#"><img src={Logo} className="img-fluid img" alt="LogoMainPage" /></a></div>
 
 
-                    <button className="btn-class" onClick={() => { window.location.pathname = "/login" }}>{text[0].mainContent.signin}</button>
+                    <button className="btn-class" onClick={() => { window.location.pathname = "/login" }}>Sign in</button>
                 </div>
             </aside>
 
@@ -55,7 +55,7 @@ function MainContent() {
                 <div className="intro">
                     <section className="main_section">
                         <img id="image" src={CarImage} alt="imagecar" />
-                        <h1 id="text-over-picture">{text[0].mainContent.title}</h1>
+                        <h1 id="text-over-picture">{languageText.mainContent.title}</h1>
                     </section>
 
                 </div>

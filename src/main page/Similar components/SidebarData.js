@@ -1,43 +1,43 @@
 
 export const SidebarData =[
     {
-        title: "Administrare cont",
+        title: "admAccount",
         icon: "",
         link: "/home/Adm-account"
     },
 
     {
-        title: "Administrare masini",
+        title: "admCars",
         icon: "",
         link: "/home/Adm-cars"
     },
 
     {
-        title: "Administrare statii",
+        title: "admStations",
         icon: "",
         link: "/home/Adm-station"
     },
 
     {
-        title: "Istoric",
+        title: "history",
         icon: "",
         link: "/home/History"
     },
 
     {
-        title: "Trip Planner",
+        title: "tripPlanner",
         icon: "",
         link: "/home/Trip-planner"
     },
 
     {
-        title: "Reviews",
+        title: "reviews",
         icon: "",
         link: "/home/Reviews"
     },
 
     {
-        title: "Statistici",
+        title: "statistics",
         icon: "",
         link: "/home/Stats"
     }

@@ -4,14 +4,17 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import {RO} from "../../../locales/ro/roTran"
+import {ENG} from "../../../locales/en/engTran"
 
 function AdaugareMasina(props) {
     const { user } = props;
     const myToken = user.loginReducer.user.token;
     const [formImput, setFormInput] = useState({});
-    //const [formImput, setFormInput] = useState();
-
     const history = useHistory();
+
+    const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
+    let text = language == 1 ? ENG : RO;
 
     function handleAdd() {
         const dataBackend = {

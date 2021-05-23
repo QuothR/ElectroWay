@@ -8,19 +8,19 @@ import * as ReactBootStrap from "react-bootstrap";
 import './AdmMasini.css'
 import Tabel from './Tabel'
 import { connect } from 'react-redux'
+import {RO} from "../../../locales/ro/roTran"
+import {ENG} from "../../../locales/en/engTran"
+
 function AdmMasini() {
-
-
-
-
-
+  const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
+  let languageText = language == 1 ? ENG : RO;
   const history = useHistory();
 
     return (
         <div className="AdmMasini">
             <div className="AdmBox">
                 <div className="Inregistrate">
-                    <p className="TitluInreg">Masini inregistrate</p>
+                    <p className="TitluInreg">{languageText.admMasini.carsRegistered}</p>
                     <Tabel />
                 </div>
                 <div className="Adaugare">
@@ -32,7 +32,7 @@ function AdmMasini() {
           <button className="btn-class"  onClick={(e) => {
           e.preventDefault();
           history.push("/home/Adm-cars/AddCar");
-          }}>Adaugare masina</button>
+          }}>{languageText.admMasini.addCar}</button>
         </div>
                 </div>
             </div>

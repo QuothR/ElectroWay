@@ -1,5 +1,4 @@
-export const RO = [
-    {
+export const RO = {
         mainContent: {
             signin: "Conectare",
             title: "Scopul nostru e sa va oferim energie",
@@ -10,7 +9,23 @@ export const RO = [
             text1: "Have you ever run out of battery and didn't know where to charge your electric car? Have you ever had problems with your car's battery level on long trips?",
             text2: "We are here to help you! Our website will show you a map of the charging stations and our application will calculate the shortest distance to your destination, taking into account the charging stations on the road.",
             text3: "Enjoy the electric experince! Find out how efficient is to travel with us! An optimal way to travel without thinking you could run out of battery."
+        },
+        sidebarBtn:{
+            signOut:"Deconectare",
+            admAccount: "Administrare cont",
+            admCars: "Administrare masini",
+            admStations: "Administrare statii",
+            history: "Istoric",
+            tripPlanner: "planificator de rute",
+            reviews: "Recenzii",
+            statistics: "Statistici"
+        },
+        admMasini: {
+            carsRegistered: "Masini inregistrate",
+            addCar: "Adaugare masina",
+            model: "Model",
+            year: "An",
+            chargingCap: "Cap incarcare (kW)",
+            speed: "Viteza maxima (km/h)"
         }
     }
-
-]

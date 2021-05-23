@@ -7,6 +7,8 @@ import "./login-register.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from "react-redux";
 import { LoginActionType, LoginAuthAction } from "../redux/actions/LoginAction";
+import {RO} from "../locales/ro/roTran"
+import {ENG} from "../locales/en/engTran"
 
 function Login(props) {
   const { user, login } = props;
@@ -15,6 +17,8 @@ function Login(props) {
   const [errorHandler, setErrorHandler] = useState({
     message: "",
   });
+  const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
+  let text = language == 1 ? ENG : RO;
 
   return (
     <div className="login-register">

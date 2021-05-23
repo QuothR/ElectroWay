@@ -112,3 +112,17 @@
     transform: translateY(-20%);
 }
 
+.ContentMainPage .blockSelectpicker{
+    width: 100%;
+
+}
+
+.ContentMainPage .selectpicker {
+    position: relative;
+    width: 100px;
+    font-size: 18px;
+    margin: 5px 0px 0px 10px;
+    box-shadow: 0px 0px 6px 0px #000;
+    outline: none;
+    background: linear-gradient(to right, #8585ac , #c6bfd2) !important;
+}

@@ -5,12 +5,22 @@ import Exit from './exit.svg'
 import AdmMasini from './AdmMasini';
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-const titleWords = ['Model', 'An', 'Cap. incarcare (kW)', 'Viteza'];
-const items = titleWords.map((word, idx) => {
-    return <li key={idx}>{word}</li>;
-});
+import { RO } from "../../../locales/ro/roTran"
+import { ENG } from "../../../locales/en/engTran"
 
 function Tabel(props) {
+    const [language, setLanguage] = useState(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1)
+    let languageText = language == 1 ? ENG : RO;
+
+    const titleWords = [
+        languageText.admMasini.model,
+        languageText.admMasini.year,
+        languageText.admMasini.chargingCap,
+        languageText.admMasini.speed
+    ];
+    const items = titleWords.map((word, idx) => {
+        return <li key={idx}>{word}</li>;
+    });
 
 
     function deleteCar(param) {
