@@ -58,3 +58,10 @@ Pentru project v.1.2 :
 
 Pentru v.1.3 v.1.4 v.1.5 :
 - READ redux -> store.js 
+
+---------------------
+- !!!!!: trebuie sa aveti versiunile astea de bootstrap in package.json
+*"bootstrap": "^4.6.0",
+*"react-bootstrap": "^1.5.2"
+- !!!!!: daca primiti eroare, intrati in redux -> store.js si urmati "pasii"
+
