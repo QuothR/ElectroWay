@@ -17,7 +17,8 @@ function AdaugareStatie(props) {
         const dataBackend = {
             address: formImput.address,
             latitude: formImput.latitude,
-            longitude: formImput.longitude
+            longitude: formImput.longitude,
+            description: formImput.description ? formImput.description : "empty"
         }
 
         axios.post("http://localhost:443/station", dataBackend, {
@@ -91,6 +92,13 @@ function AdaugareStatie(props) {
                                 onChange={(e) => {
                                     const longitude = e.target.value;
                                     setFormInput({ ...formImput, ...{ longitude } });
+                                }}
+                            />
+                            <label>Beneficiile stației</label>
+                            <input type="text" placeholder="optional" required pattern=".{1,}"
+                                onChange={(e) => {
+                                    const description = e.target.value;
+                                    setFormInput({ ...formImput, ...{ description } });
                                 }}
                             />
 

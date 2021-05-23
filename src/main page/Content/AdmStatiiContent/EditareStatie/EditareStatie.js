@@ -50,9 +50,9 @@ function EditareStatie(props) {
             }
         })
 
-       setTimeout(() => {
-        history.push("/home/Adm-station")
-       },100)
+        setTimeout(() => {
+            history.push("/home/Adm-station")
+        }, 100)
     }
 
     function handleModifyStation() {
@@ -60,7 +60,8 @@ function EditareStatie(props) {
         const dataBackend = {
             address: formImput.address ? formImput.address : stationAddr.address,
             latitude: formImput.latitude ? formImput.latitude : stationAddr.latitude,
-            longitude: formImput.longitude ? formImput.longitude : stationAddr.longitude
+            longitude: formImput.longitude ? formImput.longitude : stationAddr.longitude,
+            description: formImput.description ? formImput.description : stationAddr.description
         }
 
 
@@ -73,15 +74,15 @@ function EditareStatie(props) {
                 console.log(res.data);
             })
 
-        stationAddr.address=dataBackend.address
-        stationAddr.latitude=dataBackend.latitude
-        stationAddr.longitude=dataBackend.longitude
+        stationAddr.address = dataBackend.address
+        stationAddr.latitude = dataBackend.latitude
+        stationAddr.longitude = dataBackend.longitude
         sessionStorage.setItem('stationAddr', JSON.stringify(stationAddr))
 
     }
 
     function handleAdaugarePunct() {
-        
+
         const emtyData = {
 
         }
@@ -166,6 +167,13 @@ function EditareStatie(props) {
                                     onChange={(e) => {
                                         const longitude = e.target.value;
                                         setFormInput({ ...formImput, ...{ longitude } });
+                                    }}
+                                />
+                                <label>Beneficiile stației</label>
+                                <input type="text" placeholder="optional" defaultValue={stationAddr.description} required pattern=".{1,}"
+                                    onChange={(e) => {
+                                        const description = e.target.value;
+                                        setFormInput({ ...formImput, ...{ description } });
                                     }}
                                 />
 

@@ -77,6 +77,7 @@ function Adm(props) {
               Username
             </label>
             <input
+              className="inputDate"
               type="text"
               name="username"
               id="username"
@@ -91,6 +92,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="email">Email</label>
             <input
+            className="inputDate"
               type="text"
               name="email"
               id="email"
@@ -106,6 +108,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="nume">Nume</label>
             <input
+            className="inputDate"
               type="text"
               name="nume"
               id="nume"
@@ -121,6 +124,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="prenume">Prenume</label>
             <input
+            className="inputDate"
               type="text"
               name="prenume"
               id="prenume"
@@ -136,6 +140,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="numarDeTelefon">Numar de telefon</label>
             <input
+            className="inputDate"
               type="text"
               name="telefon"
               id="telefon"
@@ -151,6 +156,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="codPostal">Cod postal</label>
             <input
+            className="inputDate"
               type="text"
               name="codPostal"
               id="codPostal"
@@ -169,6 +175,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="tara">Tara</label>
             <input
+            className="inputDate"
               type="text"
               name="tara"
               id="tara"
@@ -184,6 +191,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="regiune">Regiune</label>
             <input
+            className="inputDate"
               type="text"
               name="regiune"
               id="regiune"
@@ -198,6 +206,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="oras">Oras</label>
             <input
+            className="inputDate"
               type="text"
               name="oras"
               id="oras"
@@ -213,6 +222,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="adresa1">Adresa 1</label>
             <input
+            className="inputDate"
               type="text"
               name="ad1"
               id="ad1"
@@ -228,6 +238,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="adresa2">Adresa 2</label>
             <input
+            className="inputDate"
               type="text"
               name="ad2"
               id="ad2"

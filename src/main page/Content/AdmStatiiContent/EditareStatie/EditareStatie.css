@@ -65,7 +65,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding:  10% 10%;
+    padding:  10% 0% 15px 0%;
 }
 
 .EditareStatie .EditareStatieBox .FormRow .Formularul .FormRowTop label{
@@ -117,6 +117,7 @@
 
 .EditareStatie .EditareStatieBox .BoxRight .ButonRenuntaRow{
     display: flex;
+    margin-top: 5px;
     justify-content: center;
     flex-direction: row;
 }
