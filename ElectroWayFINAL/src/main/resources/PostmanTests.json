@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "69689e3f-f5d7-48da-b2f5-a20982751880",
+		"_postman_id": "b46e4fac-6343-4112-ae96-20a2cdfcedd2",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -244,7 +244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"address\": \"sssss\",\r\n    \"latitude\": 112222222232312.23,\r\n    \"longitude\": 112222222223213.3\r\n    \r\n}",
+							"raw": "{\r\n    \"address\": \"sssss\",\r\n    \"latitude\": 112222222232312.23,\r\n    \"longitude\": 112222222223213.3,\r\n    \"description\": \"cafea gratis\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
