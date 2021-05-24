@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
@@ -10,6 +10,10 @@
         android:id="@+id/navigation_favourites"
         android:icon="@drawable/favourites"
         android:title="@string/favourites" />
+    <item
+        android:checkable="false"
+        android:enabled="false"
+        tools:ignore="MenuTitle" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/profile"

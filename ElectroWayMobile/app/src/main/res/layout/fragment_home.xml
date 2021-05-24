@@ -47,10 +47,25 @@
         android:id="@+id/home_bottom_nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/purple_dark"
+        app:itemBackground="@color/purple_dark"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu">
 
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/home_bottom_nav_view"
+            app:layout_constraintBottom_toTopOf="@id/home_bottom_nav_view"
+            app:layout_constraintEnd_toEndOf="@id/home_bottom_nav_view"
+            app:layout_constraintStart_toStartOf="@id/home_bottom_nav_view"
+            app:srcCompat="@drawable/logo_transparent"
+            tools:ignore="ContentDescription" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
