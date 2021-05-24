@@ -2,23 +2,15 @@ import LinieTabel from './LinieTabel'
 import axios from "axios";
 import { connect } from "react-redux";
 import Exit from './exit.svg'
+import AdmMasini from './AdmMasini';
 import React, { useEffect, useState } from "react";
-import { RO } from "../../../locales/ro/roTran"
-import { ENG } from "../../../locales/en/engTran"
+import { useHistory } from "react-router";
+const titleWords = ['Model', 'An', 'Cap. incarcare (kW)', 'Viteza'];
+const items = titleWords.map((word, idx) => {
+    return <li key={idx}>{word}</li>;
+});
 
 function Tabel(props) {
-    const language = sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1
-    let languageText = language === 1 ? ENG : RO;
-
-    const titleWords = [
-        languageText.admMasini.model,
-        languageText.admMasini.year,
-        languageText.admMasini.chargingCap,
-        languageText.admMasini.speed
-    ];
-    const items = titleWords.map((word, idx) => {
-        return <li key={idx}>{word}</li>;
-    });
 
 
     function deleteCar(param) {
@@ -33,7 +25,7 @@ function Tabel(props) {
 
         setTimeout(() => {
             window.location.reload();
-        }, 50)
+        }, 10)
 
     }
     const { user } = props;
@@ -55,7 +47,7 @@ function Tabel(props) {
 
 
     //console.log(DateLinieTabel);
-    if (DateLinieTabel.length > 3) {
+    if (DateLinieTabel.length >= 3) {
         text = "TabelBox scrollForTabelPlati";
     }
     else {

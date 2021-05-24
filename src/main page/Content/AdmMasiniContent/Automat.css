@@ -21,13 +21,14 @@
     align-items: center;
     border-radius: 30px;
     box-shadow: 0px 0px 15px 5px;
+
 }
 
 .AdaugareMasina .AdaugareMasinaBox .TitleRow {
     font-size: 25px !important;
 }
 
-.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul {
+.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,34 +40,36 @@
     justify-content: center;
 }
 
-.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .FormRowTop label {
+.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .FormRowTop label{
     display: block;
     margin: 7px 0px 0px 0px;
 }
 
-.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .FormRowTop input {
+.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .FormRowTop input{
     border-radius: 13px;
     box-shadow: 0px 1px 7px 0px #000;
     outline: none;
     padding: 0px 10px;
 }
 
-.AdaugareMasina .input-field {
+.AdaugareMasina .input-field{
     border-radius: 13px;
     box-shadow: 0px 1px 7px 0px #000;
     outline: none;
     padding: 0px 10px;
-    width: 270px;
+    width:62%;
+    
 }
 
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .FormRowTop .FormColumnLeft {
     padding: 3% 15%;
 }
-
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .FormRowTop .FormColumnRight {
     padding: 3% 15%;
 }
-
+.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow{
+    margin-top: 5%;
+}
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow .ButonAdaug {
     border-radius: 18px;
     background-color: #66628f;
@@ -76,7 +79,6 @@
     transition: 0.5s;
     color: #FFFF;
 }
-
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow .ButonRenunta {
     border-radius: 18px;
     background-color: #66628f;
@@ -86,7 +88,6 @@
     transition: 0.5s;
     color: #FFFF;
 }
-
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow .ButonInapoi {
     border-radius: 18px;
     background-color: #66628f;
@@ -96,11 +97,13 @@
     transition: 0.5s;
     color: #FFFF;
 }
-
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow .ButonAdaug:hover {
     box-shadow: 0px 0px 7px 3px #FFFF;
+    
+
 }
 
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow .ButonRenunta:hover {
     box-shadow: 0px 0px 7px 3px #FFFF;
+
 }

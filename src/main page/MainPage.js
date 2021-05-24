@@ -21,6 +21,8 @@ import EditareAddPlug from './Content/AdmStatiiContent/EditareStatie/AdaugaPlug'
 import Reviews from './Content/ReviewsContent/Reviews'
 import AdaugareReview from './Content/ReviewsContent/AdaugareReview'
 import StationReview from './Content/ReviewsContent/StationReview'
+import OptiuniIntermediar from './Content/AdmMasiniContent/OptiuniIntermediar'
+import AdaugareMasinaAutomat from './Content/AdmMasiniContent/AdaugareMasinaAutomat'
 
 function MainPage() {
 
@@ -54,6 +56,9 @@ function MainPage() {
                             <Route path="/home/Reviews" exact component={Reviews} />
                             <Route path="/home/Reviews/add" exact component={AdaugareReview} />
                             <Route path="/home/Reviews/station" exact component={StationReview} />
+                            <Route path="/home/Adm-cars/OptiuniIntermediar" exact component={OptiuniIntermediar} />
+                            <Route path="/home/Adm-cars/OptiuniIntermediar/AddCar" exact component={AdaugareMasina} />
+                            <Route path="/home/Adm-cars/OptiuniIntermediar/AddCarFromList" exact component={AdaugareMasinaAutomat} />
                         </Switch>
                     </div>
                 </Router>

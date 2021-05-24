@@ -4,26 +4,23 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-import {RO} from "../../../locales/ro/roTran"
-import {ENG} from "../../../locales/en/engTran"
 
 function AdaugareMasina(props) {
     const { user } = props;
     const myToken = user.loginReducer.user.token;
     const [formImput, setFormInput] = useState({});
-    const history = useHistory();
+    //const [formImput, setFormInput] = useState();
 
-    const language= sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1
-    let languageText = language === 1 ? ENG : RO;
+    const history = useHistory();
 
     function handleAdd() {
         const dataBackend = {
             model: formImput.model,
             year: formImput.year,
             batteryCapacity: formImput.batteryCapacity,
-            chargingCapacity: formImput.chargingCapacity,
-            plugType: formImput.plugType ? formImput.plugType:'Type 1',
-            vehicleMaxSpeed: formImput.vehicleMaxSpeed,
+            chargingCapacity: formImput. chargingCapacity,
+           // plugType: formImput.plugType ? formImput.plugType:'Type 1',
+            vehicleMaxSpeed: formImput. vehicleMaxSpeed,
             auxiliaryKwh: formImput.auxiliaryKwh
         }
         console.log(dataBackend);
@@ -38,7 +35,7 @@ function AdaugareMasina(props) {
            
             setTimeout(() => {
                 history.push("/home/Adm-cars")
-            }, 200)
+            }, 100)
     }
 
     return (
@@ -105,7 +102,7 @@ function AdaugareMasina(props) {
                                         setFormInput({ ...formImput, ...{auxiliaryKwh} });
                                      }}
                                      />
-                                <label> Tip plug</label>
+                                {/* <label> Tip plug</label>
                                 <select list="conector" className="input-field" placeholder="Tip"
                                    onChange={(e) => {
                                     const plugType= e.target.value;
@@ -116,13 +113,14 @@ function AdaugareMasina(props) {
                                     <option value="Type1">Type 1</option>
                                     <option value="Type2">Type 2</option>
 
-                                </select>
+                                </select> */}
                               
 
                             </div>
                         </div>
 
                         <div className="SubmitButtonRow">
+                        <Link to="/home/Adm-cars/OptiuniIntermediar"><button className="ButonInapoi">Inapoi</button></Link>
                             <button className="ButonAdaug" type="submit">Adauga</button>
                             <Link to="/home/Adm-cars"><button className="ButonRenunta">Renunta</button></Link>
                         </div>

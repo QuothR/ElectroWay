@@ -1,0 +1,121 @@
+.OptiuniIntermediar {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 20px !important;
+}
+
+.OptiuniIntermediar .OptiuniBox {
+    background: linear-gradient(to top left, #8585ac, #afa7ca) !important;
+    margin: 1% 3.5%;
+    width: 80%;
+    height: 500px;
+    padding: 0;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    box-shadow: 0px 0px 15px 5px;
+}
+
+.OptiuniIntermediar .OptiuniBox .TitleRow {
+    font-size: 25px !important;
+}
+
+.OptiuniIntermediar .btn-class {
+    background: linear-gradient(to right, #8585ac, #c6bfd2) !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: bold;
+    width: 200px;
+    border-radius: 40px;
+    box-shadow: 2px 2px 10px 0px #000;
+    font: bold !important;
+    transition: 0.7s;
+}
+
+.OptiuniIntermediar .S-C-Img {
+    background: #c6bfd2;
+    border-radius: 100px;
+    box-shadow: 0px 4px 15px 2px #000;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .FormRowTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .FormRowTop .Formularul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .Formularul .FormRowTop .FormColumnLeft {
+    padding: 3% 15%;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .Formularul .FormRowTop .FormColumnRight {
+    padding: 3% 15%;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .Formularul .FormRowTop .FormColumnRight .ButonAdaug {
+    border-radius: 18px;
+    background-color: #66628f;
+    margin-left: 15px;
+    margin-top: 16%;
+    padding: 2px 20px;
+    box-shadow: 0px 1px 4px 0px #000;
+    transition: 0.5s;
+    color: #FFFF;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .Formularul .FormRowTop .FormColumnLeft .ButonManual {
+    border-radius: 18px;
+    background-color: #66628f;
+    margin-left: 15px;
+    margin-top: 16%;
+    padding: 2px 20px;
+    box-shadow: 0px 1px 4px 0px #000;
+    transition: 0.5s;
+    color: #FFFF;
+}
+
+.OptiuniIntermediar .OptiuniBox .SubmitButtonRow .ButonAdaug {
+    border-radius: 18px;
+    background-color: #66628f;
+    margin-right: 15px;
+    padding: 2px 20px;
+    box-shadow: 0px 1px 4px 0px #000;
+    transition: 0.5s;
+    color: #FFFF;
+}
+
+.OptiuniIntermediar .OptiuniBox .SubmitButtonRow .ButonRenunta {
+    border-radius: 18px;
+    background-color: #66628f;
+    margin-left: 15px;
+    padding: 2px 20px;
+    box-shadow: 0px 1px 4px 0px #000;
+    transition: 0.5s;
+    color: #FFFF;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .ButonAdaug:hover {
+    box-shadow: 0px 0px 7px 3px #FFFF;
+}
+
+.OptiuniIntermediar .OptiuniBox .FormRow .SubmitButtonRow .ButonRenunta:hover {
+    box-shadow: 0px 0px 7px 3px #FFFF;
+}
