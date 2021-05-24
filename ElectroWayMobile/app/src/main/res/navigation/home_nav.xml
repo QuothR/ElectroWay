@@ -14,13 +14,9 @@
             app:destination="@id/navigation_station_list" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_history"
-        android:name="com.github.electroway.ui.main.HistoryFragment"
-        android:label="@string/title_history" />
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.github.electroway.ui.main.NotificationsFragment"
-        android:label="@string/title_notifications" />
+        android:id="@+id/navigation_favourites"
+        android:name="com.github.electroway.ui.main.FavouritesFragment"
+        android:label="@string/favourites" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.github.electroway.ui.main.ProfileFragment"

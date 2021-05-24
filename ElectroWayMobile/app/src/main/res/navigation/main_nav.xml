@@ -75,6 +75,11 @@
         <action
             android:id="@+id/action_mapFragment_to_helpFragment"
             app:destination="@id/helpFragment" />
+        <argument
+            android:name="show"
+            app:argType="com.google.android.gms.maps.model.LatLng"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

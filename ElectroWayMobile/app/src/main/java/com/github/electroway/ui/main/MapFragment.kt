@@ -237,6 +237,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 visibility = View.INVISIBLE
             }
         } else {
+            if (args.show != null) {
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(args.show, 20.0f))
+            }
             val session = (requireActivity().application as Application).session
             val stations = mutableMapOf<Int, String>()
             session.getAllStations {
@@ -272,7 +275,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                             longitude
                                         )
                                     ).title(address)
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.favourite))
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.favourite_mark))
                                 )] = id
                             } else {
                                 markersPos[googleMap.addMarker(
@@ -313,7 +316,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                             if (it) {
                                                 marker.setIcon(
                                                     BitmapDescriptorFactory.fromResource(
-                                                        R.drawable.favourite
+                                                        R.drawable.favourite_mark
                                                     )
                                                 )
                                                 val info = markersPos.remove(marker)

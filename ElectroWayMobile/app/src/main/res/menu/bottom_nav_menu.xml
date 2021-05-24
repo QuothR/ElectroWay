@@ -7,13 +7,9 @@
         android:icon="@drawable/car_details"
         android:title="@string/title_car_details" />
     <item
-        android:id="@+id/navigation_history"
-        android:icon="@drawable/history"
-        android:title="@string/title_history" />
-    <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/notifications"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_favourites"
+        android:icon="@drawable/favourites"
+        android:title="@string/favourites" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/profile"
