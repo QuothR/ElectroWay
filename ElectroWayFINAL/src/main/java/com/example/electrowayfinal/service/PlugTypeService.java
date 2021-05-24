@@ -41,7 +41,7 @@ public class PlugTypeService {
 
         Car car = carService.getCar(carId, httpServletRequest, httpServletResponse);
 
-        if (car.getUser() != user) {
+        if (!car.getUser().getEmailAddress().equals(user.getEmailAddress())) {
             throw new WrongAccessException("You don't own this car!");
         }
 
@@ -71,7 +71,7 @@ public class PlugTypeService {
 
         Car car = carService.getCar(carId, httpServletRequest, httpServletResponse);
 
-        if (car.getUser() != user) {
+        if (!car.getUser().getEmailAddress().equals(user.getEmailAddress())) {
             throw new WrongAccessException("Can't access car's consumptions if you don't own the car!");
         }
 
