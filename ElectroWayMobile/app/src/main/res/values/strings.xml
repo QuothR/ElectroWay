@@ -69,4 +69,8 @@
     <string name="show_reviews">Show reviews</string>
     <string name="remove_favourite">Remove favourite</string>
     <string name="favourites">Favourites</string>
+    <string name="pay">Pay</string>
+    <string name="charging_plug">Charging plug</string>
+    <string name="charging_point">Charging point</string>
+    <string name="total_kw">Total kW</string>
 </resources>

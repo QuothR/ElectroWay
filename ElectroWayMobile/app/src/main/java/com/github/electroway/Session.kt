@@ -862,9 +862,51 @@ class Session(val handler: Handler) {
 
             override fun onResponse(call: Call, response: Response) {
                 val success = response.isSuccessful
-                Log.e("a", response.body!!.string())
                 handler.post {
                     callback(success)
+                }
+            }
+        })
+    }
+
+    fun pay(station: Int, point: Int, plug: Int, totalKw: Int, callback: (String?) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString())
+                    .addPathSegment("points")
+                    .addPathSegment(point.toString())
+                    .addPathSegment("plugs")
+                    .addPathSegment(plug.toString())
+                    .addPathSegment("pay")
+                    .build()
+            )
+            .header("Authorization", "Bearer " + token!!)
+            .post(
+                JSONObject().put("totalKW", totalKw).put("description", "ElectroWay payment")
+                    .toString().toRequestBody(json)
+            )
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val response = response.body!!.string()
+                    val url = Regex("https://[^\\s]+").find(response)
+                    if (url != null) {
+                        handler.post {
+                            callback(url.value)
+                        }
+                        return
+                    }
+                }
+                handler.post {
+                    callback(null)
                 }
             }
         })

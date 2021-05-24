@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -51,6 +52,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var routeDialog: BottomSheetDialog
     private lateinit var waypointsDialog: BottomSheetDialog
     private lateinit var stationDialog: BottomSheetDialog
+    private lateinit var payDialog: BottomSheetDialog
     private val cars = mutableMapOf<String, Int>()
 
     override fun onCreateView(
@@ -86,6 +88,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         stationDialog.setContentView(
             inflater.inflate(
                 R.layout.station_dialog,
+                container,
+                false
+            )
+        )
+        payDialog = BottomSheetDialog(requireActivity())
+        payDialog.setContentView(
+            inflater.inflate(
+                R.layout.pay_dialog,
                 container,
                 false
             )
@@ -338,6 +348,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                                 markersPos[marker] = info!!
                                             }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                        stationDialog.findViewById<Button>(R.id.stationPayButton)!!.setOnClickListener {
+                            stationDialog.hide()
+                            payDialog.show()
+                            payDialog.findViewById<Button>(R.id.paySubmitButton)!!.setOnClickListener {
+                                val point = payDialog.findViewById<EditText>(R.id.payChargingPointText)!!.text.toString().toInt()
+                                val plug = payDialog.findViewById<EditText>(R.id.payChargingPlugText)!!.text.toString().toInt()
+                                val totalKw = payDialog.findViewById<EditText>(R.id.payTotalKwText)!!.text.toString().toInt()
+                                session.pay(markersPos[marker]!!, point, plug, totalKw) {
+                                    if (it != null) {
+                                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+                                        payDialog.hide()
+                                    } else {
+                                        Toast.makeText(requireContext(), "Failed to pay", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             }

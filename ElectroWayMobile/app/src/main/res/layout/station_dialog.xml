@@ -24,4 +24,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:text="@string/remove_favourite" />
+
+    <Button
+        android:id="@+id/stationPayButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="@string/pay" />
 </LinearLayout>
