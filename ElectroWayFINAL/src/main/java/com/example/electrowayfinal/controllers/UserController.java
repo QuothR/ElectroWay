@@ -74,6 +74,11 @@ public class UserController {
         userService.addRole(userService.getCurrentUser(httpservletRequest), roleName);
     }
 
+    @PostMapping("/user/removerole")
+    public void removeRoleFromUser(@RequestParam String roleName, HttpServletRequest httpServletRequest) throws Exception {
+        userService.removeRoleFromUser(httpServletRequest, roleName);
+    }
+
     @GetMapping("/activation")
     public String activation(@RequestParam("token") String token, Model model) {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
