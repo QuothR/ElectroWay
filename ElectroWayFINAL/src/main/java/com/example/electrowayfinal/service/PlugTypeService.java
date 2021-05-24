@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PlugTypeService {
@@ -52,9 +53,13 @@ public class PlugTypeService {
     public PlugType getPlugType(Long plugTypeId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         User user = JwtUtil.checkUserIsDriver(userService, secret, httpServletRequest, httpServletResponse);
 
-        PlugType plugType = plugTypeRepository.getOne(plugTypeId);
+        if (plugTypeRepository.findById(plugTypeId).isEmpty()) {
+            throw new NoSuchElementException("PlugType not found.");
+        }
 
-        if (plugType.getCar().getUser() != user) {
+        PlugType plugType = plugTypeRepository.findById(plugTypeId).get();
+
+        if (!plugType.getCar().getUser().getEmailAddress().equals(user.getEmailAddress())) {
             throw new WrongAccessException("Can't access car's plug type if you don't own the car!");
         }
 

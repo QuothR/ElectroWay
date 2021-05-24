@@ -38,7 +38,7 @@ public class ChargingPlugService {
     }
 
     public void createChargingPlug(ChargingPlug chargingPlug, Long cId, Long id, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
+        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(id, cId, httpServletRequest);
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("Charging point does not exist!");
         }
@@ -78,7 +78,7 @@ public class ChargingPlugService {
     }
 
     public Optional<ChargingPlug> getChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
+        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(id, cId, httpServletRequest);
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("Charging point in charging plug search is empty!");
         }
@@ -113,7 +113,7 @@ public class ChargingPlugService {
 
     //TODO de schimbat exceptiile astea, nu asa ar trebui sa arate
     public void deleteChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
+        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(id, cId, httpServletRequest);
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("Charging point in charging plug search is empty!");
         }

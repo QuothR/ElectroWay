@@ -45,8 +45,8 @@ public class ChargingPlugController {
     }
 
     @GetMapping(value = "{id}/points/{cId}/plugs")
-    public List<ChargingPlug> getAllPlugsFromStation(@PathVariable("cId") Long cId, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
+    public List<ChargingPlug> getAllPlugsFromStation(@PathVariable("id") Long id, @PathVariable("cId") Long cId, HttpServletRequest httpServletRequest) {
+        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(id, cId, httpServletRequest);
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("Charging plug does not exist!");
         }

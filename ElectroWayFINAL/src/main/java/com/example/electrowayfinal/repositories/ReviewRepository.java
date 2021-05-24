@@ -13,6 +13,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findAllByStationId(long station_id);
 
+    Review findReviewByStationId(long station_id);
+
     @Override
     List<Review> findAll();
 
