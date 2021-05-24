@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS `template_car`
     `vehicle_max_speed` bigint(20)   NOT NULL,
     `auxiliary_kwh`     double       NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 insert into template_car
 values (1, 'Tesla Model 3 Standard Range', 2019, 54, 7.2, 'Type 2', 209, 0);
@@ -247,8 +247,8 @@ CREATE TABLE IF NOT EXISTS `car`
     `auxiliary_kwh`     double       NOT NULL,
     `owner_id`          bigint references user (id),
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 DROP TABLE IF EXISTS `plug_type`;
 CREATE TABLE IF NOT EXISTS `plug_type`
@@ -258,8 +258,8 @@ CREATE TABLE IF NOT EXISTS `plug_type`
     `car_id`    bigint(20)   NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `car_plug_type_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Dumping structure for table electroway.consumption
 DROP TABLE IF EXISTS `consumption`;
@@ -272,8 +272,8 @@ CREATE TABLE IF NOT EXISTS `consumption`
     PRIMARY KEY (`id`),
     KEY `car_id` (`car_id`),
     CONSTRAINT `consumption_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -290,8 +290,8 @@ CREATE TABLE IF NOT EXISTS `charging_plug`
     PRIMARY KEY (`id`),
     KEY `charging_point_id` (`charging_point_id`),
     CONSTRAINT `charging_plug_ibfk_1` FOREIGN KEY (`charging_point_id`) REFERENCES `charging_point` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -304,8 +304,8 @@ CREATE TABLE IF NOT EXISTS `charging_point`
     PRIMARY KEY (`id`),
     KEY `station_id` (`station_id`),
     CONSTRAINT `charging_point_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `station` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -318,8 +318,8 @@ CREATE TABLE IF NOT EXISTS `password_reset_token`
     `token`   varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -333,9 +333,9 @@ CREATE TABLE IF NOT EXISTS `paypal_detail`
     PRIMARY KEY (`id`),
     UNIQUE KEY `paypal_detail_owner_id_uindex` (`owner_id`),
     CONSTRAINT `paypal_detail_user_id_fk` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 6
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 6
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -345,9 +345,9 @@ CREATE TABLE IF NOT EXISTS `privilege`
     `id`   bigint(20)   NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 5
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 5
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -364,8 +364,8 @@ CREATE TABLE IF NOT EXISTS `report`
     KEY `station_id` (`station_id`),
     CONSTRAINT `report_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
     CONSTRAINT `report_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `station` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -383,8 +383,8 @@ CREATE TABLE IF NOT EXISTS `review`
     KEY `station_id` (`station_id`),
     CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
     CONSTRAINT `review_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `station` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -394,9 +394,9 @@ CREATE TABLE IF NOT EXISTS `role`
     `id`   bigint(20)   NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 5
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 5
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -411,9 +411,9 @@ CREATE TABLE IF NOT EXISTS `role_privilege`
     KEY `privilege_id` (`privilege_id`),
     CONSTRAINT `role_privilege_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
     CONSTRAINT `role_privilege_ibfk_2` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 7
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 7
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -431,8 +431,8 @@ CREATE TABLE IF NOT EXISTS `station`
     UNIQUE KEY `map_latitude_location` (`map_latitude_location`, `map_longitude_location`, `owner_id`),
     KEY `owner_id` (`owner_id`),
     CONSTRAINT `station_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -459,8 +459,8 @@ CREATE TABLE IF NOT EXISTS `user`
     UNIQUE KEY `user_name` (`user_name`),
     UNIQUE KEY `email_address` (`email_address`),
     UNIQUE KEY `phone_number` (`phone_number`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -473,9 +473,9 @@ CREATE TABLE IF NOT EXISTS `verification_token`
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`),
     CONSTRAINT `verification_token_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 43
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 43
+    DEFAULT CHARSET = latin1;
 
 
 -- Data exporting was unselected.
@@ -492,8 +492,8 @@ CREATE TABLE IF NOT EXISTS `favourite`
     KEY `station_id` (`station_id`),
     CONSTRAINT `favourite_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
     CONSTRAINT `favourite_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `station` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -508,9 +508,9 @@ CREATE TABLE IF NOT EXISTS `user_role`
     KEY `role_id` (`role_id`),
     CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
     CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 9
-  DEFAULT CHARSET = latin1;
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 9
+    DEFAULT CHARSET = latin1;
 
 -- Data exporting was unselected.
 
@@ -526,7 +526,7 @@ CREATE TABLE IF NOT EXISTS `user_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.
 
@@ -542,7 +542,7 @@ CREATE TABLE IF NOT EXISTS `station_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.
 
@@ -558,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `review_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Dumping structure for table electroway.charging_point_sequence
 DROP TABLE IF EXISTS `charging_point_sequence`;
@@ -572,7 +572,7 @@ CREATE TABLE IF NOT EXISTS `charging_point_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Dumping structure for table electroway.charging_plug_sequence
 DROP TABLE IF EXISTS `charging_plug_sequence`;
@@ -586,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `charging_plug_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Dumping structure for table electroway.car_sequence
 DROP TABLE IF EXISTS `car_sequence`;
@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `car_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Dumping structure for table electroway.report_sequence
 DROP TABLE IF EXISTS `report_sequence`;
@@ -614,7 +614,7 @@ CREATE TABLE IF NOT EXISTS `report_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.
 
@@ -630,7 +630,7 @@ CREATE TABLE IF NOT EXISTS `template_car_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.
 
@@ -646,7 +646,7 @@ CREATE TABLE IF NOT EXISTS `favourite_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.-- Dumping structure for table electroway.consumption_sequence
 DROP TABLE IF EXISTS `consumption_sequence`;
@@ -660,7 +660,7 @@ CREATE TABLE IF NOT EXISTS `consumption_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.
 
@@ -676,7 +676,7 @@ CREATE TABLE IF NOT EXISTS `plug_type_sequence`
     `cache_size`            bigint(21) unsigned NOT NULL,
     `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
     `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE = InnoDB SEQUENCE=1;
+    ) ENGINE = InnoDB SEQUENCE=1;
 
 -- Data exporting was unselected.
 

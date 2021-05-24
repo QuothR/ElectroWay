@@ -59,14 +59,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable().cors().disable()
+//                .antMatchers("/helloadmin").hasRole("ADMIN")
+//                .antMatchers("/hellouser").hasAnyRole("USER","ADMIN")
                 .authorizeRequests().antMatchers("/station/**").hasRole("OWNER").and()
-                .authorizeRequests().antMatchers("/register", "/login", "/", "/activation", "/forgot_password", "/reset_password", "/station/**", "/documentation/**", "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**").permitAll().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/register", "/login", "/", "/activation", "/forgot_password", "/reset_password", "/station/**").permitAll().anyRequest().authenticated()
                 .and().logout().permitAll()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler).and().
-                sessionManagement()
+                // make sure we use stateless session; session won't be used to
+                // store user's state.
+                        sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+// 		Add a filter to validate the tokens with every request
         http.addFilterBefore(customJwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
     }
