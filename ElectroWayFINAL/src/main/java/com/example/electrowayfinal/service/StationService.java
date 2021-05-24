@@ -142,7 +142,7 @@ public class StationService {
 
         Station station = getCurrentStation(stationId, httpServletRequest, httpServletResponse);
 
-        if (station.getUser() != user) {
+        if (!station.getUser().getEmailAddress().equals(user.getEmailAddress())) {
             throw new WrongAccessException("You don't own this station!");
         }
         return station;
