@@ -8,12 +8,12 @@ https://docs.google.com/document/d/1SVMCBZBSY-kZaLvztw2mwiyWb7dKnzf9moRMKJVa5cE/
 Tutorial instalare React:
 https://nodejs.org/en/ v 14.16.0
 1) intalati oriunde
-2) Creati un folder unde vreti  cu orice nume (de preferat react)
-3) Din VS deschideti un terminal new si rulati: 
-npx create-react-app “nume proiect (avand doar litere mici)” 
-4) Pentru a rula proiectul, din terminal rulati comanda : npm start
+2) Creati un folder unde vreti (de ex pe Desktop)  cu orice nume (de preferat react)
+3) In Visual Studio Code deschideti fisierul creat anterior si apoi deschideti un terminal new si rulati: 
+npx create-react-app “nume proiect (avand doar litere mici)”   (((exemplu: npx create-react-app “electroway” )))
 
-!!!Aveti grija sa fiti in folderul creat cand faceti instalarile de mai jos:
+
+!!!Aveti grija ca in terminal sa fiti in proiectul creat (adica ...\react\electroway, daca nu sunteti, scrieti in terminal comanda cd electroway) cand faceti instalarile de mai jos:
 
 Instalare Router pentru management ul paginilor:      
 - npm install react-router-dom
@@ -59,6 +59,12 @@ Pentru project v.1.2 :
 
 Pentru v.1.3 v.1.4 v.1.5 :
 - READ redux -> store.js 
+
+---------------------
+4) Inchideti visual studio code, intrati in folderul de pe desktop sau unde l-ati creat react, electroway si inlocuiti DOAR folderele "src" si "public" cu cu "src" si "public" din proiectul nostru de pe github.
+---------------------
+
+5) Deschideti visual studio code, iar pentru a rula proiectul, din terminal rulati comanda : npm start (aveti grija sa fiti in proiectul creat)
 
 ---------------------
 - !!!!!: trebuie sa aveti versiunile astea de bootstrap in package.json
