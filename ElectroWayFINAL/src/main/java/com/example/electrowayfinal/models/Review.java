@@ -3,6 +3,7 @@ package com.example.electrowayfinal.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "review", schema = "electroway", uniqueConstraints = {
         @UniqueConstraint(name = "review_id_unique", columnNames = "id")
 })
-public class Review {
+public class Review implements Serializable {
     @Id
     @SequenceGenerator(
             name = "review_sequence",

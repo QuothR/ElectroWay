@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,9 +55,13 @@ public class CarService {
             throw new WrongPrivilegesException("Can't access car without being a car owner!");
         }
 
-        Car car = carRepository.getOne(carId);
+        if (carRepository.findById(carId).isEmpty()) {
+            throw new NoSuchElementException("This car does not exist!");
+        }
 
-        if (car.getUser() != user) {
+        Car car = carRepository.findById(carId).get();
+
+        if (!car.getUser().getEmailAddress().equals(user.getEmailAddress())) {
             throw new WrongAccessException("You don't own this car!");
         }
         return car;

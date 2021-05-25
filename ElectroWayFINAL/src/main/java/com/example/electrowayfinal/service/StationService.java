@@ -59,7 +59,10 @@ public class StationService {
     }
 
     public Station getStation(Long id) {
-        return stationRepository.getOne(id);
+        if (stationRepository.findStationById(id).isEmpty()) {
+            throw new NoSuchElementException("Station does not exist!");
+        }
+        return stationRepository.findStationById(id).get();
     }
 
     //station
@@ -76,7 +79,7 @@ public class StationService {
             throw new NoSuchElementException("Station does not exist!");
         }
 
-        if (station.get().getUser() != user) {
+        if (!station.get().getUser().getEmailAddress().equals(user.getEmailAddress())) {
             throw new WrongAccessException("You don't own this station!");
         }
 
@@ -100,7 +103,7 @@ public class StationService {
         stationToUpdate.setLongitude(station.getLongitude());
         stationToUpdate.setAddress(station.getAddress());
         stationToUpdate.setLatitude(station.getLatitude());
-
+        stationToUpdate.setDescription(station.getDescription());
         station.setUser(stationToUpdate.getUser());// TODO is this necessary?
         stationRepository.save(stationToUpdate);
         return stationToUpdate;
@@ -138,7 +141,7 @@ public class StationService {
 
         Station station = getCurrentStation(stationId, httpServletRequest, httpServletResponse);
 
-        if (station.getUser() != user) {
+        if (!station.getUser().getEmailAddress().equals(user.getEmailAddress())) {
             throw new WrongAccessException("You don't own this station!");
         }
         return station;

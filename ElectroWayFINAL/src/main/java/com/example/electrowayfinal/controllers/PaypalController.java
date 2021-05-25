@@ -50,7 +50,6 @@ public class PaypalController {
                 receipt.setDate(payment.getCreateTime());
                 String[] split = payment.getTransactions().get(0).getItemList().getItems().get(0).getName().split(" ");
                 Long plugId = Long.valueOf(split[7]);
-                System.out.println("asas" + plugId);
                 receipt.setDestinatar(chargingPlugService.getUserFromPlug(plugId).getFirstName() + " " + chargingPlugService.getUserFromPlug(plugId).getLastName());
                 receipt.setExpeditor(userService.getCurrentUser(httpServletRequest).getFirstName() + " " + userService.getCurrentUser(httpServletRequest).getLastName());
                 receipt.setStatus(payment.getPayer().getStatus());

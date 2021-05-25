@@ -4,15 +4,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
-import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Order;
 import com.example.electrowayfinal.models.PaypalDetail;
-import com.example.electrowayfinal.models.User;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.OAuthTokenCredential;
-import jdk.jfr.Description;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.paypal.base.rest.APIContext;
@@ -47,21 +43,25 @@ public class PaypalService {
         apiContext = new APIContext(oAuthTokenCredential.getAccessToken());
         apiContext.setConfigurationMap(configMap);
 
+        double subtotal = order.getTotalKW()*chargingPlugService.getOnePlug(plugId).getPriceKw();
+        double tax = 19d/100d * subtotal;
+
         Details details = new Details();
-        details.setSubtotal(String.valueOf(order.getTotal()*chargingPlugService.getOnePlug(plugId).getPriceKw()));
-        details.setTax("0");
+        details.setSubtotal(String.valueOf(subtotal));
+        details.setTax(String.valueOf(tax));
 
         Amount amount = new Amount();
         amount.setDetails(details);
 
         amount.setCurrency(order.getCurrency());
-        double total = BigDecimal.valueOf(order.getTotal() * chargingPlugService.getOnePlug(plugId).getPriceKw()).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        amount.setTotal(String.format("%.2f", total));
+        double total = BigDecimal.valueOf(subtotal + tax).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+        amount.setTotal(String.valueOf(total));
 
         Item item = new Item();
         item.setCurrency("EUR");
         item.setPrice(String.valueOf(chargingPlugService.getOnePlug(plugId).getPriceKw()));
-        item.setQuantity(String.valueOf((int) order.getTotal()));
+        item.setQuantity(String.valueOf((int) order.getTotalKW()));
         item.setName(" KW consumed for " + "charging at plug " + plugId);
         item.setDescription(order.getDescription() + "\n");
 
@@ -86,6 +86,8 @@ public class PaypalService {
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);
         payment.setRedirectUrls(redirectUrls);
+
+        System.out.println(payment);
 
         return payment.create(apiContext);
     }

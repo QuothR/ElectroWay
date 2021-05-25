@@ -45,6 +45,10 @@ public class Station implements Serializable {
     @Column(name = "map_longitude_location", nullable = false, columnDefinition = "double")
     private double longitude;
 
+    @Basic
+    @Column (name = "description", nullable = true, columnDefinition = "varchar(255")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id", columnDefinition = "bigint")
     private User user;
@@ -56,6 +60,7 @@ public class Station implements Serializable {
                 ", address='" + address + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", description='" + description + '\'' +
                 ", user=" + user +
                 '}';
     }
