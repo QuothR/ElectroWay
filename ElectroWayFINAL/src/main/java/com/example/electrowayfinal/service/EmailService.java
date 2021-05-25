@@ -33,7 +33,7 @@ public class EmailService {
             String token = verificationToken.getToken();
             Context context = new Context();
             context.setVariable("title", "Verify your email adress");
-            context.setVariable("link", "http://localhost:8090/activation?token=" + token);
+            context.setVariable("link", "https://electroway.herokuapp.com/activation?token=" + token);
 
             String body = templateEngine.process("verification", context);
 

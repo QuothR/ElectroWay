@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user/wallet")
-@CrossOrigin(origins = "http://localhost:3000")
 public class PaypalDetailController {
 
     @Autowired

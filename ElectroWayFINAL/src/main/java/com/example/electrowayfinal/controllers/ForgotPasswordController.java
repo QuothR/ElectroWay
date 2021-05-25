@@ -50,9 +50,6 @@ public class ForgotPasswordController {
 
         userService.updateResetPasswordToken(token, email);
 
-//        String resetPasswordLink = "http://localhost:8090/reset_password?token=" + token;
-
-
         sendEmail(email, token);
 
         return "<h1>Forgot password form</h1>";
@@ -79,7 +76,7 @@ public class ForgotPasswordController {
 
         helper.setTo(email);
         helper.setSubject("ElectroWay Password Reset");
-        String body = "<p>Hello, you've requested a password reset, please click the link below to change your password</p>" + resetPasswordLink;
+        String body = "<p>Hello, you've requested a password reset, here is your code: </p>" + resetPasswordLink;
         helper.setText(body, true);
         javaMailSender.send(message);
     }

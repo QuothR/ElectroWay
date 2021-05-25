@@ -5,6 +5,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +40,7 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 //        response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin, Access-Control-Allow-Credentials");
 //        response.addHeader("Access-Control-Allow-Credentials", "true");
 //        response.addIntHeader("Access-Control-Max-Age", 50);
+//        response.setStatus(HttpServletResponse.SC_OK);
 
         // JWT Token is in the form "Bearer token". Remove Bearer word and
         // get  only the Token
