@@ -71,7 +71,12 @@ public class UserService implements UserDetailsService {
             throw new RoleNotFoundException(roleName);
 
         Collection<Role> roleList = user.getRoles();
-        if  (!roleList.contains(roleRepository.findByName("ROLE_ADMIN").get()) && role.get().getName().equals("ROLE_ADMIN"))
+
+        if (roleRepository.findByName("ROLE_ADMIN").isEmpty()) {
+            throw new RoleNotFoundException("Role not found.");
+        }
+
+        if (!roleList.contains(roleRepository.findByName("ROLE_ADMIN").get()) && role.get().getName().equals("ROLE_ADMIN"))
             throw new ForbiddenRoleAssignmentAttemptException(user);
 
         roleList.add(role.get());
@@ -90,8 +95,12 @@ public class UserService implements UserDetailsService {
         Optional<User> user = userRepository.findUserByUsername(username);
         Optional<Role> role = roleRepository.findByName(roleName);
 
-        if(role.isEmpty())
+        if (role.isEmpty())
             throw new RoleNotFoundException(roleName);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User not found.");
+        }
 
         Collection<Role> roles = user.get().getRoles();
 
@@ -164,7 +173,7 @@ public class UserService implements UserDetailsService {
     }
 
     //user
-    public User getCurrentUser(HttpServletRequest httpServletRequest) throws UserNotFoundException{
+    public User getCurrentUser(HttpServletRequest httpServletRequest) throws UserNotFoundException {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
 
@@ -184,8 +193,8 @@ public class UserService implements UserDetailsService {
             return Optional.empty();
 
         return Optional.of(new UserDto(user.get().getUsername(), user.get().getPassword(), user.get().getFirstName(), user.get().getLastName(),
-                user.get().getPhoneNumber(), user.get().getEmailAddress(), user.get().getAddress1(),user.get().getAddress2(), user.get().getCity(),
-                user.get().getCountry(),user.get().getRegion(), user.get().getZipcode(), user.get().getRoles().stream().map(Role::getName).collect(Collectors.toCollection(ArrayList::new))));
+                user.get().getPhoneNumber(), user.get().getEmailAddress(), user.get().getAddress1(), user.get().getAddress2(), user.get().getCity(),
+                user.get().getCountry(), user.get().getRegion(), user.get().getZipcode(), user.get().getRoles().stream().map(Role::getName).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     public void deleteUser(Long id) {
