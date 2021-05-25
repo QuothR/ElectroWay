@@ -100,6 +100,7 @@ public class StationService {
         stationToUpdate.setLongitude(station.getLongitude());
         stationToUpdate.setAddress(station.getAddress());
         stationToUpdate.setLatitude(station.getLatitude());
+        stationToUpdate.setDescription(station.getDescription());
 
         station.setUser(stationToUpdate.getUser());// TODO is this necessary?
         stationRepository.save(stationToUpdate);
