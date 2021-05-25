@@ -99,11 +99,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                 "  \\/_____/   \\/_____/   \\/_____/   \\/_____/     \\/_/   \\/_/ /_/   \\/_____/   \\/_/   \\/_/   \\/_/\\/_/   \\/_____/ \n" +
                 "                                                                                                               ");
         //https://patorjk.com/software/taag/#p=display&v=0&f=Small&t=v%200.1%20 'small slant'
-        System.out.print("         ___   ______ \n" +
-                " _  __  / _ \\ <  / _ \\\n" +
-                "| |/ / / // / / / // /\n" +
-                "|___/  \\___(_)_/\\___/ \n" +
-                "                      ");
+        System.out.print("        _   __    ___ ___ _____ _   \n" +
+                " __ __ / | /  \\  | _ ) __|_   _/_\\  \n" +
+                " \\ V / | || () | | _ \\ _|  | |/ _ \\ \n" +
+                "  \\_/  |_(_)__/  |___/___| |_/_/ \\_\\\n" +
+                "                                    ");
         System.out.println();
     }
 }

@@ -3,6 +3,7 @@ package com.example.electrowayfinal.service;
 import com.example.electrowayfinal.dtos.UserDto;
 import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptException;
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
+import com.example.electrowayfinal.exceptions.WrongPrivilegesException;
 import com.example.electrowayfinal.models.Privilege;
 import com.example.electrowayfinal.models.Role;
 import com.example.electrowayfinal.models.Station;
@@ -174,6 +175,9 @@ public class UserService implements UserDetailsService {
         boolean exists = userRepository.existsById(id);
         if (!exists)
             throw new IllegalStateException("user with id " + id + " does NOT exist");
+        if (!this.getCurrentUser(httpServletRequest).getRoles().contains(roleRepository.findByName("ROLE_ADMIN").get())) {
+            throw new WrongPrivilegesException("you're not an admin");
+        }
         List<Station> stationList = stationService.getAllStations();
         for(Station station: stationList){
             if(station.getUser().getId()==id){
