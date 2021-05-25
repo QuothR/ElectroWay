@@ -236,6 +236,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
+        googleMap.isMyLocationEnabled = true
 
         if (args.addStation) {
             googleMap.setOnMapLongClickListener {
@@ -329,8 +330,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                                         R.drawable.favourite_mark
                                                     )
                                                 )
-                                                val info = markersPos.remove(marker)
-                                                markersPos[marker] = info!!
                                             }
                                         }
                                     }
@@ -344,8 +343,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                         session.deleteFavourite(markersPos[marker]!!, favourite) {
                                             if (it) {
                                                 marker.setIcon(markerBitmap)
-                                                val info = markersPos.remove(marker)
-                                                markersPos[marker] = info!!
                                             }
                                         }
                                     }

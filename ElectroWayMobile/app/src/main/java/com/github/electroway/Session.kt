@@ -98,7 +98,7 @@ class Session(val handler: Handler) {
         refreshTokenIfNeeded()
         val request = Request.Builder()
             .url(buildBasePath().addPathSegment("user").build())
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -125,7 +125,7 @@ class Session(val handler: Handler) {
         refreshTokenIfNeeded()
         val request = Request.Builder()
             .url(buildBasePath().addPathSegment("station").build())
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post(info.getJson().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -152,7 +152,7 @@ class Session(val handler: Handler) {
         refreshTokenIfNeeded()
         val request = Request.Builder()
             .url(buildBasePath().addPathSegment("station").build())
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -179,7 +179,7 @@ class Session(val handler: Handler) {
         refreshTokenIfNeeded()
         val request = Request.Builder()
             .url(buildBasePath().addPathSegment("station").addPathSegment("all").build())
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -206,7 +206,7 @@ class Session(val handler: Handler) {
         refreshTokenIfNeeded()
         val request = Request.Builder()
             .url(buildBasePath().addPathSegment("station").addPathSegment("all").build())
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -237,7 +237,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("station")
                     .addPathSegment(station.toString()).build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .delete()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -263,7 +263,7 @@ class Session(val handler: Handler) {
         refreshTokenIfNeeded()
         val request = Request.Builder()
             .url(buildBasePath().addPathSegment("routing").build())
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post(findRouteInfo.getJson().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -289,7 +289,7 @@ class Session(val handler: Handler) {
 
     private fun refreshTokenIfNeeded() {
         if (System.currentTimeMillis() - tokenRefreshTime >= expirationTime) {
-            login(loginInfo!!) {}
+            loginInfo?.let { login(it) {} }
         }
     }
 
@@ -302,7 +302,7 @@ class Session(val handler: Handler) {
                     .addPathSegment(station.toString())
                     .addPathSegment("points").build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post("".toRequestBody())
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -335,7 +335,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("points")
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -369,7 +369,7 @@ class Session(val handler: Handler) {
                     .addPathSegment(chargingPoint.toString())
                     .addPathSegment(station.toString()).build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .delete()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -407,7 +407,7 @@ class Session(val handler: Handler) {
                     .addPathSegment(chargingPoint.toString())
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post(chargingPlug.getJson().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -442,7 +442,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("plugs")
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -482,7 +482,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("plugs")
                     .addPathSegment(plug.toString()).build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .delete()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -521,7 +521,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("plugs")
                     .addPathSegment(chargingPlug.id.toString()).build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .put(chargingPlug.getJson().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -547,10 +547,13 @@ class Session(val handler: Handler) {
         val request = Request.Builder()
             .url(
                 buildBasePath()
+                    .addPathSegment("review")
+                    .addPathSegment("create")
                     .addPathSegment("station")
-                    .addPathSegment(station.toString()).build()
+                    .addPathSegment(station.toString())
+                    .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post(addReviewInfo.getJson().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -572,12 +575,13 @@ class Session(val handler: Handler) {
         val request = Request.Builder()
             .url(
                 buildBasePath()
+                    .addPathSegment("review")
+                    .addPathSegment("all")
                     .addPathSegment("station")
                     .addPathSegment(station.toString())
-                    .addPathSegment("reviews")
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -611,7 +615,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("car")
                     .addPathSegment("create").build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post(addCarInfo.getJson().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -641,7 +645,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("update")
                     .addPathSegment(addCarInfo.id.toString()).build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .put(addCarInfo.getJson().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -670,7 +674,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("delete")
                     .addPathSegment(id.toString()).build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .delete()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -696,7 +700,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("all")
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -786,7 +790,7 @@ class Session(val handler: Handler) {
                     .addPathSegment(station.toString())
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .get()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -823,7 +827,7 @@ class Session(val handler: Handler) {
                     .addPathSegment(station.toString())
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .delete()
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -852,7 +856,7 @@ class Session(val handler: Handler) {
                     .addPathSegment(station.toString())
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post(JSONObject().toString().toRequestBody(json))
             .build()
         client.newCall(request).enqueue(object : Callback {
@@ -883,7 +887,7 @@ class Session(val handler: Handler) {
                     .addPathSegment("pay")
                     .build()
             )
-            .header("Authorization", "Bearer " + token!!)
+            .header("Authorization", "Bearer $token")
             .post(
                 JSONObject().put("totalKW", totalKw).put("description", "ElectroWay payment")
                     .toString().toRequestBody(json)
