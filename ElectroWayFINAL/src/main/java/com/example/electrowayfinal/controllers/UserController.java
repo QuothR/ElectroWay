@@ -74,6 +74,10 @@ public class UserController {
     public void addRoleToUser(@RequestParam String roleName, HttpServletRequest httpservletRequest) throws UserNotFoundException, RoleNotFoundException, ForbiddenRoleAssignmentAttemptException {
         userService.addRole(userService.getCurrentUser(httpservletRequest), roleName);
     }
+    @PostMapping("/user/removerole")
+    public void removeRoleFromUser(@RequestParam String roleName, HttpServletRequest httpServletRequest) throws Exception {
+        userService.removeRoleFromUser(httpServletRequest, roleName);
+    }
 
     @GetMapping("/activation")
     public String activation(@RequestParam("token") String token, Model model) {

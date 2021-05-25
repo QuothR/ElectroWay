@@ -197,7 +197,31 @@ public class UserService implements UserDetailsService {
         }
         modifiedUser.setId(optionalUser.get().getId());
         modifiedUser.setEnabled(true);
+        modifiedUser.setRoles(optionalUser.get().getRoles());
+        modifiedUser.setPassword(optionalUser.get().getPassword());
         userRepository.save(modifiedUser);
+    }
+    public void removeRoleFromUser(HttpServletRequest httpServletRequest, String roleName) throws Exception {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        bearerToken = bearerToken.substring(6);
+
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
+        String username = claims.getSubject();
+
+        Optional<User> user = userRepository.findUserByUsername(username);
+        Optional<Role> role = roleRepository.findByName(roleName);
+
+        if(role.isEmpty())
+            throw new RoleNotFoundException(roleName);
+
+        Collection<Role> roles = user.get().getRoles();
+
+        if (!roles.contains(role.get()))
+            throw new Exception("User " + user.get().getUsername() + " does not have role " + roleName + " so you cannot remove it.");
+
+        roles.remove(role.get());
+
+        userRepository.save(user.get());
     }
 
     //TO DELETE???
