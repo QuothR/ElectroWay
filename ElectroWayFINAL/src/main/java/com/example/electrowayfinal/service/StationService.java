@@ -25,6 +25,7 @@ public class StationService {
     private final UserService userService;
     private final ChargingPointRepository chargingPointRepository;
     private final ChargingPlugRepository chargingPlugRepository;
+    private final ReviewService reviewService;
     private String secret;
 
     @Value("${jwt.secret}")
@@ -34,11 +35,12 @@ public class StationService {
 
     @Lazy
     @Autowired
-    public StationService(StationRepository stationRepository, UserService userService, ChargingPointRepository chargingPointRepository, ChargingPlugRepository chargingPlugRepository) {
+    public StationService(StationRepository stationRepository, UserService userService, ChargingPointRepository chargingPointRepository, ChargingPlugRepository chargingPlugRepository, ReviewService reviewService) {
         this.stationRepository = stationRepository;
         this.userService = userService;
         this.chargingPointRepository = chargingPointRepository;
         this.chargingPlugRepository = chargingPlugRepository;
+        this.reviewService = reviewService;
     }
 
     public void createStation(Station station, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws RoleNotFoundException, ForbiddenRoleAssignmentAttemptException, UserNotFoundException {
@@ -124,7 +126,11 @@ public class StationService {
 
             }
         }
-        stationRepository.deleteById(stationId);
+        List<Review> reviewList = reviewService.getReviews(stationId, httpServletRequest, httpServletResponse);
+        for (Review review : reviewList){
+            reviewService.deleteReview(review.getId(),stationId,httpServletRequest,httpServletResponse);
+        }
+            stationRepository.deleteById(stationId);
     }
 
     public List<Station> getAllStations() throws UserNotFoundException {
