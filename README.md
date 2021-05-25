@@ -13,7 +13,7 @@ https://nodejs.org/en/ v 14.16.0
 npx create-react-app “nume proiect (avand doar litere mici)”   (((exemplu: npx create-react-app “electroway” )))
 
 
-!!!Aveti grija ca in terminal sa fiti in proiectul creat (adica ...\react\electroway, daca nu sunteti, scrieti in terminal comanda cd electroway) cand faceti instalarile de mai jos:
+!!!Aveti grija ca in terminal sa fiti in proiectul creat (adica ...\react\electroway, daca nu sunteti, scrieti in terminal comanda cd electroway) cand faceti instalarile de mai jos: (instalati tot ce are "npm install" in fata)
 
 Instalare Router pentru management ul paginilor:      
 - npm install react-router-dom
