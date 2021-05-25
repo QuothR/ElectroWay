@@ -9,7 +9,7 @@ Tutorial instalare React:
 https://nodejs.org/en/ v 14.16.0
 1) intalati oriunde
 2) Creati un folder unde vreti (de ex pe Desktop)  cu orice nume (de preferat react)
-3) In Visual Studio Code deschideti fisierul creat anterior si apoi deschideti un terminal new si rulati: 
+3) In Visual Studio Code deschideti folderul creat anterior si apoi deschideti un terminal new si rulati: 
 npx create-react-app “nume proiect (avand doar litere mici)”   (((exemplu: npx create-react-app “electroway” )))
 
 
