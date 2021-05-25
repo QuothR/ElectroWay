@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6b7ee3a6-e05b-4473-b275-e5f6b30ce40b",
+		"_postman_id": "bd4962e0-a629-43a7-a8a8-234bc71c75d3",
 		"name": "Electroway tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"cxdsassasffdsvddsd\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
+							"raw": "{\r\n    \"username\": \"cxdsassas1ffdsvddsd\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdssasaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -175,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"address\": \"ff\",\r\n    \"latitude\": 696.23,\r\n    \"longitude\": 22\r\n}",
+							"raw": "{\r\n    \"address\": \"ff\",\r\n    \"latitude\": 696.23,\r\n    \"longitude\": 22,\r\n    \"description\": \"fara coffee\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -183,7 +183,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/33",
+							"raw": "https://localhost:443/station/3",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -191,7 +191,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"33"
+								"3"
 							]
 						}
 					},
@@ -244,7 +244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"address\": \"sssss\",\r\n    \"latitude\": 112222222232312.23,\r\n    \"longitude\": 112222222223213.3\r\n    \r\n}",
+							"raw": "{\r\n    \"address\": \"sssss\",\r\n    \"latitude\": 11222212.23,\r\n    \"longitude\": 1122223213.3,\r\n    \"description\": \"coffee\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -443,7 +443,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"cevadecent22222222222222\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdss232323asaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\",\r\n    \"roles\": []\r\n}",
+							"raw": "{\r\n    \"username\": \"cevadecent222222222222\",\r\n    \"password\": \"ds5safddsas!Aa1\",\r\n    \"firstName\": \"vcxdsfasafsdsdda23dsdzx\",\r\n    \"lastName\": \"xczdafsasfssdsxc\",\r\n    \"phoneNumber\": \"66sdss232323asaffdsdsff232ddssdsasss4335\",\r\n    \"emailAddress\": \"electroway@mailinator.com\",\r\n    \"address1\": \"xzcdsdsaf324dssxzasdsac\",\r\n    \"city\": \"cxzsafcx\",\r\n    \"country\": \"Rdsafcxzcxz\",\r\n    \"zipcode\": \"73sfad0\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -490,6 +490,42 @@
 							"path": [
 								"user",
 								"addrole"
+							],
+							"query": [
+								{
+									"key": "roleName",
+									"value": "ROLE_OWNER"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Role FromUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:443/user/removerole?roleName=ROLE_OWNER",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "443",
+							"path": [
+								"user",
+								"removerole"
 							],
 							"query": [
 								{
@@ -707,7 +743,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/3/points/2",
+							"raw": "https://localhost:443/station/3/points/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -717,7 +753,7 @@
 								"station",
 								"3",
 								"points",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -770,7 +806,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/1001/points",
+							"raw": "https://localhost:443/station/3/points",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -778,7 +814,7 @@
 							"port": "443",
 							"path": [
 								"station",
-								"1001",
+								"3",
 								"points"
 							]
 						}
@@ -801,7 +837,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:443/station/3/points/2",
+							"raw": "https://localhost:443/station/3/points/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -811,7 +847,7 @@
 								"station",
 								"3",
 								"points",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -847,7 +883,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/1001/points/1",
+							"raw": "https://localhost:443/station/3/points/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -855,9 +891,9 @@
 							"port": "443",
 							"path": [
 								"station",
-								"1001",
+								"3",
 								"points",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -1014,7 +1050,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"total\": 10,\r\n    \"description\": \"asd\"\r\n}",
+							"raw": "{\r\n    \"totalKW\": 10,\r\n    \"description\": \"asd\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1022,7 +1058,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:443/station/1/points/1/plugs/1/pay",
+							"raw": "https://localhost:443/station/3/points/2/plugs/1/pay",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1030,9 +1066,9 @@
 							"port": "443",
 							"path": [
 								"station",
-								"1",
+								"3",
 								"points",
-								"1",
+								"2",
 								"plugs",
 								"1",
 								"pay"
@@ -1275,7 +1311,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost/payment/success?paymentId=PAYID-MCUU5CI12S19070PH5495525&token=EC-5YG73851DK982592D&PayerID=MG6BQK2DGHKR4",
+							"raw": "https://localhost/payment/success?paymentId=PAYID-MCWQ3QQ9GV60669F4076822A&token=EC-0PT253108E5009200&PayerID=R9Z9D8GPKUJ7E",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1287,15 +1323,15 @@
 							"query": [
 								{
 									"key": "paymentId",
-									"value": "PAYID-MCUU5CI12S19070PH5495525"
+									"value": "PAYID-MCWQ3QQ9GV60669F4076822A"
 								},
 								{
 									"key": "token",
-									"value": "EC-5YG73851DK982592D"
+									"value": "EC-0PT253108E5009200"
 								},
 								{
 									"key": "PayerID",
-									"value": "MG6BQK2DGHKR4"
+									"value": "R9Z9D8GPKUJ7E"
 								}
 							]
 						}
