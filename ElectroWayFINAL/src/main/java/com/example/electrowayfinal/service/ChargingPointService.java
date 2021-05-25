@@ -53,20 +53,18 @@ public class ChargingPointService {
 
     private void verifyStation(Long id, HttpServletRequest httpServletRequest) {
         Station station = stationService.getStation(id);
-        Optional<User> optionalUser = verifyUser(httpServletRequest);
+        Optional<User> optionalUser =  verifyUser(httpServletRequest);
 
         if (optionalUser.isEmpty()) {
             throw new WrongUserInServiceException("Wrong user in station service!");
         }
-        if (!station.getUser().getEmailAddress().equals(optionalUser.get().getEmailAddress())) {
+        if (!station.getUser().equals(optionalUser.get())) {
             throw new WrongAccessException("You don't own this station!");
         }
     }
-
-    public Optional<ChargingPoint> getChargingPoint(Long id) {
+    public Optional<ChargingPoint> getChargingPoint(Long id){
         return chargingPointRepository.findById(id);
     }
-
     private Optional<User> verifyUser(HttpServletRequest httpServletRequest) {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -78,11 +76,12 @@ public class ChargingPointService {
     }
 
     public Optional<ChargingPoint> findChargingPointById(Long id, Long cId, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
+        Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(id);
+
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("No charging point found!");
         }
-        if (chargingPoint.get().getStation().getId() != id) {
+        if (chargingPoint.get().getStation().getId() != cId) {
             throw new WrongAccessException("You don't own this station!");
         }
         Station station = stationService.getStation(chargingPoint.get().getStation().getId());
@@ -91,8 +90,7 @@ public class ChargingPointService {
         if (optionalUser.isEmpty()) {
             throw new NoSuchElementException("Empty user in charging point search!");
         }
-
-        if (!station.getUser().getEmailAddress().equals(optionalUser.get().getEmailAddress())) {
+        if (!station.getUser().equals(optionalUser.get())) {
             throw new WrongAccessException("You don't own this station!");
         }
 

@@ -59,10 +59,7 @@ public class StationService {
     }
 
     public Station getStation(Long id) {
-        if (stationRepository.findStationById(id).isEmpty()) {
-            throw new NoSuchElementException("Station does not exist!");
-        }
-        return stationRepository.findStationById(id).get();
+        return stationRepository.getOne(id);
     }
 
     //station
@@ -79,7 +76,7 @@ public class StationService {
             throw new NoSuchElementException("Station does not exist!");
         }
 
-        if (!station.get().getUser().getEmailAddress().equals(user.getEmailAddress())) {
+        if (station.get().getUser() != user) {
             throw new WrongAccessException("You don't own this station!");
         }
 

@@ -49,7 +49,7 @@ public class ReviewService {
     public Review getReview(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {
         checkUserAndStation(httpServletRequest, httpServletResponse);
 
-        return reviewRepository.findReviewByStationId(stationId);
+        return reviewRepository.getOne(stationId);
     }
 
     public Review getReview(Long reviewId, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {
