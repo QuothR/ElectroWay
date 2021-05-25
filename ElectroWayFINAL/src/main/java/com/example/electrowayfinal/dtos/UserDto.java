@@ -3,11 +3,13 @@ package com.example.electrowayfinal.dtos;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Getter
+@Setter
 public class UserDto {
     private String password;
     private String address1;
