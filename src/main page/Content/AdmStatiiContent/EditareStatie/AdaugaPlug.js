@@ -20,7 +20,7 @@ function AdaugaPlug(props) {
         console.log(pointId)
 
         const dataBackend = {
-            status: 0,
+            status: 1,
             connectorType: formImput.connectorType ? formImput.connectorType : "Type 1", //se pune valoarea default
             priceKw: formImput.priceKw,
             chargingSpeedKw: formImput.chargingSpeedKw

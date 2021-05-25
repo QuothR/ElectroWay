@@ -19,12 +19,6 @@ export const SidebarData =[
     },
 
     {
-        title: "history",
-        icon: "",
-        link: "/home/History"
-    },
-
-    {
         title: "tripPlanner",
         icon: "",
         link: "/home/Trip-planner"
@@ -34,12 +28,6 @@ export const SidebarData =[
         title: "reviews",
         icon: "",
         link: "/home/Reviews"
-    },
-
-    {
-        title: "statistics",
-        icon: "",
-        link: "/home/Stats"
     }
 
 ]

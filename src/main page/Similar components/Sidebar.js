@@ -73,17 +73,11 @@ function Sidebar(props) {
                             case "admStations":
                                 return languageText.sidebarBtn.admStations
                                 break;
-                            case "history":
-                                return languageText.sidebarBtn.history
-                                break;
                             case "tripPlanner":
                                 return languageText.sidebarBtn.tripPlanner
                                 break;
                             case "reviews":
                                 return languageText.sidebarBtn.reviews
-                                break;
-                            case "statistics":
-                                return languageText.sidebarBtn.statistics
                                 break;
 
                             default:
