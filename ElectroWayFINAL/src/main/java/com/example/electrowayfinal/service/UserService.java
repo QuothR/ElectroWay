@@ -80,29 +80,6 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void removeRoleFromUser(HttpServletRequest httpServletRequest, String roleName) throws Exception {
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-        bearerToken = bearerToken.substring(6);
-
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(bearerToken).getBody();
-        String username = claims.getSubject();
-
-        Optional<User> user = userRepository.findUserByUsername(username);
-        Optional<Role> role = roleRepository.findByName(roleName);
-
-        if(role.isEmpty())
-            throw new RoleNotFoundException(roleName);
-
-        Collection<Role> roles = user.get().getRoles();
-
-        if (!roles.contains(role.get()))
-            throw new Exception("User " + user.get().getUsername() + " does not have role " + roleName + " so you cannot remove it.");
-
-        roles.remove(role.get());
-
-        userRepository.save(user.get());
-    }
-
     public void registerNewUserAccount(UserDto userDto) {
         Optional<User> userOptional = userRepository.findUserByEmailAddress(userDto.getEmailAddress());
 
@@ -195,8 +172,6 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    // UpdateUser nu poate schimba parola utilizatorului, pentru asta trebuie folosit forgotPassword
-    // De asemenea, rolurile unui utilizator nu se modifica nici ele cu updateUser, pentru asta folositi addRole
     public void updateUser(User modifiedUser, HttpServletRequest httpServletRequest) {
         String bearerToken = httpServletRequest.getHeader("Authorization");
         bearerToken = bearerToken.substring(6);
@@ -208,15 +183,27 @@ public class UserService implements UserDetailsService {
         if (optionalUser.isEmpty()) {
             throw new NoSuchElementException("User does not exist!");
         }
-
         modifiedUser.setId(optionalUser.get().getId());
-        modifiedUser.setPassword(optionalUser.get().getPassword());
-        modifiedUser.setRoles(optionalUser.get().getRoles());
         modifiedUser.setEnabled(true);
-
-
         userRepository.save(modifiedUser);
     }
+
+    //TO DELETE???
+//    @Transactional
+//    public void updateUser(Long userId, String firstName, String lastName, String emailAddress) {
+//        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + "does not exist"));
+//        if (firstName != null && firstName.length() > 0 && !Objects.equals(user.getFirstName(), firstName))
+//            user.setFirstName(firstName);
+//        if (lastName != null && lastName.length() > 0 && !Objects.equals(user.getLastName(), lastName))
+//            user.setFirstName(lastName);
+//        if (emailAddress != null && emailAddress.length() > 0 && !Objects.equals(user.getEmailAddress(), emailAddress)) {
+//            Optional<User> userOptional = userRepository.findUserByEmailAddress(emailAddress);
+//            if (userOptional.isPresent()) {
+//                throw new IllegalStateException("email taken");
+//            }
+//            user.setEmailAddress(emailAddress);
+//        }
+//    }
 
     @Transactional
     public void enableUser(Long userId) {
