@@ -39,7 +39,7 @@ public class ConsumptionService {
 
         Car car = carService.getCar(carId, httpServletRequest, httpServletResponse);
 
-        if (!car.getUser().getEmailAddress().equals(user.getEmailAddress())) {
+        if (car.getUser() != user) {
             throw new WrongAccessException("You don't own this car!");
         }
 
@@ -53,7 +53,7 @@ public class ConsumptionService {
 
         Consumption consumption = consumptionRepository.getOne(consumptionId);
 
-        if (!consumption.getCar().getUser().getEmailAddress().equals(user.getEmailAddress())) {
+        if (consumption.getCar().getUser() != user) {
             throw new WrongAccessException("Can't access car's consumption if you don't own the car!");
         }
 
@@ -65,7 +65,7 @@ public class ConsumptionService {
 
         Car car = carService.getCar(carId, httpServletRequest, httpServletResponse);
 
-        if (!car.getUser().getEmailAddress().equals(user.getEmailAddress())) {
+        if (car.getUser() != user) {
             throw new WrongAccessException("Can't access car's consumptions if you don't own the car!");
         }
 
