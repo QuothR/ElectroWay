@@ -49,7 +49,7 @@ public class PaypalDetailService {
 
     public PaypalDetail getPaypalDetailByOwnerId(Long id) throws Exception {
         if(paypalDetailRepository.findByUser_Id(id).isEmpty()){
-            throw new Exception("No user with the id" + id);
+            throw new Exception("There are no details for user " + id);
         }
         return paypalDetailRepository.findByUser_Id(id).get();
     }

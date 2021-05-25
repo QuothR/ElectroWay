@@ -41,8 +41,8 @@ public class ChargingPointController {
 
     @DeleteMapping(path = "/{id}/points/{cId}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("cId") Long cId, @PathVariable("id") Long id) {
-        chargingPointService.deleteChargingPointById(cId, id);
+    public void delete(@PathVariable("id") Long id, @PathVariable("cId") Long cId) {
+        chargingPointService.deleteChargingPointById(id, cId);
     }
     //cId = id charging point
     //id = id station

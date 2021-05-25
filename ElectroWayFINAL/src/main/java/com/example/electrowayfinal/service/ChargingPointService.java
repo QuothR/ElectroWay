@@ -76,12 +76,12 @@ public class ChargingPointService {
     }
 
     public Optional<ChargingPoint> findChargingPointById(Long id, Long cId, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(id);
+        Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
 
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("No charging point found!");
         }
-        if (chargingPoint.get().getStation().getId() != cId) {
+        if (chargingPoint.get().getStation().getId() != id) {
             throw new WrongAccessException("You don't own this station!");
         }
         Station station = stationService.getStation(chargingPoint.get().getStation().getId());
@@ -121,7 +121,7 @@ public class ChargingPointService {
 
     //cid = id charging point
     //id = id station
-    public void deleteChargingPointById(Long cId, Long id) {
+    public void deleteChargingPointById(Long id, Long cId) {
         Optional<ChargingPoint> chargingPoint = chargingPointRepository.getChargingPointById(cId);
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("No charging point found!");

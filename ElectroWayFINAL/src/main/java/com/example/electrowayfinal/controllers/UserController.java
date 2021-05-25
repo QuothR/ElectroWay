@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.List;
@@ -60,8 +61,8 @@ public class UserController {
     }
 
     @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long id) {
-        userService.deleteUser(id);
+    public void deleteUser(@PathVariable("userId") Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
+        userService.deleteUser(id, httpServletRequest, httpServletResponse);
     }
 
     @PutMapping("/user")

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -37,8 +38,8 @@ public class ChargingPlugService {
         this.userService = userService;
     }
 
-    public void createChargingPlug(ChargingPlug chargingPlug, Long cId, Long id, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
+    public void createChargingPlug(ChargingPlug chargingPlug, Long id, Long cId, HttpServletRequest httpServletRequest) {
+        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(id, cId, httpServletRequest);
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("Charging point does not exist!");
         }
@@ -77,8 +78,8 @@ public class ChargingPlugService {
         return chargingPlugRepository.findChargingPlugById(id).get();
     }
 
-    public Optional<ChargingPlug> getChargingPlugById(Long pId, Long id, Long cId, HttpServletRequest httpServletRequest) {
-        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(cId, id, httpServletRequest);
+    public Optional<ChargingPlug> getChargingPlugById(Long id, Long cId, Long pId, HttpServletRequest httpServletRequest) {
+        Optional<ChargingPoint> chargingPoint = chargingPointService.findChargingPointById(id, cId, httpServletRequest);
         if (chargingPoint.isEmpty()) {
             throw new NoSuchElementException("Charging point in charging plug search is empty!");
         }
@@ -130,13 +131,28 @@ public class ChargingPlugService {
         chargingPlugRepository.deleteById(pId);
     }
 
-    public Optional<ChargingPlug> updateChargingPlug(Long pId, Long id, Long cId, ChargingPlug chargingPlug, HttpServletRequest httpServletRequest) throws Exception {
+    public Optional<ChargingPlug> updateChargingPlug(Long id, Long cId, Long pId, ChargingPlug chargingPlug, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         Optional<ChargingPlug> optionalChargingPlug = chargingPlugRepository.findChargingPlugById(pId);
 
         if (optionalChargingPlug.isEmpty())
-            throw new Exception(id.toString());
-
-
+            throw new Exception(pId.toString());
+        if(chargingPointService.getChargingPoint(cId).isEmpty()){
+            throw new NoSuchElementException("The charging point with the id " + cId + "does not exist");
+        }
+        if(stationService.getStations(httpServletRequest,httpServletResponse).isEmpty()){
+            throw new NoSuchElementException("The station with the id " + id + "does not exist");
+        }
+        int ok=0;
+        List<ChargingPoint> chargingPoints = chargingPointService.getChargingPointsByStationId(id);
+        for(ChargingPoint chargingPoint: chargingPoints){
+            if(chargingPoint.getId()==cId && chargingPlug.getChargingPoint().getId()==cId){
+                ok=1;
+                break;
+            }
+        }
+        if(ok==0){
+            throw new NoSuchMethodException("The charging point with the id "+ cId +" does not own this charging plug");
+        }
         optionalChargingPlug.get().setChargingSpeedKw(chargingPlug.getChargingSpeedKw());
         optionalChargingPlug.get().setConnectorType(chargingPlug.getConnectorType());
         optionalChargingPlug.get().setPriceKw(chargingPlug.getPriceKw());

@@ -43,4 +43,7 @@ public class VerificationTokenService {
         cal.add(Calendar.MINUTE, expiryTimeInMinutes);
         return new Timestamp(cal.getTime().getTime());
     }
+    public void deleteToken(VerificationToken verificationToken){
+        verificationTokenRepository.deleteById(verificationToken.getId());
+    }
 }

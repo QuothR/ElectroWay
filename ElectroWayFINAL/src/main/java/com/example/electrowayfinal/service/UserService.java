@@ -5,6 +5,7 @@ import com.example.electrowayfinal.exceptions.ForbiddenRoleAssignmentAttemptExce
 import com.example.electrowayfinal.exceptions.UserNotFoundException;
 import com.example.electrowayfinal.models.Privilege;
 import com.example.electrowayfinal.models.Role;
+import com.example.electrowayfinal.models.Station;
 import com.example.electrowayfinal.models.User;
 import com.example.electrowayfinal.repositories.RoleRepository;
 import com.example.electrowayfinal.repositories.UserRepository;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.management.relation.RoleNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,22 +39,25 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+
     private final RoleRepository roleRepository;
     private final VerificationTokenService verificationTokenService;
     private final EmailService emailService;
     private String secret;
 
+    private final StationService stationService;
     @Value("electroway")
     public void setSecret(String secret) {
         this.secret = secret;
     }
 
     @Autowired
-    public UserService(UserRepository userRepository, VerificationTokenService verificationTokenService, EmailService emailService, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, VerificationTokenService verificationTokenService, EmailService emailService, RoleRepository roleRepository, StationService stationService) {
         this.userRepository = userRepository;
         this.verificationTokenService = verificationTokenService;
         this.emailService = emailService;
         this.roleRepository = roleRepository;
+        this.stationService = stationService;
     }
 
     public List<User> getUsers() {
@@ -165,10 +170,17 @@ public class UserService implements UserDetailsService {
                 user.get().getCountry(),user.get().getRegion(), user.get().getZipcode(), user.get().getRoles().stream().map(Role::getName).collect(Collectors.toCollection(ArrayList::new))));
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
         boolean exists = userRepository.existsById(id);
         if (!exists)
             throw new IllegalStateException("user with id " + id + " does NOT exist");
+        List<Station> stationList = stationService.getAllStations();
+        for(Station station: stationList){
+            if(station.getUser().getId()==id){
+                stationService.deleteStation(station.getId(),httpServletRequest,httpServletResponse);
+            }
+        }
+        verificationTokenService.deleteToken(verificationTokenService.findByUser(userRepository.findUserById(id).get()));
         userRepository.deleteById(id);
     }
 
