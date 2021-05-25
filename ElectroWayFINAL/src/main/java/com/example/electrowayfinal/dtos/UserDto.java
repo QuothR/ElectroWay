@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.dtos;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -21,6 +22,7 @@ public class UserDto {
     private String username;
     private String phoneNumber;
     private String emailAddress;
+    @JsonIgnore
     private List<String> roles = new LinkedList<>();
 
     @JsonCreator
@@ -36,8 +38,7 @@ public class UserDto {
             @JsonProperty("city") String city,
             @JsonProperty("country") String country,
             @JsonProperty("region") String region,
-            @JsonProperty("zipcode") String zipcode,
-            @JsonProperty("roles") List<String> roles) {
+            @JsonProperty("zipcode") String zipcode){
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -50,7 +51,6 @@ public class UserDto {
         this.country = country;
         this.region = region;
         this.zipcode = zipcode;
-        this.roles = roles;
     }
 
     public UserDto(String username, String password, String phoneNumber, String emailAddress) {

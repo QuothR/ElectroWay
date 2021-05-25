@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,11 @@ public class FavouriteService {
     public Favourite getFavourite(Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {
         checkUserAndStation(httpServletRequest, httpServletResponse);
 
-        return favouriteRepository.getOne(stationId);
+        if (favouriteRepository.findFavouriteById(stationId).isEmpty()) {
+            throw new NoSuchElementException("Station not found.");
+        }
+
+        return favouriteRepository.findFavouriteById(stationId).get();
     }
 
     public Favourite getFavourite(Long favouriteId, Long stationId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws WrongUserInServiceException, WrongAccessException, UserNotFoundException {

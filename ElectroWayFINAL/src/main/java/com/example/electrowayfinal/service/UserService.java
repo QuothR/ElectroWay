@@ -167,7 +167,7 @@ public class UserService implements UserDetailsService {
 
         return Optional.of(new UserDto(user.get().getUsername(), user.get().getPassword(), user.get().getFirstName(), user.get().getLastName(),
                 user.get().getPhoneNumber(), user.get().getEmailAddress(), user.get().getAddress1(),user.get().getAddress2(), user.get().getCity(),
-                user.get().getCountry(),user.get().getRegion(), user.get().getZipcode(), user.get().getRoles().stream().map(Role::getName).collect(Collectors.toCollection(ArrayList::new))));
+                user.get().getCountry(),user.get().getRegion(), user.get().getZipcode()));
     }
 
     public void deleteUser(Long id, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws UserNotFoundException {
