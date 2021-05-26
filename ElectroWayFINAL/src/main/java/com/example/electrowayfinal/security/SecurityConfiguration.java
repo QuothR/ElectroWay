@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable().cors().and()
 //                .authorizeRequests().antMatchers("/station/**").hasRole("OWNER").and()
-                .authorizeRequests().antMatchers("/register", "/login", "/", "/activation", "/forgot_password", "/reset_password").permitAll().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/register", "/login", "/", "/activation", "/forgot_password", "/reset_password", "/payment/*").permitAll().anyRequest().authenticated()
                 .and().logout().permitAll()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler).and().
