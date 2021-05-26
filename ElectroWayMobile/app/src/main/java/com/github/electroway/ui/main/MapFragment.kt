@@ -25,6 +25,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.*
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -161,53 +162,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun getProviderAndLocationManager(): Pair<String?, LocationManager> {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ), 44
-            )
-        }
-        val locationManager =
-            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var provider: String? = null
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            provider = LocationManager.GPS_PROVIDER
-        } else if (locationManager.isProviderEnabled(
-                LocationManager.NETWORK_PROVIDER
-            )
-        ) {
-            provider = LocationManager.NETWORK_PROVIDER
-        }
-        return Pair(provider, locationManager);
-    }
-
-    @SuppressLint("MissingPermission")
     private fun moveToCurrentLocation() {
-        val (provider, locationManager) = getProviderAndLocationManager()
-        if (provider != null) {
-            val location = locationManager.getLastKnownLocation(provider)
-            googleMap.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(
-                        location!!.latitude,
-                        location!!.longitude
-                    ), 20.0f
-                )
+        val location = googleMap.myLocation
+        googleMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    location!!.latitude,
+                    location!!.longitude
+                ), 20.0f
             )
-        }
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -411,9 +375,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     routeDialog.findViewById<Button>(R.id.routeConfigurationFindButton)!!
                         .setOnClickListener {
                             routeDialog.hide()
-                            val (provider, locationManager) = getProviderAndLocationManager()
-                            if (provider != null) {
-                                val location = locationManager.getLastKnownLocation(provider)
+                                val location = googleMap.myLocation
                                 val origin = LatLng(location!!.latitude, location!!.longitude)
                                 val destination = latLng
                                 session.findRoute(
@@ -421,8 +383,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                         arrayOf(
                                             origin,
                                             destination
-                                            /*LatLng(44.18508, 28.51904),
-                                            LatLng(46.21379, 24.7817)*/
                                         ),
                                         cars[routeCarSpinner!!.selectedItem.toString()]!!,
                                         currentChargeInkWText!!.text.toString().toDouble()
@@ -432,7 +392,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                     if (it != null) {
                                         drawRoute(googleMap, stations, it)
                                     }
-                                }
                             }
                         }
                 }
