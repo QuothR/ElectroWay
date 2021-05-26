@@ -104,9 +104,9 @@
             android:layout_marginTop="10dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/city"
             android:inputType="text"
-            android:textColor="@color/purple_dark" />
+            android:textColor="@color/purple_dark"
+            tools:ignore="LabelFor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

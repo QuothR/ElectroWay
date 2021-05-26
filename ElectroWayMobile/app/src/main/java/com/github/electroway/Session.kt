@@ -63,6 +63,7 @@ class Session(val handler: Handler) {
             override fun onResponse(call: Call, response: Response) {
                 tokenRefreshTime = System.currentTimeMillis()
                 val success = response.isSuccessful
+                Log.e("a", response.body!!.string())
                 handler.post {
                     callback(success)
                 }
@@ -86,7 +87,51 @@ class Session(val handler: Handler) {
                 val body = response.body!!.string()
                 if (success) {
                     token = JSONObject(body).getString("token")
+                    val request = Request.Builder()
+                        .url(buildBasePath().addPathSegment("user").build())
+                        .header("Authorization", "Bearer $token")
+                        .get()
+                        .build()
+                    val response = client.newCall(request).execute()
+                    val obj = JSONObject(response.body!!.string())
+                    if (obj.getJSONArray("roles").length() == 0) {
+                        for (role in arrayOf("ROLE_OWNER", "ROLE_DRIVER")) {
+                            val request = Request.Builder().url(
+                                buildBasePath()
+                                    .addPathSegment("user")
+                                    .addPathSegment("addrole")
+                                    .addQueryParameter("roleName", role)
+                                    .build()
+                            ).header("Authorization", "Bearer $token")
+                                .post("".toRequestBody(json)).build()
+                            client.newCall(request).execute()
+                        }
+                    }
                 }
+                handler.post {
+                    callback(success)
+                }
+            }
+        })
+    }
+
+    fun updateWallet(wallet: WalletInfo, callback: (Boolean) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(buildBasePath()
+                .addPathSegment("user")
+                .addPathSegment("wallet")
+                .build())
+            .header("Authorization", "Bearer $token")
+            .put(wallet.getJson().toString().toRequestBody(json))
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val success = response.isSuccessful
                 handler.post {
                     callback(success)
                 }
@@ -917,6 +962,6 @@ class Session(val handler: Handler) {
     }
 
     private fun buildBasePath(): HttpUrl.Builder {
-        return HttpUrl.Builder().scheme("https").host("192.168.1.7").port(443)
+        return HttpUrl.Builder().scheme("https").host("electroway.herokuapp.com").port(443)
     }
 }

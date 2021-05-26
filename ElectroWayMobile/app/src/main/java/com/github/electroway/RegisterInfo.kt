@@ -27,6 +27,5 @@ class RegisterInfo(
             .put("city", city)
             .put("country", country)
             .put("zipcode", zipcode)
-            .put("roles", JSONArray().put("ROLE_DRIVER").put("ROLE_OWNER"))
     }
 }

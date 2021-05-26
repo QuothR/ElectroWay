@@ -73,4 +73,8 @@
     <string name="charging_plug">Charging plug</string>
     <string name="charging_point">Charging point</string>
     <string name="total_kw">Total kW</string>
+    <string name="update_wallet">Update wallet</string>
+    <string name="client_id">Client ID</string>
+    <string name="secret">Secret</string>
+    <string name="button">Button</string>
 </resources>

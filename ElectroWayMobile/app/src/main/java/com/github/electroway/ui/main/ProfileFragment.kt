@@ -11,12 +11,24 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.github.electroway.Application
 import com.github.electroway.R
+import com.github.electroway.WalletInfo
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ProfileFragment : Fragment() {
+    private lateinit var walletDialog: BottomSheetDialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        walletDialog = BottomSheetDialog(requireActivity())
+        walletDialog.setContentView(
+            inflater.inflate(
+                R.layout.wallet_dialog,
+                container,
+                false
+            )
+        )
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -47,8 +59,28 @@ class ProfileFragment : Fragment() {
             val preferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
             val editor = preferences.edit()
             editor.clear()
-            editor.commit()
+            editor.apply()
             (requireParentFragment().requireParentFragment() as HomeFragment).navigateToSignIn()
+        }
+
+        view.findViewById<Button>(R.id.updateWalletButton).setOnClickListener {
+            walletDialog.show()
+            walletDialog.findViewById<Button>(R.id.submitWalletButton)!!.setOnClickListener {
+                val clientId =
+                    walletDialog.findViewById<EditText>(R.id.clientIdText)!!.text.toString()
+                val secret = walletDialog.findViewById<EditText>(R.id.secretText)!!.text.toString()
+                session.updateWallet(WalletInfo(clientId, secret)) {
+                    if (it) {
+                        walletDialog.hide()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to update wallet",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
         }
     }
 }
