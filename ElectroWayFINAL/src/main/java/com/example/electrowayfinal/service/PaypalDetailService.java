@@ -39,12 +39,7 @@ public class PaypalDetailService {
     }
 
     public void updatePaypalDetail(PaypalDetail paypalDetail, HttpServletRequest httpServletRequest) throws Exception {
-        User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
-        PaypalDetail paypalDetailToChange = paypalDetailRepository.findByUser_Id(user.getId()).orElseThrow(() -> new Exception("Can't find paypal detail for ID " + user.getId()));
-
-        paypalDetailToChange.setClientId(paypalDetail.getClientId());
-        paypalDetailToChange.setSecret(paypalDetail.getSecret());
-        paypalDetailRepository.save(paypalDetailToChange);
+        paypalDetailRepository.save(paypalDetail);
     }
 
     public PaypalDetail getPaypalDetailByOwnerId(Long id) throws Exception {
