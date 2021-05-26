@@ -11,6 +11,7 @@ import com.example.electrowayfinal.repositories.CarRepository;
 import com.example.electrowayfinal.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ public class CarService {
         this.secret = secret;
     }
 
+    @Lazy
     @Autowired
     public CarService(CarRepository carRepository, UserService userService, PlugTypeService plugTypeService) {
         this.carRepository = carRepository;
