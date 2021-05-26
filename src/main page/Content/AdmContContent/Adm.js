@@ -60,7 +60,32 @@ function Adm(props) {
       });
   }, []);
 
+  function handleSetRoles() {
+    const body = {}
 
+    // add role owner
+    axios
+      .post("/user/addrole?roleName=ROLE_OWNER", body, {
+        headers: {
+          'Authorization': `Bearer ${myToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+      axios
+      .post("/user/addrole?roleName=ROLE_DRIVER", body, {
+        headers: {
+          'Authorization': `Bearer ${myToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+
+  }
   return (
     <div className="admin">
       <h3>Administrate your account</h3>
@@ -92,7 +117,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="email">Email</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="email"
               id="email"
@@ -108,7 +133,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="nume">Nume</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="nume"
               id="nume"
@@ -124,7 +149,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="prenume">Prenume</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="prenume"
               id="prenume"
@@ -140,7 +165,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="numarDeTelefon">Numar de telefon</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="telefon"
               id="telefon"
@@ -156,7 +181,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="codPostal">Cod postal</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="codPostal"
               id="codPostal"
@@ -175,7 +200,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="tara">Tara</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="tara"
               id="tara"
@@ -191,7 +216,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="regiune">Regiune</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="regiune"
               id="regiune"
@@ -206,7 +231,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="oras">Oras</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="oras"
               id="oras"
@@ -222,7 +247,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="adresa1">Adresa 1</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="ad1"
               id="ad1"
@@ -238,7 +263,7 @@ function Adm(props) {
           <div className="form-in">
             <label htmlFor="adresa2">Adresa 2</label>
             <input
-            className="inputDate"
+              className="inputDate"
               type="text"
               name="ad2"
               id="ad2"
@@ -250,6 +275,13 @@ function Adm(props) {
             />
           </div>
 
+
+          <div className="change">
+            <button className="rolesBtn" onClick={(e) => {
+              e.preventDefault();
+              handleSetRoles();
+            }}>Get roles</button>
+          </div>
 
           <div className="change">
             <input type="submit" defaultValue="Save" />

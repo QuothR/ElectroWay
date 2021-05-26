@@ -6,7 +6,6 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
-
   height: 100%;
 }
 
@@ -27,9 +26,11 @@
   border-radius: 13px;
   background-color: #c6bfd2;
 }
+
 .admin .form-in input:focus {
   outline: none;
 }
+
 /* .admin .column {
   width: 50%;
 
@@ -38,6 +39,7 @@
   flex-direction: column;
   color: #f5deb3;
 } */
+
 .admin {
   background: linear-gradient(to top left, #8585ac, #afa7ca) !important;
   margin: auto;
@@ -49,6 +51,7 @@
   top: 3%;
   position: relative;
 }
+
 .admin h3 {
   top: 3%;
   margin-bottom: -10px;
@@ -56,6 +59,7 @@
   position: relative;
   font-family: "Poppins", sans-serif !important;
 }
+
 .admin label {
   color: black;
   margin: 3%;
@@ -63,8 +67,9 @@
   font-size: 18px;
   font-family: "Poppins", sans-serif !important;
 }
+
 .admin .form-administrate input[type="submit"] {
-  width: 45%;
+  width: 50%;
   height: fit-content;
   margin-top: 10px;
   font-size: 18px;
@@ -72,6 +77,21 @@
   background: linear-gradient(to right, #8585ac, #c6bfd2) !important;
   border-radius: 10px;
   font-family: "Poppins", sans-serif !important;
+}
+
+.admin .rolesBtn {
+  width: 50%;
+  height: fit-content;
+  margin-top: 10px;
+  font-size: 18px;
+  color: black;
+  background: linear-gradient(to right, #8585ac, #c6bfd2) !important;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.admin .rolesBtn:hover {
+  box-shadow: 0px 0px 5px 5px #ffff;
 }
 
 .admin .form-administrate button {
@@ -87,6 +107,7 @@
 .admin .form-administrate input[type="submit"]:hover {
   box-shadow: 0px 0px 5px 5px #ffff;
 }
+
 .admin .form-administrate {
   display: flex;
   justify-content: space-between;
@@ -94,13 +115,14 @@
   margin: auto;
 }
 
-.admin .inputDate{
+.admin .inputDate {
   border-radius: 13px;
   box-shadow: 0px 1px 7px 0px #000;
   outline: none;
   padding: 0px 10px;
   background-color: white;
 }
+
 .admin .form-in {
   margin-top: 5%;
   margin-bottom: 5%;
@@ -108,10 +130,12 @@
   flex-direction: column;
   margin: auto;
 }
+
 .admin .change {
   width: 100%;
   margin: auto;
 }
+
 .admin .admin-first {
   width: 100%;
   height: 100%;
