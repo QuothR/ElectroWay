@@ -40,10 +40,17 @@ public class PaypalDetailService {
 
     public void updatePaypalDetail(PaypalDetail paypalDetail, HttpServletRequest httpServletRequest) throws Exception {
         User user = JwtUtil.getUserFromToken(userService, secret, httpServletRequest);
-        PaypalDetail paypalDetail1 = new PaypalDetail();
-        paypalDetail.setUser(user);
-        paypalDetail.setId(paypalDetail1.getId());
-        paypalDetailRepository.save(paypalDetail);
+
+        if(paypalDetailRepository.findByUser_Id((user.getId())).isEmpty()) {
+            paypalDetail.setUser(user);
+            paypalDetailRepository.save(paypalDetail);
+            return;
+        }
+
+        PaypalDetail paypalDetailToChange = paypalDetailRepository.findByUser_Id(user.getId()).get();
+        paypalDetailToChange.setClientId(paypalDetail.getClientId());
+        paypalDetailToChange.setSecret(paypalDetail.getSecret());
+        paypalDetailRepository.save(paypalDetailToChange);
     }
 
     public PaypalDetail getPaypalDetailByOwnerId(Long id) throws Exception {

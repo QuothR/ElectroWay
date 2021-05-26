@@ -15,7 +15,7 @@ import javax.persistence.*;
 })
 public class PaypalDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigint")
     private Long id;
 
