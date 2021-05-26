@@ -57,9 +57,6 @@ public class ChargingPlugService {
     }
 
     public List<ChargingPlug> getChargingPlugsByChargingPoint(ChargingPoint chargingPoint, Long id) {
-        if (chargingPoint.getStation().getId() != id) {
-            throw new WrongAccessException("You don't own this station!");
-        }
         return chargingPlugRepository.findChargingPlugsByChargingPoint(chargingPoint);
     }
 

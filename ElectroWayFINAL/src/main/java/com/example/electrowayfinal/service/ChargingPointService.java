@@ -98,9 +98,6 @@ public class ChargingPointService {
     }
 
     public List<ChargingPoint> getAllChargingPointsByStationId(Long stationId, HttpServletRequest httpServletRequest) {
-
-        verifyStation(stationId, httpServletRequest);
-
         return chargingPointRepository.findChargingPointsByStation_Id(stationId);
     }
 
