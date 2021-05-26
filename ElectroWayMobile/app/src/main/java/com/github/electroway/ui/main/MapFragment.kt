@@ -105,7 +105,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -195,25 +194,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return Pair(provider, locationManager);
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("MissingPermission")
     private fun moveToCurrentLocation() {
         val (provider, locationManager) = getProviderAndLocationManager()
         if (provider != null) {
-            locationManager.getCurrentLocation(
-                provider,
-                null,
-                requireContext().mainExecutor
-            ) {
-                googleMap.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        LatLng(
-                            it.latitude,
-                            it.longitude
-                        ), 20.0f
-                    )
+            val location = locationManager.getLastKnownLocation(provider)
+            googleMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(
+                        location!!.latitude,
+                        location!!.longitude
+                    ), 20.0f
                 )
-            }
+            )
         }
     }
 
@@ -362,7 +355,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 session.getAllPlugs(markersPos[marker]!!) {
                                     val plugNames = mutableListOf<String>()
                                     for (plug in it) {
-                                        val name = "Point ${plug.first}, Price: ${plug.second.priceKw}, Speed: ${plug.second.chargingSpeedKw}"
+                                        val name =
+                                            "Point ${plug.first}, Price: ${plug.second.priceKw}, Speed: ${plug.second.chargingSpeedKw}"
                                         plugNames.add(name)
                                         plugs[name] = Pair(plug.first, plug.second.id!!)
                                     }
@@ -379,7 +373,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                         val totalKw =
                                             payDialog.findViewById<EditText>(R.id.payTotalKwText)!!.text.toString()
                                                 .toInt()
-                                        session.pay(markersPos[marker]!!, plug.first, plug.second, totalKw) {
+                                        session.pay(
+                                            markersPos[marker]!!,
+                                            plug.first,
+                                            plug.second,
+                                            totalKw
+                                        ) {
                                             if (it != null) {
                                                 startActivity(
                                                     Intent(
@@ -414,29 +413,24 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             routeDialog.hide()
                             val (provider, locationManager) = getProviderAndLocationManager()
                             if (provider != null) {
-                                locationManager.getCurrentLocation(
-                                    provider,
-                                    null,
-                                    requireContext().mainExecutor
+                                val location = locationManager.getLastKnownLocation(provider)
+                                val origin = LatLng(location!!.latitude, location!!.longitude)
+                                val destination = latLng
+                                session.findRoute(
+                                    FindRouteInfo(
+                                        arrayOf(
+                                            origin,
+                                            destination
+                                            /*LatLng(44.18508, 28.51904),
+                                            LatLng(46.21379, 24.7817)*/
+                                        ),
+                                        cars[routeCarSpinner!!.selectedItem.toString()]!!,
+                                        currentChargeInkWText!!.text.toString().toDouble()
+                                    )
                                 ) {
-                                    val origin = LatLng(it.latitude, it.longitude)
-                                    val destination = latLng
-                                    session.findRoute(
-                                        FindRouteInfo(
-                                            arrayOf(
-                                                origin,
-                                                destination
-                                                /*LatLng(44.18508, 28.51904),
-                                                LatLng(46.21379, 24.7817)*/
-                                            ),
-                                            cars[routeCarSpinner!!.selectedItem.toString()]!!,
-                                            currentChargeInkWText!!.text.toString().toDouble()
-                                        )
-                                    ) {
-                                        Log.e("a", it.toString())
-                                        if (it != null) {
-                                            drawRoute(googleMap, stations, it)
-                                        }
+                                    Log.e("a", it.toString())
+                                    if (it != null) {
+                                        drawRoute(googleMap, stations, it)
                                     }
                                 }
                             }
