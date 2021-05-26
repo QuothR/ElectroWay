@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/car")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 @Qualifier("car")
 public class CarController {
     private final CarService carService;

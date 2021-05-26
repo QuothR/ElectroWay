@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/consumption")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 @Qualifier("consumption")
 public class ConsumptionController {
     private final ConsumptionService consumptionService;

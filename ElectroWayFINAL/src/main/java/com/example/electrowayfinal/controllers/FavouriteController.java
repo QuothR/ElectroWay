@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @Qualifier("favourite")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 @RequestMapping("/favourite")
 public class FavouriteController {
     private final FavouriteService favouriteService;

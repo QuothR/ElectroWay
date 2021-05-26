@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/review")
 @Qualifier("review")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 public class ReviewController {
     private final ReviewService reviewService;
 

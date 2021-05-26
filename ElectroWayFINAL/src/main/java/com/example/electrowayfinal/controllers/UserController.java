@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 @RestController
 public class UserController {
     //TODO Automated testing

@@ -20,7 +20,7 @@ import java.util.Random;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 public class ForgotPasswordController {
 
     private final JavaMailSender javaMailSender;

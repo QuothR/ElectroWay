@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/plug_type")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 @Qualifier("plug_type")
 public class PlugTypeController {
     private final PlugTypeService plugTypeService;

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/station")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 @RestController
 public class ChargingPointController {
     private final ChargingPointService chargingPointService;

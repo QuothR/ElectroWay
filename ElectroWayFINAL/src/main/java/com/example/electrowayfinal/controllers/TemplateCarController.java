@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/templatecar")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 @Qualifier("template")
 public class TemplateCarController {
     private final TemplateCarService templateCarService;
