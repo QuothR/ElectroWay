@@ -348,6 +348,9 @@ public class RoutingService {
 
         if(car.isPresent()) {
             // Daca s-a gasit o masina cu acel id in baza de date atunci se va returna.
+            if(car.get().getVehicleMaxSpeed() > 250){
+                car.get().setVehicleMaxSpeed(250);
+            }
             return car.get();
         }
         else {
