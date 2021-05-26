@@ -67,7 +67,6 @@ class ChargingPointFragment : Fragment() {
 
         view.findViewById<Button>(R.id.addPlugButton).setOnClickListener {
             dialog.show()
-            val status = dialog.findViewById<TextView>(R.id.statusText)!!.text
             val connectorType = dialog.findViewById<TextView>(R.id.connectorTypeText)!!.text
             val priceKw = dialog.findViewById<TextView>(R.id.priceKwText)!!.text
             val chargingSpeedKw = dialog.findViewById<TextView>(R.id.chargingSpeedKwText)!!.text
@@ -75,7 +74,6 @@ class ChargingPointFragment : Fragment() {
                 session.addChargingPlug(
                     args.station, args.chargingPoint, ChargingPlugInfo(
                         null,
-                        status.toString().toInt(),
                         connectorType.toString(),
                         priceKw.toString().toDouble(),
                         chargingSpeedKw.toString().toDouble()
@@ -118,6 +116,6 @@ class ChargingPointFragment : Fragment() {
         val connectorType = obj.getString("connectorType")
         val priceKw = obj.getDouble("priceKw")
         val chargingSpeedKw = obj.getDouble("chargingSpeedKw")
-        adapter.add(ChargingPlugInfo(id, status, connectorType, priceKw, chargingSpeedKw))
+        adapter.add(ChargingPlugInfo(id, connectorType, priceKw, chargingSpeedKw))
     }
 }

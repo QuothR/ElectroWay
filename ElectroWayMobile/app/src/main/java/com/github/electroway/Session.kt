@@ -5,6 +5,7 @@ import android.util.Log
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.internal.toImmutableList
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -269,6 +270,66 @@ class Session(val handler: Handler) {
                     handler.post {
                         callback(null)
                     }
+                }
+            }
+        })
+    }
+
+    fun getAllPlugs(station: Int, callback: (List<Pair<Int, ChargingPlugInfo>>) -> Unit) {
+        refreshTokenIfNeeded()
+        val request = Request.Builder()
+            .url(
+                buildBasePath()
+                    .addPathSegment("station")
+                    .addPathSegment(station.toString())
+                    .addPathSegment("points").build()
+            )
+            .header("Authorization", "Bearer $token")
+            .get()
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val points = JSONArray(response.body!!.string())
+                val result = mutableListOf<Pair<Int, ChargingPlugInfo>>()
+                for (i in 0 until points.length()) {
+                    val pointId = points.getJSONObject(i).getInt("id")
+                    val request = Request.Builder()
+                        .url(
+                            buildBasePath()
+                                .addPathSegment("station")
+                                .addPathSegment(station.toString())
+                                .addPathSegment("points")
+                                .addPathSegment(pointId.toString())
+                                .addPathSegment("plugs").build()
+                        )
+                        .header("Authorization", "Bearer $token")
+                        .get()
+                        .build()
+                    val response = client.newCall(request).execute()
+                    val plugs = JSONArray(response.body!!.string())
+                    for (i in 0 until plugs.length()) {
+                        val plug = plugs.getJSONObject(i)
+                        val id = plug.getInt("id")
+                        val connectorType = plug.getString("connectorType")
+                        val priceKw = plug.getDouble("priceKw")
+                        val chargingSpeedKw = plug.getDouble("chargingSpeedKw")
+                        result.add(Pair(
+                            pointId,
+                            ChargingPlugInfo(
+                                id,
+                                connectorType,
+                                priceKw,
+                                chargingSpeedKw
+                            )
+                        ))
+                    }
+                }
+                handler.post {
+                    callback(result)
                 }
             }
         })

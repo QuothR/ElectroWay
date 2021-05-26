@@ -31,7 +31,7 @@ internal class ChargingPlugListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemsList[position]
-        holder.plugText.text = "${item.status}, ${item.connectorType}, ${item.priceKw}, ${item.chargingSpeedKw}"
+        holder.plugText.text = "${item.connectorType}, ${item.priceKw}, ${item.chargingSpeedKw}"
         holder.bind(onClick)
     }
 

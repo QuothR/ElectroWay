@@ -10,12 +10,14 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -103,6 +105,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -192,6 +195,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return Pair(provider, locationManager);
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("MissingPermission")
     private fun moveToCurrentLocation() {
         val (provider, locationManager) = getProviderAndLocationManager()
@@ -349,23 +353,51 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 }
                             }
                         }
-                        stationDialog.findViewById<Button>(R.id.stationPayButton)!!.setOnClickListener {
-                            stationDialog.hide()
-                            payDialog.show()
-                            payDialog.findViewById<Button>(R.id.paySubmitButton)!!.setOnClickListener {
-                                val point = payDialog.findViewById<EditText>(R.id.payChargingPointText)!!.text.toString().toInt()
-                                val plug = payDialog.findViewById<EditText>(R.id.payChargingPlugText)!!.text.toString().toInt()
-                                val totalKw = payDialog.findViewById<EditText>(R.id.payTotalKwText)!!.text.toString().toInt()
-                                session.pay(markersPos[marker]!!, point, plug, totalKw) {
-                                    if (it != null) {
-                                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
-                                        payDialog.hide()
-                                    } else {
-                                        Toast.makeText(requireContext(), "Failed to pay", Toast.LENGTH_SHORT).show()
+                        stationDialog.findViewById<Button>(R.id.stationPayButton)!!
+                            .setOnClickListener {
+                                stationDialog.hide()
+                                val plugSpinner =
+                                    payDialog.findViewById<Spinner>(R.id.plugSpinner)!!
+                                val plugs = mutableMapOf<String, Pair<Int, Int>>()
+                                session.getAllPlugs(markersPos[marker]!!) {
+                                    val plugNames = mutableListOf<String>()
+                                    for (plug in it) {
+                                        val name = "Point ${plug.first}, Price: ${plug.second.priceKw}, Speed: ${plug.second.chargingSpeedKw}"
+                                        plugNames.add(name)
+                                        plugs[name] = Pair(plug.first, plug.second.id!!)
                                     }
+                                    plugSpinner.adapter = ArrayAdapter(
+                                        requireContext(),
+                                        android.R.layout.simple_spinner_item,
+                                        plugNames
+                                    )
                                 }
+                                payDialog.show()
+                                payDialog.findViewById<Button>(R.id.paySubmitButton)!!
+                                    .setOnClickListener {
+                                        val plug = plugs[plugSpinner.selectedItem.toString()]!!
+                                        val totalKw =
+                                            payDialog.findViewById<EditText>(R.id.payTotalKwText)!!.text.toString()
+                                                .toInt()
+                                        session.pay(markersPos[marker]!!, plug.first, plug.second, totalKw) {
+                                            if (it != null) {
+                                                startActivity(
+                                                    Intent(
+                                                        Intent.ACTION_VIEW,
+                                                        Uri.parse(it)
+                                                    )
+                                                )
+                                                payDialog.hide()
+                                            } else {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Failed to pay",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    }
                             }
-                        }
                     }
                 }
             }

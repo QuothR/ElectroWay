@@ -30,12 +30,10 @@ class ChargingPlugFragment : Fragment() {
 
         val session = (requireActivity().application as Application).session
 
-        val status = view.findViewById<EditText>(R.id.updatePlugStatusEditText)
         val connectorType = view.findViewById<EditText>(R.id.updatePlugConnectorTypeEditExt)
         val priceKw = view.findViewById<EditText>(R.id.updatePlugPriceKwEditText)
         val chargingSpeedKw = view.findViewById<EditText>(R.id.updatePlugChargingSpeedKwEditText)
 
-        status.text.append(args.plug.status.toString())
         connectorType.text.append(args.plug.connectorType)
         priceKw.text.append(args.plug.priceKw.toString())
         chargingSpeedKw.text.append(args.plug.chargingSpeedKw.toString())
@@ -45,7 +43,6 @@ class ChargingPlugFragment : Fragment() {
                 args.station, args.chargingPoint,
                 ChargingPlugInfo(
                     args.plug.id,
-                    status.text.toString().toInt(),
                     connectorType.text.toString(),
                     priceKw.text.toString().toDouble(),
                     chargingSpeedKw.text.toString().toDouble()
