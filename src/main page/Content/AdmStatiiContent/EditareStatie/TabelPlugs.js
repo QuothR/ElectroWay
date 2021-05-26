@@ -20,9 +20,9 @@ function TabelPlugs(props) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:443/station/${stationAddr.id}/points/${pointId}/plugs`, {
+            .get(`/station/${stationAddr.id}/points/${pointId}/plugs`, {
                 headers: {
-                    Authorization: `Basic ${myToken}`,
+                    'Authorization': `Bearer ${myToken}`,
                 },
             })
             .then((response) => {
@@ -32,9 +32,9 @@ function TabelPlugs(props) {
 
     function handleDelete(plugId) {
 
-        axios.delete(`http://localhost:443/station/${stationAddr.id}/points/${pointId}/plugs/${plugId}`, {
+        axios.delete(`/station/${stationAddr.id}/points/${pointId}/plugs/${plugId}`, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
         setTimeout(() => {

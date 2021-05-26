@@ -26,9 +26,9 @@ function EditarePlug(props) {
         }
 
         console.log(dataBackend);
-        axios.put(`http://localhost:443/station/${stationAddr.id}/points/${pointId}/plugs/${plugAddr.id}`, dataBackend, {
+        axios.put(`/station/${stationAddr.id}/points/${pointId}/plugs/${plugAddr.id}`, dataBackend, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {

@@ -6,11 +6,6 @@ import { Provider } from 'react-redux'
 import myStore from './redux/store'
 
 
-// window.addEventListener("beforeunload", () => {
-
-//   localStorage.removeItem("loginState");
-//   localStorage.removeItem('userState');
-// })
 
 ReactDOM.render(
   <React.StrictMode>

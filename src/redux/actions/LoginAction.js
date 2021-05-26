@@ -9,7 +9,7 @@ const LoginActionType = {
 const LoginAuthAction = (userState, history, setErrorHandler) => {
     return async (dispatch) => {
         try {
-            const res = await axios.post("http://localhost:443/login", userState);
+            const res = await axios.post("/login", userState);
             sessionStorage.setItem("userState", JSON.stringify(userState));
             const { data } = res;
             dispatch({ type: LoginActionType.LOGIN_SUCCESS, payload: data });

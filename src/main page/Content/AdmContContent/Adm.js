@@ -30,9 +30,9 @@ function Adm(props) {
     };
     console.log(dataBackend);
     axios
-      .put("http://localhost:443/user", dataBackend, {
+      .put("/user", dataBackend, {
         headers: {
-          Authorization: `Basic ${myToken}`,
+          'Authorization': `Bearer ${myToken}`,
         },
       })
       .then((res) => {
@@ -48,9 +48,9 @@ function Adm(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:443/user", {
+      .get("/user", {
         headers: {
-          Authorization: `Basic ${myToken}`,
+          'Authorization': `Bearer ${myToken}`,
         },
       })
       .then((response) => {

@@ -28,9 +28,9 @@ function AdaugaPlug(props) {
 
         console.log(dataBackend)
 
-        axios.post(`http://localhost:443/station/${stationAddr.id}/points/${pointId}`, dataBackend, {
+        axios.post(`/station/${stationAddr.id}/points/${pointId}`, dataBackend, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {

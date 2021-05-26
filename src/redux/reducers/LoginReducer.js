@@ -29,7 +29,7 @@ const getLoginState = () => {
             if (Math.floor(new Date().getTime() / 1000) > new Date(tokenObj.exp).getTime() - 125) {
                 console.log("token nou");
 
-                axios.post("http://localhost:443/login", userStateObj)
+                axios.post("/login", userStateObj)
                     .then((res) => {
                         sessionStorage.setItem("userState", JSON.stringify(userStateObj));
                         loginStateObj.user.token = res.data.token;

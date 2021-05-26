@@ -5,7 +5,7 @@ import Exit from './exit.svg'
 import AdmMasini from './AdmMasini';
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-const titleWords = ['Model', 'An', 'Cap. incarcare (kW)', 'Viteza'];
+const titleWords = ['Model', 'An', 'Cap. baterie (kW)', 'Viteza'];
 const items = titleWords.map((word, idx) => {
     return <li key={idx}>{word}</li>;
 });
@@ -14,9 +14,9 @@ function Tabel(props) {
 
 
     function deleteCar(param) {
-        axios.delete(`http://localhost:443/car/delete/${param}`, {
+        axios.delete(`/car/delete/${param}`, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {
@@ -35,9 +35,9 @@ function Tabel(props) {
 
     useEffect(() => {
         axios
-            .get("http://localhost:443/car/all", {
+            .get("/car/all", {
                 headers: {
-                    'Authorization': `Basic ${myToken}`,
+                    'Authorization': `Bearer ${myToken}`,
                 },
             })
             .then((response) => {
@@ -47,7 +47,7 @@ function Tabel(props) {
 
 
     //console.log(DateLinieTabel);
-    if (DateLinieTabel.length >= 3) {
+    if (DateLinieTabel.length > 3) {
         text = "TabelBox scrollForTabelPlati";
     }
     else {

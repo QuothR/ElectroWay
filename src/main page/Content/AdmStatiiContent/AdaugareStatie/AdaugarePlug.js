@@ -28,9 +28,9 @@ function AdaugarePlug(props) {
         }
 
 
-        axios.post(`http://localhost:443/station/${stationId}/points/${pointId}`, dataBackend, {
+        axios.post(`/station/${stationId}/points/${pointId}`, dataBackend, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {
@@ -68,9 +68,9 @@ function AdaugarePlug(props) {
 
     function handleDelete() {
         const stationId = sessionStorage.getItem('stationId')
-        axios.delete(`http://localhost:443/station/${stationId}`, {
+        axios.delete(`/station/${stationId}`, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
 

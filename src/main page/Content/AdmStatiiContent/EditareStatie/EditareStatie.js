@@ -18,9 +18,9 @@ function EditareStatie(props) {
     const [puncte, getPuncte] = useState([]);
     useEffect(() => {
         axios
-            .get(`http://localhost:443/station/${stationAddr.id}/points`, {
+            .get(`/station/${stationAddr.id}/points`, {
                 headers: {
-                    Authorization: `Basic ${myToken}`,
+                    'Authorization': `Bearer ${myToken}`,
                 },
             })
             .then((response) => {
@@ -31,9 +31,9 @@ function EditareStatie(props) {
     function handleDelete(pointId) {
 
         console.log(pointId)
-        axios.delete(`http://localhost:443/station/${stationAddr.id}/points/${pointId}`, {
+        axios.delete(`/station/${stationAddr.id}/points/${pointId}`, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
 
@@ -44,9 +44,9 @@ function EditareStatie(props) {
 
     function handleDelStation() {
 
-        axios.delete(`http://localhost:443/station/${stationAddr.id}`, {
+        axios.delete(`/station/${stationAddr.id}`, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
 
@@ -65,9 +65,9 @@ function EditareStatie(props) {
         }
 
 
-        axios.put(`http://localhost:443/station/${stationAddr.id}`, dataBackend, {
+        axios.put(`/station/${stationAddr.id}`, dataBackend, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {
@@ -87,9 +87,9 @@ function EditareStatie(props) {
 
         }
 
-        axios.post(`http://localhost:443/station/${stationAddr.id}/points`, emtyData, {
+        axios.post(`/station/${stationAddr.id}/points`, emtyData, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {

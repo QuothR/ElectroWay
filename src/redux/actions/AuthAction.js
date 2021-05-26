@@ -10,7 +10,7 @@ const RegisterAuthAction = (userState, history, setErrorHandler) => {
         console.log(userState);
         try {
             
-            const res = await axios.post("http://localhost:443/register", userState);
+            const res = await axios.post("/register", userState);
             const { data } = res;
             dispatch({ type: AuthActionType.REGISTER_SUCCESS, payload: data });
             history.push("/login");

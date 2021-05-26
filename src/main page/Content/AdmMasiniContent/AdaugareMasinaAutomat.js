@@ -13,14 +13,11 @@ function AdaugareMasinaAutomat(props) {
     const [ChoosenCar, getCarById] = useState({});
     const history = useHistory();
 
-
-    let text = "";
-
     useEffect(() => {
         axios
-            .get("http://localhost:443/templatecar/all", {
+            .get("/templatecar/all", {
                 headers: {
-                    'Authorization': `Basic ${myToken}`,
+                    'Authorization': `Bearer ${myToken}`,
                 },
             })
             .then((response) => {
@@ -29,8 +26,26 @@ function AdaugareMasinaAutomat(props) {
     }, []);
 
     function handleAdd() {
+function postPlug(res,dataplug){
+    var carId=res.id;   
+     axios.post(`/plug_type/create/${carId}`, dataplug, {
+        headers: {
+            'Authorization': `Bearer ${myToken}`
+        }
+    })
+        .then((ressponse) => {
+            console.log(ressponse.data);
+        })
+        setTimeout(() => {
+        history.push("/home/Adm-cars")
+    }, 100)
+}
 
         console.log(masinaAleasa);
+        const dataPlug = {
+            plugType: DateTemplateuri[masinaAleasa].plugType
+           
+        }
         const dataBackend = {
             model: DateTemplateuri[masinaAleasa].model,
             year: DateTemplateuri[masinaAleasa].year,
@@ -41,13 +56,15 @@ function AdaugareMasinaAutomat(props) {
             auxiliaryKwh: DateTemplateuri[masinaAleasa].auxiliaryKwh
         }
         console.log('Date backend ' + dataBackend);
-        axios.post("http://localhost:443/car/create", dataBackend, {
+        axios.post("/car/create", dataBackend, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {
                 console.log(res.data);
+                postPlug(res.data,dataPlug);
+
             })
 
         setTimeout(() => {

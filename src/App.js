@@ -8,8 +8,13 @@ import MainPage from './main page/MainPage'
 import MainContent from './MainPageLanding/compForMain/MainContent'
 import ProtectedRoute from './Routes/ProtectedRoute'
 import ProtectedLoginRoute from './Routes/ProtectedLoginRoute'
-
+import axios from "axios"
 import { connect } from 'react-redux'
+
+
+
+axios.defaults.baseURL = 'http://localhost:443';
+
 
 function App(props) {
 

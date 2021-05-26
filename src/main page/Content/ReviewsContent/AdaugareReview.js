@@ -27,11 +27,11 @@ function AddReviews(props) {
     console.log(dataBackend);
     axios
       .post(
-        `http://localhost:443/review/create/station/${station1.id}`,
+        `/review/create/station/${station1.id}`,
         dataBackend,
         {
           headers: {
-            Authorization: `Basic ${myToken}`,
+            'Authorization': `Bearer ${myToken}`,
           },
         }
       )

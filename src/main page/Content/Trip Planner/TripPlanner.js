@@ -24,9 +24,9 @@ function TripPlanner(props) {
 
     useEffect(() => {
         axios
-            .get("http://localhost:443/car/all", {
+            .get("/car/all", {
                 headers: {
-                    'Authorization': `Basic ${myToken}`,
+                    'Authorization': `Bearer ${myToken}`,
                 },
             })
             .then((response) => {
@@ -59,9 +59,9 @@ function TripPlanner(props) {
         console.log(dataBackend)
 
 
-        axios.post("http://localhost:443/routing/points", dataBackend, {
+        axios.post("/routing/points", dataBackend, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {

@@ -96,7 +96,9 @@
     transition: 0.5s;
     color: #FFFF;
 }
-
+.AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow .ButonInapoi:hover{
+    box-shadow: 0px 0px 7px 3px #FFFF;
+}
 .AdaugareMasina .AdaugareMasinaBox .FormRow .Formularul .SubmitButtonRow .ButonAdaug:hover {
     box-shadow: 0px 0px 7px 3px #FFFF;
 }

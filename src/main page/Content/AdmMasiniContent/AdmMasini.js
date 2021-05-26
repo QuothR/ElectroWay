@@ -13,9 +13,9 @@ function AdmMasini() {
 //     redirectionare();
 //  }
 //     function handleGet() {
-//         axios.get("http://localhost:443", {
+//         axios.get("", {
 //             headers: {
-//                 Authorization: `Basic ${myToken}`
+//                 'Authorization': `Bearer ${myToken}`
 //             }
 //         })
 //             .then((res) => {

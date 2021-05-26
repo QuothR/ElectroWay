@@ -17,14 +17,14 @@ const allReducers = combineReducers({
 
 
 
-const middlewareEnhancer = applyMiddleware(thunk);
-const composedEnchancer = compose(middlewareEnhancer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+// const middlewareEnhancer = applyMiddleware(thunk);
+// const composedEnchancer = compose(middlewareEnhancer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
-const myStore = createStore(
-    allReducers,
-    composedEnchancer);
+// const myStore = createStore(
+//     allReducers,
+//     composedEnchancer);
 
-export default myStore;
+// export default myStore;
 
 
 
@@ -38,10 +38,10 @@ export default myStore;
 
 
 
-// const middlewareEnhancer = applyMiddleware(thunk);
+const middlewareEnhancer = applyMiddleware(thunk);
 
-// const myStore = createStore(
-//     allReducers,
-//     middlewareEnhancer);
+const myStore = createStore(
+    allReducers,
+    middlewareEnhancer);
 
-// export default myStore;
+export default myStore;

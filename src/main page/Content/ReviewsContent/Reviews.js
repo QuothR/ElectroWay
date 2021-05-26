@@ -21,9 +21,9 @@ function Reviews(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:443/station", {
+      .get("/station", {
         headers: {
-          Authorization: `Basic ${myToken}`,
+          'Authorization': `Bearer ${myToken}`,
         },
       })
       .then((response) => {
@@ -31,9 +31,9 @@ function Reviews(props) {
       });
 
     axios
-      .get("http://localhost:443/station/all", {
+      .get("/station/all", {
         headers: {
-          Authorization: `Basic ${myToken}`,
+          'Authorization': `Bearer ${myToken}`,
         },
       })
       .then((response) => {

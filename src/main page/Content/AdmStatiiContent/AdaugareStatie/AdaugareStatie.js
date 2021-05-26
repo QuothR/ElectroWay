@@ -21,9 +21,9 @@ function AdaugareStatie(props) {
             description: formImput.description ? formImput.description : "empty"
         }
 
-        axios.post("http://localhost:443/station", dataBackend, {
+        axios.post("/station", dataBackend, {
             headers: {
-                'Authorization': `Basic ${myToken}`
+                'Authorization': `Bearer ${myToken}`
             }
         })
             .then((res) => {
@@ -95,7 +95,7 @@ function AdaugareStatie(props) {
                                 }}
                             />
                             <label>Beneficiile stației</label>
-                            <input type="text" placeholder="optional" required pattern=".{1,}"
+                            <input type="text" placeholder="optional"
                                 onChange={(e) => {
                                     const description = e.target.value;
                                     setFormInput({ ...formImput, ...{ description } });

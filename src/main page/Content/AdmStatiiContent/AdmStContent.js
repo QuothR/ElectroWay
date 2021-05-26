@@ -19,9 +19,9 @@ function AdmStContent(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:443/station", {
+      .get("/station", {
         headers: {
-          Authorization: `Basic ${myToken}`,
+          'Authorization': `Bearer ${myToken}`,
         },
       })
       .then((response) => {

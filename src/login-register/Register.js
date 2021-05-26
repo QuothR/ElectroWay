@@ -7,8 +7,8 @@ import './Register.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux'
 import { RegisterAuthAction } from '../redux/actions/AuthAction'
-import {ENG} from "../locales/en/engTran"
-import {RO} from "../locales/ro/roTran"
+import { ENG } from "../locales/en/engTran"
+import { RO } from "../locales/ro/roTran"
 
 function Register(props) {
     const { user, register } = props;
@@ -56,8 +56,8 @@ function Register(props) {
                                             setUser({ ...userState, ...{ username } });
                                             setErrorHandler("");
                                             // const roles = { roles :["ROLE_DRIVER", "ROLE_OWNER"]};
-                                            
-                                            
+
+
                                         }} />
                                 </div>
 
@@ -172,9 +172,11 @@ function Register(props) {
                             </div>
 
                             <div className="form-group-bottom">
-                                <button type="submit" className="btn btn-class" onClick={ (e) => {
-                                    setUser({ ...userState, ...{ roles :["ROLE_DRIVER", "ROLE_OWNER"] } });
-                                }}>Confirm</button>
+                                <button type="submit" className="btn btn-class"
+                                    // onClick={(e) => {
+                                    //     setUser({ ...userState, ...{ roles: [] } });
+                                    // }}
+                                >Confirm</button>
 
                                 <div className="error-response">
                                     <p>{errorHandler.message}</p>

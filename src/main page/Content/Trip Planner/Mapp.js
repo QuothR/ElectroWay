@@ -19,22 +19,11 @@ function Mapp(props) {
   },[props.ruta])
 
 
-  // const testT = () => {
-  //   let vector = [];
-  //   testObj.legs.map((val, key) => {
-  //     console.log(val.points.length);
-  //     val.points.map((val1, key1) => {
-  //       vector.push(val1);
-  //     })
-  //   })
-  //   return vector;
-  // }
-
   useEffect(() => {
     axios
-      .get("http://localhost:443/station/all", {
+      .get("/station/all", {
         headers: {
-          Authorization: `Basic ${myToken}`,
+          'Authorization': `Bearer ${myToken}`,
         },
       })
       .then((response) => {

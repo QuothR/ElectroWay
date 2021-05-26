@@ -15,9 +15,9 @@ function ElementeJosDrp(props) {
     console.log(station2.id);
 
     axios
-      .get(`http://localhost:443/review/all/station/${station2.id}`, {
+      .get(`/review/all/station/${station2.id}`, {
         headers: {
-          Authorization: `Basic ${myToken}`,
+          'Authorization': `Bearer ${myToken}`,
         },
       })
       .then((response) => {
