@@ -2,8 +2,8 @@ package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.exceptions.CarNotFoundException;
 import com.example.electrowayfinal.exceptions.ImpossibleRouteException;
-import com.example.electrowayfinal.utils.Routing.structures.RoutingRequestData;
 import com.example.electrowayfinal.service.RoutingService;
+import com.example.electrowayfinal.utils.Routing.structures.RoutingRequestData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +24,7 @@ public class RoutingController {
     @PostMapping
     public @ResponseBody
     ResponseEntity<Object> getRoute(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException {
+
         return routingService.generateRoute(routingRequestData);
     }
 

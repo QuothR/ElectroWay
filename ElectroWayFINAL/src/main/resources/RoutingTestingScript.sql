@@ -39,7 +39,6 @@
 */
 
 # De acum poti rula script-ul pentru populare.
-
 INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(1,"Targu Frumos",47.22197,27.06514,2);
 INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(2,"Vaslui",46.63387, 27.71967,2);
 INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(3,"Barlad",46.22585, 27.66664,2);
@@ -61,45 +60,45 @@ INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owne
 INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(19,"Gura Humorului",47.57146, 25.83267,2);
 INSERT INTO station(id,address,map_latitude_location,map_longitude_location,owner_id) VALUES(20,"Vatra Dornei",47.39327, 25.31631,2);
 
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(1,1,1,"Type 1",0.1,7.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(2,1,2,"Type 1",0.3,8.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(3,1,2,"Type 2",0.4,7.5);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(4,1,1,"Type 2",0.2,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(5,1,1,"Type 1",0.4,5.8);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(6,1,1,"Type 2",0.5,7.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(7,1,2,"Type 1",0.5,5.4);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(8,1,2,"Type 2",0.2,2.9);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(9,1,2,"Type 2",0.4,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(10,1,2,"Type 1",0.7,5.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(11,1,3,"Type 1",0.33,6.0);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(12,1,3,"Type 2",0.24,6.7);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(13,1,3,"Type 1",0.39,4.5);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(14,1,3,"Type 1",0.80,4.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(15,1,3,"Type 2",0.24,6.7);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(16,1,3,"Type 1",0.39,4.5);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(17,1,3,"Type 1",0.37,6.0);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(18,1,3,"Type 2",0.24,6.7);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(19,1,3,"Type 1",0.39,4.5);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(20,1,3,"Type 1",0.60,6.0);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(21,1,3,"Type 2",0.24,6.7);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(22,1,3,"Type 1",0.39,4.5);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(23,1,2,"Type 2",0.70,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(24,1,2,"Type 1",0.70,5.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(25,1,3,"Type 1",0.90,6.0);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(26,1,3,"Type 2",0.24,6.7);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(27,1,3,"Type 1",0.39,4.5);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(28,1,2,"Type 2",0.8,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(29,1,2,"Type 1",0.7,5.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(30,1,2,"Type 2",0.4,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(31,1,2,"Type 1",0.7,5.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(32,1,2,"Type 2",0.4,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(33,1,2,"Type 1",0.7,5.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(34,1,1,"Type 1",0.7,3.8);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(35,1,1,"Type 2",1.47,4.7);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(36,1,2,"Type 2",0.4,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(37,1,2,"Type 1",0.7,5.1);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(38,1,2,"Type 2",0.4,6.2);
-INSERT INTO charging_plug(id,status,level,connector_type,price_kw,charging_speed_kw) VALUES(39,1,2,"Type 1",0.7,5.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(1,1,"Type 1",0.1,7.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(2,1,"Type 1",0.3,8.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(3,1,"Type 2",0.4,7.5);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(4,1,"Type 2",0.2,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(5,1,"Type 1",0.4,5.8);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(6,1,"Type 2",0.5,7.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(7,1,"Type 1",0.5,5.4);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(8,1,"Type 2",0.2,2.9);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(9,1,"Type 2",0.4,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(10,1,"Type 1",0.7,5.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(11,1,"Type 1",0.33,6.0);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(12,1,"Type 2",0.24,6.7);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(13,1,"Type 1",0.39,4.5);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(14,1,"Type 1",0.80,4.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(15,1,"Type 2",0.24,6.7);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(16,1,"Type 1",0.39,4.5);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(17,1,"Type 1",0.37,6.0);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(18,1,"Type 2",0.24,6.7);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(19,1,"Type 1",0.39,4.5);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(20,1,"Type 1",0.60,6.0);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(21,1,"Type 2",0.24,6.7);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(22,1,"Type 1",0.39,4.5);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(23,1,"Type 2",0.70,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(24,1,"Type 1",0.70,5.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(25,1,"Type 1",0.90,6.0);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(26,1,"Type 2",0.24,6.7);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(27,1,"Type 1",0.39,4.5);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(28,1,"Type 2",0.8,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(29,1,"Type 1",0.7,5.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(30,1,"Type 2",0.4,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(31,1,"Type 1",0.7,5.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(32,1,"Type 2",0.4,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(33,1,"Type 1",0.7,5.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(34,1,"Type 1",0.7,3.8);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(35,1,"Type 2",1.47,4.7);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(36,1,"Type 2",0.4,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(37,1,"Type 1",0.7,5.1);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(38,1,"Type 2",0.4,6.2);
+INSERT INTO charging_plug(id,status,connector_type,price_kw,charging_speed_kw) VALUES(39,1,"Type 1",0.7,5.1);
 
 INSERT INTO charging_point(id,station_id) VALUES(1,1);
 INSERT INTO charging_point(id,station_id) VALUES(2,2);
@@ -161,6 +160,7 @@ UPDATE charging_plug SET charging_point_id = 19 WHERE id = 36;
 UPDATE charging_plug SET charging_point_id = 19 WHERE id = 37;
 UPDATE charging_plug SET charging_point_id = 20 WHERE id = 38;
 UPDATE charging_plug SET charging_point_id = 20 WHERE id = 39;
+
 
 
 

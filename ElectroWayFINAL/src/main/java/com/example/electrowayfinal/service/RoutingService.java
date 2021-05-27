@@ -2,15 +2,10 @@ package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.CarNotFoundException;
 import com.example.electrowayfinal.exceptions.ImpossibleRouteException;
-import com.example.electrowayfinal.models.Car;
-import com.example.electrowayfinal.models.ChargingPlug;
-import com.example.electrowayfinal.models.ChargingPoint;
-import com.example.electrowayfinal.models.Station;
-import com.example.electrowayfinal.repositories.ChargingPlugRepository;
-import com.example.electrowayfinal.repositories.ChargingPointRepository;
-import com.example.electrowayfinal.repositories.StationRepository;
+import com.example.electrowayfinal.models.*;
+import com.example.electrowayfinal.repositories.*;
+import com.example.electrowayfinal.utils.Routing.structures.Consumption;
 import com.example.electrowayfinal.utils.Routing.structures.*;
-import com.example.electrowayfinal.repositories.CarRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +25,23 @@ public class RoutingService {
     private final StationRepository stationRepository;
     private final ChargingPointRepository chargingPointRepository;
     private final ChargingPlugRepository chargingPlugRepository;
+    private final PlugTypeRepository plugTypeRepository;
+    private final TemplateCarRepository templateCarRepository;
 
     @Autowired
     public RoutingService(
             CarRepository carRepository,
             StationRepository stationRepository,
             ChargingPointRepository chargingPointRepository,
-            ChargingPlugRepository chargingPlugRepository) {
+            ChargingPlugRepository chargingPlugRepository,
+            PlugTypeRepository plugTypeRepository,
+            TemplateCarService templateCarService, TemplateCarRepository templateCarRepository) {
         this.carRepository = carRepository;
         this.stationRepository = stationRepository;
         this.chargingPointRepository = chargingPointRepository;
         this.chargingPlugRepository = chargingPlugRepository;
+        this.plugTypeRepository = plugTypeRepository;
+        this.templateCarRepository = templateCarRepository;
     }
 
     /**
@@ -90,38 +91,68 @@ public class RoutingService {
         // O lista care contine obiecte in care retinem date despre statie, chargingPlug, ...
         List<StationData> stationDataList = new ArrayList<>();
 
-        List<ChargingPoint> chargingPointList = new ArrayList<>();
 
+        //getPlugType pentru masina primita in request
+        Car car = routeData.getCar();
+        List<PlugType> plugType= plugTypeRepository.findAllByCarId(car.getId());
+        if(plugType.size()==0) {
+            Optional<TemplateCar> templateCar = templateCarRepository.findById(routeData.getCar().getId());
+            PlugType pt = new PlugType();
+            pt.setPlugType(templateCar.get().getPlugType());
+            plugType.add(pt);
+        }
+
+        //Statiile care au acelasi plugType ca masina primita in request(cu cea mai buna viteza de incarcare)
         for(Station station : possibleReachableStations) {
             // Obtinerea chargingPoint-urilor statiei.
-            chargingPointList = chargingPointRepository.findChargingPointsByStation_Id(station.getId());
+            List<ChargingPoint> chargingPointList = chargingPointRepository.findChargingPointsByStation_Id(station.getId());
 
             // Initializez un plug cu viteza 0.
             ChargingPlug chargingPlug = new ChargingPlug();
             chargingPlug.setChargingSpeedKw(0);
 
-            for(ChargingPoint chargingPoint : chargingPointList) {
-                // Plugul cu viteza maxima corespunzator fiecarui chargingPoint.
-                ChargingPlug aux = chargingPlugRepository.findChargingPlugsByChargingPoint(chargingPoint)
-                        .stream()
-                        .max(Comparator.comparing(ChargingPlug::getChargingSpeedKw))
-                        .orElse(null);
+            List<ChargingPlug> chargingPlugs=new ArrayList<>();
+            for(ChargingPoint chargingPoint : chargingPointList){
+                List<ChargingPlug> aux = chargingPlugRepository.findChargingPlugsByChargingPoint(chargingPoint);
 
-                // Plugul cu viteza maxima per total, pt toate chargingPoint-urile.
-                if((aux != null) && (aux.getChargingSpeedKw() > chargingPlug.getChargingSpeedKw()))
-                    chargingPlug = aux;
+                for(ChargingPlug chargingPlug1:aux){
+                    if(checkGoodPlugType(plugType, chargingPlug1.getConnectorType())) {
+                        if(chargingPlug1 != null && chargingPlug1.getChargingSpeedKw() > chargingPlug.getChargingSpeedKw()) {
+                            chargingPlug = chargingPlug1;
+                        }
+                    }
+                }
             }
+            if(chargingPlug.getChargingSpeedKw() > 0) {
+                stationDataList.add(new StationData(station, chargingPlug));
+            }
+        }
 
-            stationDataList.add(new StationData(station, chargingPlug));
+        for(StationData s : stationDataList) {
+            System.out.println(s);
         }
 
         return stationDataList;
+    }
+
+    public boolean checkGoodPlugType(List<PlugType> plugtypes, String connectorType) {
+        for(PlugType pt : plugtypes) {
+            if(pt.getPlugType().equals(connectorType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ResponseEntity<Object> generateRoute(
             RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, InterruptedException, ImpossibleRouteException {
         // Obtinerea si editarea datelor necesare pentru generarea rutei.
         RouteData routeData = dataProcessing(routingRequestData);
+
+        // TomTom's constraint.
+        if(routeData.getCar().getVehicleMaxSpeed() >= 250) {
+            routeData.getCar().setVehicleMaxSpeed(249);
+        }
 
         // Crearea response-ului.
         RoutingFinalResponse finalResponse = new RoutingFinalResponse();
@@ -351,7 +382,22 @@ public class RoutingService {
             return car.get();
         }
         else {
-            throw new CarNotFoundException(carId);
+            Optional<TemplateCar> templateCar = templateCarRepository.findById(carId);
+            if(templateCar.isPresent()){
+                Car templateCarConverted = new Car();
+                //S-a gasit masina cu acel id in template
+                templateCarConverted.setId(templateCar.get().getId());
+                templateCarConverted.setAuxiliaryKwh(templateCar.get().getAuxiliaryKwh());
+                templateCarConverted.setBatteryCapacity(templateCar.get().getBatteryCapacity());
+                templateCarConverted.setChargingCapacity(templateCar.get().getChargingCapacity());
+                templateCarConverted.setVehicleMaxSpeed(templateCar.get().getVehicleMaxSpeed());
+                templateCarConverted.setYear(templateCar.get().getYear());
+                templateCarConverted.setModel(templateCar.get().getModel());
+                return templateCarConverted;
+            }
+            else {
+                throw new CarNotFoundException(carId);
+            }
         }
     }
 
