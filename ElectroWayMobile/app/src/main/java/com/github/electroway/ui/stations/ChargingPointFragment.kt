@@ -70,12 +70,16 @@ class ChargingPointFragment : Fragment() {
             val priceKw = dialog.findViewById<TextView>(R.id.priceKwText)!!.text
             val chargingSpeedKw = dialog.findViewById<TextView>(R.id.chargingSpeedKwText)!!.text
             dialog.findViewById<Button>(R.id.confirmPlugButton)!!.setOnClickListener {
+                val price = priceKw.toString()
+                if (price == "") return@setOnClickListener
+                val chargingSpeed = chargingSpeedKw.toString()
+                if (chargingSpeed == "") return@setOnClickListener
                 session.addChargingPlug(
                     args.station, args.chargingPoint, ChargingPlug(
                         null,
                         connectorType.toString(),
-                        priceKw.toString().toDouble(),
-                        chargingSpeedKw.toString().toDouble()
+                        price.toDouble(),
+                        chargingSpeed.toDouble()
                     )
                 ) {
                     addChargingPoint(it!!)
@@ -105,6 +109,12 @@ class ChargingPointFragment : Fragment() {
                     addChargingPoint(it.getJSONObject(i))
                 }
                 adapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to get charging plugs",
+                    Toast.LENGTH_SHORT
+                )
             }
         }
     }

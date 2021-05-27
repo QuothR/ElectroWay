@@ -60,6 +60,12 @@ class StationListFragment : Fragment() {
                     adapter.add(index, address)
                 }
                 adapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to get stations",
+                    Toast.LENGTH_SHORT
+                )
             }
         }
 

@@ -101,6 +101,12 @@ class AddCarFragment : Fragment() {
                         )
                     )
                 }
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to get templates",
+                    Toast.LENGTH_SHORT
+                )
             }
         }
 

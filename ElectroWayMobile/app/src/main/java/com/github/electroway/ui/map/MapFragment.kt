@@ -55,6 +55,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var stationDialog: BottomSheetDialog
     private lateinit var payDialog: BottomSheetDialog
     private val cars = mutableMapOf<String, Int>()
+    private var route: Polyline? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -166,6 +167,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
                 routeCarSpinner.adapter =
                     ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, rows)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to get cars",
+                    Toast.LENGTH_SHORT
+                )
             }
         }
     }
@@ -315,6 +322,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                                         R.drawable.favourite_mark
                                                     )
                                                 )
+                                            } else {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Failed to create favourite",
+                                                    Toast.LENGTH_SHORT
+                                                )
                                             }
                                         }
                                     }
@@ -328,6 +341,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                         session.deleteFavourite(markersPos[marker]!!, favourite) {
                                             if (it) {
                                                 marker.setIcon(markerBitmap)
+                                            } else {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Failed to delete favourite",
+                                                    Toast.LENGTH_SHORT
+                                                )
                                             }
                                         }
                                     }
@@ -386,6 +405,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                     }
                             }
                     }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to get stations",
+                        Toast.LENGTH_SHORT
+                    )
                 }
             }
             googleMap.setOnMapLongClickListener { latLng ->
@@ -399,6 +424,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     routeDialog.findViewById<Button>(R.id.routeConfigurationFindButton)!!
                         .setOnClickListener {
                             routeDialog.hide()
+                            val currentCharge = currentChargeInkWText!!.text.toString()
+                            if (currentCharge == "") return@setOnClickListener
                             val location = getLocation() ?: return@setOnClickListener
                             val origin = LatLng(location.latitude, location.longitude)
                             val destination = latLng
@@ -409,12 +436,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                         destination
                                     ),
                                     cars[routeCarSpinner!!.selectedItem.toString()]!!,
-                                    currentChargeInkWText!!.text.toString().toDouble()
+                                    currentCharge.toDouble()
                                 )
                             ) {
-                                Log.e("a", it.toString())
                                 if (it != null) {
                                     drawRoute(googleMap, stations, it)
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Failed to get route",
+                                        Toast.LENGTH_SHORT
+                                    )
                                 }
                             }
                         }
@@ -445,7 +477,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 polylineOptions.add(LatLng(point.getDouble("lat"), point.getDouble("lon")))
             }
         }
-        googleMap.addPolyline(polylineOptions)
+        route?.remove()
+        route = googleMap.addPolyline(polylineOptions)
         googleMap.setOnPolylineClickListener {
             val waypointsRecyclerView =
                 waypointsDialog.findViewById<RecyclerView>(R.id.waypointsRecyclerView)!!

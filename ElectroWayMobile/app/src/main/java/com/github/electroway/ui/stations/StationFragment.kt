@@ -69,6 +69,12 @@ class StationFragment : Fragment() {
                     chargingPointsAdapter.add(id)
                 }
                 chargingPointsAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to get charging points",
+                    Toast.LENGTH_SHORT
+                )
             }
         }
 
@@ -103,6 +109,12 @@ class StationFragment : Fragment() {
                     reviewsAdapter.add(rating, text)
                 }
                 reviewsAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to get reviews",
+                    Toast.LENGTH_SHORT
+                )
             }
         }
     }
