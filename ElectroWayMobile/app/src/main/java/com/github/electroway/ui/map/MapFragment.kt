@@ -1,11 +1,13 @@
 package com.github.electroway.ui.map
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -98,6 +101,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 false
             )
         )
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        )
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
@@ -157,13 +170,31 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun getLocation(): Location? {
+        return if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
+            null
+        } else {
+            googleMap.isMyLocationEnabled = true
+            googleMap.myLocation
+        }
+    }
+
     private fun moveToCurrentLocation() {
-        val location = googleMap.myLocation
+        val location = getLocation() ?: return
         googleMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
-                    location!!.latitude,
-                    location!!.longitude
+                    location.latitude,
+                    location.longitude
                 ), 20.0f
             )
         )
@@ -189,11 +220,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        googleMap.isMyLocationEnabled = true
-
+        getLocation()
         if (args.addStation) {
             googleMap.setOnMapLongClickListener {
                 val action = MapFragmentDirections.actionMapFragmentToHomeFragment(it)
@@ -370,23 +399,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     routeDialog.findViewById<Button>(R.id.routeConfigurationFindButton)!!
                         .setOnClickListener {
                             routeDialog.hide()
-                                val location = googleMap.myLocation
-                                val origin = LatLng(location!!.latitude, location!!.longitude)
-                                val destination = latLng
-                                session.findRoute(
-                                    FindRoute(
-                                        arrayOf(
-                                            origin,
-                                            destination
-                                        ),
-                                        cars[routeCarSpinner!!.selectedItem.toString()]!!,
-                                        currentChargeInkWText!!.text.toString().toDouble()
-                                    )
-                                ) {
-                                    Log.e("a", it.toString())
-                                    if (it != null) {
-                                        drawRoute(googleMap, stations, it)
-                                    }
+                            val location = getLocation() ?: return@setOnClickListener
+                            val origin = LatLng(location.latitude, location.longitude)
+                            val destination = latLng
+                            session.findRoute(
+                                FindRoute(
+                                    arrayOf(
+                                        origin,
+                                        destination
+                                    ),
+                                    cars[routeCarSpinner!!.selectedItem.toString()]!!,
+                                    currentChargeInkWText!!.text.toString().toDouble()
+                                )
+                            ) {
+                                Log.e("a", it.toString())
+                                if (it != null) {
+                                    drawRoute(googleMap, stations, it)
+                                }
                             }
                         }
                 }
