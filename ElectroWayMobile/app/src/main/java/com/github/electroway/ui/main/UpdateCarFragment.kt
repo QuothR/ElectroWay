@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.github.electroway.CarInfo
+import com.github.electroway.models.Car
 import com.github.electroway.Application
 import com.github.electroway.R
 
@@ -51,7 +51,7 @@ class UpdateCarFragment : Fragment() {
 
         view.findViewById<Button>(R.id.updateCarButton).setOnClickListener {
             session.updateCar(
-                CarInfo(
+                Car(
                     args.car.id,
                     model.text.toString(),
                     year.text.toString().toInt(),

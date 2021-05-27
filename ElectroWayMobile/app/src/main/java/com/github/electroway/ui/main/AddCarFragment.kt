@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.github.electroway.CarInfo
+import com.github.electroway.models.Car
 import com.github.electroway.Application
 import com.github.electroway.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -48,7 +48,7 @@ class AddCarFragment : Fragment() {
 
         view.findViewById<Button>(R.id.submitCarButton).setOnClickListener {
             session.addCar(
-                CarInfo(
+                Car(
                     null,
                     model.toString(),
                     year.toString().toInt(),
@@ -90,7 +90,7 @@ class AddCarFragment : Fragment() {
                     val vehicleMaxSpeed = template.getDouble("vehicleMaxSpeed")
                     val auxiliaryKwh = template.getDouble("auxiliaryKwh")
                     adapter.add(
-                        CarInfo(
+                        Car(
                             null,
                             model,
                             year,

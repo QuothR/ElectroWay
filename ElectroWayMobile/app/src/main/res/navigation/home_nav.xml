@@ -23,7 +23,7 @@
         android:label="@string/title_profile" />
     <fragment
         android:id="@+id/navigation_station_list"
-        android:name="com.github.electroway.ui.main.StationListFragment"
+        android:name="com.github.electroway.ui.stations.StationListFragment"
         android:label="@string/title_stations"
         tools:layout="@layout/fragment_station_list" />
 </navigation>

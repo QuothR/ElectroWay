@@ -1,4 +1,4 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.map
 
 import android.view.LayoutInflater
 import android.view.View

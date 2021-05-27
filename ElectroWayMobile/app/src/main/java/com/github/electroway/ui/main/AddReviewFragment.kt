@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.github.electroway.AddReviewInfo
+import com.github.electroway.models.AddReview
 import com.github.electroway.Application
 import com.github.electroway.R
 
@@ -30,7 +30,7 @@ class AddReviewFragment : Fragment() {
         view.findViewById<Button>(R.id.submitReviewButton).setOnClickListener {
             val text = view.findViewById<TextView>(R.id.newReviewText).text.toString()
             val rating = (view.findViewById<RatingBar>(R.id.newReviewRating).rating * 2f).toInt()
-            session.addReview(args.station, AddReviewInfo(rating, text)) {
+            session.addReview(args.station, AddReview(rating, text)) {
                 if (it) {
                     val action =
                         AddReviewFragmentDirections.actionAddReviewFragmentToReviewsFragment(args.station)

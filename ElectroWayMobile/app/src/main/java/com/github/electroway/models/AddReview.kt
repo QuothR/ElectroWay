@@ -1,8 +1,8 @@
-package com.github.electroway
+package com.github.electroway.models
 
 import org.json.JSONObject
 
-class AddReviewInfo(val rating: Int, val text: String) {
+class AddReview(val rating: Int, val text: String) {
     fun getJson(): JSONObject {
         return JSONObject()
             .put("rating", rating)

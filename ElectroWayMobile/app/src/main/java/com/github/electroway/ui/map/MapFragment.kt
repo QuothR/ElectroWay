@@ -1,31 +1,26 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.map
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.location.LocationManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.github.electroway.*
-import com.google.android.gms.location.LocationServices
+import com.github.electroway.Application
+import com.github.electroway.models.FindRoute
+import com.github.electroway.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -379,7 +374,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 val origin = LatLng(location!!.latitude, location!!.longitude)
                                 val destination = latLng
                                 session.findRoute(
-                                    FindRouteInfo(
+                                    FindRoute(
                                         arrayOf(
                                             origin,
                                             destination

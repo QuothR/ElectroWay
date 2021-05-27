@@ -1,10 +1,10 @@
-package com.github.electroway
+package com.github.electroway.models
 
 import com.google.android.gms.maps.model.LatLng
 import org.json.JSONArray
 import org.json.JSONObject
 
-class FindRouteInfo(
+class FindRoute(
     val locationsCoords: Array<LatLng>,
     val carId: Int,
     val currentChargeInkW: Double,

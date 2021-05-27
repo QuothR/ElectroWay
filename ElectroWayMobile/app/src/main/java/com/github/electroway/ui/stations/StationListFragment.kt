@@ -1,4 +1,4 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.stations
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,10 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.electroway.AddStationInfo
+import com.github.electroway.models.AddStation
 import com.github.electroway.Application
-import com.github.electroway.GeocoderAddress
+import com.github.electroway.models.GeocoderAddress
 import com.github.electroway.R
+import com.github.electroway.ui.main.HomeFragment
+import com.github.electroway.ui.main.HomeFragmentArgs
+import com.github.electroway.ui.main.HomeFragmentDirections
 
 class StationListFragment : Fragment() {
 
@@ -64,7 +67,7 @@ class StationListFragment : Fragment() {
         if (homeArgs.stationToAdd != null) {
             val latLng = homeArgs.stationToAdd!!
             val addressLine = geocoderAddress.getFromLatLng(latLng)
-            session.addStation(AddStationInfo(addressLine, latLng.latitude, latLng.longitude)) {
+            session.addStation(AddStation(addressLine, latLng.latitude, latLng.longitude)) {
                 if (it != null) {
                     adapter.add(it.getInt("id"), addressLine)
                     adapter.notifyDataSetChanged()

@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.github.electroway.Application
 import com.github.electroway.R
-import com.github.electroway.WalletInfo
+import com.github.electroway.models.Wallet
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ProfileFragment : Fragment() {
@@ -69,7 +69,7 @@ class ProfileFragment : Fragment() {
                 val clientId =
                     walletDialog.findViewById<EditText>(R.id.clientIdText)!!.text.toString()
                 val secret = walletDialog.findViewById<EditText>(R.id.secretText)!!.text.toString()
-                session.updateWallet(WalletInfo(clientId, secret)) {
+                session.updateWallet(Wallet(clientId, secret)) {
                     if (it) {
                         walletDialog.hide()
                     } else {

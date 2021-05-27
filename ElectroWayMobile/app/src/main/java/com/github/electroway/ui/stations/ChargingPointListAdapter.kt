@@ -1,22 +1,21 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.stations
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.github.electroway.ChargingPlugInfo
 import com.github.electroway.R
 
-internal class ChargingPlugListAdapter(
-    private var itemsList: MutableList<ChargingPlugInfo>,
-    private val onClick: (ChargingPlugInfo) -> Unit
+internal class ChargingPointListAdapter(
+    private var itemsList: MutableList<Int>,
+    private val onClick: (Int) -> Unit
 ) :
-    RecyclerView.Adapter<ChargingPlugListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ChargingPointListAdapter.ViewHolder>() {
     internal inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val plugText: TextView = view.findViewById(R.id.chargingPlugText)
+        val stationText: TextView = view.findViewById(R.id.chargingPointText)
 
-        fun bind(onClick: (ChargingPlugInfo) -> Unit) {
+        fun bind(onClick: (Int) -> Unit) {
             itemView.setOnClickListener {
                 onClick(itemsList[adapterPosition])
             }
@@ -25,13 +24,12 @@ internal class ChargingPlugListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.charging_plugs_recycler_view_item, parent, false)
+            .inflate(R.layout.charging_points_recycler_view_item, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = itemsList[position]
-        holder.plugText.text = "${item.connectorType}, ${item.priceKw}, ${item.chargingSpeedKw}"
+        holder.stationText.text = "Charging point ${position + 1}"
         holder.bind(onClick)
     }
 
@@ -39,7 +37,7 @@ internal class ChargingPlugListAdapter(
         return itemsList.count()
     }
 
-    fun add(info: ChargingPlugInfo) {
-        itemsList.add(info)
+    fun add(index: Int) {
+        itemsList.add(index)
     }
 }

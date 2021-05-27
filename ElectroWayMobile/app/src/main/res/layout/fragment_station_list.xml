@@ -9,6 +9,7 @@
         android:id="@+id/stationsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:isScrollContainer="true"
         android:nestedScrollingEnabled="true"
         tools:context=".ui.main.CarDetailsFragment"
         tools:listitem="@layout/stations_recycler_view_item" />

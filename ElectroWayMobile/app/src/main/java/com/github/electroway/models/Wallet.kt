@@ -1,8 +1,8 @@
-package com.github.electroway
+package com.github.electroway.models
 
 import org.json.JSONObject
 
-class WalletInfo(
+class Wallet(
     val clientId: String,
     val secret: String
 ) {

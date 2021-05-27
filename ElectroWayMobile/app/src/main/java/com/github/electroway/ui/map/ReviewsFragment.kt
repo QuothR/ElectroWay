@@ -1,4 +1,4 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +28,8 @@ class ReviewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.addReviewButton).setOnClickListener {
-            val action = ReviewsFragmentDirections.actionReviewsFragmentToAddReviewFragment(args.station)
+            val action =
+                ReviewsFragmentDirections.actionReviewsFragmentToAddReviewFragment(args.station)
             findNavController().navigate(action)
         }
 

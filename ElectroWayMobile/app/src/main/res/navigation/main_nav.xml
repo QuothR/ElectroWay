@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.github.electroway.ui.main.MapFragment"
+        android:name="com.github.electroway.ui.map.MapFragment"
         android:label="fragment_map"
         app:startDestination="@id/action_mapFragment_to_homeFragment"
         tools:layout="@layout/fragment_map">
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/station_fragment"
-        android:name="com.github.electroway.ui.main.StationFragment">
+        android:name="com.github.electroway.ui.stations.StationFragment">
         <argument
             android:name="station"
             app:argType="integer" />
@@ -131,7 +131,7 @@
     </fragment>
     <fragment
         android:id="@+id/chargingPointFragment"
-        android:name="com.github.electroway.ui.main.ChargingPointFragment"
+        android:name="com.github.electroway.ui.stations.ChargingPointFragment"
         android:label="ChargingPointFragment" >
         <action
             android:id="@+id/action_chargingPointFragment_to_station_fragment"
@@ -147,7 +147,7 @@
     </fragment>
     <fragment
         android:id="@+id/reviewsFragment"
-        android:name="com.github.electroway.ui.main.ReviewsFragment"
+        android:name="com.github.electroway.ui.map.ReviewsFragment"
         android:label="ReviewsFragment" >
         <argument
             android:name="station"
@@ -195,15 +195,15 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="car"
-            app:argType="com.github.electroway.CarInfo" />
+            app:argType="com.github.electroway.models.Car" />
     </fragment>
     <fragment
         android:id="@+id/chargingPlugFragment"
-        android:name="com.github.electroway.ui.main.ChargingPlugFragment"
+        android:name="com.github.electroway.ui.stations.ChargingPlugFragment"
         android:label="ChargingPlugFragment" >
         <argument
             android:name="plug"
-            app:argType="com.github.electroway.ChargingPlugInfo" />
+            app:argType="com.github.electroway.models.ChargingPlug" />
         <action
             android:id="@+id/action_chargingPlugFragment_to_chargingPointFragment"
             app:destination="@id/chargingPointFragment" />

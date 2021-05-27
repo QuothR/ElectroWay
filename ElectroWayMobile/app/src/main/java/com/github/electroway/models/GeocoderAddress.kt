@@ -1,4 +1,4 @@
-package com.github.electroway
+package com.github.electroway.models
 
 import android.content.Context
 import android.location.Geocoder

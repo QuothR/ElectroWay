@@ -1,9 +1,8 @@
-package com.github.electroway
+package com.github.electroway.models
 
-import org.json.JSONArray
 import org.json.JSONObject
 
-class RegisterInfo(
+class Register(
     val username: String,
     val password: String,
     val firstName: String,

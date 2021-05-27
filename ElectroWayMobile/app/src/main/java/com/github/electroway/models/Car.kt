@@ -1,9 +1,9 @@
-package com.github.electroway
+package com.github.electroway.models
 
 import org.json.JSONObject
 import java.io.Serializable
 
-class CarInfo(
+class Car(
     val id: Int?,
     val model: String,
     val year: Int,

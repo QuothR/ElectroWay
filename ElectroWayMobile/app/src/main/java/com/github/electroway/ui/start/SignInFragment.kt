@@ -1,11 +1,7 @@
 package com.github.electroway.ui.start
 
-import android.accounts.Account
-import android.accounts.AccountManager
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +9,10 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.electroway.Application
-import com.github.electroway.LoginInfo
+import com.github.electroway.models.Login
 import com.github.electroway.R
-import com.github.electroway.Session
-import com.google.android.material.checkbox.MaterialCheckBox
+import com.github.electroway.network.Session
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import java.io.IOException
 
 class SignInFragment : Fragment() {
     lateinit var session: Session
@@ -53,7 +43,7 @@ class SignInFragment : Fragment() {
 
         view.findViewById<Button>(R.id.sign_in_button).setOnClickListener {
             login(
-                LoginInfo(emailEditable.text.toString(), passwordEditable.text.toString())
+                Login(emailEditable.text.toString(), passwordEditable.text.toString())
             )
         }
 
@@ -61,11 +51,11 @@ class SignInFragment : Fragment() {
         val email = preferences.getString("email", null)
         val password = preferences.getString("password", null)
         if (email != null && password != null) {
-            login(LoginInfo(email, password))
+            login(Login(email, password))
         }
     }
 
-    private fun login(info: LoginInfo) {
+    private fun login(info: Login) {
         session.login(info) { success ->
             if (success) {
                 val preferences = requireActivity().getPreferences(Context.MODE_PRIVATE)

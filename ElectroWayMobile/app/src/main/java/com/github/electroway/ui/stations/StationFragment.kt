@@ -1,4 +1,4 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.stations
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.Application
 import com.github.electroway.R
+import com.github.electroway.ui.map.ReviewsAdapter
 
 class StationFragment : Fragment() {
     private val args: StationFragmentArgs by navArgs()

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.electroway.Application
 import com.github.electroway.R
-import com.github.electroway.RegisterInfo
+import com.github.electroway.models.Register
 
 class CreateAccountNextFragment : Fragment() {
     lateinit var firstName: Editable
@@ -48,7 +48,7 @@ class CreateAccountNextFragment : Fragment() {
 
         view.findViewById<Button>(R.id.create_account_next_sign_up_button).setOnClickListener {
             val session = (requireActivity().application as Application).session
-            val info = RegisterInfo(
+            val info = Register(
                 username = CreateAccountFragment.username.toString(),
                 password = CreateAccountFragment.password.toString(),
                 emailAddress = CreateAccountFragment.email.toString(),

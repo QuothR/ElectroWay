@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MapFragment">
+    tools:context=".ui.map.MapFragment">
 
     <com.google.android.material.appbar.AppBarLayout
 
@@ -65,7 +65,7 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.main.MapFragment"
+            tools:context=".ui.map.MapFragment"
             tools:layout_editor_absoluteX="137dp"
             tools:layout_editor_absoluteY="0dp" />
 

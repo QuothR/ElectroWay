@@ -1,4 +1,4 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.stations
 
 import android.view.LayoutInflater
 import android.view.View

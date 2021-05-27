@@ -12,9 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.electroway.Application
-import com.github.electroway.LoginInfo
 import com.github.electroway.R
-import com.github.electroway.Session
+import com.github.electroway.network.Session
 import com.google.android.material.textfield.TextInputLayout
 
 class ForgotPasswordFragment : Fragment() {

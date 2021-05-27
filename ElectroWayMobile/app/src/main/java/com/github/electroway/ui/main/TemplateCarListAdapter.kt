@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.github.electroway.CarInfo
+import com.github.electroway.models.Car
 import com.github.electroway.R
 import java.lang.StringBuilder
 
 internal class TemplateCarListAdapter(
-    private var itemsList: MutableList<CarInfo>,
-    private val onClick: (CarInfo) -> Unit,
+    private var itemsList: MutableList<Car>,
+    private val onClick: (Car) -> Unit,
 ) :
     RecyclerView.Adapter<TemplateCarListAdapter.ViewHolder>() {
     internal inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val templateCarText: TextView = view.findViewById(R.id.templateCarText)
 
-        fun bind(onClick: (CarInfo) -> Unit) {
+        fun bind(onClick: (Car) -> Unit) {
             itemView.setOnClickListener {
                 onClick(itemsList[adapterPosition])
             }
@@ -47,7 +47,7 @@ internal class TemplateCarListAdapter(
         return itemsList.count()
     }
 
-    fun add(car: CarInfo) {
+    fun add(car: Car) {
         itemsList.add(car)
     }
 }

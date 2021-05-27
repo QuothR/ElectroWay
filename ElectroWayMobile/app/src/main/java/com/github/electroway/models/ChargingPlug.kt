@@ -1,9 +1,9 @@
-package com.github.electroway
+package com.github.electroway.models
 
 import org.json.JSONObject
 import java.io.Serializable
 
-class ChargingPlugInfo(
+class ChargingPlug(
     val id: Int?,
     val connectorType: String,
     val priceKw: Double,

@@ -1,7 +1,6 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.stations
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.electroway.Application
-import com.github.electroway.ChargingPlugInfo
+import com.github.electroway.models.ChargingPlug
 import com.github.electroway.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.json.JSONObject
@@ -72,7 +71,7 @@ class ChargingPointFragment : Fragment() {
             val chargingSpeedKw = dialog.findViewById<TextView>(R.id.chargingSpeedKwText)!!.text
             dialog.findViewById<Button>(R.id.confirmPlugButton)!!.setOnClickListener {
                 session.addChargingPlug(
-                    args.station, args.chargingPoint, ChargingPlugInfo(
+                    args.station, args.chargingPoint, ChargingPlug(
                         null,
                         connectorType.toString(),
                         priceKw.toString().toDouble(),
@@ -116,6 +115,6 @@ class ChargingPointFragment : Fragment() {
         val connectorType = obj.getString("connectorType")
         val priceKw = obj.getDouble("priceKw")
         val chargingSpeedKw = obj.getDouble("chargingSpeedKw")
-        adapter.add(ChargingPlugInfo(id, connectorType, priceKw, chargingSpeedKw))
+        adapter.add(ChargingPlug(id, connectorType, priceKw, chargingSpeedKw))
     }
 }

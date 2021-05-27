@@ -1,4 +1,4 @@
-package com.github.electroway.ui.main
+package com.github.electroway.ui.stations
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.electroway.Application
-import com.github.electroway.ChargingPlugInfo
+import com.github.electroway.models.ChargingPlug
 import com.github.electroway.R
 
 class ChargingPlugFragment : Fragment() {
@@ -41,7 +41,7 @@ class ChargingPlugFragment : Fragment() {
         view.findViewById<Button>(R.id.updateChargingPlugButton).setOnClickListener {
             session.updateChargingPlug(
                 args.station, args.chargingPoint,
-                ChargingPlugInfo(
+                ChargingPlug(
                     args.plug.id,
                     connectorType.text.toString(),
                     priceKw.text.toString().toDouble(),

@@ -1,8 +1,8 @@
-package com.github.electroway;
+package com.github.electroway.models;
 
 import org.json.JSONObject
 
-class AddStationInfo(val address: String, val latitude: Double, val longitude: Double) {
+class AddStation(val address: String, val latitude: Double, val longitude: Double) {
     fun getJson(): JSONObject {
         return JSONObject()
             .put("address", address)
