@@ -25,22 +25,28 @@ public class RoutingController {
 
     @PostMapping
     public @ResponseBody
-    ResponseEntity<Object> getRoute(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, InterruptedException, InvalidData, CurrentChargeInkWhException {
+    ResponseEntity<Object> getRoute(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, ImpossibleRouteException, InvalidData, CurrentChargeInkWhException {
 
         try {
             return routingService.generateRoute(routingRequestData);
         } catch (IOException e) {
             throw new InvalidData();
-        } catch (ImpossibleRouteException e) {
+        } catch (InterruptedException e) {
             throw new InvalidData();
         }
     }
 
     @PostMapping(path = "points")
     public @ResponseBody
-    ResponseEntity<Object> getRoutePoints(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException, CurrentChargeInkWhException {
-        return routingService.convertToShortAnswer(
-                routingService.generateRoute(routingRequestData)
-        );
+    ResponseEntity<Object> getRoutePoints(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, ImpossibleRouteException, InvalidData, CurrentChargeInkWhException {
+        try {
+            return routingService.convertToShortAnswer(
+                    routingService.generateRoute(routingRequestData)
+            );
+        } catch (IOException e) {
+            throw new InvalidData();
+        } catch (InterruptedException e) {
+            throw new InvalidData();
+        }
     }
 }

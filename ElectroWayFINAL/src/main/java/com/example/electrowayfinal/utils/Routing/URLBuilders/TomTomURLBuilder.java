@@ -81,14 +81,14 @@ public class TomTomURLBuilder {
             for(i = 0; i < routeData.getConstantSpeedConsumptionInkWhPerHundredkm().size() - 1; i++) {
                 stringBuilder.append(routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(i).getSpeed());
                 stringBuilder.append("%2C");
-                stringBuilder.append(routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(i).getConsumptionKWh());
+                stringBuilder.append(routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(i).getConsumptionKwh());
                 stringBuilder.append("%3A");
             }
 
             // Add the last constSpeed...
             stringBuilder.append(routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(i).getSpeed());
             stringBuilder.append("%2C");
-            stringBuilder.append(routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(i).getConsumptionKWh());
+            stringBuilder.append(routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(i).getConsumptionKwh());
             stringBuilder.append("&");
 
             // Add current Charge.
