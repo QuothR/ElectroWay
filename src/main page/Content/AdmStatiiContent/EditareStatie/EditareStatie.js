@@ -14,6 +14,7 @@ function EditareStatie(props) {
     const [formImput, setFormInput] = useState({})
     const history = useHistory();
     const stationAddr = JSON.parse(sessionStorage.getItem('stationAddr'))
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const [puncte, getPuncte] = useState([]);
     useEffect(() => {
@@ -56,28 +57,39 @@ function EditareStatie(props) {
     }
 
     function handleModifyStation() {
-
-        const dataBackend = {
-            address: formImput.address ? formImput.address : stationAddr.address,
-            latitude: formImput.latitude ? formImput.latitude : stationAddr.latitude,
-            longitude: formImput.longitude ? formImput.longitude : stationAddr.longitude,
-            description: formImput.description ? formImput.description : stationAddr.description
-        }
-
-
-        axios.put(`/station/${stationAddr.id}`, dataBackend, {
-            headers: {
-                'Authorization': `Bearer ${myToken}`
+        console.log(formImput.latitude, formImput.longitude)
+        if(formImput.latitude >= -90 && formImput.latitude <= 90 && formImput.longitude >= -180 && formImput.longitude <= 180) {
+            const dataBackend = {
+                address: formImput.address ? formImput.address : stationAddr.address,
+                latitude: formImput.latitude ? formImput.latitude : stationAddr.latitude,
+                longitude: formImput.longitude ? formImput.longitude : stationAddr.longitude,
+                description: formImput.description ? formImput.description : stationAddr.description
             }
-        })
-            .then((res) => {
-                console.log(res.data);
+    
+    
+            axios.put(`/station/${stationAddr.id}`, dataBackend, {
+                headers: {
+                    'Authorization': `Bearer ${myToken}`
+                }
             })
-
-        stationAddr.address = dataBackend.address
-        stationAddr.latitude = dataBackend.latitude
-        stationAddr.longitude = dataBackend.longitude
-        sessionStorage.setItem('stationAddr', JSON.stringify(stationAddr))
+                .then((res) => {
+                    console.log(res.data);
+                }, (error) => {
+                    // console.log(error.response.data.details)
+                    // const mesajEroare = error.response.data.details ? error.response.data.details : "bad request"
+                    const mesajEroare = "Something went wrong."
+                    setErrorMessage(mesajEroare)
+                })
+    
+            stationAddr.address = dataBackend.address
+            stationAddr.latitude = dataBackend.latitude
+            stationAddr.longitude = dataBackend.longitude
+            sessionStorage.setItem('stationAddr', JSON.stringify(stationAddr))
+        }
+        else {
+            const mesajEroare = "Please enter valid data."
+            setErrorMessage(mesajEroare)
+        }
 
     }
 
@@ -152,6 +164,7 @@ function EditareStatie(props) {
                                     onChange={(e) => {
                                         const address = e.target.value;
                                         setFormInput({ ...formImput, ...{ address } });
+                                        setErrorMessage("")
                                     }}
                                 />
 
@@ -160,6 +173,7 @@ function EditareStatie(props) {
                                     onChange={(e) => {
                                         const latitude = e.target.value;
                                         setFormInput({ ...formImput, ...{ latitude } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label>Longitudine</label>
@@ -167,6 +181,7 @@ function EditareStatie(props) {
                                     onChange={(e) => {
                                         const longitude = e.target.value;
                                         setFormInput({ ...formImput, ...{ longitude } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label>Beneficiile stației</label>
@@ -174,6 +189,7 @@ function EditareStatie(props) {
                                     onChange={(e) => {
                                         const description = e.target.value;
                                         setFormInput({ ...formImput, ...{ description } });
+                                        setErrorMessage("")
                                     }}
                                 />
 
@@ -191,6 +207,9 @@ function EditareStatie(props) {
                                         e.preventDefault();
                                         handleDelStation();
                                     }}>Stergere</button>
+                                    <div className="error-response">
+                                        <p>{errorMessage}</p>
+                                    </div>
                             </div>
 
                         </form>

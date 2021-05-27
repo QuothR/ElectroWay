@@ -12,34 +12,44 @@ function AdaugarePlug(props) {
     const chPointObj = JSON.parse(sessionStorage.getItem('nrChPoint'))
     const [formImput, setFormInput] = useState({});
     const history = useHistory();
-
+    const [errorMessage, setErrorMessage] = useState(null)
 
     function handleAdd() {
 
-        const stationId = sessionStorage.getItem('stationId')
-        const pointId = sessionStorage.getItem('pointId')
-        console.log(pointId)
+        if(formImput.priceKw >= 0 && formImput.chargingSpeedKw > 0) {
+            const stationId = sessionStorage.getItem('stationId')
+            const pointId = sessionStorage.getItem('pointId')
+            console.log(pointId)
 
-        const dataBackend = {
-            status: 1,
-            connectorType: formImput.connectorType ? formImput.connectorType : "Type 1", //se pune valoarea default
-            priceKw: formImput.priceKw,
-            chargingSpeedKw: formImput.chargingSpeedKw
-        }
-
-
-        axios.post(`/station/${stationId}/points/${pointId}`, dataBackend, {
-            headers: {
-                'Authorization': `Bearer ${myToken}`
+            const dataBackend = {
+                status: 1,
+                connectorType: formImput.connectorType ? formImput.connectorType : "Type 1", //se pune valoarea default
+                priceKw: formImput.priceKw,
+                chargingSpeedKw: formImput.chargingSpeedKw
             }
-        })
-            .then((res) => {
-                console.log(res.data);
+
+
+            axios.post(`/station/${stationId}/points/${pointId}`, dataBackend, {
+                headers: {
+                    'Authorization': `Bearer ${myToken}`
+                }
             })
+                .then((res) => {
+                    console.log(res.data);
+                    handleWorkflow();
+                }, (error) => {
+                    // console.log(error.response.data.details)
+                    const mesajEroare = "Something went wrong."
+                    setErrorMessage(mesajEroare)
+                })
+        }
+        else {
+            const mesajEroare = "Please enter valid data."
+            setErrorMessage(mesajEroare)
+        }
     }
 
     function handleWorkflow() {
-        handleAdd();
         plugObj.iValue = plugObj.iValue + 1;
         sessionStorage.setItem('nrPlugs', JSON.stringify(plugObj));
         if (plugObj.iValue <= plugObj.nValue) {
@@ -47,7 +57,6 @@ function AdaugarePlug(props) {
                 history.push(`/home/Adm-station/add/point/plug/${plugObj.iValue}`);
                 window.location.reload()
             },200)
-            
         }
         else if (chPointObj.iValue < chPointObj.nValue) {
             chPointObj.iValue = chPointObj.iValue + 1;
@@ -91,7 +100,7 @@ function AdaugarePlug(props) {
                 <div className="FormRow">
                     <form className="Formularul" onSubmit={(e) => {
                         e.preventDefault();
-                        handleWorkflow();
+                        handleAdd();
                     }}>
                         <div className="FormRowTop">
                             <label>Conector</label>
@@ -99,7 +108,7 @@ function AdaugarePlug(props) {
                                 onChange={(e) => {
                                     const connectorType = e.target.value;
                                     setFormInput({ ...formImput, ...{ connectorType } });
-
+                                    setErrorMessage("")
                                 }}
                             >
                                 <option value="Type 1">Type 1</option>
@@ -113,7 +122,7 @@ function AdaugarePlug(props) {
                                 onChange={(e) => {
                                     const priceKw = e.target.value;
                                     setFormInput({ ...formImput, ...{ priceKw } });
-
+                                    setErrorMessage("")
                                 }}
                             />
                             <label>Viteza de incarcare kW/h</label>
@@ -121,7 +130,7 @@ function AdaugarePlug(props) {
                                 onChange={(e) => {
                                     const chargingSpeedKw = e.target.value;
                                     setFormInput({ ...formImput, ...{ chargingSpeedKw } });
-
+                                    setErrorMessage("")
                                 }}
                             />
 
@@ -133,6 +142,9 @@ function AdaugarePlug(props) {
                                     handleDelete();
                                 }}>Renunta</button>
                             <button className="ButonAdaug" type="submit">Urmator</button>
+                            <div className="error-response">
+                                <p>{errorMessage}</p>
+                            </div>
                         </div>
                     </form>
                 </div>

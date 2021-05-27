@@ -11,6 +11,7 @@ function AdaugareMasina(props) {
     const [formImput, setFormInput] = useState({});
     const [carForPlugs, getCarForPostPlugs] = useState([]);
     //const [formImput, setFormInput] = useState();
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const history = useHistory();
     const dataPlug = {
@@ -38,6 +39,11 @@ function AdaugareMasina(props) {
             })
                 .then((response) => {
                     console.log(response.data);
+                }, (error) => {
+                    // console.log(error.response.data.details)
+                    // const mesajEroare = error.response.data.details ? error.response.data.details : "bad request"
+                    const mesajEroare = "Something went wrong."
+                    setErrorMessage(mesajEroare)
                 })
 
             // setTimeout(() => {
@@ -55,6 +61,11 @@ function AdaugareMasina(props) {
             })
                 .then((ressponse) => {
                     console.log(ressponse.data);
+                }, (error) => {
+                    // console.log(error.response.data.details)
+                    // const mesajEroare = error.response.data.details ? error.response.data.details : "bad request"
+                    const mesajEroare = "Something went wrong."
+                    setErrorMessage(mesajEroare)
                 })
 
 
@@ -65,30 +76,41 @@ function AdaugareMasina(props) {
 
     }
     function handleAdd() {
-        const dataBackend = {
-            model: formImput.model,
-            year: formImput.year,
-            batteryCapacity: formImput.batteryCapacity,
-            chargingCapacity: formImput.chargingCapacity,
-            // plugType: formImput.plugType ? formImput.plugType:'Type 1',
-            vehicleMaxSpeed: formImput.vehicleMaxSpeed,
-            auxiliaryKwh: formImput.auxiliaryKwh
-        }
-        console.log(dataBackend);
-        axios.post("/car/create", dataBackend, {
-            headers: {
-                'Authorization': `Bearer ${myToken}`
+        if(formImput.year > 0 && formImput.batteryCapacity > 0 && formImput.chargingCapacity > 0 && formImput.vehicleMaxSpeed > 0 && formImput.auxiliaryKwh > 0) {
+            const dataBackend = {
+                model: formImput.model,
+                year: formImput.year,
+                batteryCapacity: formImput.batteryCapacity,
+                chargingCapacity: formImput.chargingCapacity,
+                // plugType: formImput.plugType ? formImput.plugType:'Type 1',
+                vehicleMaxSpeed: formImput.vehicleMaxSpeed,
+                auxiliaryKwh: formImput.auxiliaryKwh
             }
-        })
-            .then((res) => {
-                getCarForPostPlugs(res.data);
-                postPlugs(res.data);
-                console.log(res.data);
+            console.log(dataBackend);
+            axios.post("/car/create", dataBackend, {
+                headers: {
+                    'Authorization': `Bearer ${myToken}`
+                }
             })
-
-        // setTimeout(() => {
-        //     history.push("/home/Adm-cars")
-        // }, 100)
+                .then((res) => {
+                    getCarForPostPlugs(res.data);
+                    postPlugs(res.data);
+                    console.log(res.data);
+                }, (error) => {
+                    // console.log(error.response.data.details)
+                    // const mesajEroare = error.response.data.details ? error.response.data.details : "bad request"
+                    const mesajEroare = "Something went wrong."
+                    setErrorMessage(mesajEroare)
+                })
+    
+            // setTimeout(() => {
+            //     history.push("/home/Adm-cars")
+            // }, 100)
+        }
+        else {
+            const mesajEroare = "Please enter valid data."
+            setErrorMessage(mesajEroare)
+        }
     }
 
 
@@ -114,6 +136,7 @@ function AdaugareMasina(props) {
                                         const model = e.target.value;
                                         //console.log(model);
                                         setFormInput({ ...formImput, ...{ model } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label>An</label>
@@ -122,6 +145,7 @@ function AdaugareMasina(props) {
                                         const year = e.target.value;
                                         //console.log(year);
                                         setFormInput({ ...formImput, ...{ year } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label>Capacitate baterie</label>
@@ -131,6 +155,7 @@ function AdaugareMasina(props) {
                                     onChange={(e) => {
                                         const batteryCapacity = e.target.value;
                                         setFormInput({ ...formImput, ...{ batteryCapacity } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label> Tip plug 1</label>
@@ -138,6 +163,7 @@ function AdaugareMasina(props) {
                                     onChange={(ex) => {
                                         const plugType1 = ex.target.value;
                                         setFormInput({ ...formImput, ...{ plugType1 } });
+                                        setErrorMessage("")
                                     }}
 
                                 >
@@ -154,6 +180,7 @@ function AdaugareMasina(props) {
                                     onChange={(e) => {
                                         const chargingCapacity = e.target.value;
                                         setFormInput({ ...formImput, ...{ chargingCapacity } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label>Viteza maxima</label>
@@ -161,6 +188,7 @@ function AdaugareMasina(props) {
                                     onChange={(e) => {
                                         const vehicleMaxSpeed = e.target.value;
                                         setFormInput({ ...formImput, ...{ vehicleMaxSpeed } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label>Auxiliary kwh</label>
@@ -168,6 +196,7 @@ function AdaugareMasina(props) {
                                     onChange={(e) => {
                                         const auxiliaryKwh = e.target.value;
                                         setFormInput({ ...formImput, ...{ auxiliaryKwh } });
+                                        setErrorMessage("")
                                     }}
                                 />
                                 <label> Tip plug 2</label>
@@ -175,6 +204,7 @@ function AdaugareMasina(props) {
                                     onChange={(e) => {
                                         const plugType2 = e.target.value;
                                         setFormInput({ ...formImput, ...{ plugType2 } });
+                                        setErrorMessage("")
                                     }}
 
                                 >
@@ -192,6 +222,9 @@ function AdaugareMasina(props) {
                             <Link to="/home/Adm-cars/OptiuniIntermediar"><button className="ButonInapoi">Inapoi</button></Link>
                             <button className="ButonAdaug" type="submit">Adauga</button>
                             <Link to="/home/Adm-cars"><button className="ButonRenunta">Renunta</button></Link>
+                            <div className="error-response">
+                                <p>{errorMessage}</p>
+                            </div>
                         </div>
 
                     </form>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './AdaugareStatie.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
@@ -11,6 +11,7 @@ function AdaugareStatie(props) {
     const myToken = user.loginReducer.user.token;
     const [formImput, setFormInput] = useState({});
     const history = useHistory();
+    const [errorMessage, setErrorMessage] = useState(null)
 
     function handleAdd() {
 
@@ -27,33 +28,33 @@ function AdaugareStatie(props) {
             }
         })
             .then((res) => {
-                console.log(res.data);
-                sessionStorage.setItem('stationId',res.data.id);
+                // console.log(res.data);
+                sessionStorage.setItem('stationId', res.data.id);
+
+                // merge la urmatoarea pagina
+                handleWorkflow()
+
+
+            }, (error) => {
+                // console.log(error.response.data.details)
+                // const mesajEroare = error.response.data.details ? error.response.data.details : "bad request"
+                const mesajEroare = "Please enter valid data."
+                setErrorMessage(mesajEroare)
             })
+
     }
 
 
     function handleWorkflow() {
-        if (formImput.address != null &&
-            formImput.latitude != null &&
-            formImput.longitude != null &&
-            formImput.nrChPoint != null &&
-            formImput.nrChPoint > 0) 
-            {
-                const chPointObj = {
-                    nValue : formImput.nrChPoint, 
-                    iValue : 1
-                }
-                handleAdd();
-                sessionStorage.setItem('nrChPoint', JSON.stringify(chPointObj));
-                setTimeout(() => {
-                    history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
-                    window.location.reload()
-                }, 200)
-                
-                
-                
-            }
+        console.log(formImput)
+        const chPointObj = {
+            nValue: formImput.nrChPoint,
+            iValue: 1
+        }
+        sessionStorage.setItem('nrChPoint', JSON.stringify(chPointObj));
+        history.push(`/home/Adm-station/add/point/${chPointObj.iValue}`);
+        window.location.reload()
+
     }
 
     return (
@@ -66,7 +67,7 @@ function AdaugareStatie(props) {
                 <div className="FormRow">
                     <form className="Formularul" onSubmit={(e) => {
                         e.preventDefault();
-                        handleWorkflow();
+                        handleAdd()
                     }}>
 
                         <div className="FormRowTop">
@@ -76,7 +77,7 @@ function AdaugareStatie(props) {
                                 onChange={(e) => {
                                     const address = e.target.value;
                                     setFormInput({ ...formImput, ...{ address } });
-
+                                    setErrorMessage("")
                                 }}
                             />
 
@@ -85,6 +86,7 @@ function AdaugareStatie(props) {
                                 onChange={(e) => {
                                     const latitude = e.target.value;
                                     setFormInput({ ...formImput, ...{ latitude } });
+                                    setErrorMessage("")
                                 }}
                             />
                             <label>Longitudine</label>
@@ -92,6 +94,7 @@ function AdaugareStatie(props) {
                                 onChange={(e) => {
                                     const longitude = e.target.value;
                                     setFormInput({ ...formImput, ...{ longitude } });
+                                    setErrorMessage("")
                                 }}
                             />
                             <label>Beneficiile stației</label>
@@ -99,6 +102,7 @@ function AdaugareStatie(props) {
                                 onChange={(e) => {
                                     const description = e.target.value;
                                     setFormInput({ ...formImput, ...{ description } });
+                                    setErrorMessage("")
                                 }}
                             />
 
@@ -107,7 +111,7 @@ function AdaugareStatie(props) {
                                 onChange={(e) => {
                                     const nrChPoint = e.target.value;
                                     setFormInput({ ...formImput, ...{ nrChPoint } });
-
+                                    setErrorMessage("")
                                 }}
                             />
 
@@ -116,6 +120,10 @@ function AdaugareStatie(props) {
                         <div className="SubmitButtonRow">
                             <Link to="/home/Adm-station"><button className="ButonRenunta">Renunta</button></Link>
                             <button className="ButonAdaug" type="submit">Urmator</button>
+
+                        </div>
+                        <div className="error-response">
+                            <p>{errorMessage}</p>
                         </div>
 
                     </form>

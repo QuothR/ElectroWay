@@ -11,6 +11,7 @@ function Adm(props) {
   const myToken = user.loginReducer.user.token;
   //const [dateCont, getDate] = useState("");
   var [formImput, setFormInput] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null)
 
   function handleAdd() {
     const dataBackend = {
@@ -37,14 +38,20 @@ function Adm(props) {
       })
       .then((res) => {
         console.log(res.data);
+      }, (error) => {
+        console.log(error.response.status)
+        // const mesajEroare = error.response.data.details ? error.response.data.details : "bad request"
+        if(error.response.status === 400) {
+          const mesajEroare = "Invalid data."
+          setErrorMessage(mesajEroare)
+        }
+        else {
+          const mesajEroare = "Something went wrong."
+          setErrorMessage(mesajEroare)
+        }
       });
   }
 
-
-  function handleWorkflow() {
-    handleAdd();
-
-  }
 
   useEffect(() => {
     axios
@@ -93,7 +100,8 @@ function Adm(props) {
         className="change-forms"
         onSubmit={(e) => {
           e.preventDefault();
-          handleWorkflow();
+          setErrorMessage("")
+          handleAdd();
         }}
       >
         <div className="form-administrate">
@@ -285,6 +293,9 @@ function Adm(props) {
 
           <div className="change">
             <input type="submit" defaultValue="Save" />
+          </div>
+          <div className="error-response">
+              <p>{errorMessage}</p>
           </div>
         </div>
       </form>
