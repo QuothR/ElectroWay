@@ -1,10 +1,10 @@
 package com.example.electrowayfinal.service;
 
 import com.example.electrowayfinal.exceptions.CarNotFoundException;
+import com.example.electrowayfinal.exceptions.CurrentChargeInkWhException;
 import com.example.electrowayfinal.exceptions.ImpossibleRouteException;
 import com.example.electrowayfinal.models.*;
 import com.example.electrowayfinal.repositories.*;
-import com.example.electrowayfinal.utils.Routing.structures.Consumption;
 import com.example.electrowayfinal.utils.Routing.structures.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +27,7 @@ public class RoutingService {
     private final ChargingPlugRepository chargingPlugRepository;
     private final PlugTypeRepository plugTypeRepository;
     private final TemplateCarRepository templateCarRepository;
+    private final ConsumptionRepository consumptionRepository;
 
     @Autowired
     public RoutingService(
@@ -35,13 +36,16 @@ public class RoutingService {
             ChargingPointRepository chargingPointRepository,
             ChargingPlugRepository chargingPlugRepository,
             PlugTypeRepository plugTypeRepository,
-            TemplateCarService templateCarService, TemplateCarRepository templateCarRepository) {
+            TemplateCarService templateCarService,
+            TemplateCarRepository templateCarRepository,
+            ConsumptionRepository consumptionRepository) {
         this.carRepository = carRepository;
         this.stationRepository = stationRepository;
         this.chargingPointRepository = chargingPointRepository;
         this.chargingPlugRepository = chargingPlugRepository;
         this.plugTypeRepository = plugTypeRepository;
         this.templateCarRepository = templateCarRepository;
+        this.consumptionRepository = consumptionRepository;
     }
 
     /**
@@ -128,10 +132,6 @@ public class RoutingService {
             }
         }
 
-        for(StationData s : stationDataList) {
-            System.out.println(s);
-        }
-
         return stationDataList;
     }
 
@@ -145,7 +145,7 @@ public class RoutingService {
     }
 
     public ResponseEntity<Object> generateRoute(
-            RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, InterruptedException, ImpossibleRouteException {
+            RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, InterruptedException, ImpossibleRouteException, CurrentChargeInkWhException {
         // Obtinerea si editarea datelor necesare pentru generarea rutei.
         RouteData routeData = dataProcessing(routingRequestData);
 
@@ -187,15 +187,6 @@ public class RoutingService {
                     new RouteData(routeData)
             );
 
-            Iterator i = travelTimesAndDistances.entrySet().iterator();
-            while(i.hasNext()) { // de scos
-                Map.Entry m = (Map.Entry) i.next();
-                StationData station = (StationData) m.getKey();
-                Pair<Double, Double> travelTimeAndDistance = (Pair<Double, Double>) m.getValue();
-                System.out.println(station.getStation().getAddress() + "    " + travelTimeAndDistance);
-            }
-            System.out.println("");
-
             // Determinarea celei mai convenabile statii ca timp si distanta.
             StationData reachableStation = reachableStation(
                     travelTimesAndDistances,
@@ -215,8 +206,6 @@ public class RoutingService {
             if (reachableStation == null || movedAwayTimes == 0) {
                 throw new ImpossibleRouteException();
             }
-
-            System.out.println("S-a ales: " + reachableStation.getStation().getAddress());
 
             // adaugam leg-ul la final response.
             addDataToResponse(finalResponse, auxiliarRouteVar, reachableStation);
@@ -239,8 +228,6 @@ public class RoutingService {
 
         // Adaugam ultimul leg.
         addDataToResponse(finalResponse, auxiliarRouteVar, null);
-
-        System.out.println("\n" + finalResponse);
 
         return ResponseEntity.status(200).body(finalResponse);
     }
@@ -326,7 +313,7 @@ public class RoutingService {
     }
 
     // De lucrat.
-    public RouteData dataProcessing(RoutingRequestData routingRequestData) throws CarNotFoundException {
+    public RouteData dataProcessing(RoutingRequestData routingRequestData) throws CarNotFoundException, CurrentChargeInkWhException {
         // Construim routeData. Mai intai adaugam locatiile si "avoid".
         RouteData routeData = new RouteData(routingRequestData);
 
@@ -347,14 +334,16 @@ public class RoutingService {
                 routingRequestData.getCarData().getCurrentChargeInkW()
         );
 
+        if(routeData.getCar().getBatteryCapacity() < routeData.getCurrentChargeInkWh()) {
+            throw new CurrentChargeInkWhException(routeData.getCurrentChargeInkWh(), routeData.getCar().getBatteryCapacity());
+        }
+
         // Extragerea datelor legate de constantSpeedConsumption.
         routeData.setConstantSpeedConsumptionInkWhPerHundredkm(
                 getConstantSpeedConsumption(
-                        routingRequestData.getCarData().getCarId()
+                        new RouteData(routeData)
                 )
         );
-
-        // Editarea constantSpeedConsumption-ului in functie de factorii externi.
 
         return routeData;
     }
@@ -401,11 +390,29 @@ public class RoutingService {
         }
     }
 
-    // De lucrat.
-    public List<Consumption> getConstantSpeedConsumption(Long carId) {
-        // Obtinerea constantSpeedConsumption din baza de date.
-        List<Consumption> listConsumption = new ArrayList<>();
-        listConsumption.add(new Consumption(50, 8.2));
+    // Extragerea constant speed consumption-ului si editarea lui in functie de factori externi.
+    public List<Consumption> getConstantSpeedConsumption(RouteData routeData) {
+        // Editarea constantSpeedConsumption-ului in functie de factorii externi.
+
+        // Extragerea Consumption-ului din baza de date.
+        routeData.setConstantSpeedConsumptionInkWhPerHundredkm(
+                getConsumption(routeData.getCar())
+        );
+
+        // Editarea constantSpeedConsumption-ului in functie de factorii externi.
+        return SpeedConsumptionImprover.getNewSCR(new RouteData(routeData));
+    }
+
+    public List<Consumption> getConsumption(Car car) {
+        List<Consumption> listConsumption = consumptionRepository.findAllByCarId(car.getId());
+        if(listConsumption.size() == 0) {
+            Consumption consumption = new Consumption();
+            consumption.setSpeed(50);
+            consumption.setConsumptionKwh(car.getBatteryCapacity() / 3);
+
+            listConsumption.add(consumption);
+        }
+
         return listConsumption;
     }
 
@@ -429,7 +436,6 @@ public class RoutingService {
                     finalResponse.getLegs().get(finalResponse.getLegs().size() - 1).getPoints()
             );
 
-            System.out.println(allPoints);
             return ResponseEntity.status(200).body(
                     Map.of(
                             "totalTravelTime", finalResponse.getTotalTravelTime(),

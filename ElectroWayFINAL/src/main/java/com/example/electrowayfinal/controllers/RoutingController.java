@@ -1,9 +1,11 @@
 package com.example.electrowayfinal.controllers;
 
 import com.example.electrowayfinal.exceptions.CarNotFoundException;
+import com.example.electrowayfinal.exceptions.CurrentChargeInkWhException;
 import com.example.electrowayfinal.exceptions.ImpossibleRouteException;
-import com.example.electrowayfinal.service.RoutingService;
+import com.example.electrowayfinal.exceptions.InvalidData;
 import com.example.electrowayfinal.utils.Routing.structures.RoutingRequestData;
+import com.example.electrowayfinal.service.RoutingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,6 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "/routing")
-@CrossOrigin(origins = "https://electrowayweb.herokuapp.com")
 public class RoutingController {
     private final RoutingService routingService;
 
@@ -24,14 +25,20 @@ public class RoutingController {
 
     @PostMapping
     public @ResponseBody
-    ResponseEntity<Object> getRoute(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException {
+    ResponseEntity<Object> getRoute(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, InterruptedException, InvalidData, CurrentChargeInkWhException {
 
-        return routingService.generateRoute(routingRequestData);
+        try {
+            return routingService.generateRoute(routingRequestData);
+        } catch (IOException e) {
+            throw new InvalidData();
+        } catch (ImpossibleRouteException e) {
+            throw new InvalidData();
+        }
     }
 
     @PostMapping(path = "points")
     public @ResponseBody
-    ResponseEntity<Object> getRoutePoints(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException {
+    ResponseEntity<Object> getRoutePoints(@Valid @RequestBody RoutingRequestData routingRequestData) throws CarNotFoundException, IOException, ImpossibleRouteException, InterruptedException, CurrentChargeInkWhException {
         return routingService.convertToShortAnswer(
                 routingService.generateRoute(routingRequestData)
         );

@@ -1,6 +1,7 @@
 package com.example.electrowayfinal.utils.Routing.structures;
 
 import com.example.electrowayfinal.models.Car;
+import com.example.electrowayfinal.models.Consumption;
 
 import java.util.List;
 

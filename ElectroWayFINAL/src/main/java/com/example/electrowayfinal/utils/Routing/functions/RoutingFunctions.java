@@ -354,14 +354,6 @@ public class RoutingFunctions {
                 .sorted(Comparator.comparing(o -> o.getValue().getSecond()))
                 .forEachOrdered(x -> sortedMapByDistance.put(x.getKey(), x.getValue()));
 
-        i = sortedMapByDistance.entrySet().iterator(); // de scos
-        while(i.hasNext()) { // de scos
-            Map.Entry m = (Map.Entry) i.next();
-            StationData station = (StationData) m.getKey();
-            Pair<Double, Double> travelTimeAndDistance = (Pair<Double, Double>) m.getValue();
-            System.out.println(station.getStation().getAddress() + "    " + travelTimeAndDistance);
-        }
-
         i = sortedMapByDistance.entrySet().iterator();
         while(i.hasNext()) {
             Map.Entry m = (Map.Entry) i.next();
@@ -409,7 +401,7 @@ public class RoutingFunctions {
     public static Double getTotalElectricalRange(RouteData routeData) {
         // Distanta maxima pe care o poate parcurge masina.
         // Consumul.
-        Double consumption = routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(0).getConsumptionKWh();
+        Double consumption = routeData.getConstantSpeedConsumptionInkWhPerHundredkm().get(0).getConsumptionKwh();
         Double totalElectricalRange = routeData.getCurrentChargeInkWh() / consumption * 100;
         totalElectricalRange = Math.floor(totalElectricalRange);
 
