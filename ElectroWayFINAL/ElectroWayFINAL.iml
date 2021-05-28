@@ -14,7 +14,11 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="ElectroWayFINAL" value="d6325f25-aef0-4371-917b-578208993815" />
+          <factory-entry name="entityManagerFactory" value="d6325f25-aef0-4371-917b-578208993815" />
+          <factory-entry name="noname-a.xml@0" value="ad818dc1-72c4-4588-8c63-046b83015041" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>

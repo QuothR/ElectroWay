@@ -75,8 +75,8 @@ public class ChargingPlugController {
     @PostMapping("/{id}/points/{cId}/plugs/{pId}/pay")
     public String payment(@RequestBody Order order, @PathVariable("pId") Long plugId) {
         try {
-            Payment payment = paypalService.createPayment(plugId,order, "https://electroway.herokuapp.com/" + CANCEL_URL,
-                    "https://electroway.herokuapp.com/" + SUCCESS_URL);
+            Payment payment = paypalService.createPayment(plugId,order, "https://localhost:443/" + CANCEL_URL,
+                    "https://localhost:443/" + SUCCESS_URL);
             for (Links link : payment.getLinks()) {
                 if (link.getRel().equals("approval_url")) {
                     return ("<h1>redirect:" + link.getHref());
