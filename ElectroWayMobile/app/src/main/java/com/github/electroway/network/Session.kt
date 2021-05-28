@@ -88,6 +88,7 @@ class Session(val handler: Handler) {
     fun login(info: Login, callback: (Boolean) -> Unit) =
         call(Post(info.getJson().toString()), callback, arrayOf("login"), useToken = false) {
             if (!it.isSuccessful) return@call false
+            loginInfo = info
             token = JSONObject(it.body!!.string()).getString("token")
             val request = Request.Builder()
                 .url(buildBasePath().addPathSegment("user").build())
